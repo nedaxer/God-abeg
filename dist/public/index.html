@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style data-vite-theme="" data-inject-first="">:root {
+      --background: 248 100% 1%;
+--foreground: 230 100% 97%;
+--muted: 239 47% 40%;
+--muted-foreground: 230 100% 97%;
+--popover: 240 59% 14%;
+--popover-foreground: 230 100% 97%;
+--card: 240 59% 14%;
+--card-foreground: 230 100% 97%;
+--border: 239 47% 40%;
+--input: 239 47% 40%;
+--primary: 237 87% 68%;
+--primary-foreground: 229 100% 99%;
+--secondary: 239 47% 40%;
+--secondary-foreground: 230 100% 97%;
+--accent: 239 47% 40%;
+--accent-foreground: 230 100% 97%;
+--destructive: 0 62.8% 30.6%;
+--destructive-foreground: 0 0% 98%;
+--ring: 237 87% 68%;
+--radius: 0.75rem;
+  }
+  .light {
+      --background: 231 98% 84%;
+--foreground: 256 100% 15%;
+--muted: 233 92% 75%;
+--muted-foreground: 256 100% 15%;
+--popover: 229 100% 99%;
+--popover-foreground: 256 100% 15%;
+--card: 229 100% 99%;
+--card-foreground: 256 100% 15%;
+--border: 233 92% 75%;
+--input: 233 92% 75%;
+--primary: 234 100% 77%;
+--primary-foreground: 229 100% 99%;
+--secondary: 231 100% 89%;
+--secondary-foreground: 256 100% 15%;
+--accent: 231 100% 89%;
+--accent-foreground: 256 100% 15%;
+--destructive: 0 84.2% 60.2%;
+--destructive-foreground: 60 9.1% 97.8%;
+--ring: 234 100% 77%;
+--radius: 0.75rem;
+  }</style>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, shrink-to-fit=no, viewport-fit=cover" />
+    <title>Nedaxer Trading Platform</title>
+    <meta name="description" content="Trade with limited risk on the Nedaxer regulated exchange." />
+    <meta name="theme-color" content="#0033a0" />
+    
+    <!-- PWA and Mobile App Meta Tags -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Nedaxer" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192x192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="/icons/icon-152x152.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="/icons/icon-128x128.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="/icons/icon-128x128.png" />
+    
+    <!-- Preload critical splash screen images for instant display -->
+    <link rel="preload" as="image" href="/assets/file_00000000e0d461f9b4be5c8627966318_1750209747614-DbMqjedn.png" />
+    <link rel="preload" as="image" href="/assets/20250618_001640_1750207793691-DAS_T2Q3.png" />
+    <link rel="preload" as="image" href="/assets/20250618_001710_1750207793694-AoeJmqxR.png" />
+    <link rel="preload" as="image" href="/assets/20250618_001748_1750207793698-Bulh0HhN.png" />
+    <link rel="preload" as="image" href="/assets/20250618_001828_1750207793703-BhML_qVO.png" />
+    <link rel="preload" as="image" href="/assets/20250618_001859_1750207793716-7erD0uLz.png" />
+    <link rel="preload" as="image" href="/assets/20250618_001938_1750207793727-DUrGtuRJ.png" />
+    <link rel="preload" as="image" href="/assets/20250618_002006_1750207793730-C1o41KA5.png" />
+    
+    <!-- Preload offline fallback splash screen assets -->
+    <link rel="preload" as="image" href="/splash-assets/background.png" />
+    <link rel="preload" as="image" href="/splash-assets/letter-n.png" />
+    <link rel="preload" as="image" href="/splash-assets/letter-e1.png" />
+    <link rel="preload" as="image" href="/splash-assets/letter-d.png" />
+    <link rel="preload" as="image" href="/splash-assets/letter-a.png" />
+    <link rel="preload" as="image" href="/splash-assets/letter-x.png" />
+    <link rel="preload" as="image" href="/splash-assets/letter-e2.png" />
+    <link rel="preload" as="image" href="/splash-assets/letter-r.png" />
+    <link rel="preload" as="image" href="/splash-assets/nedaxer-logo.png" />
+    
+    <!-- Preload pull-to-refresh offline assets -->
+    <link rel="preload" as="image" href="/splash-assets/refresh-logo.png" />
+    <link rel="preload" as="image" href="/splash-assets/pull-letter-n.png" />
+    <link rel="preload" as="image" href="/splash-assets/pull-letter-e1.png" />
+    <link rel="preload" as="image" href="/splash-assets/pull-letter-d.png" />
+    <link rel="preload" as="image" href="/splash-assets/pull-letter-a.png" />
+    <link rel="preload" as="image" href="/splash-assets/pull-letter-x.png" />
+    <link rel="preload" as="image" href="/splash-assets/pull-letter-e2.png" />
+    <link rel="preload" as="image" href="/splash-assets/pull-letter-r.png" />
+    <link rel="apple-touch-icon" sizes="76x76" href="/icons/icon-72x72.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png" />
+    <link rel="apple-touch-icon" sizes="60x60" href="/icons/icon-72x72.png" />
+    <link rel="apple-touch-icon" sizes="57x57" href="/icons/icon-72x72.png" />
+    
+    <!-- Prevent zoom on iOS Safari -->
+    <style>
+      @media screen and (-webkit-min-device-pixel-ratio:0) {
+        select:focus,
+        textarea:focus,
+        input:focus {
+          font-size: 16px !important;
+        }
+      }
+    </style>
+    <script type="module" crossorigin src="/assets/index-DALKRyZh.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-C5QvA3bO.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <!-- This is a replit script which adds a banner on the top of the page when opened in development mode outside the replit environment -->
+    <script type="text/javascript" src="https://replit.com/public/js/replit-dev-banner.js"></script>
+    <!-- Service worker is registered in main.tsx -->
+  </body>
+</html>
