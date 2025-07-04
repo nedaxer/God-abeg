@@ -1,0 +1,59 @@
+up to date, audited 1156 packages in 9s
+
+147 packages are looking for funding
+  run `npm fund` for details
+
+25 vulnerabilities (6 moderate, 19 high)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+
+> rest-express@1.0.0 build
+> vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+
+vite v6.0.5 building for production...
+✓ 2294 modules transformed.
+../dist/public/assets/20250618_001710_1750207793694-AoeJmqxR.png                            6.10 kB
+../dist/public/assets/20250618_001938_1750207793727-DUrGtuRJ.png                            6.11 kB
+../dist/public/index.html                                                                   6.16 kB │ gzip:   1.67 kB
+../dist/public/assets/20250618_001828_1750207793703-BhML_qVO.png                            7.96 kB
+../dist/public/assets/20250618_001748_1750207793698-Bulh0HhN.png                            7.96 kB
+../dist/public/assets/20250618_002006_1750207793730-C1o41KA5.png                            8.15 kB
+../dist/public/assets/20250618_001640_1750207793691-DAS_T2Q3.png                            8.56 kB
+../dist/public/assets/20250618_001859_1750207793716-7erD0uLz.png                            8.87 kB
+../dist/public/assets/20250618_042459_1750217238332-BbcqRReD.png                           53.63 kB
+../dist/public/assets/Refresh  app logo_1750782062607-Dentd8Fq.png                        307.36 kB
+../dist/public/assets/Picsart_25-06-28_15-49-20-738 (1)_1751125238732--_rr9HCK.png        665.25 kB
+../dist/public/assets/advanced-charts-video-CHAPDcx5.mp4                                1,302.43 kB
+../dist/public/assets/file_00000000e0d461f9b4be5c8627966318_1750209747614-DbMqjedn.png  1,585.86 kB
+../dist/public/assets/index-C5QvA3bO.css                                                  130.80 kB │ gzip:  20.27 kB
+../dist/public/assets/qr-scanner-worker.min-D85Z9gVD.js                                    43.95 kB │ gzip:  10.40 kB
+../dist/public/assets/index-DALKRyZh.js                                                 1,422.88 kB │ gzip: 356.70 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 8.40s
+✘ [ERROR] No matching export in "server/mongodb.ts" for import "default"
+
+    server/mongodb.ts:4:7:
+      4 │ import mongodb from 'mongodb';
+        ╵        ~~~~~~~
+
+✘ [ERROR] No matching export in "server/vite.ts" for import "createServer"
+
+    server/vite.ts:4:9:
+      4 │ import { createServer as createViteServer, createLogger } from "vite";
+        ╵          ~~~~~~~~~~~~
+
+✘ [ERROR] No matching export in "server/vite.ts" for import "createLogger"
+
+    server/vite.ts:4:43:
+      4 │ import { createServer as createViteServer, createLogger } from "vite";
+        ╵                                            ~~~~~~~~~~~~

@@ -1,0 +1,91 @@
+mote: error: GH013: Repository rule violations found for refs/heads/nedaxer.
+remote: 
+remote: - GITHUB PUSH PROTECTION
+remote:   —————————————————————————————————————————
+remote:     Resolve the following violations before pushing again
+remote: 
+remote:     - Push cannot contain secrets
+remote: 
+remote:     
+remote:      (?) Learn how to resolve a blocked push
+remote:      https://docs.github.com/code-security/secret-scanning/working-with-secret-scanning-and-push-protection/working-with-push-protection-from-the-command-line#resolving-a-blocked-push
+remote:     
+remote:     
+remote:       —— Google OAuth Client ID ————————————————————————————
+remote:        locations:
+remote:          - commit: ef16386c51ee922a3f8dac26c15f26bfd74bda26
+remote:            path: server/passport-config.ts:7
+remote:          - commit: 97e2ab996b1b47b5fee1122dc9c2626a9e6dd6af
+remote:            path: server/passport-config.ts:8
+remote:     
+remote:        (?) To push, remove secret from commit(s) or follow this URL to allow the secret.
+remote:        https://github.com/nedaxer/nedaxer-com/security/secret-scanning/unblock-secret/2zNOI8y6FyUnL8MOSbSMrA2Oeuj
+remote:     
+remote:     
+remote:       —— Google OAuth Client Secret ————————————————————————
+remote:        locations:
+remote:          - commit: ef16386c51ee922a3f8dac26c15f26bfd74bda26
+remote:            path: server/passport-config.ts:8
+remote:          - commit: 97e2ab996b1b47b5fee1122dc9c2626a9e6dd6af
+remote:            path: server/passport-config.ts:9
+remote:     
+remote:        (?) To push, remove secret from commit(s) or follow this URL to allow the secret.
+remote:        https://github.com/nedaxer/nedaxer-com/security/secret-scanning/unblock-secret/2zNOIBDKh8baSTkk9M9SrxggonM
+remote:     
+remote:     
+remote:       —— Google OAuth Client ID ————————————————————————————
+remote:        locations:
+remote:          - commit: bb06e6c4e5d0a399a262667c15e587e0befe72ed
+remote:            path: replit.md:123
+remote:          - commit: c895478c17d6a558b120258cb0a5befe58df16fd
+remote:            path: replit.md:123
+remote:          - commit: 8325403799156ba70a271ad3d94984d84952bcbb
+remote:            path: replit.md:123
+remote:          - commit: ae679885bfbc735388284654a1f14c8b1c78ef7f
+remote:            path: replit.md:123
+remote:          - commit: 97f60b926d1a86061479c9d701c855d172c4ed0a
+remote:            path: replit.md:123
+remote:     
+remote:        (?) To push, remove secret from commit(s) or follow this URL to allow the secret.
+remote:        https://github.com/nedaxer/nedaxer-com/security/secret-scanning/unblock-secret/2zNOI8O7j7M9en5CLFcP5n8ASCL
+remote:     
+remote:     
+remote:       —— Google OAuth Client ID ————————————————————————————
+remote:        locations:
+remote:          - commit: 2928cab1e17ca8236eb94b9e4d90d9d4d4cf7af3
+remote:            path: replit.md:123
+remote:          - commit: 1dfbee1113251f9ba214abde058afc5baf921961
+remote:            path: replit.md:123
+remote:          - commit: 2928cab1e17ca8236eb94b9e4d90d9d4d4cf7af3
+remote:            path: replit.md:145
+remote:          - commit: 8325403799156ba70a271ad3d94984d84952bcbb
+remote:            path: replit.md:158
+remote:          - commit: c895478c17d6a558b120258cb0a5befe58df16fd
+remote:            path: replit.md:162
+remote:     
+remote:        (?) To push, remove secret from commit(s) or follow this URL to allow the secret.
+remote:        https://github.com/nedaxer/nedaxer-com/security/secret-scanning/unblock-secret/2zNOIDrZ852Dyo58gCbXTSHdoL7
+remote:     
+remote:     
+remote:       —— GitHub Personal Access Token ——————————————————————
+remote:        locations:
+remote:          - commit: 27826f022920cf6680eaa28ffd191d8ebf6d1254
+remote:            path: replit.md:123
+remote:          - commit: 8efb9c52ba23abc0f5829fc4c79564392eceb6a3
+remote:            path: replit.md:146
+remote:          - commit: 27826f022920cf6680eaa28ffd191d8ebf6d1254
+remote:            path: server/api/chatbot-routes.ts:8
+remote:     
+remote:        (?) To push, remove secret from commit(s) or follow this URL to allow the secret.
+remote:        https://github.com/nedaxer/nedaxer-com/security/secret-scanning/unblock-secret/2zNOIBBuhwrbr0E33m54u3RK2EN
+remote:     
+remote:     
+remote:     ——[ WARNING ]—————————————————————————————————————————
+remote:      2 more secrets detected. Remove each secret from your commit history to view more detections.
+remote:      https://docs.github.com/code-security/secret-scanning/using-advanced-secret-scanning-and-push-protection-features/excluding-folders-and-files-from-secret-scanning
+remote:     ——————————————————————————————————————————————————————
+remote: 
+remote: 
+To github.com:nedaxer/nedaxer-com.git
+ ! [remote rejected] nedaxer -> nedaxer (push declined due to repository rule violations)
+error: failed to push some refs to 'github.com:nedaxer/nedaxer-com.git'

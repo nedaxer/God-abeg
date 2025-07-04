@@ -1,0 +1,2554 @@
+C:\Users\MANA\Documents\Dell\Nedaxer>npm install
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm warn deprecated npmlog@5.0.1: This package is no longer supported.
+npm warn deprecated @esbuild-kit/esm-loader@2.6.5: Merged into tsx: https://tsx.is
+npm warn deprecated rimraf@2.7.1: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated @esbuild-kit/core-utils@3.3.2: Merged into tsx: https://tsx.is
+npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+npm warn deprecated are-we-there-yet@2.0.0: This package is no longer supported.
+npm warn deprecated gauge@3.0.2: This package is no longer supported.
+npm warn deprecated uuid@3.4.0: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
+npm warn deprecated ethereumjs-wallet@1.0.2: New package name format for new versions: @ethereumjs/wallet. Please update.
+
+> rest-express@1.0.0 postinstall
+> npm run check
+
+
+> rest-express@1.0.0 check
+> tsc
+
+client/src/components/protected-route.tsx:43:37 - error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+
+43   const isDevelopment = import.meta.env.DEV || process.env.NODE_ENV === 'development';
+                                       ~~~
+
+client/src/components/protected-route.tsx:75:17 - error TS2741: Property 'params' is missing in type '{}' but required in type 'RouteComponentProps<{ [param: string]: string; }>'.
+
+75         return <Component {...(routeParams || {})} />;
+                   ~~~~~~~~~
+
+  node_modules/wouter/types/index.d.ts:65:3
+    65   params: T;
+         ~~~~~~
+    'params' is declared here.
+
+client/src/lib/chart-state-manager.ts:155:5 - error TS2322: Type 'Window' is not assignable to type 'boolean'.
+
+155     return globalWidget.isReady &&
+        ~~~~~~
+
+client/src/pages/account/login.tsx:263:43 - error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+
+263                 data-sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY || "6LeX_XMrAAAAAOE1YUBRSnQb70l9FJra_s2Ohb8u"}
+                                              ~~~
+
+client/src/pages/account/register.tsx:437:45 - error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+
+437                   data-sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY || "6LeX_XMrAAAAAOE1YUBRSnQb70l9FJra_s2Ohb8u"}
+                                                ~~~
+
+client/src/pages/mobile/deposit-details.tsx:42:11 - error TS2339: Property 'transactionId' does not exist on type 'StringRouteParams<undefined>'.
+
+42   const { transactionId } = useParams();
+             ~~~~~~~~~~~~~
+
+client/src/pages/mobile/home.tsx:353:20 - error TS2554: Expected 2-3 arguments, but got 1.
+
+353     queryFn: () => apiRequest('/api/notifications/unread-count'),
+                       ~~~~~~~~~~
+
+  client/src/lib/queryClient.ts:12:3
+    12   url: string,
+         ~~~~~~~~~~~
+    An argument for 'url' was not provided.
+
+client/src/pages/mobile/home.tsx:524:24 - error TS2339: Property 'data' does not exist on type 'unknown'.
+
+524     return walletData?.data?.usdBalance || 0;
+                           ~~~~
+
+client/src/pages/mobile/home.tsx:737:21 - error TS2339: Property 'data' does not exist on type 'unknown'.
+
+737           kycStatus.data?.kycStatus === 'none' || kycStatus.data?.kycStatus === 'rejected'
+                        ~~~~
+
+client/src/pages/mobile/home.tsx:737:61 - error TS2339: Property 'data' does not exist on type 'unknown'.
+
+737           kycStatus.data?.kycStatus === 'none' || kycStatus.data?.kycStatus === 'rejected'
+                                                                ~~~~
+
+client/src/pages/mobile/home.tsx:742:44 - error TS2339: Property 'data' does not exist on type 'unknown'.
+
+742             questionsCompleted={kycStatus?.data?.kycData?.sourceOfIncome ? true : false}
+                                               ~~~~
+
+client/src/pages/mobile/home.tsx:743:35 - error TS2339: Property 'data' does not exist on type 'unknown'.
+
+743             kycStatus={kycStatus?.data?.kycStatus || 'none'}
+                                      ~~~~
+
+client/src/pages/mobile/home.tsx:787:35 - error TS2339: Property 'unreadCount' does not exist on type 'unknown'.
+
+787               {notificationCount?.unreadCount > 0 && (
+                                      ~~~~~~~~~~~
+
+client/src/pages/mobile/home.tsx:790:40 - error TS2339: Property 'unreadCount' does not exist on type 'unknown'.
+
+790                     {notificationCount.unreadCount > 9 ? '9+' : notificationCount.unreadCount}
+                                           ~~~~~~~~~~~
+
+client/src/pages/mobile/home.tsx:790:83 - error TS2339: Property 'unreadCount' does not exist on type 'unknown'.
+
+790                     {notificationCount.unreadCount > 9 ? '9+' : notificationCount.unreadCount}
+                                                                                      ~~~~~~~~~~~
+
+client/src/pages/mobile/kyc-status.tsx:37:30 - error TS2339: Property 'data' does not exist on type 'unknown'.
+
+37   const kycData = kycStatus?.data;
+                                ~~~~
+
+client/src/pages/mobile/news.tsx:244:50 - error TS2304: Cannot find name 'getSourceIcon'.
+
+244                               parent.innerHTML = getSourceIcon(article.source?.name || 'Crypto News');
+                                                     ~~~~~~~~~~~~~
+
+client/src/pages/mobile/security.tsx:69:20 - error TS2554: Expected 2-3 arguments, but got 1.
+
+69     queryFn: () => apiRequest('/api/user/security/settings'),
+                      ~~~~~~~~~~
+
+  client/src/lib/queryClient.ts:12:3
+    12   url: string,
+         ~~~~~~~~~~~
+    An argument for 'url' was not provided.
+
+client/src/pages/mobile/security.tsx:77:20 - error TS2554: Expected 2-3 arguments, but got 1.
+
+77     queryFn: () => apiRequest('/api/user/security/login-history'),
+                      ~~~~~~~~~~
+
+  client/src/lib/queryClient.ts:12:3
+    12   url: string,
+         ~~~~~~~~~~~
+    An argument for 'url' was not provided.
+
+client/src/pages/mobile/security.tsx:266:23 - error TS2339: Property 'data' does not exist on type 'Response'.
+
+266     if (securityData?.data) {
+                          ~~~~
+
+client/src/pages/mobile/security.tsx:269:25 - error TS2339: Property 'data' does not exist on type 'Response'.
+
+269         ...securityData.data
+                            ~~~~
+
+client/src/pages/mobile/security.tsx:665:30 - error TS2339: Property 'data' does not exist on type 'Response'.
+
+665               {loginHistory?.data?.slice(0, 5).map((login: LoginAttempt) => (
+                                 ~~~~
+
+client/src/pages/mobile/settings.tsx:53:20 - error TS2554: Expected 2-3 arguments, but got 1.
+
+53     queryFn: () => apiRequest('/api/user/security/settings'),
+                      ~~~~~~~~~~
+
+  client/src/lib/queryClient.ts:12:3
+    12   url: string,
+         ~~~~~~~~~~~
+    An argument for 'url' was not provided.
+
+client/src/pages/mobile/settings.tsx:61:20 - error TS2554: Expected 2-3 arguments, but got 1.
+
+61     queryFn: () => apiRequest('/api/verification/status'),
+                      ~~~~~~~~~~
+
+  client/src/lib/queryClient.ts:12:3
+    12   url: string,
+         ~~~~~~~~~~~
+    An argument for 'url' was not provided.
+
+client/src/pages/mobile/settings.tsx:68:24 - error TS2339: Property 'data' does not exist on type 'Response'.
+
+68     if (!securityData?.data) return 0;
+                          ~~~~
+
+client/src/pages/mobile/settings.tsx:69:35 - error TS2339: Property 'data' does not exist on type 'Response'.
+
+69     const settings = securityData.data;
+                                     ~~~~
+
+client/src/pages/mobile/settings.tsx:388:28 - error TS2339: Property 'data' does not exist on type 'Response'.
+
+388                   kycData?.data?.kycStatus === 'verified'
+                               ~~~~
+
+client/src/pages/mobile/settings.tsx:390:32 - error TS2339: Property 'data' does not exist on type 'Response'.
+
+390                     : kycData?.data?.kycStatus === 'pending'
+                                   ~~~~
+
+client/src/pages/mobile/settings.tsx:394:29 - error TS2339: Property 'data' does not exist on type 'Response'.
+
+394                   {kycData?.data?.kycStatus === 'verified'
+                                ~~~~
+
+client/src/pages/mobile/settings.tsx:396:32 - error TS2339: Property 'data' does not exist on type 'Response'.
+
+396                     : kycData?.data?.kycStatus === 'pending'
+                                   ~~~~
+
+client/src/pages/mobile/trade.tsx:212:61 - error TS2448: Block-scoped variable 'currentSymbol' used before its declaration.
+
+212         const currentSymbol = activeWidget.currentSymbol || currentSymbol;
+                                                                ~~~~~~~~~~~~~
+
+  client/src/pages/mobile/trade.tsx:212:15
+    212         const currentSymbol = activeWidget.currentSymbol || currentSymbol;
+                      ~~~~~~~~~~~~~
+    'currentSymbol' is declared here.
+
+client/src/pages/mobile/transfer-details.tsx:11:11 - error TS2339: Property 'transactionId' does not exist on type 'StringRouteParams<undefined>'.
+
+11   const { transactionId } = useParams();
+             ~~~~~~~~~~~~~
+
+client/src/pages/mobile/verification-submitted.tsx:36:30 - error TS2339: Property 'data' does not exist on type 'unknown'.
+
+36   const kycData = kycStatus?.data?.kycData;
+                                ~~~~
+
+client/src/pages/mobile/withdrawal-details.tsx:42:11 - error TS2339: Property 'transactionId' does not exist on type 'StringRouteParams<undefined>'.
+
+42   const { transactionId } = useParams();
+             ~~~~~~~~~~~~~
+
+client/src/pages/mobile/withdrawal-details.tsx:52:44 - error TS2339: Property 'data' does not exist on type 'unknown'.
+
+52   const transaction = transactionResponse?.data;
+                                              ~~~~
+
+client/src/pages/platform/staking.tsx:162:46 - error TS2345: Argument of type '{ method: string; body: { currencyId: number; amount: number; lockupDays: number; }; }' is not assignable to parameter of type 'string'.
+
+162       await apiRequest('/api/staking/stake', {
+                                                 ~
+163         method: 'POST',
+    ~~~~~~~~~~~~~~~~~~~~~~~
+...
+168         }
+    ~~~~~~~~~
+169       });
+    ~~~~~~~
+
+client/src/pages/platform/staking.tsx:180:62 - error TS2345: Argument of type '{ method: string; }' is not assignable to parameter of type 'string'.
+
+180       await apiRequest(`/api/staking/unstake/${positionId}`, {
+                                                                 ~
+181         method: 'POST'
+    ~~~~~~~~~~~~~~~~~~~~~~
+182       });
+    ~~~~~~~
+
+client/src/pages/platform/trading.tsx:51:33 - error TS2339: Property 'find' does not exist on type 'unknown'.
+
+51   const currentPrice = markets?.find((m: any) => m.symbol === selectedPair.split('/')[0])?.price || 43250;
+                                   ~~~~
+
+client/src/pages/platform/wallet.tsx:161:48 - error TS2345: Argument of type '{ method: string; body: { currencyId: number; amount: number; address: string; }; }' is not assignable to parameter of type 'string'.
+
+161       await apiRequest('/api/wallet/withdraw', {
+                                                   ~
+162         method: 'POST',
+    ~~~~~~~~~~~~~~~~~~~~~~~
+...
+167         }
+    ~~~~~~~~~
+168       });
+    ~~~~~~~
+
+server/api/admin-kyc-routes.ts:17:47 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request<{}, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>, number>) => Promise<Response<any, Record<...>, number>>' is not assignable to parameter of type 'RequestHandlerParams<{}, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request<{}, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>, number>) => Promise<Response<any, Record<...>, number>>' is not assignable to type 'RequestHandler<{}, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<Response<any, Record<string, any>, number>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<Response<any, Record<string, any>, number>>' is not assignable to type 'Promise<void>'.
+            Type 'Response<any, Record<string, any>, number>' is not assignable to type 'void'.
+
+17 router.post('/approve-kyc', requireAdminAuth, async (req, res) => {
+                                                 ~~~~~~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/api/admin-kyc-routes.ts:40:29 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(id: any, projection: ProjectionType<IUser>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, projection?: ProjectionType<...>, options?: QueryOp...' has signatures, but none of those signatures are compatible with each other.
+
+40     const user = await User.findById(userId);
+                               ~~~~~~~~
+
+server/api/admin-kyc-routes.ts:122:45 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(filter: RootFilterQuery<IUser>, projection: ProjectionType<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(filter: RootFilterQuery<...>, projectio...' has signatures, but none of those signatures are compatible with each other.
+
+122     const pendingVerifications = await User.find({
+                                                ~~~~
+
+server/api/admin-kyc-routes.ts:144:54 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request<{}, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>, number>) => Promise<Response<any, Record<...>, number>>' is not assignable to parameter of type 'RequestHandlerParams<{}, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request<{}, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>, number>) => Promise<Response<any, Record<...>, number>>' is not assignable to type 'RequestHandler<{}, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<Response<any, Record<string, any>, number>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<Response<any, Record<string, any>, number>>' is not assignable to type 'Promise<void>'.
+            Type 'Response<any, Record<string, any>, number>' is not assignable to type 'void'.
+
+144 router.post('/add-test-documents', requireAdminAuth, async (req, res) => {
+                                                         ~~~~~~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/api/admin-kyc-routes.ts:152:29 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(filter: RootFilterQuery<IUser>, projection: ProjectionType<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(filter?: RootFilterQuery<...>, projecti...' has signatures, but none of those signatures are compatible with each other.
+
+152     const user = await User.findOne({ kycStatus: 'pending' });
+                                ~~~~~~~
+
+server/api/admin-panel-routes.ts:38:22 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+38 router.get("/stats", requireAdmin, async (req: Request, res: Response) => {
+                        ~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/api/admin-panel-routes.ts:40:11 - error TS2488: Type '{ where: () => {}[]; }' must have a '[Symbol.iterator]()' method that returns an iterator.
+
+40     const [totalUsers] = await db.select({ count: count() }).from(users);
+             ~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:40:42 - error TS2554: Expected 0 arguments, but got 1.
+
+40     const [totalUsers] = await db.select({ count: count() }).from(users);
+                                            ~~~~~~~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:40:67 - error TS2304: Cannot find name 'users'.
+
+40     const [totalUsers] = await db.select({ count: count() }).from(users);
+                                                                     ~~~~~
+
+server/api/admin-panel-routes.ts:40:67 - error TS2554: Expected 0 arguments, but got 1.
+
+40     const [totalUsers] = await db.select({ count: count() }).from(users);
+                                                                     ~~~~~
+
+server/api/admin-panel-routes.ts:41:11 - error TS2488: Type '{ where: () => {}[]; }' must have a '[Symbol.iterator]()' method that returns an iterator.
+
+41     const [totalBalance] = await db.select({
+             ~~~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:41:44 - error TS2554: Expected 0 arguments, but got 1.
+
+41     const [totalBalance] = await db.select({
+                                              ~
+42       total: sum(userBalances.balance)
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+43     }).from(userBalances);
+   ~~~~~
+
+server/api/admin-panel-routes.ts:42:18 - error TS2304: Cannot find name 'userBalances'.
+
+42       total: sum(userBalances.balance)
+                    ~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:42:18 - error TS2554: Expected 0 arguments, but got 1.
+
+42       total: sum(userBalances.balance)
+                    ~~~~~~~~~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:43:13 - error TS2304: Cannot find name 'userBalances'.
+
+43     }).from(userBalances);
+               ~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:43:13 - error TS2554: Expected 0 arguments, but got 1.
+
+43     }).from(userBalances);
+               ~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:45:50 - error TS2554: Expected 0 arguments, but got 1.
+
+45     const [recentTransactions] = await db.select({ count: count() })
+                                                    ~~~~~~~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:46:13 - error TS2552: Cannot find name 'transactions'. Did you mean 'IDBTransaction'?
+
+46       .from(transactions)
+               ~~~~~~~~~~~~
+
+  node_modules/typescript/lib/lib.dom.d.ts:15016:13
+    15016 declare var IDBTransaction: {
+                      ~~~~~~~~~~~~~~
+    'IDBTransaction' is declared here.
+
+server/api/admin-panel-routes.ts:46:13 - error TS2554: Expected 0 arguments, but got 1.
+
+46       .from(transactions)
+               ~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:47:14 - error TS2554: Expected 0 arguments, but got 1.
+
+47       .where(eq(transactions.status, 'completed'));
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:47:17 - error TS2304: Cannot find name 'transactions'.
+
+47       .where(eq(transactions.status, 'completed'));
+                   ~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:47:17 - error TS2554: Expected 0 arguments, but got 2.
+
+47       .where(eq(transactions.status, 'completed'));
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:54:47 - error TS2339: Property 'count' does not exist on type '{}'.
+
+54         totalTransactions: recentTransactions.count || 0,
+                                                 ~~~~~
+
+server/api/admin-panel-routes.ts:68:22 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+68 router.get("/users", requireAdmin, async (req: Request, res: Response) => {
+                        ~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/api/admin-panel-routes.ts:70:38 - error TS2554: Expected 0 arguments, but got 1.
+
+ 70     const allUsers = await db.select({
+                                         ~
+ 71       id: users.id,
+    ~~~~~~~~~~~~~~~~~~~
+...
+ 79       createdAt: users.createdAt
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 80     }).from(users).orderBy(desc(users.createdAt));
+    ~~~~~
+
+server/api/admin-panel-routes.ts:71:11 - error TS2304: Cannot find name 'users'.
+
+71       id: users.id,
+             ~~~~~
+
+server/api/admin-panel-routes.ts:72:17 - error TS2304: Cannot find name 'users'.
+
+72       username: users.username,
+                   ~~~~~
+
+server/api/admin-panel-routes.ts:73:14 - error TS2304: Cannot find name 'users'.
+
+73       email: users.email,
+                ~~~~~
+
+server/api/admin-panel-routes.ts:74:18 - error TS2304: Cannot find name 'users'.
+
+74       firstName: users.firstName,
+                    ~~~~~
+
+server/api/admin-panel-routes.ts:75:17 - error TS2304: Cannot find name 'users'.
+
+75       lastName: users.lastName,
+                   ~~~~~
+
+server/api/admin-panel-routes.ts:76:19 - error TS2304: Cannot find name 'users'.
+
+76       isVerified: users.isVerified,
+                     ~~~~~
+
+server/api/admin-panel-routes.ts:77:18 - error TS2304: Cannot find name 'users'.
+
+77       kycStatus: users.kycStatus,
+                    ~~~~~
+
+server/api/admin-panel-routes.ts:78:28 - error TS2304: Cannot find name 'users'.
+
+78       totalPortfolioValue: users.totalPortfolioValue,
+                              ~~~~~
+
+server/api/admin-panel-routes.ts:79:18 - error TS2304: Cannot find name 'users'.
+
+79       createdAt: users.createdAt
+                    ~~~~~
+
+server/api/admin-panel-routes.ts:80:13 - error TS2304: Cannot find name 'users'.
+
+80     }).from(users).orderBy(desc(users.createdAt));
+               ~~~~~
+
+server/api/admin-panel-routes.ts:80:13 - error TS2554: Expected 0 arguments, but got 1.
+
+80     }).from(users).orderBy(desc(users.createdAt));
+               ~~~~~
+
+server/api/admin-panel-routes.ts:80:20 - error TS2339: Property 'orderBy' does not exist on type '{ where: () => {}[]; }'.
+
+80     }).from(users).orderBy(desc(users.createdAt));
+                      ~~~~~~~
+
+server/api/admin-panel-routes.ts:80:33 - error TS2304: Cannot find name 'users'.
+
+80     }).from(users).orderBy(desc(users.createdAt));
+                                   ~~~~~
+
+server/api/admin-panel-routes.ts:80:33 - error TS2554: Expected 0 arguments, but got 1.
+
+80     }).from(users).orderBy(desc(users.createdAt));
+                                   ~~~~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:96:32 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+96 router.post("/credit-balance", requireAdmin, async (req: Request, res: Response) => {
+                                  ~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/api/admin-panel-routes.ts:118:13 - error TS2304: Cannot find name 'currencies'.
+
+118       .from(currencies)
+                ~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:118:13 - error TS2554: Expected 0 arguments, but got 1.
+
+118       .from(currencies)
+                ~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:119:14 - error TS2554: Expected 0 arguments, but got 1.
+
+119       .where(eq(currencies.symbol, currencySymbol));
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:119:17 - error TS2304: Cannot find name 'currencies'.
+
+119       .where(eq(currencies.symbol, currencySymbol));
+                    ~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:119:17 - error TS2554: Expected 0 arguments, but got 2.
+
+119       .where(eq(currencies.symbol, currencySymbol));
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:130:13 - error TS2304: Cannot find name 'users'.
+
+130       .from(users)
+                ~~~~~
+
+server/api/admin-panel-routes.ts:130:13 - error TS2554: Expected 0 arguments, but got 1.
+
+130       .from(users)
+                ~~~~~
+
+server/api/admin-panel-routes.ts:131:14 - error TS2554: Expected 0 arguments, but got 1.
+
+131       .where(eq(users.id, userId));
+                 ~~~~~~~~~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:131:17 - error TS2304: Cannot find name 'users'.
+
+131       .where(eq(users.id, userId));
+                    ~~~~~
+
+server/api/admin-panel-routes.ts:131:17 - error TS2554: Expected 0 arguments, but got 2.
+
+131       .where(eq(users.id, userId));
+                    ~~~~~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:142:13 - error TS2304: Cannot find name 'userBalances'.
+
+142       .from(userBalances)
+                ~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:142:13 - error TS2554: Expected 0 arguments, but got 1.
+
+142       .from(userBalances)
+                ~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:143:14 - error TS2554: Expected 0 arguments, but got 1.
+
+143       .where(eq(userBalances.userId, userId))
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:143:17 - error TS2304: Cannot find name 'userBalances'.
+
+143       .where(eq(userBalances.userId, userId))
+                    ~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:143:17 - error TS2554: Expected 0 arguments, but got 2.
+
+143       .where(eq(userBalances.userId, userId))
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:144:8 - error TS2339: Property 'where' does not exist on type '{}[]'.
+
+144       .where(eq(userBalances.currencyId, currency.id));
+           ~~~~~
+
+server/api/admin-panel-routes.ts:144:17 - error TS2304: Cannot find name 'userBalances'.
+
+144       .where(eq(userBalances.currencyId, currency.id));
+                    ~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:144:17 - error TS2554: Expected 0 arguments, but got 2.
+
+144       .where(eq(userBalances.currencyId, currency.id));
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:144:51 - error TS2339: Property 'id' does not exist on type '{}'.
+
+144       .where(eq(userBalances.currencyId, currency.id));
+                                                      ~~
+
+server/api/admin-panel-routes.ts:148:23 - error TS2304: Cannot find name 'userBalances'.
+
+148       await db.update(userBalances)
+                          ~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:148:23 - error TS2554: Expected 0 arguments, but got 1.
+
+148       await db.update(userBalances)
+                          ~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:149:14 - error TS2554: Expected 0 arguments, but got 1.
+
+149         .set({
+                 ~
+150           balance: existingBalance.balance + amount,
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+151           updatedAt: new Date()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+152         })
+    ~~~~~~~~~
+
+server/api/admin-panel-routes.ts:153:16 - error TS2554: Expected 0 arguments, but got 1.
+
+153         .where(eq(userBalances.id, existingBalance.id));
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:153:19 - error TS2304: Cannot find name 'userBalances'.
+
+153         .where(eq(userBalances.id, existingBalance.id));
+                      ~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:153:19 - error TS2554: Expected 0 arguments, but got 2.
+
+153         .where(eq(userBalances.id, existingBalance.id));
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:156:23 - error TS2304: Cannot find name 'userBalances'.
+
+156       await db.insert(userBalances).values({
+                          ~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:156:23 - error TS2554: Expected 0 arguments, but got 1.
+
+156       await db.insert(userBalances).values({
+                          ~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:156:37 - error TS2339: Property 'values' does not exist on type '{ into: () => { values: () => { returning: () => {}[]; }; }; }'.
+
+156       await db.insert(userBalances).values({
+                                        ~~~~~~
+
+server/api/admin-panel-routes.ts:158:30 - error TS2339: Property 'id' does not exist on type '{}'.
+
+158         currencyId: currency.id,
+                                 ~~
+
+server/api/admin-panel-routes.ts:165:21 - error TS2304: Cannot find name 'adminCredits'.
+
+165     await db.insert(adminCredits).values({
+                        ~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:165:21 - error TS2554: Expected 0 arguments, but got 1.
+
+165     await db.insert(adminCredits).values({
+                        ~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:165:35 - error TS2339: Property 'values' does not exist on type '{ into: () => { values: () => { returning: () => {}[]; }; }; }'.
+
+165     await db.insert(adminCredits).values({
+                                      ~~~~~~
+
+server/api/admin-panel-routes.ts:168:28 - error TS2339: Property 'id' does not exist on type '{}'.
+
+168       currencyId: currency.id,
+                               ~~
+
+server/api/admin-panel-routes.ts:175:21 - error TS2304: Cannot find name 'transactions'.
+
+175     await db.insert(transactions).values({
+                        ~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:175:21 - error TS2554: Expected 0 arguments, but got 1.
+
+175     await db.insert(transactions).values({
+                        ~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:175:35 - error TS2339: Property 'values' does not exist on type '{ into: () => { values: () => { returning: () => {}[]; }; }; }'.
+
+175     await db.insert(transactions).values({
+                                      ~~~~~~
+
+server/api/admin-panel-routes.ts:178:26 - error TS2339: Property 'id' does not exist on type '{}'.
+
+178       sourceId: currency.id,
+                             ~~
+
+server/api/admin-panel-routes.ts:180:26 - error TS2339: Property 'id' does not exist on type '{}'.
+
+180       targetId: currency.id,
+                             ~~
+
+server/api/admin-panel-routes.ts:204:31 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+204 router.post("/staking-rates", requireAdmin, async (req: Request, res: Response) => {
+                                  ~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/api/admin-panel-routes.ts:225:13 - error TS2304: Cannot find name 'currencies'.
+
+225       .from(currencies)
+                ~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:225:13 - error TS2554: Expected 0 arguments, but got 1.
+
+225       .from(currencies)
+                ~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:226:14 - error TS2554: Expected 0 arguments, but got 1.
+
+226       .where(eq(currencies.symbol, currencySymbol));
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:226:17 - error TS2304: Cannot find name 'currencies'.
+
+226       .where(eq(currencies.symbol, currencySymbol));
+                    ~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:226:17 - error TS2554: Expected 0 arguments, but got 2.
+
+226       .where(eq(currencies.symbol, currencySymbol));
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:237:13 - error TS2304: Cannot find name 'stakingRates'.
+
+237       .from(stakingRates)
+                ~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:237:13 - error TS2554: Expected 0 arguments, but got 1.
+
+237       .from(stakingRates)
+                ~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:238:14 - error TS2554: Expected 0 arguments, but got 1.
+
+238       .where(eq(stakingRates.currencyId, currency.id));
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:238:17 - error TS2304: Cannot find name 'stakingRates'.
+
+238       .where(eq(stakingRates.currencyId, currency.id));
+                    ~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:238:17 - error TS2554: Expected 0 arguments, but got 2.
+
+238       .where(eq(stakingRates.currencyId, currency.id));
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:238:51 - error TS2339: Property 'id' does not exist on type '{}'.
+
+238       .where(eq(stakingRates.currencyId, currency.id));
+                                                      ~~
+
+server/api/admin-panel-routes.ts:242:23 - error TS2304: Cannot find name 'stakingRates'.
+
+242       await db.update(stakingRates)
+                          ~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:242:23 - error TS2554: Expected 0 arguments, but got 1.
+
+242       await db.update(stakingRates)
+                          ~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:243:14 - error TS2554: Expected 0 arguments, but got 1.
+
+243         .set({
+                 ~
+244           rate,
+    ~~~~~~~~~~~~~~~
+...
+246           updatedAt: new Date()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+247         })
+    ~~~~~~~~~
+
+server/api/admin-panel-routes.ts:248:16 - error TS2554: Expected 0 arguments, but got 1.
+
+248         .where(eq(stakingRates.id, existingRate.id));
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:248:19 - error TS2304: Cannot find name 'stakingRates'.
+
+248         .where(eq(stakingRates.id, existingRate.id));
+                      ~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:248:19 - error TS2554: Expected 0 arguments, but got 2.
+
+248         .where(eq(stakingRates.id, existingRate.id));
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:248:49 - error TS2339: Property 'id' does not exist on type '{}'.
+
+248         .where(eq(stakingRates.id, existingRate.id));
+                                                    ~~
+
+server/api/admin-panel-routes.ts:251:23 - error TS2304: Cannot find name 'stakingRates'.
+
+251       await db.insert(stakingRates).values({
+                          ~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:251:23 - error TS2554: Expected 0 arguments, but got 1.
+
+251       await db.insert(stakingRates).values({
+                          ~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:251:37 - error TS2339: Property 'values' does not exist on type '{ into: () => { values: () => { returning: () => {}[]; }; }; }'.
+
+251       await db.insert(stakingRates).values({
+                                        ~~~~~~
+
+server/api/admin-panel-routes.ts:252:30 - error TS2339: Property 'id' does not exist on type '{}'.
+
+252         currencyId: currency.id,
+                                 ~~
+
+server/api/admin-panel-routes.ts:275:36 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+275 router.get("/recent-transactions", requireAdmin, async (req: Request, res: Response) => {
+                                       ~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/api/admin-panel-routes.ts:277:48 - error TS2554: Expected 0 arguments, but got 1.
+
+277     const recentTransactions = await db.select({
+                                                   ~
+278       id: transactions.id,
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~
+...
+285       username: users.username
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+286     })
+    ~~~~~
+
+server/api/admin-panel-routes.ts:278:11 - error TS2304: Cannot find name 'transactions'.
+
+278       id: transactions.id,
+              ~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:279:15 - error TS2304: Cannot find name 'transactions'.
+
+279       userId: transactions.userId,
+                  ~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:280:13 - error TS2304: Cannot find name 'transactions'.
+
+280       type: transactions.type,
+                ~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:281:21 - error TS2304: Cannot find name 'transactions'.
+
+281       sourceAmount: transactions.sourceAmount,
+                        ~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:282:21 - error TS2304: Cannot find name 'transactions'.
+
+282       targetAmount: transactions.targetAmount,
+                        ~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:283:15 - error TS2304: Cannot find name 'transactions'.
+
+283       status: transactions.status,
+                  ~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:284:18 - error TS2304: Cannot find name 'transactions'.
+
+284       createdAt: transactions.createdAt,
+                     ~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:285:17 - error TS2304: Cannot find name 'users'.
+
+285       username: users.username
+                    ~~~~~
+
+server/api/admin-panel-routes.ts:287:11 - error TS2304: Cannot find name 'transactions'.
+
+287     .from(transactions)
+              ~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:287:11 - error TS2554: Expected 0 arguments, but got 1.
+
+287     .from(transactions)
+              ~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:288:6 - error TS2339: Property 'leftJoin' does not exist on type '{ where: () => {}[]; }'.
+
+288     .leftJoin(users, eq(transactions.userId, users.id))
+         ~~~~~~~~
+
+server/api/admin-panel-routes.ts:288:15 - error TS2304: Cannot find name 'users'.
+
+288     .leftJoin(users, eq(transactions.userId, users.id))
+                  ~~~~~
+
+server/api/admin-panel-routes.ts:288:25 - error TS2304: Cannot find name 'transactions'.
+
+288     .leftJoin(users, eq(transactions.userId, users.id))
+                            ~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:288:25 - error TS2554: Expected 0 arguments, but got 2.
+
+288     .leftJoin(users, eq(transactions.userId, users.id))
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:288:46 - error TS2304: Cannot find name 'users'.
+
+288     .leftJoin(users, eq(transactions.userId, users.id))
+                                                 ~~~~~
+
+server/api/admin-panel-routes.ts:289:19 - error TS2304: Cannot find name 'transactions'.
+
+289     .orderBy(desc(transactions.createdAt))
+                      ~~~~~~~~~~~~
+
+server/api/admin-panel-routes.ts:289:19 - error TS2554: Expected 0 arguments, but got 1.
+
+289     .orderBy(desc(transactions.createdAt))
+                      ~~~~~~~~~~~~~~~~~~~~~~
+
+server/api/admin-routes.ts:20:29 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(id: any, projection: ProjectionType<IUser>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, projection?: ProjectionType<...>, options?: QueryOp...' has signatures, but none of those signatures are compatible with each other.
+
+20     const user = await User.findById(req.session.userId);
+                               ~~~~~~~~
+
+server/api/admin-routes.ts:41:22 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+41 router.get("/stats", requireAdmin, async (req: Request, res: Response) => {
+                        ~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/api/admin-routes.ts:74:22 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+74 router.get("/users", requireAdmin, async (req: Request, res: Response) => {
+                        ~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/api/admin-routes.ts:92:33 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(filter: RootFilterQuery<IUser>, projection: ProjectionType<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(filter: RootFilterQuery<...>, projectio...' has signatures, but none of those signatures are compatible with each other.
+
+92     const allUsers = await User.find(query).sort({ createdAt: -1 });
+                                   ~~~~
+
+server/api/admin-routes.ts:102:36 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+102 router.get("/recent-transactions", requireAdmin, async (req: Request, res: Response) => {
+                                       ~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/api/admin-routes.ts:105:50 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & Required<...> & { ...; })[], ... 4 more ..., {}>; <ResultDoc = any>(filter: RootFilterQuery<...>, projection?: ProjectionType<...>, options?: QueryOptions<...>):...' has signatures, but none of those signatures are compatible with each other.
+
+105     const recentTransactions = await Transaction.find()
+                                                     ~~~~
+
+server/api/admin-routes.ts:114:39 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & Required<...> & { ...; })[], ... 4 more ..., {}>; <ResultDoc = any>(filter: RootFilterQuery<...>, projection?: ProjectionType<...>, options?: QueryOptions<...>):...' has signatures, but none of those signatures are compatible with each other.
+
+114     const currencies = await Currency.find({}, { symbol: 1, _id: 1 });
+                                          ~~~~
+
+server/api/admin-routes.ts:146:32 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+146 router.post("/credit-balance", requireAdmin, async (req: Request, res: Response) => {
+                                   ~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/api/admin-routes.ts:158:35 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(id: any, projection: ProjectionType<IUser>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, projection?: ProjectionType<...>, options?: QueryOp...' has signatures, but none of those signatures are compatible with each other.
+
+158     const userExists = await User.findById(userId);
+                                      ~~~~~~~~
+
+server/api/admin-routes.ts:168:43 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(id: any, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<any> & Required<{ _id: unknown; }> & { ...; })[] | (FlattenMaps<...> & ... 1 more ... & { ...; }), ... 4 more ..., {}>; <ResultDoc = any>(id: any, projection?: ProjectionType<...>, options?...' has signatures, but none of those signatures are compatible with each other.
+
+168     const currencyExists = await Currency.findById(currencyId);
+                                              ~~~~~~~~
+
+server/api/admin-routes.ts:178:47 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & ... 1 more ... & { ...; })[] | (FlattenMaps<...> & ... 1 more ... & { ...; }), ... 4 more ..., {}>; <ResultDoc = any>(filter?: RootFilterQuery<...>, projection?:...' has signatures, but none of those signatures are compatible with each other.
+
+178     const existingBalance = await UserBalance.findOne({
+                                                  ~~~~~~~
+
+server/api/admin-routes.ts:190:25 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <DocContents = AnyKeys<any>>(docs: any[], options: CreateOptions & { aggregateErrors: true; }): Promise<any[]>; <DocContents = AnyKeys<any>>(docs: any[], options?: CreateOptions): Promise<...>; <DocContents = AnyKeys<...>>(doc: any): Promise<...>; <DocContents = AnyKeys<...>>(...docs: any[]): Promise<...>; } | { ....' has signatures, but none of those signatures are compatible with each other.
+
+190       await UserBalance.create({
+                            ~~~~~~
+
+server/api/admin-routes.ts:200:23 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <DocContents = AnyKeys<any>>(docs: any[], options: CreateOptions & { aggregateErrors: true; }): Promise<any[]>; <DocContents = AnyKeys<any>>(docs: any[], options?: CreateOptions): Promise<...>; <DocContents = AnyKeys<...>>(doc: any): Promise<...>; <DocContents = AnyKeys<...>>(...docs: any[]): Promise<...>; } | { ....' has signatures, but none of those signatures are compatible with each other.
+
+200     await Transaction.create({
+                          ~~~~~~
+
+server/api/admin-routes.ts:225:31 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+225 router.post("/staking-rates", requireAdmin, async (req: Request, res: Response) => {
+                                  ~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/api/admin-routes.ts:251:44 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & ... 1 more ... & { ...; })[] | (FlattenMaps<...> & ... 1 more ... & { ...; }), ... 4 more ..., {}>; <ResultDoc = any>(filter?: RootFilterQuery<...>, projection?:...' has signatures, but none of those signatures are compatible with each other.
+
+251     const existingRate = await StakingRate.findOne({ currencyId });
+                                               ~~~~~~~
+
+server/api/admin-routes.ts:267:25 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <DocContents = AnyKeys<any>>(docs: any[], options: CreateOptions & { aggregateErrors: true; }): Promise<any[]>; <DocContents = AnyKeys<any>>(docs: any[], options?: CreateOptions): Promise<...>; <DocContents = AnyKeys<...>>(doc: any): Promise<...>; <DocContents = AnyKeys<...>>(...docs: any[]): Promise<...>; } | { ....' has signatures, but none of those signatures are compatible with each other.
+
+267       await StakingRate.create({
+                            ~~~~~~
+
+server/api/admin-routes.ts:291:38 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+291 router.post("/users/:userId/verify", requireAdmin, async (req: Request, res: Response) => {
+                                         ~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/api/admin-routes.ts:303:29 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(id: any, projection: ProjectionType<IUser>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, projection?: ProjectionType<...>, options?: QueryOp...' has signatures, but none of those signatures are compatible with each other.
+
+303     const user = await User.findById(userId);
+                                ~~~~~~~~
+
+server/api/chatbot-routes.ts:89:25 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response) => Promise<Response<any, Record<string, any>>>' is not assignable to parameter of type 'Application<Record<string, any>>'.
+      Type '(req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>) => Promise<...>' is missing the following properties from type 'Application<Record<string, any>>': init, defaultConfiguration, engine, set, and 63 more.
+
+89 router.post('/message', async (req: Request, res: Response) => {
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:168:5
+    168     (path: PathParams, subApplication: Application): T;
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    The last overload is declared here.
+
+server/api/futures-trading-routes.ts:27:26 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+27 router.get("/positions", requireAuth, async (req: Request, res: Response) => {
+                            ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/api/futures-trading-routes.ts:30:11 - error TS2304: Cannot find name 'futuresPositions'.
+
+30       id: futuresPositions.id,
+             ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:31:13 - error TS2304: Cannot find name 'futuresPositions'.
+
+31       side: futuresPositions.side,
+               ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:32:13 - error TS2304: Cannot find name 'futuresPositions'.
+
+32       size: futuresPositions.size,
+               ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:33:19 - error TS2304: Cannot find name 'futuresPositions'.
+
+33       entryPrice: futuresPositions.entryPrice,
+                     ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:34:18 - error TS2304: Cannot find name 'futuresPositions'.
+
+34       markPrice: futuresPositions.markPrice,
+                    ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:35:17 - error TS2304: Cannot find name 'futuresPositions'.
+
+35       leverage: futuresPositions.leverage,
+                   ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:36:15 - error TS2304: Cannot find name 'futuresPositions'.
+
+36       margin: futuresPositions.margin,
+                 ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:37:12 - error TS2304: Cannot find name 'futuresPositions'.
+
+37       pnl: futuresPositions.pnl,
+              ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:38:22 - error TS2304: Cannot find name 'futuresPositions'.
+
+38       unrealizedPnl: futuresPositions.unrealizedPnl,
+                        ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:39:15 - error TS2304: Cannot find name 'futuresPositions'.
+
+39       status: futuresPositions.status,
+                 ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:40:17 - error TS2304: Cannot find name 'futuresPositions'.
+
+40       stopLoss: futuresPositions.stopLoss,
+                   ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:41:19 - error TS2304: Cannot find name 'futuresPositions'.
+
+41       takeProfit: futuresPositions.takeProfit,
+                     ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:42:18 - error TS2304: Cannot find name 'futuresPositions'.
+
+42       createdAt: futuresPositions.createdAt,
+                    ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:43:15 - error TS2304: Cannot find name 'futuresContracts'.
+
+43       symbol: futuresContracts.symbol,
+                 ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:44:18 - error TS2304: Cannot find name 'futuresContracts'.
+
+44       baseAsset: futuresContracts.baseAsset,
+                    ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:45:19 - error TS2304: Cannot find name 'futuresContracts'.
+
+45       quoteAsset: futuresContracts.quoteAsset
+                     ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:47:11 - error TS2304: Cannot find name 'futuresPositions'.
+
+47     .from(futuresPositions)
+             ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:48:15 - error TS2304: Cannot find name 'futuresContracts'.
+
+48     .leftJoin(futuresContracts, eq(futuresPositions.contractId, futuresContracts.id))
+                 ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:48:36 - error TS2304: Cannot find name 'futuresPositions'.
+
+48     .leftJoin(futuresContracts, eq(futuresPositions.contractId, futuresContracts.id))
+                                      ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:48:65 - error TS2304: Cannot find name 'futuresContracts'.
+
+48     .leftJoin(futuresContracts, eq(futuresPositions.contractId, futuresContracts.id))
+                                                                   ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:50:10 - error TS2304: Cannot find name 'futuresPositions'.
+
+50       eq(futuresPositions.userId, req.session.userId!),
+            ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:51:10 - error TS2304: Cannot find name 'futuresPositions'.
+
+51       eq(futuresPositions.status, 'open')
+            ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:53:19 - error TS2304: Cannot find name 'futuresPositions'.
+
+53     .orderBy(desc(futuresPositions.createdAt));
+                     ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:69:23 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+69 router.get("/orders", requireAuth, async (req: Request, res: Response) => {
+                         ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/api/futures-trading-routes.ts:74:27 - error TS2339: Property 'type' does not exist on type 'PgTableWithColumns<{ name: "futures_orders"; schema: undefined; columns: { id: PgColumn<{ name: "id"; tableName: "futures_orders"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; ... 8 more ...; generated: undefined; }, {}, {}>; ... 11 more ...; updatedAt: PgColumn<...>; }; d...'.
+
+74       type: futuresOrders.type,
+                             ~~~~
+
+server/api/futures-trading-routes.ts:75:31 - error TS2339: Property 'quantity' does not exist on type 'PgTableWithColumns<{ name: "futures_orders"; schema: undefined; columns: { id: PgColumn<{ name: "id"; tableName: "futures_orders"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; ... 8 more ...; generated: undefined; }, {}, {}>; ... 11 more ...; updatedAt: PgColumn<...>; }; d...'.
+
+75       quantity: futuresOrders.quantity,
+                                 ~~~~~~~~
+
+server/api/futures-trading-routes.ts:76:28 - error TS2339: Property 'price' does not exist on type 'PgTableWithColumns<{ name: "futures_orders"; schema: undefined; columns: { id: PgColumn<{ name: "id"; tableName: "futures_orders"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; ... 8 more ...; generated: undefined; }, {}, {}>; ... 11 more ...; updatedAt: PgColumn<...>; }; d...'.
+
+76       price: futuresOrders.price,
+                              ~~~~~
+
+server/api/futures-trading-routes.ts:77:32 - error TS2339: Property 'stopPrice' does not exist on type 'PgTableWithColumns<{ name: "futures_orders"; schema: undefined; columns: { id: PgColumn<{ name: "id"; tableName: "futures_orders"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; ... 8 more ...; generated: undefined; }, {}, {}>; ... 11 more ...; updatedAt: PgColumn<...>; }; d...'.
+
+77       stopPrice: futuresOrders.stopPrice,
+                                  ~~~~~~~~~
+
+server/api/futures-trading-routes.ts:78:34 - error TS2339: Property 'executedQty' does not exist on type 'PgTableWithColumns<{ name: "futures_orders"; schema: undefined; columns: { id: PgColumn<{ name: "id"; tableName: "futures_orders"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; ... 8 more ...; generated: undefined; }, {}, {}>; ... 11 more ...; updatedAt: PgColumn<...>; }; d...'.
+
+78       executedQty: futuresOrders.executedQty,
+                                    ~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:81:34 - error TS2339: Property 'timeInForce' does not exist on type 'PgTableWithColumns<{ name: "futures_orders"; schema: undefined; columns: { id: PgColumn<{ name: "id"; tableName: "futures_orders"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; ... 8 more ...; generated: undefined; }, {}, {}>; ... 11 more ...; updatedAt: PgColumn<...>; }; d...'.
+
+81       timeInForce: futuresOrders.timeInForce,
+                                    ~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:82:33 - error TS2339: Property 'reduceOnly' does not exist on type 'PgTableWithColumns<{ name: "futures_orders"; schema: undefined; columns: { id: PgColumn<{ name: "id"; tableName: "futures_orders"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; ... 8 more ...; generated: undefined; }, {}, {}>; ... 11 more ...; updatedAt: PgColumn<...>; }; d...'.
+
+82       reduceOnly: futuresOrders.reduceOnly,
+                                   ~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:84:15 - error TS2304: Cannot find name 'futuresContracts'.
+
+84       symbol: futuresContracts.symbol,
+                 ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:85:18 - error TS2304: Cannot find name 'futuresContracts'.
+
+85       baseAsset: futuresContracts.baseAsset,
+                    ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:86:19 - error TS2304: Cannot find name 'futuresContracts'.
+
+86       quoteAsset: futuresContracts.quoteAsset
+                     ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:89:15 - error TS2304: Cannot find name 'futuresContracts'.
+
+89     .leftJoin(futuresContracts, eq(futuresOrders.contractId, futuresContracts.id))
+                 ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:89:50 - error TS2339: Property 'contractId' does not exist on type 'PgTableWithColumns<{ name: "futures_orders"; schema: undefined; columns: { id: PgColumn<{ name: "id"; tableName: "futures_orders"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; ... 8 more ...; generated: undefined; }, {}, {}>; ... 11 more ...; updatedAt: PgColumn<...>; }; d...'.
+
+89     .leftJoin(futuresContracts, eq(futuresOrders.contractId, futuresContracts.id))
+                                                    ~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:89:62 - error TS2304: Cannot find name 'futuresContracts'.
+
+89     .leftJoin(futuresContracts, eq(futuresOrders.contractId, futuresContracts.id))
+                                                                ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:90:12 - error TS2769: No overload matches this call.
+  Overload 1 of 3, '(left: PgColumn<{ name: "user_id"; tableName: "futures_orders"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>, right: number | SQLWrapper): SQL<...>', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'number | SQLWrapper'.
+  Overload 2 of 3, '(left: Aliased<string>, right: string | SQLWrapper): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "user_id"; tableName: "futures_orders"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'Aliased<string>'.
+      Type 'PgColumn<{ name: "user_id"; tableName: "futures_orders"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>' is missing the following properties from type 'Aliased<string>': sql, fieldAlias
+  Overload 3 of 3, '(left: never, right: unknown): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "user_id"; tableName: "futures_orders"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'never'.
+
+90     .where(eq(futuresOrders.userId, req.session.userId!))
+              ~~
+
+
+server/api/futures-trading-routes.ts:107:23 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+107 router.post("/order", requireAuth, async (req: Request, res: Response) => {
+                          ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/api/futures-trading-routes.ts:134:13 - error TS2304: Cannot find name 'futuresContracts'.
+
+134       .from(futuresContracts)
+                ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:136:12 - error TS2304: Cannot find name 'futuresContracts'.
+
+136         eq(futuresContracts.symbol, orderData.symbol),
+               ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:137:12 - error TS2304: Cannot find name 'futuresContracts'.
+
+137         eq(futuresContracts.isActive, true)
+               ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:155:9 - error TS2769: No overload matches this call.
+  Overload 1 of 3, '(left: PgColumn<{ name: "user_id"; tableName: "user_balances"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>, right: number | SQLWrapper): SQL<...>', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'number | SQLWrapper'.
+  Overload 2 of 3, '(left: Aliased<string>, right: string | SQLWrapper): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "user_id"; tableName: "user_balances"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'Aliased<string>'.
+      Type 'PgColumn<{ name: "user_id"; tableName: "user_balances"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>' is missing the following properties from type 'Aliased<string>': sql, fieldAlias
+  Overload 3 of 3, '(left: never, right: unknown): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "user_id"; tableName: "user_balances"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'never'.
+
+155         eq(userBalances.userId, req.session.userId!),
+            ~~
+
+
+server/api/futures-trading-routes.ts:172:45 - error TS2304: Cannot find name 'futuresPositions'.
+
+172       const [newPosition] = await db.insert(futuresPositions).values({
+                                                ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:198:9 - error TS2769: No overload matches this call.
+  Overload 1 of 2, '(value: { userId: number | SQL<unknown> | Placeholder<string, any>; type: string | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<...>; ... 8 more ...; toAddress?: string | ... 1 more ... | Placeholder<...>; }): PgInsertBase<...>', gave the following error.
+    Type 'string' is not assignable to type 'number | SQL<unknown> | Placeholder<string, any>'.
+  Overload 2 of 2, '(values: { userId: number | SQL<unknown> | Placeholder<string, any>; type: string | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<...>; ... 8 more ...; toAddress?: string | ... 1 more ... | Placeholder<...>; }[]): PgInsertBase<...>', gave the following error.
+    Object literal may only specify known properties, and 'userId' does not exist in type '{ userId: number | SQL<unknown> | Placeholder<string, any>; type: string | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<...>; ... 8 more ...; toAddress?: string | ... 1 more ... | Placeholder<...>; }[]'.
+
+198         userId: req.session.userId!,
+            ~~~~~~
+
+  node_modules/drizzle-orm/pg-core/query-builders/insert.d.ts:29:101
+     29 export type PgInsertValue<TTable extends PgTable<TableConfig>, OverrideT extends boolean = false> = {
+                                                                                                            ~
+     30     [Key in keyof InferInsertModel<TTable, {
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+     36     }>[Key] | SQL | Placeholder;
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     37 } & {};
+        ~
+    The expected type comes from property 'userId' which is declared here on type '{ userId: number | SQL<unknown> | Placeholder<string, any>; type: string | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<...>; ... 8 more ...; toAddress?: string | ... 1 more ... | Placeholder<...>; }'
+
+server/api/futures-trading-routes.ts:224:9 - error TS2769: No overload matches this call.
+  Overload 1 of 2, '(value: { symbol: string | SQL<unknown> | Placeholder<string, any>; userId: number | SQL<unknown> | Placeholder<string, any>; side: string | SQL<unknown> | Placeholder<...>; ... 9 more ...; leverage?: number | ... 1 more ... | Placeholder<...>; }): PgInsertBase<...>', gave the following error.
+    Type 'string' is not assignable to type 'number | SQL<unknown> | Placeholder<string, any>'.
+  Overload 2 of 2, '(values: { symbol: string | SQL<unknown> | Placeholder<string, any>; userId: number | SQL<unknown> | Placeholder<string, any>; side: string | SQL<unknown> | Placeholder<...>; ... 9 more ...; leverage?: number | ... 1 more ... | Placeholder<...>; }[]): PgInsertBase<...>', gave the following error.
+    Object literal may only specify known properties, and 'userId' does not exist in type '{ symbol: string | SQL<unknown> | Placeholder<string, any>; userId: number | SQL<unknown> | Placeholder<string, any>; side: string | SQL<unknown> | Placeholder<string, any>; ... 9 more ...; leverage?: number | ... 1 more ... | Placeholder<...>; }[]'.
+
+224         userId: req.session.userId!,
+            ~~~~~~
+
+  node_modules/drizzle-orm/pg-core/query-builders/insert.d.ts:29:101
+     29 export type PgInsertValue<TTable extends PgTable<TableConfig>, OverrideT extends boolean = false> = {
+                                                                                                            ~
+     30     [Key in keyof InferInsertModel<TTable, {
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+     36     }>[Key] | SQL | Placeholder;
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     37 } & {};
+        ~
+    The expected type comes from property 'userId' which is declared here on type '{ symbol: string | SQL<unknown> | Placeholder<string, any>; userId: number | SQL<unknown> | Placeholder<string, any>; side: string | SQL<unknown> | Placeholder<string, any>; ... 9 more ...; leverage?: number | ... 1 more ... | Placeholder<...>; }'
+
+server/api/futures-trading-routes.ts:257:32 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+257 router.post("/close-position", requireAuth, async (req: Request, res: Response) => {
+                                   ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/api/futures-trading-routes.ts:278:13 - error TS2304: Cannot find name 'futuresPositions'.
+
+278       .from(futuresPositions)
+                ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:280:12 - error TS2304: Cannot find name 'futuresPositions'.
+
+280         eq(futuresPositions.id, positionId),
+               ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:281:12 - error TS2304: Cannot find name 'futuresPositions'.
+
+281         eq(futuresPositions.userId, req.session.userId!),
+               ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:282:12 - error TS2304: Cannot find name 'futuresPositions'.
+
+282         eq(futuresPositions.status, 'open')
+               ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:298:21 - error TS2304: Cannot find name 'futuresPositions'.
+
+298     await db.update(futuresPositions)
+                        ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:304:17 - error TS2304: Cannot find name 'futuresPositions'.
+
+304       .where(eq(futuresPositions.id, positionId));
+                    ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:314:9 - error TS2769: No overload matches this call.
+  Overload 1 of 3, '(left: PgColumn<{ name: "user_id"; tableName: "user_balances"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>, right: number | SQLWrapper): SQL<...>', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'number | SQLWrapper'.
+  Overload 2 of 3, '(left: Aliased<string>, right: string | SQLWrapper): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "user_id"; tableName: "user_balances"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'Aliased<string>'.
+      Type 'PgColumn<{ name: "user_id"; tableName: "user_balances"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>' is missing the following properties from type 'Aliased<string>': sql, fieldAlias
+  Overload 3 of 3, '(left: never, right: unknown): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "user_id"; tableName: "user_balances"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'never'.
+
+314         eq(userBalances.userId, req.session.userId!),
+            ~~
+
+
+server/api/futures-trading-routes.ts:343:34 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+343 router.delete("/order/:orderId", requireAuth, async (req: Request, res: Response) => {
+                                     ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/api/futures-trading-routes.ts:351:9 - error TS2769: No overload matches this call.
+  Overload 1 of 3, '(left: PgColumn<{ name: "user_id"; tableName: "futures_orders"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>, right: number | SQLWrapper): SQL<...>', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'number | SQLWrapper'.
+  Overload 2 of 3, '(left: Aliased<string>, right: string | SQLWrapper): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "user_id"; tableName: "futures_orders"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'Aliased<string>'.
+      Type 'PgColumn<{ name: "user_id"; tableName: "futures_orders"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>' is missing the following properties from type 'Aliased<string>': sql, fieldAlias
+  Overload 3 of 3, '(left: never, right: unknown): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "user_id"; tableName: "futures_orders"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'never'.
+
+351         eq(futuresOrders.userId, req.session.userId!),
+            ~~
+
+
+server/api/futures-trading-routes.ts:387:24 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+387 router.get("/history", requireAuth, async (req: Request, res: Response) => {
+                           ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/api/futures-trading-routes.ts:390:11 - error TS2304: Cannot find name 'futuresPositions'.
+
+390       id: futuresPositions.id,
+              ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:391:13 - error TS2304: Cannot find name 'futuresPositions'.
+
+391       side: futuresPositions.side,
+                ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:392:13 - error TS2304: Cannot find name 'futuresPositions'.
+
+392       size: futuresPositions.size,
+                ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:393:19 - error TS2304: Cannot find name 'futuresPositions'.
+
+393       entryPrice: futuresPositions.entryPrice,
+                      ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:394:17 - error TS2304: Cannot find name 'futuresPositions'.
+
+394       leverage: futuresPositions.leverage,
+                    ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:395:12 - error TS2304: Cannot find name 'futuresPositions'.
+
+395       pnl: futuresPositions.pnl,
+               ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:396:15 - error TS2304: Cannot find name 'futuresPositions'.
+
+396       status: futuresPositions.status,
+                  ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:397:18 - error TS2304: Cannot find name 'futuresPositions'.
+
+397       createdAt: futuresPositions.createdAt,
+                     ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:398:15 - error TS2304: Cannot find name 'futuresContracts'.
+
+398       symbol: futuresContracts.symbol
+                  ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:400:11 - error TS2304: Cannot find name 'futuresPositions'.
+
+400     .from(futuresPositions)
+              ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:401:15 - error TS2304: Cannot find name 'futuresContracts'.
+
+401     .leftJoin(futuresContracts, eq(futuresPositions.contractId, futuresContracts.id))
+                  ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:401:36 - error TS2304: Cannot find name 'futuresPositions'.
+
+401     .leftJoin(futuresContracts, eq(futuresPositions.contractId, futuresContracts.id))
+                                       ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:401:65 - error TS2304: Cannot find name 'futuresContracts'.
+
+401     .leftJoin(futuresContracts, eq(futuresPositions.contractId, futuresContracts.id))
+                                                                    ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:402:15 - error TS2304: Cannot find name 'futuresPositions'.
+
+402     .where(eq(futuresPositions.userId, req.session.userId!))
+                  ~~~~~~~~~~~~~~~~
+
+server/api/futures-trading-routes.ts:403:19 - error TS2304: Cannot find name 'futuresPositions'.
+
+403     .orderBy(desc(futuresPositions.createdAt))
+                      ~~~~~~~~~~~~~~~~
+
+server/api/market-data-routes.ts:232:46 - error TS2304: Cannot find name 'futuresContracts'.
+
+232     const contracts = await db.select().from(futuresContracts)
+                                                 ~~~~~~~~~~~~~~~~
+
+server/api/market-data-routes.ts:233:17 - error TS2304: Cannot find name 'futuresContracts'.
+
+233       .where(eq(futuresContracts.isActive, true));
+                    ~~~~~~~~~~~~~~~~
+
+server/api/referral-routes.ts:25:22 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+25 router.get("/stats", requireAuth, async (req: Request, res: Response) => {
+                        ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/api/referral-routes.ts:30:54 - error TS2769: No overload matches this call.
+  Overload 1 of 3, '(left: PgColumn<{ name: "id"; tableName: "users"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: true; isPrimaryKey: true; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>, right: number | SQLWrapper): SQL<...>', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'number | SQLWrapper'.
+  Overload 2 of 3, '(left: Aliased<string>, right: string | SQLWrapper): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "id"; tableName: "users"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: true; isPrimaryKey: true; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'Aliased<string>'.
+      Type 'PgColumn<{ name: "id"; tableName: "users"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: true; isPrimaryKey: true; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is missing the following properties from type 'Aliased<string>': sql, fieldAlias
+  Overload 3 of 3, '(left: never, right: unknown): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "id"; tableName: "users"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: true; isPrimaryKey: true; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'never'.
+
+30     const user = await db.select().from(users).where(eq(users.id, userId)).limit(1);
+                                                        ~~
+
+
+server/api/referral-routes.ts:38:58 - error TS2769: No overload matches this call.
+  Overload 1 of 3, '(left: PgColumn<{ name: "id"; tableName: "users"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: true; isPrimaryKey: true; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>, right: number | SQLWrapper): SQL<...>', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'number | SQLWrapper'.
+  Overload 2 of 3, '(left: Aliased<string>, right: string | SQLWrapper): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "id"; tableName: "users"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: true; isPrimaryKey: true; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'Aliased<string>'.
+      Type 'PgColumn<{ name: "id"; tableName: "users"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: true; isPrimaryKey: true; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is missing the following properties from type 'Aliased<string>': sql, fieldAlias
+  Overload 3 of 3, '(left: never, right: unknown): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "id"; tableName: "users"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: true; isPrimaryKey: true; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'never'.
+
+38       await db.update(users).set({ referralCode }).where(eq(users.id, userId));
+                                                            ~~
+
+
+server/api/referral-routes.ts:44:43 - error TS2304: Cannot find name 'referralEarnings'.
+
+44         total: sql<number>`COALESCE(SUM(${referralEarnings.amount}), 0)`
+                                             ~~~~~~~~~~~~~~~~
+
+server/api/referral-routes.ts:46:13 - error TS2304: Cannot find name 'referralEarnings'.
+
+46       .from(referralEarnings)
+               ~~~~~~~~~~~~~~~~
+
+server/api/referral-routes.ts:47:17 - error TS2304: Cannot find name 'referralEarnings'.
+
+47       .where(eq(referralEarnings.referrerId, userId));
+                   ~~~~~~~~~~~~~~~~
+
+server/api/referral-routes.ts:52:45 - error TS2304: Cannot find name 'referralEarnings'.
+
+52         count: sql<number>`COUNT(DISTINCT ${referralEarnings.referredUserId})`
+                                               ~~~~~~~~~~~~~~~~
+
+server/api/referral-routes.ts:54:13 - error TS2304: Cannot find name 'referralEarnings'.
+
+54       .from(referralEarnings)
+               ~~~~~~~~~~~~~~~~
+
+server/api/referral-routes.ts:55:17 - error TS2304: Cannot find name 'referralEarnings'.
+
+55       .where(eq(referralEarnings.referrerId, userId));
+                   ~~~~~~~~~~~~~~~~
+
+server/api/referral-routes.ts:63:45 - error TS2304: Cannot find name 'referralEarnings'.
+
+63         monthly: sql<number>`COALESCE(SUM(${referralEarnings.amount}), 0)`
+                                               ~~~~~~~~~~~~~~~~
+
+server/api/referral-routes.ts:65:13 - error TS2304: Cannot find name 'referralEarnings'.
+
+65       .from(referralEarnings)
+               ~~~~~~~~~~~~~~~~
+
+server/api/referral-routes.ts:68:14 - error TS2304: Cannot find name 'referralEarnings'.
+
+68           eq(referralEarnings.referrerId, userId),
+                ~~~~~~~~~~~~~~~~
+
+server/api/referral-routes.ts:69:17 - error TS2304: Cannot find name 'referralEarnings'.
+
+69           sql`${referralEarnings.createdAt} >= ${startOfMonth}`
+                   ~~~~~~~~~~~~~~~~
+
+server/api/referral-routes.ts:76:13 - error TS2304: Cannot find name 'referralEarnings'.
+
+76         id: referralEarnings.id,
+               ~~~~~~~~~~~~~~~~
+
+server/api/referral-routes.ts:77:17 - error TS2304: Cannot find name 'referralEarnings'.
+
+77         amount: referralEarnings.amount,
+                   ~~~~~~~~~~~~~~~~
+
+server/api/referral-routes.ts:78:21 - error TS2304: Cannot find name 'referralEarnings'.
+
+78         percentage: referralEarnings.percentage,
+                       ~~~~~~~~~~~~~~~~
+
+server/api/referral-routes.ts:79:26 - error TS2304: Cannot find name 'referralEarnings'.
+
+79         transactionType: referralEarnings.transactionType,
+                            ~~~~~~~~~~~~~~~~
+
+server/api/referral-routes.ts:80:20 - error TS2304: Cannot find name 'referralEarnings'.
+
+80         createdAt: referralEarnings.createdAt,
+                      ~~~~~~~~~~~~~~~~
+
+server/api/referral-routes.ts:83:13 - error TS2304: Cannot find name 'referralEarnings'.
+
+83       .from(referralEarnings)
+               ~~~~~~~~~~~~~~~~
+
+server/api/referral-routes.ts:84:38 - error TS2304: Cannot find name 'referralEarnings'.
+
+84       .innerJoin(users, eq(users.id, referralEarnings.referredUserId))
+                                        ~~~~~~~~~~~~~~~~
+
+server/api/referral-routes.ts:85:17 - error TS2304: Cannot find name 'referralEarnings'.
+
+85       .where(eq(referralEarnings.referrerId, userId))
+                   ~~~~~~~~~~~~~~~~
+
+server/api/referral-routes.ts:86:21 - error TS2304: Cannot find name 'referralEarnings'.
+
+86       .orderBy(desc(referralEarnings.createdAt))
+                       ~~~~~~~~~~~~~~~~
+
+server/api/referral-routes.ts:112:29 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+112 router.post("/add-earning", requireAuth, async (req: Request, res: Response) => {
+                                ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/api/referral-routes.ts:123:9 - error TS2769: No overload matches this call.
+  Overload 1 of 3, '(left: PgColumn<{ name: "referred_by"; tableName: "users"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: false; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>, right: number | SQLWrapper): SQL<...>', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'number | SQLWrapper'.
+  Overload 2 of 3, '(left: Aliased<string>, right: string | SQLWrapper): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "referred_by"; tableName: "users"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: false; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'Aliased<string>'.
+      Type 'PgColumn<{ name: "referred_by"; tableName: "users"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: false; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>' is missing the following properties from type 'Aliased<string>': sql, fieldAlias
+  Overload 3 of 3, '(left: never, right: unknown): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "referred_by"; tableName: "users"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: false; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'never'.
+
+123         eq(users.referredBy, referrerId)
+            ~~
+
+
+server/api/referral-routes.ts:132:21 - error TS2304: Cannot find name 'referralEarnings'.
+
+132     await db.insert(referralEarnings).values({
+                        ~~~~~~~~~~~~~~~~
+
+server/api/referral-routes.ts:150:31 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response) => Promise<Response<any, Record<string, any>>>' is not assignable to parameter of type 'Application<Record<string, any>>'.
+      Type '(req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>) => Promise<...>' is missing the following properties from type 'Application<Record<string, any>>': init, defaultConfiguration, engine, set, and 63 more.
+
+150 router.get("/validate/:code", async (req: Request, res: Response) => {
+                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:168:5
+    168     (path: PathParams, subApplication: Application): T;
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    The last overload is declared here.
+
+server/api/spot-trading-routes.ts:6:3 - error TS2300: Duplicate identifier 'transactions'.
+
+6   transactions,
+    ~~~~~~~~~~~~
+
+server/api/spot-trading-routes.ts:8:3 - error TS2300: Duplicate identifier 'transactions'.
+
+8   transactions
+    ~~~~~~~~~~~~
+
+server/api/spot-trading-routes.ts:27:23 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+27 router.get("/orders", requireAuth, async (req: Request, res: Response) => {
+                         ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/api/spot-trading-routes.ts:30:13 - error TS2304: Cannot find name 'spotOrders'.
+
+30       .from(spotOrders)
+               ~~~~~~~~~~
+
+server/api/spot-trading-routes.ts:31:17 - error TS2304: Cannot find name 'spotOrders'.
+
+31       .where(eq(spotOrders.userId, req.session.userId!))
+                   ~~~~~~~~~~
+
+server/api/spot-trading-routes.ts:32:21 - error TS2304: Cannot find name 'spotOrders'.
+
+32       .orderBy(desc(spotOrders.createdAt));
+                       ~~~~~~~~~~
+
+server/api/spot-trading-routes.ts:48:23 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+48 router.post("/order", requireAuth, async (req: Request, res: Response) => {
+                         ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/api/spot-trading-routes.ts:96:9 - error TS2769: No overload matches this call.
+  Overload 1 of 3, '(left: PgColumn<{ name: "user_id"; tableName: "user_balances"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>, right: number | SQLWrapper): SQL<...>', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'number | SQLWrapper'.
+  Overload 2 of 3, '(left: Aliased<string>, right: string | SQLWrapper): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "user_id"; tableName: "user_balances"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'Aliased<string>'.
+      Type 'PgColumn<{ name: "user_id"; tableName: "user_balances"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>' is missing the following properties from type 'Aliased<string>': sql, fieldAlias
+  Overload 3 of 3, '(left: never, right: unknown): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "user_id"; tableName: "user_balances"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'never'.
+
+96         eq(userBalances.userId, req.session.userId!),
+           ~~
+
+
+server/api/spot-trading-routes.ts:131:13 - error TS2769: No overload matches this call.
+  Overload 1 of 3, '(left: PgColumn<{ name: "user_id"; tableName: "user_balances"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>, right: number | SQLWrapper): SQL<...>', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'number | SQLWrapper'.
+  Overload 2 of 3, '(left: Aliased<string>, right: string | SQLWrapper): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "user_id"; tableName: "user_balances"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'Aliased<string>'.
+      Type 'PgColumn<{ name: "user_id"; tableName: "user_balances"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>' is missing the following properties from type 'Aliased<string>': sql, fieldAlias
+  Overload 3 of 3, '(left: never, right: unknown): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "user_id"; tableName: "user_balances"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'never'.
+
+131             eq(userBalances.userId, req.session.userId!),
+                ~~
+
+
+server/api/spot-trading-routes.ts:144:13 - error TS2769: No overload matches this call.
+  Overload 1 of 2, '(value: { userId: number | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<string, any>; id?: number | SQL<unknown> | Placeholder<...>; balance?: number | ... 1 more ... | Placeholder<...>; updatedAt?: Date | ... 1 more ... | Placeholder<...>; }): PgInsertBase<...>', gave the following error.
+    Type 'string' is not assignable to type 'number | SQL<unknown> | Placeholder<string, any>'.
+  Overload 2 of 2, '(values: { userId: number | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<string, any>; id?: number | SQL<unknown> | Placeholder<...>; balance?: number | ... 1 more ... | Placeholder<...>; updatedAt?: Date | ... 1 more ... | Placeholder<...>; }[]): PgInsertBase<...>', gave the following error.
+    Object literal may only specify known properties, and 'userId' does not exist in type '{ userId: number | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<string, any>; id?: number | SQL<unknown> | Placeholder<...>; balance?: number | ... 1 more ... | Placeholder<...>; updatedAt?: Date | ... 1 more ... | Placeholder<...>; }[]'.
+
+144             userId: req.session.userId!,
+                ~~~~~~
+
+  node_modules/drizzle-orm/pg-core/query-builders/insert.d.ts:29:101
+     29 export type PgInsertValue<TTable extends PgTable<TableConfig>, OverrideT extends boolean = false> = {
+                                                                                                            ~
+     30     [Key in keyof InferInsertModel<TTable, {
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+     36     }>[Key] | SQL | Placeholder;
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     37 } & {};
+        ~
+    The expected type comes from property 'userId' which is declared here on type '{ userId: number | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<string, any>; id?: number | SQL<unknown> | Placeholder<...>; balance?: number | ... 1 more ... | Placeholder<...>; updatedAt?: Date | ... 1 more ... | Placeholder<...>; }'
+
+server/api/spot-trading-routes.ts:163:13 - error TS2769: No overload matches this call.
+  Overload 1 of 3, '(left: PgColumn<{ name: "user_id"; tableName: "user_balances"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>, right: number | SQLWrapper): SQL<...>', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'number | SQLWrapper'.
+  Overload 2 of 3, '(left: Aliased<string>, right: string | SQLWrapper): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "user_id"; tableName: "user_balances"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'Aliased<string>'.
+      Type 'PgColumn<{ name: "user_id"; tableName: "user_balances"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>' is missing the following properties from type 'Aliased<string>': sql, fieldAlias
+  Overload 3 of 3, '(left: never, right: unknown): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "user_id"; tableName: "user_balances"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'never'.
+
+163             eq(userBalances.userId, req.session.userId!),
+                ~~
+
+
+server/api/spot-trading-routes.ts:178:13 - error TS2769: No overload matches this call.
+  Overload 1 of 2, '(value: { userId: number | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<string, any>; id?: number | SQL<unknown> | Placeholder<...>; balance?: number | ... 1 more ... | Placeholder<...>; updatedAt?: Date | ... 1 more ... | Placeholder<...>; }): PgInsertBase<...>', gave the following error.
+    Type 'string' is not assignable to type 'number | SQL<unknown> | Placeholder<string, any>'.
+  Overload 2 of 2, '(values: { userId: number | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<string, any>; id?: number | SQL<unknown> | Placeholder<...>; balance?: number | ... 1 more ... | Placeholder<...>; updatedAt?: Date | ... 1 more ... | Placeholder<...>; }[]): PgInsertBase<...>', gave the following error.
+    Object literal may only specify known properties, and 'userId' does not exist in type '{ userId: number | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<string, any>; id?: number | SQL<unknown> | Placeholder<...>; balance?: number | ... 1 more ... | Placeholder<...>; updatedAt?: Date | ... 1 more ... | Placeholder<...>; }[]'.
+
+178             userId: req.session.userId!,
+                ~~~~~~
+
+  node_modules/drizzle-orm/pg-core/query-builders/insert.d.ts:29:101
+     29 export type PgInsertValue<TTable extends PgTable<TableConfig>, OverrideT extends boolean = false> = {
+                                                                                                            ~
+     30     [Key in keyof InferInsertModel<TTable, {
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+     36     }>[Key] | SQL | Placeholder;
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     37 } & {};
+        ~
+    The expected type comes from property 'userId' which is declared here on type '{ userId: number | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<string, any>; id?: number | SQL<unknown> | Placeholder<...>; balance?: number | ... 1 more ... | Placeholder<...>; updatedAt?: Date | ... 1 more ... | Placeholder<...>; }'
+
+server/api/spot-trading-routes.ts:188:9 - error TS2769: No overload matches this call.
+  Overload 1 of 2, '(value: { userId: number | SQL<unknown> | Placeholder<string, any>; type: string | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<...>; ... 8 more ...; toAddress?: string | ... 1 more ... | Placeholder<...>; }): PgInsertBase<...>', gave the following error.
+    Type 'string' is not assignable to type 'number | SQL<unknown> | Placeholder<string, any>'.
+  Overload 2 of 2, '(values: { userId: number | SQL<unknown> | Placeholder<string, any>; type: string | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<...>; ... 8 more ...; toAddress?: string | ... 1 more ... | Placeholder<...>; }[]): PgInsertBase<...>', gave the following error.
+    Object literal may only specify known properties, and 'userId' does not exist in type '{ userId: number | SQL<unknown> | Placeholder<string, any>; type: string | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<...>; ... 8 more ...; toAddress?: string | ... 1 more ... | Placeholder<...>; }[]'.
+
+188         userId: req.session.userId!,
+            ~~~~~~
+
+  node_modules/drizzle-orm/pg-core/query-builders/insert.d.ts:29:101
+     29 export type PgInsertValue<TTable extends PgTable<TableConfig>, OverrideT extends boolean = false> = {
+                                                                                                            ~
+     30     [Key in keyof InferInsertModel<TTable, {
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+     36     }>[Key] | SQL | Placeholder;
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     37 } & {};
+        ~
+    The expected type comes from property 'userId' which is declared here on type '{ userId: number | SQL<unknown> | Placeholder<string, any>; type: string | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<...>; ... 8 more ...; toAddress?: string | ... 1 more ... | Placeholder<...>; }'
+
+server/api/spot-trading-routes.ts:215:42 - error TS2304: Cannot find name 'spotOrders'.
+
+215       const [newOrder] = await db.insert(spotOrders).values({
+                                             ~~~~~~~~~~
+
+server/api/spot-trading-routes.ts:247:34 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+247 router.delete("/order/:orderId", requireAuth, async (req: Request, res: Response) => {
+                                     ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/api/spot-trading-routes.ts:252:13 - error TS2304: Cannot find name 'spotOrders'.
+
+252       .from(spotOrders)
+                ~~~~~~~~~~
+
+server/api/spot-trading-routes.ts:254:12 - error TS2304: Cannot find name 'spotOrders'.
+
+254         eq(spotOrders.id, orderId),
+               ~~~~~~~~~~
+
+server/api/spot-trading-routes.ts:255:12 - error TS2304: Cannot find name 'spotOrders'.
+
+255         eq(spotOrders.userId, req.session.userId!),
+               ~~~~~~~~~~
+
+server/api/spot-trading-routes.ts:257:14 - error TS2304: Cannot find name 'spotOrders'.
+
+257           eq(spotOrders.status, 'new'),
+                 ~~~~~~~~~~
+
+server/api/spot-trading-routes.ts:258:14 - error TS2304: Cannot find name 'spotOrders'.
+
+258           eq(spotOrders.status, 'partially_filled')
+                 ~~~~~~~~~~
+
+server/api/spot-trading-routes.ts:269:21 - error TS2304: Cannot find name 'spotOrders'.
+
+269     await db.update(spotOrders)
+                        ~~~~~~~~~~
+
+server/api/spot-trading-routes.ts:274:17 - error TS2304: Cannot find name 'spotOrders'.
+
+274       .where(eq(spotOrders.id, orderId));
+                    ~~~~~~~~~~
+
+server/api/spot-trading-routes.ts:291:24 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+291 router.get("/history", requireAuth, async (req: Request, res: Response) => {
+                           ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/api/spot-trading-routes.ts:296:9 - error TS2769: No overload matches this call.
+  Overload 1 of 3, '(left: PgColumn<{ name: "user_id"; tableName: "transactions"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>, right: number | SQLWrapper): SQL<...>', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'number | SQLWrapper'.
+  Overload 2 of 3, '(left: Aliased<string>, right: string | SQLWrapper): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "user_id"; tableName: "transactions"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'Aliased<string>'.
+      Type 'PgColumn<{ name: "user_id"; tableName: "transactions"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>' is missing the following properties from type 'Aliased<string>': sql, fieldAlias
+  Overload 3 of 3, '(left: never, right: unknown): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "user_id"; tableName: "transactions"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'never'.
+
+296         eq(transactions.userId, req.session.userId!),
+            ~~
+
+
+server/api/staking-routes.ts:5:32 - error TS2307: Cannot find module '../services/trading.service' or its corresponding type declarations.
+
+5 import { tradingService } from "../services/trading.service";
+                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+server/api/staking-routes.ts:21:29 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request<{}, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>, number>) => Promise<Response<any, Record<...>, number>>' is not assignable to parameter of type 'Application<Record<string, any>>'.
+      Type '(req: Request<{}, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>, number>) => Promise<Response<any, Record<...>, number>>' is missing the following properties from type 'Application<Record<string, any>>': init, defaultConfiguration, engine, set, and 63 more.
+
+21 stakingRouter.get("/rates", async (req, res) => {
+                               ~~~~~~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:168:5
+    168     (path: PathParams, subApplication: Application): T;
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    The last overload is declared here.
+
+server/api/staking-routes.ts:39:33 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: Function) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: Function) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+39 stakingRouter.get("/positions", requireAuth, async (req, res) => {
+                                   ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/api/staking-routes.ts:42:68 - error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
+
+42     const positions = await stakingService.getUserStakingPositions(userId);
+                                                                      ~~~~~~
+
+server/api/staking-routes.ts:58:30 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: Function) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: Function) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+58 stakingRouter.post("/stake", requireAuth, async (req, res) => {
+                                ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/api/staking-routes.ts:108:7 - error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
+
+108       userId,
+          ~~~~~~
+
+server/api/staking-routes.ts:118:64 - error TS2339: Property 'rate' does not exist on type '{ id: number; createdAt: Date; currencyId: number; apy: number; minAmount: number; maxAmount: number; lockPeriod: number; }'.
+
+118       message: `Successfully staked ${amount} at ${stakingRate.rate * 100}% APY`
+                                                                   ~~~~
+
+server/api/staking-routes.ts:130:36 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: Function) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: Function) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+130 stakingRouter.post("/unstake/:id", requireAuth, async (req, res) => {
+                                       ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/api/staking-routes.ts:144:68 - error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
+
+144     const positions = await stakingService.getUserStakingPositions(userId);
+                                                                       ~~~~~~
+
+server/api/staking-routes.ts:178:36 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: Function) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: Function) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+178 stakingRouter.post("/rewards/:id", requireAuth, async (req, res) => {
+                                       ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/api/staking-routes.ts:192:68 - error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
+
+192     const positions = await stakingService.getUserStakingPositions(userId);
+                                                                       ~~~~~~
+
+server/api/trading-routes.mongo.ts:4:10 - error TS2305: Module '"../services/price.service"' has no exported member 'getLatestPrice'.
+
+4 import { getLatestPrice } from "../services/price.service";
+           ~~~~~~~~~~~~~~
+
+server/api/trading-routes.mongo.ts:21:34 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request<{}, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>, number>) => Promise<Response<any, Record<...>, number>>' is not assignable to parameter of type 'Application<Record<string, any>>'.
+      Type '(req: Request<{}, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>, number>) => Promise<Response<any, Record<...>, number>>' is missing the following properties from type 'Application<Record<string, any>>': init, defaultConfiguration, engine, set, and 63 more.
+
+21 tradingRouter.get("/currencies", async (req, res) => {
+                                    ~~~~~~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:168:5
+    168     (path: PathParams, subApplication: Application): T;
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    The last overload is declared here.
+
+server/api/trading-routes.mongo.ts:23:42 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & Required<...> & { ...; })[], ... 4 more ..., {}>; <ResultDoc = any>(filter: RootFilterQuery<...>, projection?: ProjectionType<...>, options?: QueryOptions<...>):...' has signatures, but none of those signatures are compatible with each other.
+
+23     const allCurrencies = await Currency.find({ isActive: true });
+                                            ~~~~
+
+server/api/trading-routes.mongo.ts:39:30 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request<{}, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>, number>) => Promise<Response<any, Record<...>, number>>' is not assignable to parameter of type 'Application<Record<string, any>>'.
+      Type '(req: Request<{}, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>, number>) => Promise<Response<any, Record<...>, number>>' is missing the following properties from type 'Application<Record<string, any>>': init, defaultConfiguration, engine, set, and 63 more.
+
+39 tradingRouter.get("/prices", async (req, res) => {
+                                ~~~~~~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:168:5
+    168     (path: PathParams, subApplication: Application): T;
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    The last overload is declared here.
+
+server/api/trading-routes.mongo.ts:41:42 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & Required<...> & { ...; })[], ... 4 more ..., {}>; <ResultDoc = any>(filter: RootFilterQuery<...>, projection?: ProjectionType<...>, options?: QueryOptions<...>):...' has signatures, but none of those signatures are compatible with each other.
+
+41     const allCurrencies = await Currency.find({ isActive: true });
+                                            ~~~~
+
+server/api/trading-routes.mongo.ts:81:28 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: Function) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: Function) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+81 tradingRouter.post("/buy", requireAuth, async (req, res) => {
+                              ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/api/trading-routes.mongo.ts:144:29 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: Function) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: Function) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+144 tradingRouter.post("/sell", requireAuth, async (req, res) => {
+                                ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/api/trading-routes.mongo.ts:207:37 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request<{ symbol: string; }, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>, number>) => Promise<...>' is not assignable to parameter of type 'Application<Record<string, any>>'.
+      Type '(req: Request<{ symbol: string; }, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>, number>) => Promise<...>' is missing the following properties from type 'Application<Record<string, any>>': init, defaultConfiguration, engine, set, and 63 more.
+
+207 tradingRouter.get("/chart/:symbol", async (req, res) => {
+                                        ~~~~~~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:168:5
+    168     (path: PathParams, subApplication: Application): T;
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    The last overload is declared here.
+
+server/api/trading-routes.mongo.ts:212:37 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & ... 1 more ... & { ...; })[] | (FlattenMaps<...> & ... 1 more ... & { ...; }), ... 4 more ..., {}>; <ResultDoc = any>(filter?: RootFilterQuery<...>, projection?:...' has signatures, but none of those signatures are compatible with each other.
+
+212     const currency = await Currency.findOne({ symbol: symbol.toUpperCase() });
+                                        ~~~~~~~
+
+server/api/verification-routes.ts:32:24 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+32 router.post('/submit', requireAuth, upload.fields([
+                          ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/api/verification-routes.ts:100:36 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(id: any, projection: ProjectionType<IUser>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, projection?: ProjectionType<...>, options?: QueryOp...' has signatures, but none of those signatures are compatible with each other.
+
+100     const currentUser = await User.findById(userId);
+                                       ~~~~~~~~
+
+server/api/verification-routes.ts:131:23 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+131 router.get('/status', requireAuth, async (req: Request, res: Response) => {
+                          ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/api/verification-routes.ts:149:29 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(id: any, projection: ProjectionType<IUser>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, projection?: ProjectionType<...>, options?: QueryOp...' has signatures, but none of those signatures are compatible with each other.
+
+149     const user = await User.findById(userId).select('kycStatus kycData');
+                                ~~~~~~~~
+
+server/api/wallet-routes.ts:7:32 - error TS2307: Cannot find module '../services/trading.service' or its corresponding type declarations.
+
+7 import { tradingService } from "../services/trading.service";
+                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+server/api/wallet-routes.ts:8:10 - error TS2305: Module '"../services/price.service"' has no exported member 'getLatestPrice'.
+
+8 import { getLatestPrice } from "../services/price.service";
+           ~~~~~~~~~~~~~~
+
+server/api/wallet-routes.ts:25:32 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: Function) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: Function) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.

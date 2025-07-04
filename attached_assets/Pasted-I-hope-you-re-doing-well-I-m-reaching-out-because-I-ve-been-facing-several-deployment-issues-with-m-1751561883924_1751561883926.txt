@@ -1,0 +1,53 @@
+I hope you’re doing well. I’m reaching out because I’ve been facing several deployment issues with my Nedaxer Trading Platform project when trying to deploy it on Render. I would appreciate your help to audit and restructure the project to avoid these problems and ensure smooth builds and deployments.
+
+Here’s a summary of the main issues I’ve encountered:
+
+1. The current monorepo setup has mixed dependencies and unclear separation between frontend (client/) and backend (server/) folders, causing build confusion.
+
+
+2. Some essential dependencies like autoprefixer are missing or not installed in the correct folders, leading to build errors.
+
+
+3. PostCSS config throws module type warnings because the root package.json lacks "type": "module", or the config file isn’t recognized properly.
+
+
+4. The render.yaml deployment configuration needs to be correctly set up with the right build and start commands, environment variables, and autoDeploy settings.
+
+
+5. Workspace configurations and package-lock.json conflicts are causing inconsistent dependency installs.
+
+
+6. Deprecated packages and outdated versions (e.g., glob, rimraf) need to be updated to supported versions.
+
+
+7. node_modules should not be committed to GitHub; instead, proper package.json and lock files should be used, with fresh installs during build.
+
+
+8. Scripts in package.json must be properly defined for both frontend and backend builds and starts.
+
+
+9. Environment variables should be correctly configured and loaded.
+
+
+10. Overall, the project file structure should be clean and clear so that Render can build and run the app without errors.
+
+
+
+Could you please:
+
+Audit and restructure the project files and folders for a clear frontend/backend separation
+
+Update all package.json files with correct dependencies and scripts
+
+Fix or add the render.yaml file to support Render’s deployment requirements
+
+Update deprecated packages to their latest stable versions
+
+Make sure all dependencies are installed correctly and consistently without workspace conflicts
+
+Test building and deploying on Render to verify everything works as expected
+
+Provide me with any additional recommendations or changes needed
+
+
+Thank you very much for your assistance! Please let me know if you need any further details or access.
