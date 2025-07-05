@@ -2,6 +2,10 @@
 
 echo "🚀 Building Nedaxer Trading Platform - Full Application..."
 
+# Install dependencies first
+echo "📦 Installing dependencies..."
+npm install
+
 # Clean previous build
 rm -rf dist
 mkdir -p dist
@@ -25,6 +29,7 @@ npx esbuild server/index.ts \
   --external:@replit/vite-plugin-cartographer \
   --external:@replit/vite-plugin-runtime-error-modal \
   --external:@replit/vite-plugin-shadcn-theme-json \
+  --external:mongodb \
   --external:mongodb-memory-server \
   --external:mock-aws-s3 \
   --external:aws-sdk \
