@@ -2,9 +2,13 @@
 
 echo "🚀 Building Nedaxer Trading Platform - Full Application..."
 
-# Install dependencies first
+# Install dependencies first (skip postinstall checks)
 echo "📦 Installing dependencies..."
-npm install
+npm install --ignore-scripts
+
+# Install Vite and build tools explicitly
+echo "📦 Installing build tools..."
+npm install vite @vitejs/plugin-react esbuild @replit/vite-plugin-cartographer @replit/vite-plugin-runtime-error-modal @replit/vite-plugin-shadcn-theme-json --no-save
 
 # Clean previous build
 rm -rf dist
@@ -12,11 +16,11 @@ mkdir -p dist
 
 # Build frontend with Vite (this creates dist automatically)
 echo "📦 Building frontend with Vite..."
-npm run build
+npx vite build
 
 # The npm run build already creates dist with built assets, no need to copy
 
-# Build server with TypeScript suppression
+# Build server with ESBuild
 echo "🔧 Building server..."
 npx esbuild server/index.ts \
   --platform=node \
