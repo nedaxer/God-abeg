@@ -45,14 +45,6 @@ app.use(express.static(publicPath));
 // Register API routes first
 registerRoutes(app);
 
-// Catch-all handler: send back React's index.html file for client-side routing
-app.get("*", (req, res) => {
-  if (req.path.startsWith("/api")) {
-    return res.status(404).json({ error: "API endpoint not found" });
-  }
-  res.sendFile(path.join(publicPath, "index.html"));
-});
-
 // Error handler
 app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
   const status = err.status || err.statusCode || 500;
@@ -62,7 +54,13 @@ app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
   res.status(status).json({ message });
 });
 
-registerRoutes(app);
+// Catch-all handler: send back React's index.html file for client-side routing
+app.get("*", (req, res) => {
+  if (req.path.startsWith("/api")) {
+    return res.status(404).json({ error: "API endpoint not found" });
+  }
+  res.sendFile(path.join(publicPath, "index.html"));
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, "0.0.0.0", () => {
