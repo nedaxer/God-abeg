@@ -6,7 +6,7 @@ services:
     region: oregon
     plan: starter
     buildCommand: chmod +x render-bypass-build.sh && ./render-bypass-build.sh
-    startCommand: npx tsx server/index.ts
+    startCommand: npx tsx server/index.production.ts
     healthCheckPath: /api/health
     envVars:
       - key: NODE_ENV

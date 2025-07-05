@@ -1,14 +1,13 @@
-// @ts-nocheck
 import 'dotenv/config'; // Load environment variables from .env file
 import express, { type Request, Response, NextFunction } from "express";
-import { registerRoutes } from "./routes.mongo"; // Using MongoDB routes
-import path from "path";
-import { fileURLToPath } from 'url';
+import path from 'path';
+import { registerRoutes } from "./routes.mongo";
 
 const app = express();
 app.use(express.json({ limit: '10mb' })); // Increased limit for profile picture uploads
 app.use(express.urlencoded({ extended: false, limit: '10mb' }));
 
+// Logging middleware
 app.use((req, res, next) => {
   const start = Date.now();
   const path = req.path;
@@ -17,16 +16,21 @@ app.use((req, res, next) => {
   const originalResJson = res.json;
   res.json = function (bodyJson, ...args) {
     capturedJsonResponse = bodyJson;
-    return originalResJson.call(this, bodyJson, ...args);
+    return originalResJson.apply(res, [bodyJson, ...args]);
   };
 
   res.on("finish", () => {
     const duration = Date.now() - start;
     if (path.startsWith("/api")) {
-      let logLine = `${new Date().toLocaleTimeString()} [express] ${req.method} ${path} ${res.statusCode} in ${duration}ms`;
+      let logLine = `${req.method} ${path} ${res.statusCode} in ${duration}ms`;
       if (capturedJsonResponse) {
-        logLine += ` :: ${JSON.stringify(capturedJsonResponse).slice(0, 100)}`;
+        logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
       }
+
+      if (logLine.length > 80) {
+        logLine = logLine.slice(0, 79) + "…";
+      }
+
       console.log(logLine);
     }
   });
@@ -35,34 +39,57 @@ app.use((req, res, next) => {
 });
 
 // Production static file serving
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const publicPath = path.join(__dirname, "public");
+function serveStatic(app: express.Express) {
+  const distPath = path.resolve(process.cwd(), "dist");
+  const publicPath = path.join(distPath, "public");
+  
+  // Serve static files from dist/public
+  app.use(express.static(publicPath));
+  
+  // Handle client-side routing
+  app.get("*", (req, res, next) => {
+    // Skip API routes
+    if (req.path.startsWith('/api')) {
+      return next();
+    }
+    
+    // Serve index.html for all other routes
+    const indexPath = path.join(publicPath, "index.html");
+    res.sendFile(indexPath);
+  });
+}
 
-// Serve static files from the public directory
-app.use(express.static(publicPath));
+(async () => {
+  try {
+    console.log('🚀 Starting Nedaxer Trading Platform...');
+    console.log(`📡 Environment: ${process.env.NODE_ENV}`);
+    console.log(`🌍 Port: ${process.env.PORT || 5000}`);
+    
+    // Register routes
+    const server = await registerRoutes(app);
 
-// Register API routes first
-registerRoutes(app);
+    // Error handling middleware
+    app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+      const status = err.status || err.statusCode || 500;
+      const message = err.message || "Internal Server Error";
+      console.error('Error:', err);
+      res.status(status).json({ message });
+    });
 
-// Error handler
-app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
-  const status = err.status || err.statusCode || 500;
-  const message = err.message || "Internal Server Error";
-  console.error(`Error ${status}: ${message}`);
-  console.error(err.stack);
-  res.status(status).json({ message });
-});
+    // Serve static files in production
+    serveStatic(app);
 
-// Catch-all handler: send back React's index.html file for client-side routing
-app.get("*", (req, res) => {
-  if (req.path.startsWith("/api")) {
-    return res.status(404).json({ error: "API endpoint not found" });
+    // Use PORT environment variable for deployment (Render) or default to 5000
+    const port = process.env.PORT ? parseInt(process.env.PORT) : 5000;
+    server.listen({
+      port,
+      host: "0.0.0.0",
+      reusePort: true,
+    }, () => {
+      console.log(`✅ Nedaxer Trading Platform running on port ${port}`);
+    });
+  } catch (error) {
+    console.error('❌ Server initialization error:', error);
+    process.exit(1);
   }
-  res.sendFile(path.join(publicPath, "index.html"));
-});
-
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`Server running on port ${PORT}`);
-});
+})();
