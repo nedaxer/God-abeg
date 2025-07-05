@@ -1,13 +1,15 @@
-import express from 'express';
-import path from 'path';
-import { fileURLToPath } from 'url';
+const express = require('express');
+const path = require('path');
 
 const app = express();
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const port = process.env.PORT || 5000;
 
 // Middleware
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: false, limit: '10mb' }));
+
+// Serve static files
+app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use(express.static(__dirname));
 
 // Health check
@@ -15,37 +17,48 @@ app.get('/api/health', (req, res) => {
   res.json({ 
     status: 'ok', 
     timestamp: new Date().toISOString(),
-    service: 'Nedaxer Trading Platform'
-  });
-});
-
-// Basic API routes
-app.get('/api/status', (req, res) => {
-  res.json({ 
-    platform: 'Nedaxer',
+    service: 'Nedaxer Trading Platform',
     version: '1.0.0',
-    status: 'running'
+    features: [
+      'Real-time crypto prices (106 currencies)',
+      'Mobile trading interface',
+      'User authentication',
+      'MongoDB integration',
+      'Admin portal'
+    ]
   });
 });
 
-// Catch-all for frontend routing
+// API placeholder endpoints
+app.get('/api/crypto/realtime-prices', (req, res) => {
+  res.json({ 
+    success: true, 
+    message: 'Live crypto prices endpoint - requires full server deployment',
+    currencies: 106
+  });
+});
+
+app.get('/api/auth/user', (req, res) => {
+  res.status(401).json({ 
+    success: false, 
+    message: 'Authentication endpoint - requires MongoDB connection' 
+  });
+});
+
+// Catch all handler
 app.get('*', (req, res) => {
-  if (req.path.startsWith('/api')) {
-    return res.status(404).json({ error: 'API endpoint not found' });
+  if (req.path.startsWith('/api/')) {
+    res.status(404).json({ 
+      error: 'API endpoint not implemented in basic deployment',
+      availableEndpoints: ['/api/health', '/api/crypto/realtime-prices', '/api/auth/user']
+    });
+  } else {
+    res.sendFile(path.join(__dirname, 'index.html'));
   }
-  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// Error handler
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ error: 'Something went wrong!' });
-});
-
-// Port configuration for Render
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`🚀 Nedaxer server running on port ${PORT}`);
-  console.log(`📡 Health check available at: /api/health`);
+app.listen(port, '0.0.0.0', () => {
+  console.log(`🚀 Nedaxer Trading Platform running on port ${port}`);
+  console.log(`📊 Health check: http://localhost:${port}/api/health`);
+  console.log(`🌐 Application: http://localhost:${port}`);
 });

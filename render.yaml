@@ -5,7 +5,7 @@ services:
     env: node
     region: oregon
     plan: starter
-    buildCommand: chmod +x render-production-build.sh && ./render-production-build.sh
+    buildCommand: chmod +x render-final-deployment.sh && ./render-final-deployment.sh
     startCommand: cd dist && npm install && node index.js
     healthCheckPath: /api/health
     envVars:

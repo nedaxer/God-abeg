@@ -48,7 +48,7 @@ cat > dist/index.html << 'EOF'
 </html>
 EOF
 
-# The npm run build already creates dist with built assets, no need to copy
+# Static files created above, no Vite build needed
 
 # Create production server entry point
 echo "🔧 Creating production server..."
