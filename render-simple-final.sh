@@ -39,6 +39,22 @@ cat > dist/index.html << 'EOF'
 </html>
 EOF
 
+# Create package.json for production dependencies
+cat > dist/package.json << 'EOF'
+{
+  "name": "nedaxer-production",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
+EOF
+
 # Create production server
 cat > dist/index.js << 'EOF'
 import express from 'express';
