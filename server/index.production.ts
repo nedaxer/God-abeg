@@ -40,22 +40,34 @@ app.use((req, res, next) => {
 
 // Production static file serving
 function serveStatic(app: express.Express) {
+  // Serve static files from dist directory (Vite builds to dist/)
   const distPath = path.resolve(process.cwd(), "dist");
-  const publicPath = path.join(distPath, "public");
   
-  // Serve static files from dist/public
-  app.use(express.static(publicPath));
+  console.log(`📁 Serving static files from: ${distPath}`);
   
-  // Handle client-side routing
+  // Serve static assets
+  app.use(express.static(distPath, {
+    maxAge: '1y',
+    etag: true
+  }));
+  
+  // Handle client-side routing - serve index.html for non-API routes
   app.get("*", (req, res, next) => {
-    // Skip API routes
-    if (req.path.startsWith('/api')) {
+    // Skip API routes and static assets
+    if (req.path.startsWith('/api') || req.path.includes('.')) {
       return next();
     }
     
-    // Serve index.html for all other routes
-    const indexPath = path.join(publicPath, "index.html");
-    res.sendFile(indexPath);
+    // Serve index.html for client-side routing
+    const indexPath = path.join(distPath, "index.html");
+    console.log(`📄 Serving index.html for route: ${req.path}`);
+    
+    res.sendFile(indexPath, (err) => {
+      if (err) {
+        console.error(`❌ Error serving index.html:`, err);
+        res.status(500).send('Error loading application');
+      }
+    });
   });
 }
 
@@ -65,6 +77,16 @@ function serveStatic(app: express.Express) {
     console.log(`📡 Environment: ${process.env.NODE_ENV}`);
     console.log(`🌍 Port: ${process.env.PORT || 5000}`);
     
+    // Health check endpoint (before other routes)
+    app.get('/api/health', (req, res) => {
+      res.json({ 
+        status: 'ok', 
+        timestamp: new Date().toISOString(),
+        environment: process.env.NODE_ENV,
+        port: process.env.PORT || 5000
+      });
+    });
+
     // Register routes
     const server = await registerRoutes(app);
 
