@@ -31,7 +31,8 @@ import { useLanguage } from '@/contexts/language-context';
 import { useTheme } from '@/contexts/theme-context';
 import { useAuth } from '@/hooks/use-auth';
 import { useWithdrawal } from '@/contexts/withdrawal-context';
-import advancedChartsVideo from '@/assets/advanced-charts-video.mp4';
+// Using external Cloudinary video hosting
+const advancedChartsVideo = 'https://res.cloudinary.com/dajvsbemy/video/upload/v1751728951/crypto-webinars-demo_fyeix4.mp4';
 
 export default function MobileAssets() {
   const { t } = useLanguage();

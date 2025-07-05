@@ -2,6 +2,28 @@ import 'dotenv/config'; // Load environment variables from .env file
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes.mongo"; // Using PostgreSQL routes
 import { setupVite, serveStatic, log } from "./vite";
+import { createServer } from "http";
+
+// Helper function to find an available port
+async function findAvailablePort(startPort: number): Promise<number> {
+  return new Promise((resolve, reject) => {
+    const server = createServer();
+    server.listen(startPort, () => {
+      const port = (server.address() as any)?.port;
+      server.close(() => {
+        resolve(port);
+      });
+    });
+    server.on('error', (err: any) => {
+      if (err.code === 'EADDRINUSE') {
+        // Port is in use, try the next one
+        resolve(findAvailablePort(startPort + 1));
+      } else {
+        reject(err);
+      }
+    });
+  });
+}
 
 const app = express();
 app.use(express.json({ limit: '10mb' })); // Increased limit for profile picture uploads
@@ -59,8 +81,13 @@ app.use((req, res, next) => {
       serveStatic(app);
     }
 
-    // Use PORT environment variable for deployment (Render) or default to 5000 for development
-    const port = process.env.PORT ? parseInt(process.env.PORT) : 5000;
+    // Use PORT environment variable for deployment (Render) or find available port for development
+    let port = process.env.PORT ? parseInt(process.env.PORT) : 5000;
+    
+    // If no PORT env var is set, find an available port starting from 5000
+    if (!process.env.PORT) {
+      port = await findAvailablePort(5000);
+    }
     server.listen({
       port,
       host: "0.0.0.0",

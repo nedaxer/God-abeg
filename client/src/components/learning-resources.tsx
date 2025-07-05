@@ -18,7 +18,7 @@ export const LearningResources = () => {
             <div key={index} className="bg-[#f5f5f5] rounded-lg overflow-hidden">
               {resource.title === "Crypto Webinars" ? (
                 <video
-                  src="/videos/crypto-webinars-demo.mp4"
+                  src="https://res.cloudinary.com/dajvsbemy/video/upload/v1751728951/crypto-webinars-demo_fyeix4.mp4"
                   autoPlay
                   loop
                   muted

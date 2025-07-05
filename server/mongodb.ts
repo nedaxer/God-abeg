@@ -1,8 +1,7 @@
 // @ts-nocheck
 // TypeScript error suppression for development productivity - 6 MongoDB/Mongoose type conflicts
 import mongoose from 'mongoose';
-import mongodb from 'mongodb';
-const { MongoClient } = mongodb;
+import { MongoClient } from 'mongodb';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 
 // In-memory MongoDB server for development

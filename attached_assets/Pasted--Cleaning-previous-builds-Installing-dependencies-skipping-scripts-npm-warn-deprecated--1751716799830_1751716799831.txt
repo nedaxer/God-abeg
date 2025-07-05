@@ -1,0 +1,169 @@
+ Cleaning previous builds...
+📦 Installing dependencies (skipping scripts)...
+npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated npmlog@5.0.1: This package is no longer supported.
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm warn deprecated gauge@3.0.2: This package is no longer supported.
+npm warn deprecated are-we-there-yet@2.0.0: This package is no longer supported.
+npm warn deprecated ethereumjs-wallet@1.0.2: New package name format for new versions: @ethereumjs/wallet. Please update.
+npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+npm warn deprecated rimraf@2.7.1: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated uuid@3.4.0: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
+npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+
+added 1081 packages, and audited 1082 packages in 55s
+
+135 packages are looking for funding
+  run `npm fund` for details
+
+20 vulnerabilities (1 moderate, 19 high)
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+🔍 Ensuring build dependencies are present...
+
+up to date, audited 1082 packages in 5s
+
+135 packages are looking for funding
+  run `npm fund` for details
+
+20 vulnerabilities (1 moderate, 19 high)
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+🔍 Verifying Vite installation...
+
+
+
+
+
+
+
+
+
+🔧 Building frontend with Vite (skipping TypeScript check)...
+failed to load config from /home/runner/workspace/vite.config.ts
+error during build:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'vite' imported from /home/runner/workspace/node_modules/.vite-temp/vite.config.ts.timestamp-1751716173825-6c75fdec1e9e.mjs
+    at packageResolve (node:internal/modules/esm/resolve:854:9)
+    at moduleResolve (node:internal/modules/esm/resolve:927:18)
+    at defaultResolve (node:internal/modules/esm/resolve:1169:11)
+    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:542:12)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:510:25)
+    at ModuleLoader.getModuleJob (node:internal/modules/esm/loader:239:38)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:96:40)
+    at link (node:internal/modules/esm/module_job:95:36)
+❌ Frontend build failed
+📂 Current directory contents:
+total 1100
+drwxr-xr-x 1 runner runner   3418 Jul  5 11:47 .
+drwxrwxrwx 1 runner runner     54 Jul  5 10:34 ..
+-rw-r--r-- 1 runner runner   1819 Jul  3 19:43 add-docs-to-specific-user.js
+-rw-r--r-- 1 runner runner   1709 Jul  3 19:43 add-test-documents.js
+-rw-r--r-- 1 runner runner    261 Jul  2 20:41 admin_cookies_final.txt
+-rw-r--r-- 1 runner runner    261 Jul  2 20:41 admin_cookies_new.txt
+-rw-r--r-- 1 runner runner    265 Jul  2 20:41 admin-cookies.txt
+-rw-r--r-- 1 runner runner    273 Jul  2 20:41 admin_cookies.txt
+drwxr-xr-x 1 runner runner  18108 Jul  5 11:28 attached_assets
+-rwxr-xr-x 1 runner runner   1054 Jul  4 18:39 build-fix.sh
+-rwxr-xr-x 1 runner runner   1488 Jul  4 18:38 build-production.sh
+-rwxr-xr-x 1 runner runner    738 Jul  4 18:23 build-server.sh
+-rwxr-xr-x 1 runner runner   1094 Jul  4 03:17 build.sh
+drwxr-xr-x 1 runner runner     58 Jul  3 20:27 .cache
+-rw-r--r-- 1 runner runner   1740 Jul  3 19:43 check-documents.js
+drwxr-xr-x 1 runner runner    320 Jul  5 01:51 client
+-rw-r--r-- 1 runner runner   5047 Jul  3 20:05 comprehensive-zero-cleanup.js
+drwxr-xr-x 1 runner runner     22 Jun 25 18:25 .config
+-rw-r--r-- 1 runner runner    131 Jul  2 20:41 cookies.txt
+-rw-r--r-- 1 runner runner   7904 Jul  2 20:41 debug-assets-history.html
+-rw-r--r-- 1 runner runner   2545 Jul  3 19:43 debug-kyc-status.js
+-rw-r--r-- 1 runner runner   2510 Jul  3 19:43 debug-notification-structure.js
+-rw-r--r-- 1 runner runner   3632 Jul  3 19:42 debug-user-issues.js
+-rw-r--r-- 1 runner runner   2720 Jul  5 01:26 DEPLOYMENT_CHECKLIST.md
+-rw-r--r-- 1 runner runner   8516 Jul  4 03:07 DEPLOYMENT_GUIDE.md
+-rw-r--r-- 1 runner runner    325 Apr 12 12:21 drizzle.config.ts
+drwxr-xr-x 1 runner runner     96 May  9 21:49 emails
+-rw-r--r-- 1 runner runner    963 Jul  2 20:41 enable-transfer-access.js
+-rw-r--r-- 1 runner runner    943 Jul  2 20:41 enable-transfer-admin.cjs
+-rw-r--r-- 1 runner runner    943 Jul  2 20:41 enable-transfer-admin.js
+-rw-r--r-- 1 runner runner    628 Jul  2 11:40 .env
+-rw-r--r-- 1 runner runner   1360 Jul  5 00:43 FILES_FOR_DEPLOYMENT.txt
+-rw-r--r-- 1 runner runner   1595 Jul  3 20:05 find-users-with-docs.js
+-rw-r--r-- 1 runner runner   6025 Jul  5 01:35 fix-both-issues.js
+-rw-r--r-- 1 runner runner   1893 Jul  5 01:36 fix-deposit-transaction.js
+drwxr-xr-x 1 runner runner    402 Jul  5 11:47 .git
+-rw-r--r-- 1 runner runner   1305 Jul  3 21:17 git-cleanup-commands.sh
+-rw-r--r-- 1 runner runner    794 Jul  4 20:17 .gitignore
+-rw-r--r-- 1 runner runner    871 Jul  4 06:12 global.d.ts
+drwxr-xr-x 1 runner runner     10 Apr 12 12:18 .local
+-rw-r--r-- 1 runner runner    271 Jul  2 20:41 new_cookies.txt
+drwxr-xr-x 1 runner runner  14156 Jul  5 11:49 node_modules
+-rw-r--r-- 1 runner runner   5101 Jul  5 01:58 package.json
+-rw-r--r-- 1 runner runner 630160 Jul  5 03:50 package-lock.json
+-rw-r--r-- 1 runner runner     80 Jul  5 01:36 postcss.config.js
+-rw-r--r-- 1 runner runner   2962 Jul  3 19:06 PROJECT_STATUS.md
+drwxr-xr-x 1 runner runner     88 Jun 29 01:12 public
+drwxr-xr-x 1 runner runner     12 Jul  3 20:27 .pythonlibs
+-rw-r--r-- 1 runner runner  11792 Jul  5 03:52 README.md
+-rw-r--r-- 1 runner runner   3760 Jul  5 10:40 render-app-deployment.sh
+-rwxr-xr-x 1 runner runner   2097 Jul  4 19:49 render-build.sh
+-rw-r--r-- 1 runner runner    773 Jul  5 11:15 render-bypass-build.sh
+-rw-r--r-- 1 runner runner   2826 Jul  5 00:15 render-deployment-build.sh
+-rw-r--r-- 1 runner runner   4025 Jul  4 19:49 RENDER_DEPLOYMENT_GUIDE.md
+-rw-r--r-- 1 runner runner   2222 Jul  5 00:18 RENDER_DEPLOYMENT_SOLUTION.md
+-rwxr-xr-x 1 runner runner   2167 Jul  5 11:31 render-final-build.sh
+-rwxr-xr-x 1 runner runner   4758 Jul  5 03:26 render-final-deployment.sh
+-rw-r--r-- 1 runner runner   1185 Jul  5 10:40 render-final-fix.yaml
+-rw-r--r-- 1 runner runner   2463 Jul  5 04:04 render-full-app-deployment.sh
+-rwxr-xr-x 1 runner runner    811 Jul  5 00:17 render-minimal-build.sh
+-rw-r--r-- 1 runner runner   6076 Jul  5 03:25 render-production-build.sh
+-rwxr-xr-x 1 runner runner   1187 Jul  4 21:05 render-simple-build.sh
+-rw-r--r-- 1 runner runner    319 Jul  5 10:40 render-simple-deploy.sh
+-rwxr-xr-x 1 runner runner   7248 Jul  5 01:52 render-simple-final.sh
+-rw-r--r-- 1 runner runner   1453 Jul  5 11:16 render.yaml
+-rw-r--r-- 1 runner runner   1117 Jul  4 23:31 .replit
+-rw-r--r-- 1 runner runner  80687 Jul  5 11:31 replit.md
+drwxr-xr-x 1 runner runner   1254 Jul  2 20:41 scripts
+-rw-r--r-- 1 runner runner   3641 Jul  3 20:48 SECRET_CLEANUP_GUIDE.md
+drwxr-xr-x 1 runner runner    594 Jul  5 11:16 server
+drwxr-xr-x 1 runner runner     64 Jul  4 12:53 shared
+-rw-r--r-- 1 runner runner   2787 Apr 12 12:21 tailwind.config.ts
+-rw-r--r-- 1 runner runner    259 Jul  2 20:41 test_admin_cookies.txt
+-rw-r--r-- 1 runner runner   4744 Jul  3 19:45 test-admin-transfer-restriction-fix.cjs
+-rw-r--r-- 1 runner runner   4930 Jul  2 20:41 test-api-endpoints.js
+-rw-r--r-- 1 runner runner   9694 Jul  2 20:41 test-assets-history.html
+-rw-r--r-- 1 runner runner   4146 Jul  3 19:46 test-both-issues.js
+-rw-r--r-- 1 runner runner    131 Jul  2 20:41 test-cookies.txt
+-rw-r--r-- 1 runner runner    131 Jul  2 20:41 test_cookies.txt
+-rw-r--r-- 1 runner runner   3196 Jul  2 20:41 test-email.cjs
+-rw-r--r-- 1 runner runner   4693 Jul  3 19:46 test-final-verification.js
+-rw-r--r-- 1 runner runner   2400 Jul  3 19:45 test-kyc-with-documents.js
+-rw-r--r-- 1 runner runner   3972 Jul  2 20:41 test-login.html
+-rw-r--r-- 1 runner runner   6648 Jul  3 19:45 test-transfer-restriction-system.cjs
+-rw-r--r-- 1 runner runner   6718 Jul  3 19:42 test-transfer-restriction-system.js
+-rw-r--r-- 1 runner runner   6916 Jul  2 20:41 test-withdrawal-restriction-system.js
+-rw-r--r-- 1 runner runner   4666 Jul  3 19:44 test-with-real-user.js
+-rw-r--r-- 1 runner runner     93 Jun 26 01:54 theme.json
+-rw-r--r-- 1 runner runner   1381 Jul  4 13:04 tsconfig.json
+drwxr-xr-x 1 runner runner    136 Jul  4 12:55 types
+drwxr-xr-x 1 runner runner     20 Jul  5 03:50 .upm
+-rw-r--r-- 1 runner runner    131 Jul  2 20:41 user-cookies.txt
+-rw-r--r-- 1 runner runner    131 Jul  2 20:41 user_cookies.txt
+-rw-r--r-- 1 runner runner   2490 Jul  2 20:41 verify-fixes-working.js
+-rw-r--r-- 1 runner runner    978 Apr 12 12:21 vite.config.ts
+-rw-r--r-- 1 runner runner   4638 Jul  4 18:40 VITE_OPTIMIZATION_GUIDE.md
+📂 Checking if vite.config.ts exists:
+-rw-r--r-- 1 runner runner 978 Apr 12 12:21 vite.config.ts
+~/workspace$ 
+~/workspace$ 
+~/workspace$ 
+~/workspace$ 
+~/workspace$ 
+~/workspace$ 
+~/workspace$ 
+~/workspace$ 
+~/workspace$ 

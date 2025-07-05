@@ -4,39 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nedaxer Trading Platform</title>
+    <link href="https://cdn.tailwindcss.com/3.4.0/tailwind.min.css" rel="stylesheet">
     <style>
-        body { 
-            margin: 0; 
-            font-family: Arial, sans-serif; 
-            background: #0a0a2e; 
-            color: white; 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            flex-direction: column;
-        }
-        .logo { width: 200px; margin-bottom: 20px; }
-        .loading { text-align: center; }
-        .subtitle { opacity: 0.8; margin-top: 10px; }
+        body { background: #0a0a2e; color: white; font-family: system-ui, -apple-system, sans-serif; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        .loading { text-align: center; padding: 4rem 0; }
     </style>
 </head>
 <body>
-    <div class="loading">
-        <img src="/public/nedaxer-logo.png" alt="Nedaxer" class="logo" onerror="this.style.display='none'">
-        <h1>Nedaxer Trading Platform</h1>
-        <p class="subtitle">Your complete cryptocurrency trading solution</p>
-        <p>✅ Real-time prices for 106+ cryptocurrencies</p>
-        <p>✅ Advanced mobile trading interface</p>
-        <p>✅ Secure user authentication & KYC</p>
-    </div>
-    <script>
-        // Redirect to mobile app after 3 seconds
-        setTimeout(() => {
-            if (window.location.pathname === '/') {
+    <div id="root">
+        <div class="container">
+            <div class="loading">
+                <h1 style="font-size: 2rem; margin-bottom: 1rem;">Nedaxer Trading Platform</h1>
+                <p>Loading your trading platform...</p>
+                <p style="margin-top: 1rem; opacity: 0.8;">Real-time crypto prices • Advanced mobile trading • Secure authentication</p>
+            </div>
+        </div>
+        <script>
+            // Try to load the actual React app
+            setTimeout(() => {
                 window.location.href = '/mobile';
-            }
-        }, 3000);
-    </script>
+            }, 2000);
+        </script>
+    </div>
 </body>
 </html>

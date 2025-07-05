@@ -195,8 +195,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   setImmediate(async () => {
     try {
       console.log('Starting background image optimization...');
-      await imageOptimizer.optimizeAllImages();
-      console.log('Background image optimization completed');
+      // Temporarily disabled due to WebP binary issues
+      // await imageOptimizer.optimizeAllImages();
+      console.log('Background image optimization skipped (WebP binaries not available)');
     } catch (error) {
       console.error('Background image optimization failed:', error);
     }

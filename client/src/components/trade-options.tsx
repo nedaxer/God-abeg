@@ -16,7 +16,7 @@ export const TradeOptions = () => {
               <div className="h-48 bg-[#0033a0] relative">
                 {option.title === "Call Spreads" ? (
                   <video
-                    src="/videos/call-spread-demo.mp4"
+                    src="https://res.cloudinary.com/dajvsbemy/video/upload/v1751728933/call-spread-demo_mfxf3p.mp4"
                     autoPlay
                     loop
                     muted
