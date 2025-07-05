@@ -5,8 +5,8 @@ services:
     env: node
     region: oregon
     plan: starter
-    buildCommand: chmod +x render-simple-final.sh && ./render-simple-final.sh
-    startCommand: cd dist && npm install && node server.js
+    buildCommand: chmod +x render-production-build.sh && ./render-production-build.sh
+    startCommand: cd dist && npm install && node index.js
     healthCheckPath: /api/health
     envVars:
       - key: NODE_ENV
@@ -36,7 +36,7 @@ services:
       - key: VITE_RECAPTCHA_SITE_KEY
         fromSecret: VITE_RECAPTCHA_SITE_KEY
       - key: BASE_URL
-        value: https://nedaxer-app.onrender.com
+        value: https://nedaxer.onrender.com
     autoDeploy: true
 
 databases:
