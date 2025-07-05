@@ -1,0 +1,47 @@
+services:
+  # Single Full-Stack Application (Frontend + Backend on Port 5000)
+  - type: web
+    name: nedaxer-app
+    env: node
+    region: oregon
+    plan: starter
+    buildCommand: chmod +x render-simple-react-build.sh && ./render-simple-react-build.sh
+    startCommand: npx tsx server/index.production.ts
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: MONGODB_URI
+        fromSecret: MONGODB_URI
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: COINGECKO_API_KEY
+        fromSecret: COINGECKO_API_KEY
+      - key: GOOGLE_CLIENT_ID
+        fromSecret: GOOGLE_CLIENT_ID
+      - key: GOOGLE_CLIENT_SECRET
+        fromSecret: GOOGLE_CLIENT_SECRET
+      - key: SENDGRID_API_KEY
+        fromSecret: SENDGRID_API_KEY
+      - key: ZOHO_EMAIL
+        fromSecret: ZOHO_EMAIL
+      - key: ZOHO_PASSWORD
+        fromSecret: ZOHO_PASSWORD
+      - key: GITHUB_TOKEN
+        fromSecret: GITHUB_TOKEN
+      - key: RECAPTCHA_SECRET_KEY
+        fromSecret: RECAPTCHA_SECRET_KEY
+      - key: VITE_RECAPTCHA_SITE_KEY
+        fromSecret: VITE_RECAPTCHA_SITE_KEY
+      - key: BASE_URL
+        value: https://nedaxer.onrender.com
+    autoDeploy: true
+
+databases:
+  # Optional: MongoDB Atlas connection (if not using external service)
+  # Uncomment if you want Render to manage your database
+  # - name: nedaxer-mongo
+  #   databaseName: nedaxer
+  #   user: nedaxer-user

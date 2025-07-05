@@ -1,0 +1,67 @@
+# Root level gitignore
+node_modules/
+
+# Environment files
+.env
+.env.*
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# Build outputs
+build/
+
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+
+# Database files
+*.db
+*.sqlite
+
+# Deployment specific
+.vercel
+.netlify
+
+# Dependencies lock files (keep package-lock.json but ignore others)
+yarn.lock
+pnpm-lock.yaml
+
+# Scripts and development files
+scripts/
+*.js.map
+*.css.map
+
+# Cookie files (existing development artifacts)
+*cookies*.txt
+admin_cookies*.txt
+test_cookies*.txt
+user_cookies*.txt

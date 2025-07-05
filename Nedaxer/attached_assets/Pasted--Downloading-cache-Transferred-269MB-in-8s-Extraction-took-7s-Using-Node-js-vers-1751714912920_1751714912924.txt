@@ -1,0 +1,50 @@
+
+==> Downloading cache...
+==> Transferred 269MB in 8s. Extraction took 7s.
+==> Using Node.js version 22.16.0 (default)
+==> Docs on specifying a Node.js version: https://render.com/docs/node-version
+==> Using Bun version 1.1.0 (default)
+==> Docs on specifying a Bun version: https://render.com/docs/bun-version
+==> Running build command 'chmod +x render-final-build.sh && ./render-final-build.sh'...
+🚀 Nedaxer Trading Platform - Complete Build & Deploy
+🧹 Cleaning previous builds...
+📦 Installing all dependencies...
+> rest-express@1.0.0 postinstall
+> npm run check
+> rest-express@1.0.0 check
+> tsc
+server/vite.ts(4,64): error TS2307: Cannot find module 'vite' or its corresponding type declarations.
+vite.config.ts(1,30): error TS2307: Cannot find module 'vite' or its corresponding type declarations.
+vite.config.ts(2,19): error TS2307: Cannot find module '@vitejs/plugin-react' or its corresponding type declarations.
+vite.config.ts(5,33): error TS2307: Cannot find module '@replit/vite-plugin-runtime-error-modal' or its corresponding type declarations.
+vite.config.ts(15,24): error TS2307: Cannot find module '@replit/vite-plugin-cartographer' or its corresponding type declarations.
+npm error code 2
+npm error path /opt/render/project/src
+npm error command failed
+npm error command sh -c npm run check
+npm error A complete log of this run can be found in: /opt/render/.cache/_logs/2025-07-05T11_27_19_934Z-debug-0.log
+🔍 Verifying build dependencies...
+❌ Vite not found, installing...
+up to date, audited 1082 packages in 3s
+135 packages are looking for funding
+  run `npm fund` for details
+20 vulnerabilities (1 moderate, 19 high)
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+Run `npm audit` for details.
+🔧 Building frontend with Vite...
+failed to load config from /opt/render/project/src/vite.config.ts
+error during build:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'vite' imported from /opt/render/project/src/node_modules/.vite-temp/vite.config.ts.timestamp-1751714878412-2aaa2a12ece41.mjs
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:256:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:854:18)
+    at defaultResolve (node:internal/modules/esm/resolve:984:11)
+    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:780:12)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:704:25)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:687:38)
+    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:305:38)
+    at ModuleJob._link (node:internal/modules/esm/module_job:137:49)
+❌ Frontend build failed - missing dist/index.html
+==> Build failed 😞
+==> Common ways to tro

@@ -1,0 +1,41 @@
+=> Checking out commit 0b83e3bc305f7e74671c0ec4dc25abb99da1e7c5 in branch main
+==> Downloading cache...
+==> Transferred 53MB in 8s. Extraction took 1s.
+==> Using Node.js version 22.16.0 (default)
+==> Docs on specifying a Node.js version: https://render.com/docs/node-version
+==> Using Bun version 1.1.0 (default)
+==> Docs on specifying a Bun version: https://render.com/docs/bun-version
+==> Running build command 'chmod +x render-app-deployment.sh && ./render-app-deployment.sh'...
+🚀 Nedaxer Trading Platform - Full App Deployment
+🧹 Creating deployment structure...
+📂 Copying essential application files...
+🔧 Creating startup configuration...
+📄 Updating package.json for production...
+✅ Full app deployment build completed successfully!
+📋 Deployment ready with:
+   • Complete Nedaxer trading platform
+   • All dependencies included
+   • Production startup script
+   • Health check endpoints
+total 48
+drwxr-sr-x  6 render render 4096 Jul  5 10:37 .
+drwxr-sr-x 13 render render 4096 Jul  5 10:37 ..
+drwxr-sr-x  4 render render 4096 Jul  5 10:37 client
+-rw-r--r--  1 render render  727 Jul  5 10:37 package.json
+-rw-r--r--  1 render render   80 Jul  5 10:37 postcss.config.js
+drwxr-sr-x  4 render render 4096 Jul  5 10:37 public
+drwxr-sr-x  8 render render 4096 Jul  5 10:37 server
+drwxr-sr-x  2 render render 4096 Jul  5 10:37 shared
+-rw-r--r--  1 render render  601 Jul  5 10:37 start.js
+-rw-r--r--  1 render render 2787 Jul  5 10:37 tailwind.config.ts
+-rw-r--r--  1 render render 1381 Jul  5 10:37 tsconfig.json
+-rw-r--r--  1 render render  978 Jul  5 10:37 vite.config.ts
+==> Uploading build...
+==> Uploaded in 5.6s. Compression took 1.2s
+==> Build successful 🎉
+==> Deploying...
+==> Running 'cd dist && npm install && node index.js'
+==> No open ports detected, continuing to scan...
+==> Docs on specifying a port: https://render.com/docs/web-services#port-binding
+==> Exited with status 1
+==> Common ways to troubleshoot your deploy: https://render.com/docs/troubleshooting-deploy

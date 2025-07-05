@@ -1,0 +1,46 @@
+hecking out commit 1dfb9d1787616b62b24d1060613e3922a67930d2 in branch main
+==> Using Node.js version 22.16.0 (default)
+==> Docs on specifying a Node.js version: https://render.com/docs/node-version
+==> Using Bun version 1.1.0 (default)
+==> Docs on specifying a Bun version: https://render.com/docs/bun-version
+==> Running build command 'chmod +x render-simple-final.sh && ./render-simple-final.sh'...
+🚀 Simple Render build...
+✅ Simple build complete!
+📁 Created files:
+total 2232
+drwxr-sr-x  9 render render    4096 Jul  5 01:41 .
+drwxr-sr-x 12 render render    4096 Jul  5 01:41 ..
+-rw-r--r--  1 render render   30541 Jul  5 01:41 apple-touch-icon.png
+-rw-r--r--  1 render render    3518 Jul  5 01:41 favicon.ico
+drwxr-sr-x  2 render render    4096 Jul  5 01:41 icons
+drwxr-sr-x  2 render render    4096 Jul  5 01:41 images
+-rw-r--r--  1 render render     954 Jul  5 01:41 index.html
+-rw-r--r--  1 render render    1235 Jul  5 01:41 index.js
+-rw-r--r--  1 render render 2182082 Jul  5 01:41 index.production.js
+drwxr-sr-x  2 render render    4096 Jul  5 01:41 logos
+-rw-r--r--  1 render render    2361 Jul  5 01:41 manifest.json
+-rw-r--r--  1 render render     198 Jul  5 01:41 package.json
+drwxr-sr-x  9 render render    4096 Jul  5 01:41 public
+-rw-r--r--  1 render render    2453 Jul  5 01:41 service-worker.js
+drwxr-sr-x  2 render render    4096 Jul  5 01:41 splash-assets
+-rw-r--r--  1 render render    6879 Jul  5 01:41 sw.js
+drwxr-sr-x  2 render render    4096 Jul  5 01:41 team_photos
+drwxr-sr-x  2 render render    4096 Jul  5 01:41 videos
+==> Uploading build...
+==> Uploaded in 4.9s. Compression took 1.3s
+==> Build successful 🎉
+==> Deploying...
+==> Running 'cd dist && npm install && node index.js'
+added 69 packages, and audited 70 packages in 17s
+14 packages are looking for funding
+  run `npm fund` for details
+found 0 vulnerabilities
+🚀 Nedaxer server running on port 3001
+📡 Health check available at: /api/health
+==> Your service is live 🎉
+==> 
+==> ///////////////////////////////////////////////////////////
+==> 
+==> Available at your primary URL https://nedaxer.onrender.com
+==> 
+==> /////////////////////////////////////

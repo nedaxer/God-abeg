@@ -1,0 +1,182 @@
+==> Cloning from https://github.com/nedaxer/new-upload-render
+==> Checking out commit a53ab3a2e4286e3a9b3540fd7abcddcdaf2e64c1 in branch main
+==> Using Node.js version 22.16.0 (default)
+==> Docs on specifying a Node.js version: https://render.com/docs/node-version
+==> Using Bun version 1.1.0 (default)
+==> Docs on specifying a Bun version: https://render.com/docs/bun-version
+==> Running build command 'npm install && chmod +x render-build.sh && ./render-build.sh'...
+> rest-express@1.0.0 postinstall
+> npm run check
+> rest-express@1.0.0 check
+> tsc
+client/src/components/animated-error-banner.tsx(126,14): error TS2322: Type '{ children: string; jsx: true; }' is not assignable to type 'DetailedHTMLProps<StyleHTMLAttributes<HTMLStyleElement>, HTMLStyleElement>'.
+  Property 'jsx' does not exist on type 'DetailedHTMLProps<StyleHTMLAttributes<HTMLStyleElement>, HTMLStyleElement>'.
+client/src/components/crypto-pair-selector.tsx(130,36): error TS2345: Argument of type '{ method: string; body: { cryptoId: string; symbol: string; }; }' is not assignable to parameter of type 'string'.
+client/src/components/crypto-pair-selector.tsx(141,36): error TS2345: Argument of type '{ method: string; body: { cryptoId: string; symbol: string; }; }' is not assignable to parameter of type 'string'.
+client/src/components/crypto-pair-selector.tsx(151,24): error TS2339: Property 'data' does not exist on type 'unknown'.
+client/src/components/crypto-pair-selector.tsx(152,34): error TS2339: Property 'data' does not exist on type 'unknown'.
+client/src/components/lightweight-chart.tsx(87,34): error TS2345: Argument of type 'string' is not assignable to parameter of type 'SeriesDefinition<keyof SeriesOptionsMap>'.
+client/src/components/lightweight-chart.tsx(96,34): error TS2345: Argument of type 'string' is not assignable to parameter of type 'SeriesDefinition<keyof SeriesOptionsMap>'.
+client/src/components/lightweight-chart.tsx(112,46): error TS2345: Argument of type 'string' is not assignable to parameter of type 'SeriesDefinition<keyof SeriesOptionsMap>'.
+client/src/components/protected-route.tsx(43,37): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+client/src/components/protected-route.tsx(75,17): error TS2741: Property 'params' is missing in type '{}' but required in type 'RouteComponentProps<{ [param: string]: string; }>'.
+client/src/components/pull-to-refresh.tsx(13,25): error TS2307: Cannot find module '@assets/Refresh  app logo_1750782062607.png' or its corresponding type declarations.
+client/src/components/pull-to-refresh.tsx(14,21): error TS2307: Cannot find module '@assets/20250618_001640_1750782086856.png' or its corresponding type declarations.
+client/src/components/pull-to-refresh.tsx(15,22): error TS2307: Cannot find module '@assets/20250618_001710_1750782086866.png' or its corresponding type declarations.
+client/src/components/pull-to-refresh.tsx(16,21): error TS2307: Cannot find module '@assets/20250618_001748_1750782086877.png' or its corresponding type declarations.
+client/src/components/pull-to-refresh.tsx(17,21): error TS2307: Cannot find module '@assets/20250618_001828_1750782086889.png' or its corresponding type declarations.
+client/src/components/pull-to-refresh.tsx(18,21): error TS2307: Cannot find module '@assets/20250618_001859_1750782086919.png' or its corresponding type declarations.
+client/src/components/pull-to-refresh.tsx(19,22): error TS2307: Cannot find module '@assets/20250618_001938_1750782086928.png' or its corresponding type declarations.
+client/src/components/pull-to-refresh.tsx(20,21): error TS2307: Cannot find module '@assets/20250618_002006_1750782086936.png' or its corresponding type declarations.
+client/src/components/splash-screen.tsx(5,21): error TS2307: Cannot find module '@assets/20250618_001640_1750207793691.png' or its corresponding type declarations.
+client/src/components/splash-screen.tsx(6,22): error TS2307: Cannot find module '@assets/20250618_001710_1750207793694.png' or its corresponding type declarations.
+client/src/components/splash-screen.tsx(7,21): error TS2307: Cannot find module '@assets/20250618_001748_1750207793698.png' or its corresponding type declarations.
+client/src/components/splash-screen.tsx(8,21): error TS2307: Cannot find module '@assets/20250618_001828_1750207793703.png' or its corresponding type declarations.
+client/src/components/splash-screen.tsx(9,21): error TS2307: Cannot find module '@assets/20250618_001859_1750207793716.png' or its corresponding type declarations.
+client/src/components/splash-screen.tsx(10,22): error TS2307: Cannot find module '@assets/20250618_001938_1750207793727.png' or its corresponding type declarations.
+client/src/components/splash-screen.tsx(11,21): error TS2307: Cannot find module '@assets/20250618_002006_1750207793730.png' or its corresponding type declarations.
+client/src/components/splash-screen.tsx(12,29): error TS2307: Cannot find module '@assets/file_00000000e0d461f9b4be5c8627966318_1750209747614.png' or its corresponding type declarations.
+client/src/components/splash-screen.tsx(13,25): error TS2307: Cannot find module '@assets/20250618_042459_1750217238332.png' or its corresponding type declarations.
+client/src/lib/chart-state-manager.ts(155,5): error TS2322: Type 'Window' is not assignable to type 'boolean'.
+client/src/pages/account/login.tsx(263,43): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+client/src/pages/account/register.tsx(437,45): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+client/src/pages/company/careers.tsx(7,27): error TS2307: Cannot find module '/team_photos/team_main.png' or its corresponding type declarations.
+client/src/pages/company/careers.tsx(8,24): error TS2307: Cannot find module '/team_photos/team_1.png' or its corresponding type declarations.
+client/src/pages/company/careers.tsx(9,24): error TS2307: Cannot find module '/team_photos/team_2.png' or its corresponding type declarations.
+client/src/pages/company/careers.tsx(10,24): error TS2307: Cannot find module '/team_photos/team_3.png' or its corresponding type declarations.
+client/src/pages/company/careers.tsx(11,24): error TS2307: Cannot find module '/team_photos/team_4.png' or its corresponding type declarations.
+client/src/pages/company/careers.tsx(12,24): error TS2307: Cannot find module '/team_photos/team_5.png' or its corresponding type declarations.
+client/src/pages/company/careers.tsx(13,24): error TS2307: Cannot find module '/team_photos/team_6.png' or its corresponding type declarations.
+client/src/pages/mobile/assets.tsx(34,33): error TS2307: Cannot find module '@/assets/advanced-charts-video.mp4' or its corresponding type declarations.
+client/src/pages/mobile/deposit-details.tsx(42,11): error TS2339: Property 'transactionId' does not exist on type 'StringRouteParams<undefined>'.
+client/src/pages/mobile/home.tsx(353,20): error TS2554: Expected 2-3 arguments, but got 1.
+client/src/pages/mobile/home.tsx(524,24): error TS2339: Property 'data' does not exist on type 'unknown'.
+client/src/pages/mobile/home.tsx(737,21): error TS2339: Property 'data' does not exist on type 'unknown'.
+client/src/pages/mobile/home.tsx(737,61): error TS2339: Property 'data' does not exist on type 'unknown'.
+client/src/pages/mobile/home.tsx(742,44): error TS2339: Property 'data' does not exist on type 'unknown'.
+client/src/pages/mobile/home.tsx(743,35): error TS2339: Property 'data' does not exist on type 'unknown'.
+client/src/pages/mobile/home.tsx(787,35): error TS2339: Property 'unreadCount' does not exist on type 'unknown'.
+client/src/pages/mobile/home.tsx(790,40): error TS2339: Property 'unreadCount' does not exist on type 'unknown'.
+client/src/pages/mobile/home.tsx(790,83): error TS2339: Property 'unreadCount' does not exist on type 'unknown'.
+client/src/pages/mobile/kyc-status.tsx(37,30): error TS2339: Property 'data' does not exist on type 'unknown'.
+client/src/pages/mobile/news.tsx(244,50): error TS2304: Cannot find name 'getSourceIcon'.
+client/src/pages/mobile/security.tsx(69,20): error TS2554: Expected 2-3 arguments, but got 1.
+client/src/pages/mobile/security.tsx(77,20): error TS2554: Expected 2-3 arguments, but got 1.
+client/src/pages/mobile/security.tsx(266,23): error TS2339: Property 'data' does not exist on type 'Response'.
+client/src/pages/mobile/security.tsx(269,25): error TS2339: Property 'data' does not exist on type 'Response'.
+client/src/pages/mobile/security.tsx(665,30): error TS2339: Property 'data' does not exist on type 'Response'.
+client/src/pages/mobile/settings.tsx(53,20): error TS2554: Expected 2-3 arguments, but got 1.
+client/src/pages/mobile/settings.tsx(61,20): error TS2554: Expected 2-3 arguments, but got 1.
+client/src/pages/mobile/settings.tsx(68,24): error TS2339: Property 'data' does not exist on type 'Response'.
+client/src/pages/mobile/settings.tsx(69,35): error TS2339: Property 'data' does not exist on type 'Response'.
+client/src/pages/mobile/settings.tsx(388,28): error TS2339: Property 'data' does not exist on type 'Response'.
+client/src/pages/mobile/settings.tsx(390,32): error TS2339: Property 'data' does not exist on type 'Response'.
+client/src/pages/mobile/settings.tsx(394,29): error TS2339: Property 'data' does not exist on type 'Response'.
+client/src/pages/mobile/settings.tsx(396,32): error TS2339: Property 'data' does not exist on type 'Response'.
+client/src/pages/mobile/trade.tsx(212,61): error TS2448: Block-scoped variable 'currentSymbol' used before its declaration.
+client/src/pages/mobile/transfer-details.tsx(11,11): error TS2339: Property 'transactionId' does not exist on type 'StringRouteParams<undefined>'.
+client/src/pages/mobile/verification-submitted.tsx(36,30): error TS2339: Property 'data' does not exist on type 'unknown'.
+client/src/pages/mobile/verification/VerificationStart.tsx(7,31): error TS2307: Cannot find module '@assets/Picsart_25-06-28_15-49-20-738 (1)_1751125238732.png' or its corresponding type declarations.
+client/src/pages/mobile/withdrawal-details.tsx(42,11): error TS2339: Property 'transactionId' does not exist on type 'StringRouteParams<undefined>'.
+client/src/pages/mobile/withdrawal-details.tsx(52,44): error TS2339: Property 'data' does not exist on type 'unknown'.
+client/src/pages/platform/staking.tsx(162,46): error TS2345: Argument of type '{ method: string; body: { currencyId: number; amount: number; lockupDays: number; }; }' is not assignable to parameter of type 'string'.
+client/src/pages/platform/staking.tsx(180,62): error TS2345: Argument of type '{ method: string; }' is not assignable to parameter of type 'string'.
+client/src/pages/platform/trading.tsx(51,33): error TS2339: Property 'find' does not exist on type 'unknown'.
+client/src/pages/platform/wallet.tsx(161,48): error TS2345: Argument of type '{ method: string; body: { currencyId: number; amount: number; address: string; }; }' is not assignable to parameter of type 'string'.
+server/api/admin-kyc-routes.ts(17,47): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request<{}, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>, number>) => Promise<Response<any, Record<...>, number>>' is not assignable to parameter of type 'RequestHandlerParams<{}, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request<{}, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>, number>) => Promise<Response<any, Record<...>, number>>' is not assignable to type 'RequestHandler<{}, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<Response<any, Record<string, any>, number>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<Response<any, Record<string, any>, number>>' is not assignable to type 'Promise<void>'.
+            Type 'Response<any, Record<string, any>, number>' is not assignable to type 'void'.
+server/api/admin-kyc-routes.ts(40,29): error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(id: any, projection: ProjectionType<IUser>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, projection?: ProjectionType<...>, options?: QueryOp...' has signatures, but none of those signatures are compatible with each other.
+server/api/admin-kyc-routes.ts(122,45): error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(filter: RootFilterQuery<IUser>, projection: ProjectionType<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(filter: RootFilterQuery<...>, projectio...' has signatures, but none of those signatures are compatible with each other.
+server/api/admin-kyc-routes.ts(144,54): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request<{}, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>, number>) => Promise<Response<any, Record<...>, number>>' is not assignable to parameter of type 'RequestHandlerParams<{}, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request<{}, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>, number>) => Promise<Response<any, Record<...>, number>>' is not assignable to type 'RequestHandler<{}, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<Response<any, Record<string, any>, number>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<Response<any, Record<string, any>, number>>' is not assignable to type 'Promise<void>'.
+            Type 'Response<any, Record<string, any>, number>' is not assignable to type 'void'.
+server/api/admin-kyc-routes.ts(152,29): error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(filter: RootFilterQuery<IUser>, projection: ProjectionType<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(filter?: RootFilterQuery<...>, projecti...' has signatures, but none of those signatures are compatible with each other.
+server/api/admin-panel-routes.ts(11,12): error TS2339: Property 'session' does not exist on type 'Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+server/api/admin-panel-routes.ts(18,71): error TS2339: Property 'session' does not exist on type 'Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+server/api/admin-panel-routes.ts(31,22): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+server/api/admin-panel-routes.ts(48,24): error TS2362: The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
+server/api/admin-panel-routes.ts(61,22): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+server/api/admin-panel-routes.ts(89,32): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+server/api/admin-panel-routes.ts(137,8): error TS2339: Property 'where' does not exist on type 'Omit<PgSelectBase<"user_balances", { id: PgColumn<{ name: "id"; tableName: "user_balances"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; notNull: true; hasDefault: true; ... 6 more ...; generated: undefined; }, {}, {}>; userId: PgColumn<...>; currencyId: PgColumn<...>; bal...'.
+server/api/admin-panel-routes.ts(158,21): error TS2304: Cannot find name 'adminCredits'.
+server/api/admin-panel-routes.ts(159,20): error TS2339: Property 'session' does not exist on type 'Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+server/api/admin-panel-routes.ts(168,35): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(value: { userId: number | SQL<unknown> | Placeholder<string, any>; type: string | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<...>; ... 8 more ...; toAddress?: string | ... 1 more ... | Placeholder<...>; }): PgInsertBase<...>', gave the following error.
+    Object literal may only specify known properties, and 'sourceId' does not exist in type '{ userId: number | SQL<unknown> | Placeholder<string, any>; type: string | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<...>; ... 8 more ...; toAddress?: string | ... 1 more ... | Placeholder<...>; }'.
+  Overload 2 of 2, '(values: { userId: number | SQL<unknown> | Placeholder<string, any>; type: string | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<...>; ... 8 more ...; toAddress?: string | ... 1 more ... | Placeholder<...>; }[]): PgInsertBase<...>', gave the following error.
+    Object literal may only specify known properties, and 'userId' does not exist in type '{ userId: number | SQL<unknown> | Placeholder<string, any>; type: string | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<...>; ... 8 more ...; toAddress?: string | ... 1 more ... | Placeholder<...>; }[]'.
+server/api/admin-panel-routes.ts(197,31): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+server/api/admin-panel-routes.ts(237,11): error TS2353: Object literal may only specify known properties, and 'rate' does not exist in type '{ currencyId?: number | SQL<unknown> | PgColumn<ColumnBaseConfig<ColumnDataType, string>, {}, {}>; apy?: number | SQL<unknown> | PgColumn<...>; ... 4 more ...; lockPeriod?: number | ... 1 more ... | PgColumn<...>; }'.
+server/api/admin-panel-routes.ts(244,37): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(value: { currencyId: number | SQL<unknown> | Placeholder<string, any>; apy: number | SQL<unknown> | Placeholder<string, any>; id?: number | SQL<unknown> | Placeholder<...>; createdAt?: Date | ... 1 more ... | Placeholder<...>; minAmount?: number | ... 1 more ... | Placeholder<...>; maxAmount?: number | ... 1 more ... | Placeholder<...>; lockPeriod?: number | ... 1 more ... | Placeholder<...>; }): PgInsertBase<...>', gave the following error.
+    Object literal may only specify known properties, and 'rate' does not exist in type '{ currencyId: number | SQL<unknown> | Placeholder<string, any>; apy: number | SQL<unknown> | Placeholder<string, any>; id?: number | SQL<unknown> | Placeholder<string, any>; createdAt?: Date | ... 1 more ... | Placeholder<...>; minAmount?: number | ... 1 more ... | Placeholder<...>; maxAmount?: number | ... 1 more ....'.
+  Overload 2 of 2, '(values: { currencyId: number | SQL<unknown> | Placeholder<string, any>; apy: number | SQL<unknown> | Placeholder<string, any>; id?: number | SQL<unknown> | Placeholder<...>; createdAt?: Date | ... 1 more ... | Placeholder<...>; minAmount?: number | ... 1 more ... | Placeholder<...>; maxAmount?: number | ... 1 more ... | Placeholder<...>; lockPeriod?: number | ... 1 more ... | Placeholder<...>; }[]): PgInsertBase<...>', gave the following error.
+    Object literal may only specify known properties, and 'currencyId' does not exist in type '{ currencyId: number | SQL<unknown> | Placeholder<string, any>; apy: number | SQL<unknown> | Placeholder<string, any>; id?: number | SQL<unknown> | Placeholder<string, any>; createdAt?: Date | ... 1 more ... | Placeholder<...>; minAmount?: number | ... 1 more ... | Placeholder<...>; maxAmount?: number | ... 1 more ....'.
+server/api/admin-panel-routes.ts(268,36): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+server/api/admin-panel-routes.ts(274,34): error TS2339: Property 'sourceAmount' does not exist on type 'PgTableWithColumns<{ name: "transactions"; schema: undefined; columns: { id: PgColumn<{ name: "id"; tableName: "transactions"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; ... 8 more ...; generated: undefined; }, {}, {}>; ... 10 more ...; updatedAt: PgColumn<...>; }; diale...'.
+server/api/admin-panel-routes.ts(275,34): error TS2339: Property 'targetAmount' does not exist on type 'PgTableWithColumns<{ name: "transactions"; schema: undefined; columns: { id: PgColumn<{ name: "id"; tableName: "transactions"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; ... 8 more ...; generated: undefined; }, {}, {}>; ... 10 more ...; updatedAt: PgColumn<...>; }; diale...'.
+server/api/admin-routes.ts(14,12): error TS2339: Property 'session' does not exist on type 'Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+server/api/admin-routes.ts(20,29): error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(id: any, projection: ProjectionType<IUser>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, projection?: ProjectionType<...>, options?: QueryOp...' has signatures, but none of those signatures are compatible with each other.
+server/api/admin-routes.ts(20,42): error TS2339: Property 'session' does not exist on type 'Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+server/api/admin-routes.ts(41,22): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+server/api/admin-routes.ts(74,22): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+server/api/admin-routes.ts(92,33): error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(filter: RootFilterQuery<IUser>, projection: ProjectionType<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(filter: RootFilterQuery<...>, projectio...' has signatures, but none of those signatures are compatible with each other.
+server/api/admin-routes.ts(102,36): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request

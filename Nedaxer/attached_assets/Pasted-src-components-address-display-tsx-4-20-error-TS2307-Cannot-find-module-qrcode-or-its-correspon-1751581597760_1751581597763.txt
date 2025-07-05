@@ -1,0 +1,119 @@
+src/components/address-display.tsx(4,20): error TS2307: Cannot find module 'qrcode' or its corresponding type declarations.
+src/components/advanced-trading-chart.tsx(197,41): error TS7006: Parameter 'item' implicitly has an 'any' type.
+src/components/animated-error-banner.tsx(126,14): error TS2322: Type '{ children: string; jsx: true; }' is not assignable to type 'DetailedHTMLProps<StyleHTMLAttributes<HTMLStyleElement>, HTMLStyleElement>'.
+  Property 'jsx' does not exist on type 'DetailedHTMLProps<StyleHTMLAttributes<HTMLStyleElement>, HTMLStyleElement>'.
+src/components/crypto-pair-selector.tsx(130,36): error TS2345: Argument of type '{ method: string; body: { cryptoId: string; symbol: string; }; }' is not assignable to parameter of type 'string'.
+src/components/crypto-pair-selector.tsx(141,36): error TS2345: Argument of type '{ method: string; body: { cryptoId: string; symbol: string; }; }' is not assignable to parameter of type 'string'.
+src/components/crypto-pair-selector.tsx(151,24): error TS2339: Property 'data' does not exist on type '{}'.
+src/components/crypto-pair-selector.tsx(152,34): error TS2339: Property 'data' does not exist on type '{}'.
+src/components/lightweight-chart.tsx(87,34): error TS2345: Argument of type 'string' is not assignable to parameter of type 'SeriesDefinition<keyof SeriesOptionsMap>'.
+src/components/lightweight-chart.tsx(96,34): error TS2345: Argument of type 'string' is not assignable to parameter of type 'SeriesDefinition<keyof SeriesOptionsMap>'.
+src/components/lightweight-chart.tsx(112,46): error TS2345: Argument of type 'string' is not assignable to parameter of type 'SeriesDefinition<keyof SeriesOptionsMap>'.
+src/components/protected-route.tsx(43,37): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/components/protected-route.tsx(43,48): error TS2580: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node`.
+src/components/protected-route.tsx(52,21): error TS18047: 'user' is possibly 'null'.
+src/components/protected-route.tsx(71,27): error TS18047: 'user' is possibly 'null'.
+src/components/protected-route.tsx(75,17): error TS2741: Property 'params' is missing in type '{}' but required in type 'RouteComponentProps<{ [param: string]: string | undefined; }>'.
+src/components/pull-to-refresh.tsx(13,25): error TS2307: Cannot find module '@assets/Refresh  app logo_1750782062607.png' or its corresponding type declarations.
+src/components/pull-to-refresh.tsx(14,21): error TS2307: Cannot find module '@assets/20250618_001640_1750782086856.png' or its corresponding type declarations.
+src/components/pull-to-refresh.tsx(15,22): error TS2307: Cannot find module '@assets/20250618_001710_1750782086866.png' or its corresponding type declarations.
+src/components/pull-to-refresh.tsx(16,21): error TS2307: Cannot find module '@assets/20250618_001748_1750782086877.png' or its corresponding type declarations.
+src/components/pull-to-refresh.tsx(17,21): error TS2307: Cannot find module '@assets/20250618_001828_1750782086889.png' or its corresponding type declarations.
+src/components/pull-to-refresh.tsx(18,21): error TS2307: Cannot find module '@assets/20250618_001859_1750782086919.png' or its corresponding type declarations.
+src/components/pull-to-refresh.tsx(19,22): error TS2307: Cannot find module '@assets/20250618_001938_1750782086928.png' or its corresponding type declarations.
+src/components/pull-to-refresh.tsx(20,21): error TS2307: Cannot find module '@assets/20250618_002006_1750782086936.png' or its corresponding type declarations.
+src/components/splash-screen.tsx(5,21): error TS2307: Cannot find module '@assets/20250618_001640_1750207793691.png' or its corresponding type declarations.
+src/components/splash-screen.tsx(6,22): error TS2307: Cannot find module '@assets/20250618_001710_1750207793694.png' or its corresponding type declarations.
+src/components/splash-screen.tsx(7,21): error TS2307: Cannot find module '@assets/20250618_001748_1750207793698.png' or its corresponding type declarations.
+src/components/splash-screen.tsx(8,21): error TS2307: Cannot find module '@assets/20250618_001828_1750207793703.png' or its corresponding type declarations.
+src/components/splash-screen.tsx(9,21): error TS2307: Cannot find module '@assets/20250618_001859_1750207793716.png' or its corresponding type declarations.
+src/components/splash-screen.tsx(10,22): error TS2307: Cannot find module '@assets/20250618_001938_1750207793727.png' or its corresponding type declarations.
+src/components/splash-screen.tsx(11,21): error TS2307: Cannot find module '@assets/20250618_002006_1750207793730.png' or its corresponding type declarations.
+src/components/splash-screen.tsx(12,29): error TS2307: Cannot find module '@assets/file_00000000e0d461f9b4be5c8627966318_1750209747614.png' or its corresponding type declarations.
+src/components/splash-screen.tsx(13,25): error TS2307: Cannot find module '@assets/20250618_042459_1750217238332.png' or its corresponding type declarations.
+src/hooks/use-auth.tsx(8,34): error TS2307: Cannot find module '@shared/schema' or its corresponding type declarations.
+src/lib/chart-persistence.ts(26,26): error TS2503: Cannot find namespace 'NodeJS'.
+src/lib/queryClient.ts(78,25): error TS7006: Parameter 'previousData' implicitly has an 'any' type.
+src/main.tsx(132,7): error TS2580: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node`.
+src/main.tsx(156,5): error TS2580: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node`.
+src/main.tsx(165,7): error TS2580: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node`.
+src/pages/account/login.tsx(263,43): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/pages/account/register.tsx(437,45): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/pages/admin-portal-unified.tsx(119,27): error TS2503: Cannot find namespace 'NodeJS'.
+src/pages/company/careers.tsx(7,27): error TS2307: Cannot find module '/team_photos/team_main.png' or its corresponding type declarations.
+src/pages/company/careers.tsx(8,24): error TS2307: Cannot find module '/team_photos/team_1.png' or its corresponding type declarations.
+src/pages/company/careers.tsx(9,24): error TS2307: Cannot find module '/team_photos/team_2.png' or its corresponding type declarations.
+src/pages/company/careers.tsx(10,24): error TS2307: Cannot find module '/team_photos/team_3.png' or its corresponding type declarations.
+src/pages/company/careers.tsx(11,24): error TS2307: Cannot find module '/team_photos/team_4.png' or its corresponding type declarations.
+src/pages/company/careers.tsx(12,24): error TS2307: Cannot find module '/team_photos/team_5.png' or its corresponding type declarations.
+src/pages/company/careers.tsx(13,24): error TS2307: Cannot find module '/team_photos/team_6.png' or its corresponding type declarations.
+src/pages/markets/market-data.tsx(19,27): error TS7006: Parameter 'id' implicitly has an 'any' type.
+src/pages/markets/market-data.tsx(130,61): error TS18048: 'selectedStats.dailyChange' is possibly 'undefined'.
+src/pages/markets/market-data.tsx(131,26): error TS18048: 'selectedStats.dailyChange' is possibly 'undefined'.
+src/pages/markets/market-data.tsx(131,69): error TS18048: 'selectedStats.dailyChange' is possibly 'undefined'.
+src/pages/markets/market-data.tsx(136,61): error TS18048: 'selectedStats.weeklyChange' is possibly 'undefined'.
+src/pages/markets/market-data.tsx(137,26): error TS18048: 'selectedStats.weeklyChange' is possibly 'undefined'.
+src/pages/markets/market-data.tsx(137,70): error TS18048: 'selectedStats.weeklyChange' is possibly 'undefined'.
+src/pages/markets/market-data.tsx(142,61): error TS18048: 'selectedStats.monthlyChange' is possibly 'undefined'.
+src/pages/markets/market-data.tsx(143,26): error TS18048: 'selectedStats.monthlyChange' is possibly 'undefined'.
+src/pages/markets/market-data.tsx(143,71): error TS18048: 'selectedStats.monthlyChange' is possibly 'undefined'.
+src/pages/mobile/address-display.tsx(4,20): error TS2307: Cannot find module 'qrcode' or its corresponding type declarations.
+src/pages/mobile/assets.tsx(34,33): error TS2307: Cannot find module '@/assets/advanced-charts-video.mp4' or its corresponding type declarations.
+src/pages/mobile/home.tsx(353,20): error TS2554: Expected 2-3 arguments, but got 1.
+src/pages/mobile/home.tsx(481,32): error TS7006: Parameter 'market' implicitly has an 'any' type.
+src/pages/mobile/home.tsx(484,19): error TS7006: Parameter 'market' implicitly has an 'any' type.
+src/pages/mobile/home.tsx(485,18): error TS7006: Parameter 'a' implicitly has an 'any' type.
+src/pages/mobile/home.tsx(485,21): error TS7006: Parameter 'b' implicitly has an 'any' type.
+src/pages/mobile/home.tsx(489,19): error TS7006: Parameter 'market' implicitly has an 'any' type.
+src/pages/mobile/home.tsx(490,18): error TS7006: Parameter 'a' implicitly has an 'any' type.
+src/pages/mobile/home.tsx(490,21): error TS7006: Parameter 'b' implicitly has an 'any' type.
+src/pages/mobile/home.tsx(493,31): error TS7006: Parameter 'a' implicitly has an 'any' type.
+src/pages/mobile/home.tsx(493,34): error TS7006: Parameter 'b' implicitly has an 'any' type.
+src/pages/mobile/home.tsx(495,31): error TS7006: Parameter 'a' implicitly has an 'any' type.
+src/pages/mobile/home.tsx(495,34): error TS7006: Parameter 'b' implicitly has an 'any' type.
+src/pages/mobile/home.tsx(497,31): error TS7006: Parameter 'a' implicitly has an 'any' type.
+src/pages/mobile/home.tsx(497,34): error TS7006: Parameter 'b' implicitly has an 'any' type.
+src/pages/mobile/home.tsx(499,31): error TS7006: Parameter 'a' implicitly has an 'any' type.
+src/pages/mobile/home.tsx(499,34): error TS7006: Parameter 'b' implicitly has an 'any' type.
+src/pages/mobile/home.tsx(524,24): error TS2339: Property 'data' does not exist on type '{}'.
+src/pages/mobile/home.tsx(735,9): error TS2322: Type 'unknown' is not assignable to type 'ReactNode'.
+src/pages/mobile/home.tsx(737,21): error TS2339: Property 'data' does not exist on type '{}'.
+src/pages/mobile/home.tsx(737,61): error TS2339: Property 'data' does not exist on type '{}'.
+src/pages/mobile/home.tsx(742,44): error TS2339: Property 'data' does not exist on type '{}'.
+src/pages/mobile/home.tsx(743,35): error TS2339: Property 'data' does not exist on type '{}'.
+src/pages/mobile/home.tsx(787,35): error TS2339: Property 'unreadCount' does not exist on type '{}'.
+src/pages/mobile/home.tsx(790,22): error TS18046: 'notificationCount' is of type 'unknown'.
+src/pages/mobile/home.tsx(790,65): error TS18046: 'notificationCount' is of type 'unknown'.
+src/pages/mobile/home.tsx(932,35): error TS7006: Parameter 'market' implicitly has an 'any' type.
+src/pages/mobile/home.tsx(932,43): error TS7006: Parameter 'index' implicitly has an 'any' type.
+src/pages/mobile/kyc-status.tsx(37,30): error TS2339: Property 'data' does not exist on type '{}'.
+src/pages/mobile/news.tsx(244,50): error TS2304: Cannot find name 'getSourceIcon'.
+src/pages/mobile/notifications.tsx(35,27): error TS2503: Cannot find namespace 'NodeJS'.
+src/pages/mobile/security.tsx(69,20): error TS2554: Expected 2-3 arguments, but got 1.
+src/pages/mobile/security.tsx(77,20): error TS2554: Expected 2-3 arguments, but got 1.
+src/pages/mobile/security.tsx(266,23): error TS2339: Property 'data' does not exist on type 'Response'.
+src/pages/mobile/security.tsx(269,25): error TS2339: Property 'data' does not exist on type 'Response'.
+src/pages/mobile/security.tsx(665,30): error TS2339: Property 'data' does not exist on type 'Response'.
+src/pages/mobile/settings.tsx(53,20): error TS2554: Expected 2-3 arguments, but got 1.
+src/pages/mobile/settings.tsx(61,20): error TS2554: Expected 2-3 arguments, but got 1.
+src/pages/mobile/settings.tsx(68,24): error TS2339: Property 'data' does not exist on type 'Response'.
+src/pages/mobile/settings.tsx(69,35): error TS2339: Property 'data' does not exist on type 'Response'.
+src/pages/mobile/settings.tsx(388,28): error TS2339: Property 'data' does not exist on type 'Response'.
+src/pages/mobile/settings.tsx(390,32): error TS2339: Property 'data' does not exist on type 'Response'.
+src/pages/mobile/settings.tsx(394,29): error TS2339: Property 'data' does not exist on type 'Response'.
+src/pages/mobile/settings.tsx(396,32): error TS2339: Property 'data' does not exist on type 'Response'.
+src/pages/mobile/trade.tsx(212,15): error TS7022: 'currentSymbol' implicitly has type 'any' because it does not have a type annotation and is referenced directly or indirectly in its own initializer.
+src/pages/mobile/trade.tsx(212,61): error TS2448: Block-scoped variable 'currentSymbol' used before its declaration.
+src/pages/mobile/trade.tsx(278,38): error TS2503: Cannot find namespace 'NodeJS'.
+src/pages/mobile/trade.tsx(509,23): error TS7006: Parameter 'newSymbol' implicitly has an 'any' type.
+src/pages/mobile/trade.tsx(509,34): error TS7006: Parameter 'interval' implicitly has an 'any' type.
+src/pages/mobile/trade.tsx(509,44): error TS7006: Parameter 'callback' implicitly has an 'any' type.
+src/pages/mobile/verification-submitted.tsx(36,30): error TS2339: Property 'data' does not exist on type '{}'.
+src/pages/mobile/verification/VerificationStart.tsx(7,31): error TS2307: Cannot find module '@assets/Picsart_25-06-28_15-49-20-738 (1)_1751125238732.png' or its corresponding type declarations.
+src/pages/mobile/withdrawal-details.tsx(52,44): error TS2339: Property 'data' does not exist on type '{}'.
+src/pages/platform/staking.tsx(162,46): error TS2345: Argument of type '{ method: string; body: { currencyId: number; amount: number; lockupDays: number; }; }' is not assignable to parameter of type 'string'.
+src/pages/platform/staking.tsx(180,62): error TS2345: Argument of type '{ method: string; }' is not assignable to parameter of type 'string'.
+src/pages/platform/trading.tsx(51,33): error TS2339: Property 'find' does not exist on type '{}'.
+src/pages/platform/wallet.tsx(161,48): error TS2345: Argument of type '{ method: string; body: { currencyId: number; amount: number; address: string; }; }' is not assignable to parameter of type 'string'.
+src/pages/trading/live-trading.tsx(206,13): error TS2322: Type 'unknown' is not assignable to type 'ReactNode'.
+==> Build failed 😞

@@ -1,0 +1,54 @@
+==> Checking out commit 78e77ca9d1195e681640e3299728b509886aba2f in branch main
+==> Using Node.js version 22.16.0 (default)
+==> Docs on specifying a Node.js version: https://render.com/docs/node-version
+==> Using Bun version 1.1.0 (default)
+==> Docs on specifying a Bun version: https://render.com/docs/bun-version
+==> Running build command 'chmod +x render-production-build.sh && ./render-production-build.sh'...
+🚀 Building Nedaxer Trading Platform - Full Application...
+📦 Installing dependencies...
+added 1081 packages, and audited 1082 packages in 12s
+135 packages are looking for funding
+  run `npm fund` for details
+20 vulnerabilities (1 moderate, 19 high)
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+Run `npm audit` for details.
+📦 Installing build tools...
+up to date, audited 1082 packages in 4s
+135 packages are looking for funding
+  run `npm fund` for details
+20 vulnerabilities (1 moderate, 19 high)
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+Run `npm audit` for details.
+📦 Building frontend with Vite...
+failed to load config from /opt/render/project/src/vite.config.ts
+error during build:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'vite' imported from /opt/render/project/src/node_modules/.vite-temp/vite.config.ts.timestamp-1751685512956-3f8124604bc47.mjs
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:256:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:854:18)
+    at defaultResolve (node:internal/modules/esm/resolve:984:11)
+    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:780:12)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:704:25)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:687:38)
+    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:305:38)
+    at ModuleJob._link (node:internal/modules/esm/module_job:137:49)
+🔧 Building server...
+📄 Creating production package.json...
+📂 Copying server configuration files...
+🏥 Creating health check...
+✅ Production build completed successfully!
+📁 Created files:
+total 168
+drwxr-sr-x  5 render render   4096 Jul  5 03:18 .
+drwxr-sr-x 14 render render   4096 Jul  5 03:18 ..
+-rw-r--r--  1 render render    244 Jul  5 03:18 health.js
+-rw-r--r--  1 render render 142401 Jul  5 03:18 index.js
+-rw-r--r--  1 render render    842 Jul  5 03:18 package.json
+drwxr-sr-x  4 render render   4096 Jul  5 03:18 public
+drwxr-sr-x  2 render render   4096 Jul  5 03:18 services
+drwxr-sr-x  2 render render   4096 Jul  5 03:18 types
+📊 Server bundle: 139KB
+❌ Frontend build failed!
+==> Build failed 😞

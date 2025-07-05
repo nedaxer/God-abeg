@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Assets History</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #0a0a2e;
+            color: white;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #ccc;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #444;
+            background-color: #1a1a40;
+            color: white;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #ff6b35;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #e55a2b;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+            background-color: #1a1a40;
+            border: 1px solid #2a2a50;
+        }
+        .transaction {
+            padding: 12px;
+            margin: 8px 0;
+            background-color: #2a2a50;
+            border-radius: 6px;
+            border-left: 3px solid #ff6b35;
+        }
+        .transaction-header {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .transaction-details {
+            font-size: 12px;
+            color: #ccc;
+        }
+        .success { color: #4ade80; }
+        .error { color: #ef4444; }
+    </style>
+</head>
+<body>
+    <h2>Assets History Test</h2>
+    
+    <div>
+        <h3>Step 1: Login</h3>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">Username/Email:</label>
+                <input type="text" id="username" name="username" value="robinstephen003@outlook.com" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" value="password123" required>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <div id="loginResult"></div>
+
+    <div id="historySection" style="display: none;">
+        <h3>Step 2: View Assets History</h3>
+        <button onclick="loadAssetsHistory()">Load Transaction History</button>
+        <div id="historyResult"></div>
+    </div>
+
+    <script>
+        let isLoggedIn = false;
+
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const resultDiv = document.getElementById('loginResult');
+            
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        username: username,
+                        password: password
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    isLoggedIn = true;
+                    resultDiv.innerHTML = `
+                        <div class="result success">
+                            <h4>✓ Login Successful!</h4>
+                            <p><strong>User:</strong> ${data.user.username}</p>
+                            <p><strong>UID:</strong> ${data.user.uid}</p>
+                            <p><strong>Verified:</strong> ${data.user.isVerified}</p>
+                        </div>
+                    `;
+                    document.getElementById('historySection').style.display = 'block';
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="result error">
+                            <h4>✗ Login Failed</h4>
+                            <p>${data.message || 'Unknown error'}</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="result error">
+                        <h4>✗ Network Error</h4>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        });
+
+        async function loadAssetsHistory() {
+            if (!isLoggedIn) {
+                alert('Please login first');
+                return;
+            }
+
+            const resultDiv = document.getElementById('historyResult');
+            resultDiv.innerHTML = '<p>Loading transaction history...</p>';
+            
+            try {
+                const response = await fetch('/api/deposits/history', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include'
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    const transactions = data.data || [];
+                    
+                    if (transactions.length === 0) {
+                        resultDiv.innerHTML = `
+                            <div class="result">
+                                <h4>📋 No Transaction History</h4>
+                                <p>No deposit transactions found for this user.</p>
+                                <p><em>This is expected for new accounts or accounts without deposits.</em></p>
+                            </div>
+                        `;
+                    } else {
+                        let transactionHtml = `
+                            <div class="result">
+                                <h4>📋 Assets History (${transactions.length} transactions)</h4>
+                        `;
+                        
+                        transactions.forEach(tx => {
+                            const date = new Date(tx.createdAt).toLocaleDateString('en-US', {
+                                year: 'numeric',
+                                month: '2-digit',
+                                day: '2-digit',
+                                hour: '2-digit',
+                                minute: '2-digit'
+                            });
+                            
+                            transactionHtml += `
+                                <div class="transaction">
+                                    <div class="transaction-header">
+                                        <span>${tx.cryptoSymbol} Deposit</span>
+                                        <span class="success">+${tx.cryptoAmount.toFixed(8)}</span>
+                                    </div>
+                                    <div class="transaction-details">
+                                        <div>USD Value: $${tx.usdAmount.toFixed(2)}</div>
+                                        <div>Network: ${tx.networkName}</div>
+                                        <div>Date: ${date}</div>
+                                        <div>Status: <span class="success">Confirmed</span></div>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                        
+                        transactionHtml += '</div>';
+                        resultDiv.innerHTML = transactionHtml;
+                    }
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="result error">
+                            <h4>✗ Failed to Load History</h4>
+                            <p>${data.message || 'Unknown error'}</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="result error">
+                        <h4>✗ Network Error</h4>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Auto-check authentication status on page load
+        window.addEventListener('load', async function() {
+            try {
+                const response = await fetch('/api/auth/user', {
+                    credentials: 'include'
+                });
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    isLoggedIn = true;
+                    document.getElementById('loginResult').innerHTML = `
+                        <div class="result success">
+                            <h4>✓ Already Logged In</h4>
+                            <p><strong>User:</strong> ${data.user.username}</p>
+                        </div>
+                    `;
+                    document.getElementById('historySection').style.display = 'block';
+                }
+            } catch (error) {
+                // Not logged in, which is fine
+            }
+        });
+    </script>
+</body>
+</html>

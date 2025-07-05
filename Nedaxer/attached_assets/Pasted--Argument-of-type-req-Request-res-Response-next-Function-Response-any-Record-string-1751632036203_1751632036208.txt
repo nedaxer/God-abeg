@@ -1,0 +1,2518 @@
+
+    Argument of type '(req: Request, res: Response, next: Function) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: Function) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+25 walletRouter.get("/addresses", requireAuth, async (req, res) => {
+                                  ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/api/wallet-routes.ts:30:62 - error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
+
+30     const wallets = await depositService.generateUserWallets(userId);
+                                                                ~~~~~~
+
+server/api/wallet-routes.ts:74:38 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: Function) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: Function) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+74 walletRouter.post("/check-deposits", requireAuth, async (req, res) => {
+                                        ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/api/wallet-routes.ts:78:61 - error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
+
+78     const result = await depositService.checkForNewDeposits(userId);
+                                                               ~~~~~~
+
+server/mongodb.ts:62:41 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(filter: RootFilterQuery<IUser>, projection: ProjectionType<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(filter?: RootFilterQuery<...>, projecti...' has signatures, but none of those signatures are compatible with each other.
+
+62     const existingTestUser = await User.findOne({ username: 'testuser' });
+                                           ~~~~~~~
+
+server/mongodb.ts:80:42 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(filter: RootFilterQuery<IUser>, projection: ProjectionType<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(filter?: RootFilterQuery<...>, projecti...' has signatures, but none of those signatures are compatible with each other.
+
+80     const existingAdminUser = await User.findOne({ username: 'admin' });
+                                            ~~~~~~~
+
+server/mongodb.ts:107:47 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & ... 1 more ... & { ...; })[] | (FlattenMaps<...> & ... 1 more ... & { ...; }), ... 4 more ..., {}>; <ResultDoc = any>(filter?: RootFilterQuery<...>, projection?:...' has signatures, but none of those signatures are compatible with each other.
+
+107       const existingCurrency = await Currency.findOne({ symbol: currencyData.symbol });
+                                                  ~~~~~~~
+
+server/mongodb.ts:116:40 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & ... 1 more ... & { ...; })[] | (FlattenMaps<...> & ... 1 more ... & { ...; }), ... 4 more ..., {}>; <ResultDoc = any>(filter?: RootFilterQuery<...>, projection?:...' has signatures, but none of those signatures are compatible with each other.
+
+116     const usdCurrency = await Currency.findOne({ symbol: 'USD' });
+                                           ~~~~~~~
+
+server/mongodb.ts:117:40 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & ... 1 more ... & { ...; })[] | (FlattenMaps<...> & ... 1 more ... & { ...; }), ... 4 more ..., {}>; <ResultDoc = any>(filter?: RootFilterQuery<...>, projection?:...' has signatures, but none of those signatures are compatible with each other.
+
+117     const btcCurrency = await Currency.findOne({ symbol: 'BTC' });
+                                           ~~~~~~~
+
+server/mongodb.ts:118:40 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & ... 1 more ... & { ...; })[] | (FlattenMaps<...> & ... 1 more ... & { ...; }), ... 4 more ..., {}>; <ResultDoc = any>(filter?: RootFilterQuery<...>, projection?:...' has signatures, but none of those signatures are compatible with each other.
+
+118     const ethCurrency = await Currency.findOne({ symbol: 'ETH' });
+                                           ~~~~~~~
+
+server/mongoStorage.ts:92:31 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(id: any, projection: ProjectionType<IUser>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, projection?: ProjectionType<...>, options?: QueryOp...' has signatures, but none of those signatures are compatible with each other.
+
+92       const user = await User.findById(id).select('-password');
+                                 ~~~~~~~~
+
+server/mongoStorage.ts:119:7 - error TS2739: Type '{ _id: any; uid: any; username: any; email: any; firstName: any; lastName: any; isAdmin: any; isVerified: boolean; profilePicture: any; preferences: any; favorites: any; createdAt: any; updatedAt: any; }' is missing the following properties from type 'IUser': password, balance
+
+119       return userData;
+          ~~~~~~
+
+server/mongoStorage.ts:136:31 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(filter: RootFilterQuery<IUser>, projection: ProjectionType<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(filter?: RootFilterQuery<...>, projecti...' has signatures, but none of those signatures are compatible with each other.
+
+136       let result = await User.findOne({ username });
+                                  ~~~~~~~
+
+server/mongoStorage.ts:138:29 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(filter: RootFilterQuery<IUser>, projection: ProjectionType<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(filter?: RootFilterQuery<...>, projecti...' has signatures, but none of those signatures are compatible with each other.
+
+138         result = await User.findOne({ email: username });
+                                ~~~~~~~
+
+server/mongoStorage.ts:153:33 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(filter: RootFilterQuery<IUser>, projection: ProjectionType<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(filter?: RootFilterQuery<...>, projecti...' has signatures, but none of those signatures are compatible with each other.
+
+153       const result = await User.findOne({ email });
+                                    ~~~~~~~
+
+server/mongoStorage.ts:178:41 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(filter: RootFilterQuery<IUser>, projection: ProjectionType<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(filter?: RootFilterQuery<...>, projecti...' has signatures, but none of those signatures are compatible with each other.
+
+178         const existingUser = await User.findOne({ uid });
+                                            ~~~~~~~
+
+server/mongoStorage.ts:213:18 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(filter: RootFilterQuery<IUser>, update: UpdateQuery<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, update: UpdateQuery<...>, options: Qu...' has signatures, but none of those signatures are compatible with each other.
+
+213       await User.findByIdAndUpdate(userId, {
+                     ~~~~~~~~~~~~~~~~~
+
+server/mongoStorage.ts:225:31 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(id: any, projection: ProjectionType<IUser>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, projection?: ProjectionType<...>, options?: QueryOp...' has signatures, but none of those signatures are compatible with each other.
+
+225       const user = await User.findById(userId);
+                                  ~~~~~~~~
+
+server/mongoStorage.ts:241:18 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(filter: RootFilterQuery<IUser>, update: UpdateQuery<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, update: UpdateQuery<...>, options: Qu...' has signatures, but none of those signatures are compatible with each other.
+
+241       await User.findByIdAndUpdate(userId, {
+                     ~~~~~~~~~~~~~~~~~
+
+server/mongoStorage.ts:254:18 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(filter: RootFilterQuery<IUser>, update: UpdateQuery<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, update: UpdateQuery<...>, options: Qu...' has signatures, but none of those signatures are compatible with each other.
+
+254       await User.findByIdAndUpdate(userId, {
+                     ~~~~~~~~~~~~~~~~~
+
+server/mongoStorage.ts:266:31 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(id: any, projection: ProjectionType<IUser>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, projection?: ProjectionType<...>, options?: QueryOp...' has signatures, but none of those signatures are compatible with each other.
+
+266       const user = await User.findById(userId);
+                                  ~~~~~~~~
+
+server/mongoStorage.ts:289:18 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(filter: RootFilterQuery<IUser>, update: UpdateQuery<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, update: UpdateQuery<...>, options: Qu...' has signatures, but none of those signatures are compatible with each other.
+
+289       await User.findByIdAndUpdate(userId, {
+                     ~~~~~~~~~~~~~~~~~
+
+server/mongoStorage.ts:314:18 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(filter: RootFilterQuery<IUser>, update: UpdateQuery<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, update: UpdateQuery<...>, options: Qu...' has signatures, but none of those signatures are compatible with each other.
+
+314       await User.findByIdAndUpdate(userId, updateData, { new: true });
+                     ~~~~~~~~~~~~~~~~~
+
+server/mongoStorage.ts:325:18 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(filter: RootFilterQuery<IUser>, update: UpdateQuery<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, update: UpdateQuery<...>, options: Qu...' has signatures, but none of those signatures are compatible with each other.
+
+325       await User.findByIdAndUpdate(userId, {
+                     ~~~~~~~~~~~~~~~~~
+
+server/mongoStorage.ts:336:18 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(filter: RootFilterQuery<IUser>, update: UpdateQuery<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, update: UpdateQuery<...>, options: Qu...' has signatures, but none of those signatures are compatible with each other.
+
+336       await User.findByIdAndUpdate(userId, {
+                     ~~~~~~~~~~~~~~~~~
+
+server/mongoStorage.ts:347:31 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(id: any, projection: ProjectionType<IUser>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, projection?: ProjectionType<...>, options?: QueryOp...' has signatures, but none of those signatures are compatible with each other.
+
+347       const user = await User.findById(userId).select('favorites');
+                                  ~~~~~~~~
+
+server/mongoStorage.ts:381:18 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(filter: RootFilterQuery<IUser>, update: UpdateQuery<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, update: UpdateQuery<...>, options: Qu...' has signatures, but none of those signatures are compatible with each other.
+
+381       await User.findByIdAndUpdate(userId, {
+                     ~~~~~~~~~~~~~~~~~
+
+server/mongoStorage.ts:399:31 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(id: any, projection: ProjectionType<IUser>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, projection?: ProjectionType<...>, options?: QueryOp...' has signatures, but none of those signatures are compatible with each other.
+
+399       const user = await User.findById(userId).select('preferences');
+                                  ~~~~~~~~
+
+server/mongoStorage.ts:424:32 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(filter: RootFilterQuery<IUser>, projection: ProjectionType<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(filter: RootFilterQuery<...>, projectio...' has signatures, but none of those signatures are compatible with each other.
+
+424       const users = await User.find({
+                                   ~~~~
+
+server/mongoStorage.ts:472:31 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(id: any, projection: ProjectionType<IUser>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, projection?: ProjectionType<...>, options?: QueryOp...' has signatures, but none of those signatures are compatible with each other.
+
+472       const user = await User.findById(userId);
+                                  ~~~~~~~~
+
+server/mongoStorage.ts:478:42 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & ... 1 more ... & { ...; })[] | (FlattenMaps<...> & ... 1 more ... & { ...; }), ... 4 more ..., {}>; <ResultDoc = any>(filter?: RootFilterQuery<...>, projection?:...' has signatures, but none of those signatures are compatible with each other.
+
+478       const usdCurrency = await Currency.findOne({ symbol: 'USD' });
+                                             ~~~~~~~
+
+server/mongoStorage.ts:484:49 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & ... 1 more ... & { ...; })[] | (FlattenMaps<...> & ... 1 more ... & { ...; }), ... 4 more ..., {}>; <ResultDoc = any>(filter?: RootFilterQuery<...>, projection?:...' has signatures, but none of those signatures are compatible with each other.
+
+484       const existingBalance = await UserBalance.findOne({
+                                                    ~~~~~~~
+
+server/mongoStorage.ts:494:27 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, update: UpdateQuery<any>, options: QueryOptions<any> & { includeResultMetadata: true; lean: true; }): Query<...>; <ResultDoc = any>(filter: RootFilterQuery<...>, update: UpdateQuery<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = any>(filter: R...' has signatures, but none of those signatures are compatible with each other.
+
+494         await UserBalance.findOneAndUpdate(
+                              ~~~~~~~~~~~~~~~~
+
+server/mongoStorage.ts:503:27 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <DocContents = AnyKeys<any>>(docs: any[], options: CreateOptions & { aggregateErrors: true; }): Promise<any[]>; <DocContents = AnyKeys<any>>(docs: any[], options?: CreateOptions): Promise<...>; <DocContents = AnyKeys<...>>(doc: any): Promise<...>; <DocContents = AnyKeys<...>>(...docs: any[]): Promise<...>; } | { ....' has signatures, but none of those signatures are compatible with each other.
+
+503         await UserBalance.create({
+                              ~~~~~~
+
+server/mongoStorage.ts:516:18 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(filter: RootFilterQuery<IUser>, update: UpdateQuery<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, update: UpdateQuery<...>, options: Qu...' has signatures, but none of those signatures are compatible with each other.
+
+516       await User.findByIdAndUpdate(userId, {
+                     ~~~~~~~~~~~~~~~~~
+
+server/mongoStorage.ts:537:31 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(id: any, projection: ProjectionType<IUser>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, projection?: ProjectionType<...>, options?: QueryOp...' has signatures, but none of those signatures are compatible with each other.
+
+537       const user = await User.findById(userId);
+                                  ~~~~~~~~
+
+server/mongoStorage.ts:543:42 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & ... 1 more ... & { ...; })[] | (FlattenMaps<...> & ... 1 more ... & { ...; }), ... 4 more ..., {}>; <ResultDoc = any>(filter?: RootFilterQuery<...>, projection?:...' has signatures, but none of those signatures are compatible with each other.
+
+543       const usdCurrency = await Currency.findOne({ symbol: 'USD' });
+                                             ~~~~~~~
+
+server/mongoStorage.ts:549:49 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & ... 1 more ... & { ...; })[] | (FlattenMaps<...> & ... 1 more ... & { ...; }), ... 4 more ..., {}>; <ResultDoc = any>(filter?: RootFilterQuery<...>, projection?:...' has signatures, but none of those signatures are compatible with each other.
+
+549       const existingBalance = await UserBalance.findOne({
+                                                    ~~~~~~~
+
+server/mongoStorage.ts:565:25 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, update: UpdateQuery<any>, options: QueryOptions<any> & { includeResultMetadata: true; lean: true; }): Query<...>; <ResultDoc = any>(filter: RootFilterQuery<...>, update: UpdateQuery<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = any>(filter: R...' has signatures, but none of those signatures are compatible with each other.
+
+565       await UserBalance.findOneAndUpdate(
+                            ~~~~~~~~~~~~~~~~
+
+server/mongoStorage.ts:577:18 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(filter: RootFilterQuery<IUser>, update: UpdateQuery<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, update: UpdateQuery<...>, options: Qu...' has signatures, but none of those signatures are compatible with each other.
+
+577       await User.findByIdAndUpdate(userId, {
+                     ~~~~~~~~~~~~~~~~~
+
+server/mongoStorage.ts:593:18 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(id: any, options: QueryOptions<IUser> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ......' has signatures, but none of those signatures are compatible with each other.
+
+593       await User.findByIdAndDelete(userId);
+                     ~~~~~~~~~~~~~~~~~
+
+server/mongoStorage.ts:601:9 - error TS2416: Property 'getUserBalance' in type 'MongoStorage' is not assignable to the same property in base type 'IMongoStorage'.
+  Type '(userId: string, currency?: string) => Promise<{ balance: number; }>' is not assignable to type '(userId: string) => Promise<number>'.
+    Type 'Promise<{ balance: number; }>' is not assignable to type 'Promise<number>'.
+      Type '{ balance: number; }' is not assignable to type 'number'.
+
+601   async getUserBalance(userId: string, currency: string = 'USD'): Promise<{ balance: number } | null> {
+            ~~~~~~~~~~~~~~
+
+server/mongoStorage.ts:603:31 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(id: any, projection: ProjectionType<IUser>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, projection?: ProjectionType<...>, options?: QueryOp...' has signatures, but none of those signatures are compatible with each other.
+
+603       const user = await User.findById(userId).select('balance');
+                                  ~~~~~~~~
+
+server/mongoStorage.ts:619:31 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(id: any, projection: ProjectionType<IUser>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, projection?: ProjectionType<...>, options?: QueryOp...' has signatures, but none of those signatures are compatible with each other.
+
+619       const user = await User.findById(userId);
+                                  ~~~~~~~~
+
+server/mongoStorage.ts:633:18 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(filter: RootFilterQuery<IUser>, update: UpdateQuery<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, update: UpdateQuery<...>, options: Qu...' has signatures, but none of those signatures are compatible with each other.
+
+633       await User.findByIdAndUpdate(userId, { balance: newBalance });
+                     ~~~~~~~~~~~~~~~~~
+
+server/routes.mongo.ts:60:39 - error TS18047: 'userId' is possibly 'null'.
+
+60     if (typeof userId === 'object' && userId.toString) {
+                                         ~~~~~~
+
+server/routes.mongo.ts:61:16 - error TS18047: 'userId' is possibly 'null'.
+
+61       userId = userId.toString();
+                  ~~~~~~
+
+server/routes.mongo.ts:199:35 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response) => Promise<Response<any, Record<string, any>>>' is not assignable to parameter of type 'Application<Record<string, any>>'.
+      Type '(req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>) => Promise<...>' is missing the following properties from type 'Application<Record<string, any>>': init, defaultConfiguration, engine, set, and 63 more.
+
+199   app.get('/api/images/optimize', async (req: Request, res: Response) => {
+                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:168:5
+    168     (path: PathParams, subApplication: Application): T;
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:302:33 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'void | Response<any, Record<string, any>>' is not assignable to type 'void'.
+              Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+302   app.post('/api/users/search', requireAuth, async (req: Request, res: Response) => {
+                                    ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:319:31 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(filter: RootFilterQuery<IUser>, projection: ProjectionType<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(filter?: RootFilterQuery<...>, projecti...' has signatures, but none of those signatures are compatible with each other.
+
+319       const user = await User.findOne({
+                                  ~~~~~~~
+
+server/routes.mongo.ts:353:41 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'void | Response<any, Record<string, any>>' is not assignable to type 'void'.
+              Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+353   app.post('/api/user/change-password', requireAuth, async (req: Request, res: Response) => {
+                                            ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:377:31 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(id: any, projection: ProjectionType<IUser>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, projection?: ProjectionType<...>, options?: QueryOp...' has signatures, but none of those signatures are compatible with each other.
+
+377       const user = await User.findById(userId);
+                                  ~~~~~~~~
+
+server/routes.mongo.ts:399:18 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(filter: RootFilterQuery<IUser>, update: UpdateQuery<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, update: UpdateQuery<...>, options: Qu...' has signatures, but none of those signatures are compatible with each other.
+
+399       await User.findByIdAndUpdate(userId, {
+                     ~~~~~~~~~~~~~~~~~
+
+server/routes.mongo.ts:436:36 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'void | Response<any, Record<string, any>>' is not assignable to type 'void'.
+              Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+436   app.post('/api/wallet/transfer', requireAuth, async (req: Request, res: Response) => {
+                                       ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:478:33 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(id: any, projection: ProjectionType<IUser>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, projection?: ProjectionType<...>, options?: QueryOp...' has signatures, but none of those signatures are compatible with each other.
+
+478       const sender = await User.findById(senderId).select('transferAccess');
+                                    ~~~~~~~~
+
+server/routes.mongo.ts:502:44 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & ... 1 more ... & { ...; })[] | (FlattenMaps<...> & ... 1 more ... & { ...; }), ... 4 more ..., {}>; <ResultDoc = any>(filter?: RootFilterQuery<...>, projection?:...' has signatures, but none of those signatures are compatible with each other.
+
+502         const usdCurrency = await Currency.findOne({ symbol: 'USD' });
+                                               ~~~~~~~
+
+server/routes.mongo.ts:508:49 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & ... 1 more ... & { ...; })[] | (FlattenMaps<...> & ... 1 more ... & { ...; }), ... 4 more ..., {}>; <ResultDoc = any>(filter?: RootFilterQuery<...>, projection?:...' has signatures, but none of those signatures are compatible with each other.
+
+508         const senderBalance = await UserBalance.findOne({
+                                                    ~~~~~~~
+
+server/routes.mongo.ts:525:50 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & ... 1 more ... & { ...; })[] | (FlattenMaps<...> & ... 1 more ... & { ...; }), ... 4 more ..., {}>; <ResultDoc = any>(filter?: RootFilterQuery<...>, projection?:...' has signatures, but none of those signatures are compatible with each other.
+
+525         let recipientBalance = await UserBalance.findOne({
+                                                     ~~~~~~~
+
+server/routes.mongo.ts:568:35 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(id: any, projection: ProjectionType<IUser>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, projection?: ProjectionType<...>, options?: QueryOp...' has signatures, but none of those signatures are compatible with each other.
+
+568         const sender = await User.findById(senderId).select('firstName lastName');
+                                      ~~~~~~~~
+
+server/routes.mongo.ts:569:38 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(id: any, projection: ProjectionType<IUser>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, projection?: ProjectionType<...>, options?: QueryOp...' has signatures, but none of those signatures are compatible with each other.
+
+569         const recipient = await User.findById(recipientId).select('firstName lastName');
+                                         ~~~~~~~~
+
+server/routes.mongo.ts:683:37 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'void | Response<any, Record<string, any>>' is not assignable to type 'void'.
+              Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+683   app.get('/api/transfers/history', requireAuth, async (req: Request, res: Response) => {
+                                        ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:694:45 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & Required<...> & { ...; })[], ... 4 more ..., {}>; <ResultDoc = any>(filter: RootFilterQuery<...>, projection?: ProjectionType<...>, options?: QueryOptions<...>):...' has signatures, but none of those signatures are compatible with each other.
+
+694         const allTransfers = await Transfer.find({
+                                                ~~~~
+
+server/routes.mongo.ts:743:40 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & Required<...> & { ...; })[], ... 4 more ..., {}>; <ResultDoc = any>(filter: RootFilterQuery<...>, projection?: ProjectionType<...>, options?: QueryOptions<...>):...' has signatures, but none of those signatures are compatible with each other.
+
+743       const transfers = await Transfer.find({
+                                           ~~~~
+
+server/routes.mongo.ts:809:52 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'void | Response<any, Record<string, any>>' is not assignable to type 'void'.
+              Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+809   app.get('/api/transfers/details/:transactionId', requireAuth, async (req: Request, res: Response) => {
+                                                       ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:819:39 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & ... 1 more ... & { ...; })[] | (FlattenMaps<...> & ... 1 more ... & { ...; }), ... 4 more ..., {}>; <ResultDoc = any>(filter?: RootFilterQuery<...>, projection?:...' has signatures, but none of those signatures are compatible with each other.
+
+819       const transfer = await Transfer.findOne({
+                                          ~~~~~~~
+
+server/routes.mongo.ts:875:42 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>) => Promise<...>' is not assignable to parameter of type 'Application<Record<string, any>>'.
+      Type '(req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>) => Promise<...>' is missing the following properties from type 'Application<Record<string, any>>': init, defaultConfiguration, engine, set, and 63 more.
+
+875   app.get('/api/crypto/realtime-prices', getRealtimePrices);
+                                             ~~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:168:5
+    168     (path: PathParams, subApplication: Application): T;
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:1250:29 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response) => Promise<Response<any, Record<string, any>>>' is not assignable to parameter of type 'Application<Record<string, any>>'.
+      Type '(req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>) => Promise<...>' is missing the following properties from type 'Application<Record<string, any>>': init, defaultConfiguration, engine, set, and 63 more.
+
+1250   app.get('/api/auth/user', async (req: Request, res: Response) => {
+                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:168:5
+    168     (path: PathParams, subApplication: Application): T;
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:1310:34 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response) => Promise<Response<any, Record<string, any>>>' is not assignable to parameter of type 'Application<Record<string, any>>'.
+      Type '(req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>) => Promise<...>' is missing the following properties from type 'Application<Record<string, any>>': init, defaultConfiguration, engine, set, and 63 more.
+
+1310   app.post('/api/auth/register', async (req: Request, res: Response) => {
+                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:168:5
+    168     (path: PathParams, subApplication: Application): T;
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:1397:44 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & ... 1 more ... & { ...; })[] | (FlattenMaps<...> & ... 1 more ... & { ...; }), ... 4 more ..., {}>; <ResultDoc = any>(filter?: RootFilterQuery<...>, projection?:...' has signatures, but none of those signatures are compatible with each other.
+
+1397         const usdCurrency = await Currency.findOne({ symbol: 'USD' });
+                                                ~~~~~~~
+
+server/routes.mongo.ts:1446:31 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response) => Promise<Response<any, Record<string, any>>>' is not assignable to parameter of type 'Application<Record<string, any>>'.
+      Type '(req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>) => Promise<...>' is missing the following properties from type 'Application<Record<string, any>>': init, defaultConfiguration, engine, set, and 63 more.
+
+1446   app.post('/api/auth/login', async (req: Request, res: Response) => {
+                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:168:5
+    168     (path: PathParams, subApplication: Application): T;
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:1645:25 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'void | Response<any, Record<string, any>>' is not assignable to type 'void'.
+              Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+1645   app.get('/dashboard', requireAuth, async (req: Request, res: Response) => {
+                             ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:1665:32 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'void | Response<any, Record<string, any>>' is not assignable to type 'void'.
+              Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+1665   app.put('/api/auth/profile', requireAuth, async (req: Request, res: Response) => {
+                                    ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:1721:30 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'void | Response<any, Record<string, any>>' is not assignable to type 'void'.
+              Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+1721   app.post('/api/favorites', requireAuth, async (req: Request, res: Response) => {
+                                  ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:1734:40 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'void | Response<any, Record<string, any>>' is not assignable to type 'void'.
+              Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+1734   app.delete('/api/favorites/:symbol', requireAuth, async (req: Request, res: Response) => {
+                                            ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:1747:29 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'void | Response<any, Record<string, any>>' is not assignable to type 'void'.
+              Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+1747   app.get('/api/favorites', requireAuth, async (req: Request, res: Response) => {
+                                 ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:1759:31 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'void | Response<any, Record<string, any>>' is not assignable to type 'void'.
+              Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+1759   app.put('/api/preferences', requireAuth, async (req: Request, res: Response) => {
+                                   ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:1772:31 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'void | Response<any, Record<string, any>>' is not assignable to type 'void'.
+              Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+1772   app.get('/api/preferences', requireAuth, async (req: Request, res: Response) => {
+                                   ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:1784:28 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'void | Response<any, Record<string, any>>' is not assignable to type 'void'.
+              Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+1784   app.get('/api/balances', requireAuth, async (req: Request, res: Response) => {
+                                ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:1795:42 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & ... 1 more ... & { ...; })[] | (FlattenMaps<...> & ... 1 more ... & { ...; }), ... 4 more ..., {}>; <ResultDoc = any>(filter?: RootFilterQuery<...>, projection?:...' has signatures, but none of those signatures are compatible with each other.
+
+1795       const usdCurrency = await Currency.findOne({ symbol: 'USD' });
+                                              ~~~~~~~
+
+server/routes.mongo.ts:1805:42 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & ... 1 more ... & { ...; })[] | (FlattenMaps<...> & ... 1 more ... & { ...; }), ... 4 more ..., {}>; <ResultDoc = any>(filter?: RootFilterQuery<...>, projection?:...' has signatures, but none of those signatures are compatible with each other.
+
+1805       let usdBalance = await UserBalance.findOne({
+                                              ~~~~~~~
+
+server/routes.mongo.ts:1812:40 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <DocContents = AnyKeys<any>>(docs: any[], options: CreateOptions & { aggregateErrors: true; }): Promise<any[]>; <DocContents = AnyKeys<any>>(docs: any[], options?: CreateOptions): Promise<...>; <DocContents = AnyKeys<...>>(doc: any): Promise<...>; <DocContents = AnyKeys<...>>(...docs: any[]): Promise<...>; } | { ....' has signatures, but none of those signatures are compatible with each other.
+
+1812         usdBalance = await UserBalance.create({
+                                            ~~~~~~
+
+server/routes.mongo.ts:1853:42 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & ... 1 more ... & { ...; })[] | (FlattenMaps<...> & ... 1 more ... & { ...; }), ... 4 more ..., {}>; <ResultDoc = any>(filter?: RootFilterQuery<...>, projection?:...' has signatures, but none of those signatures are compatible with each other.
+
+1853       const usdCurrency = await Currency.findOne({ symbol: 'USD' });
+                                              ~~~~~~~
+
+server/routes.mongo.ts:1857:27 - error TS2349: This expression is not callable.
+  Each member of the union type '{ (filter?: RootFilterQuery<any>, options?: DeleteOptions & Pick<QueryOptions<any>, MongooseBaseQueryOptionKeys> & { ...; }): Query<...>; (filter: RootFilterQuery<...>): Query<...>; } | { ...; }' has signatures, but none of those signatures are compatible with each other.
+
+1857         await UserBalance.deleteMany({
+                               ~~~~~~~~~~
+
+server/routes.mongo.ts:1884:34 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'void | Response<any, Record<string, any>>' is not assignable to type 'void'.
+              Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+1884   app.get('/api/wallet/summary', requireAuth, async (req: Request, res: Response) => {
+                                      ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:1895:42 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & ... 1 more ... & { ...; })[] | (FlattenMaps<...> & ... 1 more ... & { ...; }), ... 4 more ..., {}>; <ResultDoc = any>(filter?: RootFilterQuery<...>, projection?:...' has signatures, but none of those signatures are compatible with each other.
+
+1895       const usdCurrency = await Currency.findOne({ symbol: 'USD' });
+                                              ~~~~~~~
+
+server/routes.mongo.ts:1908:42 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & ... 1 more ... & { ...; })[] | (FlattenMaps<...> & ... 1 more ... & { ...; }), ... 4 more ..., {}>; <ResultDoc = any>(filter?: RootFilterQuery<...>, projection?:...' has signatures, but none of those signatures are compatible with each other.
+
+1908       let usdBalance = await UserBalance.findOne({
+                                              ~~~~~~~
+
+server/routes.mongo.ts:1915:40 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <DocContents = AnyKeys<any>>(docs: any[], options: CreateOptions & { aggregateErrors: true; }): Promise<any[]>; <DocContents = AnyKeys<any>>(docs: any[], options?: CreateOptions): Promise<...>; <DocContents = AnyKeys<...>>(doc: any): Promise<...>; <DocContents = AnyKeys<...>>(...docs: any[]): Promise<...>; } | { ....' has signatures, but none of those signatures are compatible with each other.
+
+1915         usdBalance = await UserBalance.create({
+                                            ~~~~~~
+
+server/routes.mongo.ts:1943:38 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+1943   app.get('/api/admin/users/search', requireAdmin, async (req: Request, res: Response) => {
+                                          ~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:2029:49 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'void | Response<any, Record<string, any>>' is not assignable to type 'void'.
+              Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+2029   app.get('/api/debug/transfers-notifications', requireAuth, async (req: Request, res: Response) => {
+                                                     ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:2038:40 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & Required<...> & { ...; })[], ... 4 more ..., {}>; <ResultDoc = any>(filter: RootFilterQuery<...>, projection?: ProjectionType<...>, options?: QueryOptions<...>):...' has signatures, but none of those signatures are compatible with each other.
+
+2038       const transfers = await Transfer.find({
+                                            ~~~~
+
+server/routes.mongo.ts:2069:44 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+2069   app.get('/api/admin/users/search/email', requireAdminAuth, async (req: Request, res: Response) => {
+                                                ~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:2077:32 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(filter: RootFilterQuery<IUser>, projection: ProjectionType<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(filter: RootFilterQuery<...>, projectio...' has signatures, but none of those signatures are compatible with each other.
+
+2077       const users = await User.find({
+                                    ~~~~
+
+server/routes.mongo.ts:2084:45 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & ... 1 more ... & { ...; })[] | (FlattenMaps<...> & ... 1 more ... & { ...; }), ... 4 more ..., {}>; <ResultDoc = any>(filter?: RootFilterQuery<...>, projection?:...' has signatures, but none of those signatures are compatible with each other.
+
+2084           const balance = await UserBalance.findOne({ userId: user._id.toString() });
+                                                 ~~~~~~~
+
+server/routes.mongo.ts:2100:42 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+2100   app.get('/api/admin/users/search/uid', requireAdminAuth, async (req: Request, res: Response) => {
+                                              ~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:2108:32 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(filter: RootFilterQuery<IUser>, projection: ProjectionType<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(filter: RootFilterQuery<...>, projectio...' has signatures, but none of those signatures are compatible with each other.
+
+2108       const users = await User.find({
+                                    ~~~~
+
+server/routes.mongo.ts:2115:45 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & ... 1 more ... & { ...; })[] | (FlattenMaps<...> & ... 1 more ... & { ...; }), ... 4 more ..., {}>; <ResultDoc = any>(filter?: RootFilterQuery<...>, projection?:...' has signatures, but none of those signatures are compatible with each other.
+
+2115           const balance = await UserBalance.findOne({ userId: user._id.toString() });
+                                                 ~~~~~~~
+
+server/routes.mongo.ts:2131:38 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+2131   app.get('/api/admin/users/search', requireAdminAuth, async (req: Request, res: Response) => {
+                                          ~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:2209:35 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+2209   app.get('/api/admin/users/all', requireAdminAuth, async (req: Request, res: Response) => {
+                                       ~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:2272:48 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+2272   app.get('/api/admin/users/:userId/password', requireAdminAuth, async (req: Request, res: Response) => {
+                                                    ~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:2277:31 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(id: any, projection: ProjectionType<IUser>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, projection?: ProjectionType<...>, options?: QueryOp...' has signatures, but none of those signatures are compatible with each other.
+
+2277       const user = await User.findById(userId).select('password actualPassword username email');
+                                   ~~~~~~~~
+
+server/routes.mongo.ts:2303:55 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+2303   app.post('/api/admin/users/:userId/reset-password', requireAdminAuth, async (req: Request, res: Response) => {
+                                                           ~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:2318:31 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(id: any, projection: ProjectionType<IUser>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, projection?: ProjectionType<...>, options?: QueryOp...' has signatures, but none of those signatures are compatible with each other.
+
+2318       const user = await User.findById(userId);
+                                   ~~~~~~~~
+
+server/routes.mongo.ts:2328:18 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(filter: RootFilterQuery<IUser>, update: UpdateQuery<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, update: UpdateQuery<...>, options: Qu...' has signatures, but none of those signatures are compatible with each other.
+
+2328       await User.findByIdAndUpdate(userId, {
+                      ~~~~~~~~~~~~~~~~~
+
+server/routes.mongo.ts:2366:49 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+2366   app.post('/api/admin/users/:userId/activity', requireAdminAuth, async (req: Request, res: Response) => {
+                                                     ~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:2372:31 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(id: any, projection: ProjectionType<IUser>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, projection?: ProjectionType<...>, options?: QueryOp...' has signatures, but none of those signatures are compatible with each other.
+
+2372       const user = await User.findById(userId);
+                                   ~~~~~~~~
+
+server/routes.mongo.ts:2381:20 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(filter: RootFilterQuery<IUser>, update: UpdateQuery<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, update: UpdateQuery<...>, options: Qu...' has signatures, but none of those signatures are compatible with each other.
+
+2381         await User.findByIdAndUpdate(userId, {
+                        ~~~~~~~~~~~~~~~~~
+
+server/routes.mongo.ts:2389:22 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(filter: RootFilterQuery<IUser>, update: UpdateQuery<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, update: UpdateQuery<...>, options: Qu...' has signatures, but none of those signatures are compatible with each other.
+
+2389           await User.findByIdAndUpdate(userId, {
+                          ~~~~~~~~~~~~~~~~~
+
+server/routes.mongo.ts:2397:20 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(filter: RootFilterQuery<IUser>, update: UpdateQuery<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, update: UpdateQuery<...>, options: Qu...' has signatures, but none of those signatures are compatible with each other.
+
+2397         await User.findByIdAndUpdate(userId, {
+                        ~~~~~~~~~~~~~~~~~
+
+server/routes.mongo.ts:2410:44 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'void | Response<any, Record<string, any>>' is not assignable to type 'void'.
+              Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+2410   app.get('/api/user/deposit-requirement', requireAuth, async (req: Request, res: Response) => {
+                                                ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:2415:31 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(id: any, projection: ProjectionType<IUser>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, projection?: ProjectionType<...>, options?: QueryOp...' has signatures, but none of those signatures are compatible with each other.
+
+2415       const user = await User.findById(userId).select('requiresDeposit');
+                                   ~~~~~~~~
+
+server/routes.mongo.ts:2438:40 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'void | Response<any, Record<string, any>>' is not assignable to type 'void'.
+              Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+2438   app.get('/api/user/transfer-access', requireAuth, async (req: Request, res: Response) => {
+                                            ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:2443:31 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(id: any, projection: ProjectionType<IUser>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, projection?: ProjectionType<...>, options?: QueryOp...' has signatures, but none of those signatures are compatible with each other.
+
+2443       const user = await User.findById(userId).select('transferAccess');
+                                   ~~~~~~~~
+
+server/routes.mongo.ts:2471:59 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+2471   app.post('/api/admin/users/toggle-deposit-requirement', requireAdminAuth, async (req: Request, res: Response) => {
+                                                               ~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:2500:31 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(filter: RootFilterQuery<IUser>, update: UpdateQuery<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, update: UpdateQuery<...>, options: Qu...' has signatures, but none of those signatures are compatible with each other.
+
+2500       const user = await User.findByIdAndUpdate(
+                                   ~~~~~~~~~~~~~~~~~
+
+server/routes.mongo.ts:2510:41 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(id: any, projection: ProjectionType<IUser>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, projection?: ProjectionType<...>, options?: QueryOp...' has signatures, but none of those signatures are compatible with each other.
+
+2510         const existingUser = await User.findById(userObjectId);
+                                             ~~~~~~~~
+
+server/routes.mongo.ts:2556:52 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+2556   app.post('/api/admin/users/toggle-all-features', requireAdminAuth, async (req: Request, res: Response) => {
+                                                        ~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:2571:31 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(filter: RootFilterQuery<IUser>, update: UpdateQuery<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, update: UpdateQuery<...>, options: Qu...' has signatures, but none of those signatures are compatible with each other.
+
+2571       const user = await User.findByIdAndUpdate(
+                                   ~~~~~~~~~~~~~~~~~
+
+server/routes.mongo.ts:2624:57 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+2624   app.post('/api/admin/users/toggle-withdrawal-access', requireAdminAuth, async (req: Request, res: Response) => {
+                                                             ~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:2638:31 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(filter: RootFilterQuery<IUser>, update: UpdateQuery<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, update: UpdateQuery<...>, options: Qu...' has signatures, but none of those signatures are compatible with each other.
+
+2638       const user = await User.findByIdAndUpdate(
+                                   ~~~~~~~~~~~~~~~~~
+
+server/routes.mongo.ts:2685:55 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+2685   app.post('/api/admin/users/toggle-transfer-access', requireAdminAuth, async (req: Request, res: Response) => {
+                                                           ~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:2699:31 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(filter: RootFilterQuery<IUser>, update: UpdateQuery<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, update: UpdateQuery<...>, options: Qu...' has signatures, but none of those signatures are compatible with each other.
+
+2699       const user = await User.findByIdAndUpdate(
+                                   ~~~~~~~~~~~~~~~~~
+
+server/routes.mongo.ts:2746:58 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+2746   app.post('/api/admin/users/update-withdrawal-message', requireAdminAuth, async (req: Request, res: Response) => {
+                                                              ~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:2759:31 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(filter: RootFilterQuery<IUser>, update: UpdateQuery<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, update: UpdateQuery<...>, options: Qu...' has signatures, but none of those signatures are compatible with each other.
+
+2759       const user = await User.findByIdAndUpdate(
+                                   ~~~~~~~~~~~~~~~~~
+
+server/routes.mongo.ts:2826:47 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'void | Response<any, Record<string, any>>' is not assignable to type 'void'.
+              Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+2826   app.get('/api/user/withdrawal-restriction', requireAuth, async (req: Request, res: Response) => {
+                                                   ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:2843:31 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(id: any, projection: ProjectionType<IUser>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, projection?: ProjectionType<...>, options?: QueryOp...' has signatures, but none of those signatures are compatible with each other.
+
+2843       const user = await User.findById(userId).select('withdrawalRestrictionMessage requiresDeposit');
+                                   ~~~~~~~~
+
+server/routes.mongo.ts:2872:41 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+2872   app.get('/api/admin/users/analytics', requireAdminAuth, async (req: Request, res: Response) => {
+                                             ~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:2891:14 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(filter: RootFilterQuery<IUser>, projection: ProjectionType<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(filter: RootFilterQuery<...>, projectio...' has signatures, but none of those signatures are compatible with each other.
+
+2891         User.find({})
+                  ~~~~
+
+server/routes.mongo.ts:2914:42 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+2914   app.post('/api/admin/users/add-funds', requireAdminAuth, async (req: Request, res: Response) => {
+                                              ~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:2940:45 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+2940   app.post('/api/admin/users/remove-funds', requireAdminAuth, async (req: Request, res: Response) => {
+                                                 ~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:2964:45 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+2964   app.post('/api/admin/users/remove-funds', requireAdminAuth, async (req: Request, res: Response) => {
+                                                 ~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:2991:42 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+2991   app.delete('/api/admin/users/:userId', requireAdminAuth, async (req: Request, res: Response) => {
+                                              ~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:3020:42 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+3020   app.post('/api/admin/deposits/create', requireAdminAuth, async (req: Request, res: Response) => {
+                                              ~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:3125:45 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+3125   app.post('/api/admin/withdrawals/create', requireAdminAuth, async (req: Request, res: Response) => {
+                                                 ~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:3155:67 - error TS2339: Property 'toFixed' does not exist on type '{ balance: number; }'.
+
+3155           message: `Insufficient balance. User has $${userBalance.toFixed(2)}, trying to withdraw $${usdAmount.toFixed(2)}`
+                                                                       ~~~~~~~
+
+server/routes.mongo.ts:3238:36 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'void | Response<any, Record<string, any>>' is not assignable to type 'void'.
+              Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+3238   app.get('/api/deposits/history', requireAuth, async (req: Request, res: Response) => {
+                                        ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:3276:36 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'void | Response<any, Record<string, any>>' is not assignable to type 'void'.
+              Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+3276   app.get('/api/deposits/:userId', requireAuth, async (req: Request, res: Response) => {
+                                        ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:3299:51 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'void | Response<any, Record<string, any>>' is not assignable to type 'void'.
+              Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+3299   app.get('/api/deposits/details/:transactionId', requireAuth, async (req: Request, res: Response) => {
+                                                       ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:3326:43 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'void | Response<any, Record<string, any>>' is not assignable to type 'void'.
+              Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+3326   app.get('/api/withdrawals/eligibility', requireAuth, async (req: Request, res: Response) => {
+                                               ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:3347:31 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(id: any, projection: ProjectionType<IUser>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, projection?: ProjectionType<...>, options?: QueryOp...' has signatures, but none of those signatures are compatible with each other.
+
+3347       const user = await User.findById(userId).select('withdrawalAccess withdrawalRestrictionMessage');
+                                   ~~~~~~~~
+
+server/routes.mongo.ts:3371:39 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'void | Response<any, Record<string, any>>' is not assignable to type 'void'.
+              Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+3371   app.post('/api/withdrawals/create', requireAuth, async (req: Request, res: Response) => {
+                                           ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:3497:39 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'void | Response<any, Record<string, any>>' is not assignable to type 'void'.
+              Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+3497   app.get('/api/withdrawals/history', requireAuth, async (req: Request, res: Response) => {
+                                           ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:3534:39 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'void | Response<any, Record<string, any>>' is not assignable to type 'void'.
+              Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+3534   app.get('/api/withdrawals/:userId', requireAuth, async (req: Request, res: Response) => {
+                                           ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:3557:54 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'void | Response<any, Record<string, any>>' is not assignable to type 'void'.
+              Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+3557   app.get('/api/withdrawals/details/:transactionId', requireAuth, async (req: Request, res: Response) => {
+                                                          ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:3584:33 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'void | Response<any, Record<string, any>>' is not assignable to type 'void'.
+              Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+3584   app.get('/api/notifications', requireAuth, async (req: Request, res: Response) => {
+                                     ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:3610:46 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'void | Response<any, Record<string, any>>' is not assignable to type 'void'.
+              Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+3610   app.get('/api/notifications/unread-count', requireAuth, async (req: Request, res: Response) => {
+                                                  ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:3631:54 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'void | Response<any, Record<string, any>>' is not assignable to type 'void'.
+              Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+3631   app.put('/api/notifications/:notificationId/read', requireAuth, async (req: Request, res: Response) => {
+                                                          ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:3659:39 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+3659   app.post('/api/admin/send-message', requireAdminAuth, async (req: Request, res: Response) => {
+                                           ~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:3736:59 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+3736   app.get('/api/admin/users/:userId/withdrawal-settings', requireAdminAuth, async (req: Request, res: Response) => {
+                                                               ~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:3791:52 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+3791   app.post('/api/admin/users/withdrawal-settings', requireAdminAuth, async (req: Request, res: Response) => {
+                                                        ~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:3802:31 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = Document<unknown, {}, IUser, {}> & IUser & Required<{ _id: string; }> & { __v: number; }>(filter: RootFilterQuery<IUser>, update: UpdateQuery<...>, options: QueryOptions<...> & { ...; }): Query<...>; <ResultDoc = Document<...> & ... 2 more ... & { ...; }>(id: any, update: UpdateQuery<...>, options: Qu...' has signatures, but none of those signatures are compatible with each other.
+
+3802       const user = await User.findByIdAndUpdate(
+                                   ~~~~~~~~~~~~~~~~~
+
+server/routes.mongo.ts:3932:50 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+3932   app.post('/api/admin/connection-request/send', requireAdminAuth, async (req: Request, res: Response) => {
+                                                      ~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:4008:47 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'void | Response<any, Record<string, any>>' is not assignable to type 'void'.
+              Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+4008   app.post('/api/connection-request/respond', requireAuth, async (req: Request, res: Response) => {
+                                                   ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:4107:39 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'void | Response<any, Record<string, any>>' is not assignable to type 'void'.
+              Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+4107   app.get('/api/connection-requests', requireAuth, async (req: Request, res: Response) => {
+                                           ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:4126:42 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'void | Response<any, Record<string, any>>' is not assignable to type 'void'.
+              Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+4126   app.get('/api/connection-request/:id', requireAuth, async (req: Request, res: Response) => {
+                                              ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:4152:45 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+4152   app.get('/api/admin/connection-requests', requireAdminAuth, async (req: Request, res: Response) => {
+                                                 ~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:4171:35 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'void | Response<any, Record<string, any>>' is not assignable to type 'void'.
+              Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+4171   app.post('/api/contact/submit', requireAuth, async (req: Request, res: Response) => {
+                                       ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:4227:42 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+4227   app.get('/api/admin/contact-messages', requireAdminAuth, async (req: Request, res: Response) => {
+                                              ~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:4300:60 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+4300   app.patch('/api/admin/contact-messages/:messageId/read', requireAdminAuth, async (req: Request, res: Response) => {
+                                                                ~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:4333:56 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+4333   app.delete('/api/admin/contact-messages/:messageId', requireAdminAuth, async (req: Request, res: Response) => {
+                                                            ~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:4361:60 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Response<any, Record<string, any>>' is not assignable to type 'void | Promise<void>'.
+
+4361   app.post('/api/admin/contact-messages/:messageId/reply', requireAdminAuth, async (req: Request, res: Response) => {
+                                                                ~~~~~~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/routes.mongo.ts:4433:41 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to parameter of type 'RequestHandlerParams<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+      Type '(req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'RequestHandler<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+        Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'void | Promise<void>'.
+          Type 'Promise<void | Response<any, Record<string, any>>>' is not assignable to type 'Promise<void>'.
+            Type 'void | Response<any, Record<string, any>>' is not assignable to type 'void'.
+              Type 'Response<any, Record<string, any>>' is not assignable to type 'void'.
+
+4433   app.get('/api/user/contact-messages', requireAuth, async (req: Request, res: Response) => {
+                                             ~~~~~~~~~~~
+
+  node_modules/@types/express-serve-static-core/index.d.ts:157:5
+    157     <
+            ~
+    158         P = ParamsDictionary,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    166         ...handlers: Array<RequestHandlerParams<P, ResBody, ReqBody, ReqQuery, LocalsObj>>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    167     ): T;
+        ~~~~~~~~~
+    The last overload is declared here.
+
+server/services/deposit.service.ts:7:3 - error TS2724: '"@shared/schema"' has no exported member named 'UserWallet'. Did you mean 'userWallets'?
+
+7   UserWallet
+    ~~~~~~~~~~
+
+  shared/schema.ts:76:14
+    76 export const userWallets = pgTable("user_wallets", {
+                    ~~~~~~~~~~~
+    'userWallets' is declared here.
+
+server/services/deposit.service.ts:11:32 - error TS2307: Cannot find module './trading.service' or its corresponding type declarations.
+
+11 import { tradingService } from './trading.service';
+                                  ~~~~~~~~~~~~~~~~~~~
+
+server/services/deposit.service.ts:12:10 - error TS2305: Module '"./price.service"' has no exported member 'getLatestPrice'.
+
+12 import { getLatestPrice } from './price.service';
+            ~~~~~~~~~~~~~~
+
+server/services/deposit.service.ts:59:43 - error TS2339: Property 'generateBitcoinWallet' does not exist on type 'WalletService'.
+
+59             walletDetails = walletService.generateBitcoinWallet(index);
+                                             ~~~~~~~~~~~~~~~~~~~~~
+
+server/services/deposit.service.ts:63:43 - error TS2339: Property 'generateEthereumWallet' does not exist on type 'WalletService'.
+
+63             walletDetails = walletService.generateEthereumWallet(index);
+                                             ~~~~~~~~~~~~~~~~~~~~~~
+
+server/services/deposit.service.ts:66:43 - error TS2339: Property 'generateBinanceWallet' does not exist on type 'WalletService'.
+
+66             walletDetails = walletService.generateBinanceWallet(index);
+                                             ~~~~~~~~~~~~~~~~~~~~~
+
+server/services/deposit.service.ts:74:51 - error TS2339: Property 'encryptPrivateKey' does not exist on type 'WalletService'.
+
+74         const encryptedPrivateKey = walletService.encryptPrivateKey(walletDetails.privateKey);
+                                                     ~~~~~~~~~~~~~~~~~
+
+server/services/deposit.service.ts:79:12 - error TS2769: No overload matches this call.
+  Overload 1 of 2, '(value: { userId: number | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<string, any>; address: string | SQL<unknown> | Placeholder<...>; id?: number | ... 1 more ... | Placeholder<...>; createdAt?: Date | ... 1 more ... | Placeholder<...>; privateKey?: string | ... 1 more ... | Placeholder<...>; publicKey?: string | ... 1 more ... | Placeholder<...>; }): PgInsertBase<...>', gave the following error.
+    Object literal may only specify known properties, and 'hdPath' does not exist in type '{ userId: number | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<string, any>; address: string | SQL<unknown> | Placeholder<...>; id?: number | ... 1 more ... | Placeholder<...>; createdAt?: Date | ... 1 more ... | Placeholder<...>; privateKey?: string | ... 1 more ... | Pl...'.
+  Overload 2 of 2, '(values: { userId: number | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<string, any>; address: string | SQL<unknown> | Placeholder<...>; id?: number | ... 1 more ... | Placeholder<...>; createdAt?: Date | ... 1 more ... | Placeholder<...>; privateKey?: string | ... 1 more ... | Placeholder<...>; publicKey?: string | ... 1 more ... | Placeholder<...>; }[]): PgInsertBase<...>', gave the following error.
+    Object literal may only specify known properties, and 'userId' does not exist in type '{ userId: number | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<string, any>; address: string | SQL<unknown> | Placeholder<...>; id?: number | ... 1 more ... | Placeholder<...>; createdAt?: Date | ... 1 more ... | Placeholder<...>; privateKey?: string | ... 1 more ... | Pl...'.
+
+79           .values({
+              ~~~~~~
+
+
+server/services/deposit.service.ts:162:29 - error TS2339: Property 'hdPath' does not exist on type '{ id: number; userId: number; currencyId: number; address: string; privateKey: string; publicKey: string; createdAt: Date; }'.
+
+162       const hdPath = wallet.hdPath;
+                                ~~~~~~
+
+server/services/deposit.service.ts:202:31 - error TS2339: Property 'targetId' does not exist on type 'PgTableWithColumns<{ name: "transactions"; schema: undefined; columns: { id: PgColumn<{ name: "id"; tableName: "transactions"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; ... 8 more ...; generated: undefined; }, {}, {}>; ... 10 more ...; updatedAt: PgColumn<...>; }; diale...'.
+
+202               eq(transactions.targetId, wallet.currencyId)
+                                  ~~~~~~~~
+
+server/services/deposit.service.ts:217:43 - error TS2339: Property 'checkBitcoinBalance' does not exist on type 'WalletService'.
+
+217             balance = await walletService.checkBitcoinBalance(wallet.address);
+                                              ~~~~~~~~~~~~~~~~~~~
+
+server/services/deposit.service.ts:220:43 - error TS2339: Property 'checkEthereumBalance' does not exist on type 'WalletService'.
+
+220             balance = await walletService.checkEthereumBalance(wallet.address);
+                                              ~~~~~~~~~~~~~~~~~~~~
+
+server/services/deposit.service.ts:223:43 - error TS2339: Property 'checkBinanceBalance' does not exist on type 'WalletService'.
+
+223             balance = await walletService.checkBinanceBalance(wallet.address);
+                                              ~~~~~~~~~~~~~~~~~~~
+
+server/services/deposit.service.ts:226:43 - error TS2339: Property 'checkUSDTBalance' does not exist on type 'WalletService'.
+
+226             balance = await walletService.checkUSDTBalance(wallet.address);
+                                              ~~~~~~~~~~~~~~~~
+
+server/services/deposit.service.ts:239:33 - error TS2339: Property 'targetId' does not exist on type 'PgTableWithColumns<{ name: "transactions"; schema: undefined; columns: { id: PgColumn<{ name: "id"; tableName: "transactions"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; ... 8 more ...; generated: undefined; }, {}, {}>; ... 10 more ...; updatedAt: PgColumn<...>; }; diale...'.
+
+239                 eq(transactions.targetId, wallet.currencyId),
+                                    ~~~~~~~~
+
+server/services/deposit.service.ts:240:33 - error TS2339: Property 'targetAmount' does not exist on type 'PgTableWithColumns<{ name: "transactions"; schema: undefined; columns: { id: PgColumn<{ name: "id"; tableName: "transactions"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; ... 8 more ...; generated: undefined; }, {}, {}>; ... 10 more ...; updatedAt: PgColumn<...>; }; diale...'.
+
+240                 eq(transactions.targetAmount, balance)
+                                    ~~~~~~~~~~~~
+
+server/services/deposit.service.ts:258:16 - error TS2769: No overload matches this call.
+  Overload 1 of 2, '(value: { userId: number | SQL<unknown> | Placeholder<string, any>; type: string | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<...>; ... 8 more ...; toAddress?: string | ... 1 more ... | Placeholder<...>; }): PgInsertBase<...>', gave the following error.
+    Object literal may only specify known properties, and 'sourceId' does not exist in type '{ userId: number | SQL<unknown> | Placeholder<string, any>; type: string | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<...>; ... 8 more ...; toAddress?: string | ... 1 more ... | Placeholder<...>; }'.
+  Overload 2 of 2, '(values: { userId: number | SQL<unknown> | Placeholder<string, any>; type: string | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<...>; ... 8 more ...; toAddress?: string | ... 1 more ... | Placeholder<...>; }[]): PgInsertBase<...>', gave the following error.
+    Object literal may only specify known properties, and 'userId' does not exist in type '{ userId: number | SQL<unknown> | Placeholder<string, any>; type: string | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<...>; ... 8 more ...; toAddress?: string | ... 1 more ... | Placeholder<...>; }[]'.
+
+258               .values({
+                   ~~~~~~
+
+
+server/services/staking.service.ts:12:32 - error TS2307: Cannot find module './trading.service' or its corresponding type declarations.
+
+12 import { tradingService } from './trading.service';
+                                  ~~~~~~~~~~~~~~~~~~~
+
+server/services/staking.service.ts:29:30 - error TS2339: Property 'isActive' does not exist on type 'PgTableWithColumns<{ name: "staking_rates"; schema: undefined; columns: { id: PgColumn<{ name: "id"; tableName: "staking_rates"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; ... 8 more ...; generated: undefined; }, {}, {}>; ... 5 more ...; createdAt: PgColumn<...>; }; dial...'.
+
+29       .where(eq(stakingRates.isActive, true));
+                                ~~~~~~~~
+
+server/services/staking.service.ts:47:27 - error TS2339: Property 'isActive' does not exist on type 'PgTableWithColumns<{ name: "staking_rates"; schema: undefined; columns: { id: PgColumn<{ name: "id"; tableName: "staking_rates"; dataType: "number"; columnType: "PgInteger"; data: number; driverParam: string | number; ... 8 more ...; generated: undefined; }, {}, {}>; ... 5 more ...; createdAt: PgColumn<...>; }; dial...'.
+
+47           eq(stakingRates.isActive, true)
+                             ~~~~~~~~
+
+server/services/staking.service.ts:86:8 - error TS2769: No overload matches this call.
+  Overload 1 of 2, '(value: { userId: number | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<string, any>; amount: number | SQL<unknown> | Placeholder<...>; ... 7 more ...; rewards?: number | ... 1 more ... | Placeholder<...>; }): PgInsertBase<...>', gave the following error.
+    Object literal may only specify known properties, and 'rate' does not exist in type '{ userId: number | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<string, any>; amount: number | SQL<unknown> | Placeholder<...>; ... 7 more ...; rewards?: number | ... 1 more ... | Placeholder<...>; }'.
+  Overload 2 of 2, '(values: { userId: number | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<string, any>; amount: number | SQL<unknown> | Placeholder<...>; ... 7 more ...; rewards?: number | ... 1 more ... | Placeholder<...>; }[]): PgInsertBase<...>', gave the following error.
+    Object literal may only specify known properties, and 'userId' does not exist in type '{ userId: number | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<string, any>; amount: number | SQL<unknown> | Placeholder<...>; ... 7 more ...; rewards?: number | ... 1 more ... | Placeholder<...>; }[]'.
+
+86       .values({
+          ~~~~~~
+
+
+server/services/staking.service.ts:90:27 - error TS2339: Property 'rate' does not exist on type '{ id: number; createdAt: Date; currencyId: number; apy: number; minAmount: number; maxAmount: number; lockPeriod: number; }'.
+
+90         rate: stakingRate.rate,
+                             ~~~~
+
+server/services/staking.service.ts:103:8 - error TS2769: No overload matches this call.
+  Overload 1 of 2, '(value: { userId: number | SQL<unknown> | Placeholder<string, any>; type: string | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<...>; ... 8 more ...; toAddress?: string | ... 1 more ... | Placeholder<...>; }): PgInsertBase<...>', gave the following error.
+    Object literal may only specify known properties, and 'sourceId' does not exist in type '{ userId: number | SQL<unknown> | Placeholder<string, any>; type: string | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<...>; ... 8 more ...; toAddress?: string | ... 1 more ... | Placeholder<...>; }'.
+  Overload 2 of 2, '(values: { userId: number | SQL<unknown> | Placeholder<string, any>; type: string | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<...>; ... 8 more ...; toAddress?: string | ... 1 more ... | Placeholder<...>; }[]): PgInsertBase<...>', gave the following error.
+    Object literal may only specify known properties, and 'userId' does not exist in type '{ userId: number | SQL<unknown> | Placeholder<string, any>; type: string | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<...>; ... 8 more ...; toAddress?: string | ... 1 more ... | Placeholder<...>; }[]'.
+
+103       .values({
+           ~~~~~~
+
+
+server/services/staking.service.ts:111:46 - error TS2339: Property 'rate' does not exist on type '{ id: number; createdAt: Date; currencyId: number; apy: number; minAmount: number; maxAmount: number; lockPeriod: number; }'.
+
+111         metadata: { stakingRate: stakingRate.rate, stakingPositionId: stakingPosition.id },
+                                                 ~~~~
+
+server/services/staking.service.ts:151:35 - error TS2339: Property 'lastRewardAt' does not exist on type '{ id: number; createdAt: Date; userId: number; currencyId: number; updatedAt: Date; amount: number; status: string; apy: number; startDate: Date; endDate: Date; rewards: number; }'.
+
+151     const lastRewardAt = position.lastRewardAt;
+                                      ~~~~~~~~~~~~
+
+server/services/staking.service.ts:161:32 - error TS2339: Property 'rate' does not exist on type '{ id: number; createdAt: Date; userId: number; currencyId: number; updatedAt: Date; amount: number; status: string; apy: number; startDate: Date; endDate: Date; rewards: number; }'.
+
+161     const dailyRate = position.rate / 365;
+                                   ~~~~
+
+server/services/staking.service.ts:194:9 - error TS2353: Object literal may only specify known properties, and 'lastRewardAt' does not exist in type '{ userId?: number | SQL<unknown> | PgColumn<ColumnBaseConfig<ColumnDataType, string>, {}, {}>; currencyId?: number | SQL<unknown> | PgColumn<...>; ... 8 more ...; rewards?: number | ... 1 more ... | PgColumn<...>; }'.
+
+194         lastRewardAt: now,
+            ~~~~~~~~~~~~
+
+server/services/staking.service.ts:195:38 - error TS2339: Property 'accumulatedRewards' does not exist on type '{ id: number; userId: number; currencyId: number; amount: number; apy: number; startDate: Date; endDate: Date; status: string; rewards: number; createdAt: Date; updatedAt: Date; }'.
+
+195         accumulatedRewards: position.accumulatedRewards + rewards,
+                                         ~~~~~~~~~~~~~~~~~~
+
+server/services/staking.service.ts:210:35 - error TS2339: Property 'accumulatedRewards' does not exist on type '{ id: number; createdAt: Date; userId: number; currencyId: number; updatedAt: Date; amount: number; status: string; apy: number; startDate: Date; endDate: Date; rewards: number; }'.
+
+210     const totalRewards = position.accumulatedRewards;
+                                      ~~~~~~~~~~~~~~~~~~
+
+server/services/staking.service.ts:228:9 - error TS2353: Object literal may only specify known properties, and 'endsAt' does not exist in type '{ userId?: number | SQL<unknown> | PgColumn<ColumnBaseConfig<ColumnDataType, string>, {}, {}>; currencyId?: number | SQL<unknown> | PgColumn<...>; ... 8 more ...; rewards?: number | ... 1 more ... | PgColumn<...>; }'.
+
+228         endsAt: now,
+            ~~~~~~
+
+server/services/staking.service.ts:242:8 - error TS2769: No overload matches this call.
+  Overload 1 of 2, '(value: { userId: number | SQL<unknown> | Placeholder<string, any>; type: string | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<...>; ... 8 more ...; toAddress?: string | ... 1 more ... | Placeholder<...>; }): PgInsertBase<...>', gave the following error.
+    Object literal may only specify known properties, and 'sourceId' does not exist in type '{ userId: number | SQL<unknown> | Placeholder<string, any>; type: string | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<...>; ... 8 more ...; toAddress?: string | ... 1 more ... | Placeholder<...>; }'.
+  Overload 2 of 2, '(values: { userId: number | SQL<unknown> | Placeholder<string, any>; type: string | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<...>; ... 8 more ...; toAddress?: string | ... 1 more ... | Placeholder<...>; }[]): PgInsertBase<...>', gave the following error.
+    Object literal may only specify known properties, and 'userId' does not exist in type '{ userId: number | SQL<unknown> | Placeholder<string, any>; type: string | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<...>; ... 8 more ...; toAddress?: string | ... 1 more ... | Placeholder<...>; }[]'.
+
+242       .values({
+           ~~~~~~
+
+
+server/services/staking.service.ts:258:8 - error TS2769: No overload matches this call.
+  Overload 1 of 2, '(value: { userId: number | SQL<unknown> | Placeholder<string, any>; type: string | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<...>; ... 8 more ...; toAddress?: string | ... 1 more ... | Placeholder<...>; }): PgInsertBase<...>', gave the following error.
+    Object literal may only specify known properties, and 'sourceId' does not exist in type '{ userId: number | SQL<unknown> | Placeholder<string, any>; type: string | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<...>; ... 8 more ...; toAddress?: string | ... 1 more ... | Placeholder<...>; }'.
+  Overload 2 of 2, '(values: { userId: number | SQL<unknown> | Placeholder<string, any>; type: string | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<...>; ... 8 more ...; toAddress?: string | ... 1 more ... | Placeholder<...>; }[]): PgInsertBase<...>', gave the following error.
+    Object literal may only specify known properties, and 'userId' does not exist in type '{ userId: number | SQL<unknown> | Placeholder<string, any>; type: string | SQL<unknown> | Placeholder<string, any>; currencyId: number | SQL<unknown> | Placeholder<...>; ... 8 more ...; toAddress?: string | ... 1 more ... | Placeholder<...>; }[]'.
+
+258       .values({
+           ~~~~~~
+
+
+server/services/trading.service.mongo.ts:5:10 - error TS2305: Module '"./price.service"' has no exported member 'fetchPriceFromExternalAPI'.
+
+5 import { fetchPriceFromExternalAPI } from './price.service';
+           ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+server/services/trading.service.mongo.ts:14:41 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & ... 1 more ... & { ...; })[] | (FlattenMaps<...> & ... 1 more ... & { ...; }), ... 4 more ..., {}>; <ResultDoc = any>(filter?: RootFilterQuery<...>, projection?:...' has signatures, but none of those signatures are compatible with each other.
+
+14       const balance = await UserBalance.findOne({
+                                           ~~~~~~~
+
+server/services/trading.service.mongo.ts:31:42 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & Required<...> & { ...; })[], ... 4 more ..., {}>; <ResultDoc = any>(filter: RootFilterQuery<...>, projection?: ProjectionType<...>, options?: QueryOptions<...>):...' has signatures, but none of those signatures are compatible with each other.
+
+31       const balances = await UserBalance.find({ userId });
+                                            ~~~~
+
+server/services/trading.service.mongo.ts:35:41 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & Required<...> & { ...; })[], ... 4 more ..., {}>; <ResultDoc = any>(filter: RootFilterQuery<...>, projection?: ProjectionType<...>, options?: QueryOptions<...>):...' has signatures, but none of those signatures are compatible with each other.
+
+35       const currencies = await Currency.find({
+                                           ~~~~
+
+server/services/trading.service.mongo.ts:104:45 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & ... 1 more ... & { ...; })[] | (FlattenMaps<...> & ... 1 more ... & { ...; }), ... 4 more ..., {}>; <ResultDoc = any>(filter?: RootFilterQuery<...>, projection?:...' has signatures, but none of those signatures are compatible with each other.
+
+104       const latestPrice = await MarketPrice.findOne({
+                                                ~~~~~~~
+
+server/services/trading.service.mongo.ts:113:39 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(id: any, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<any> & Required<{ _id: unknown; }> & { ...; })[] | (FlattenMaps<...> & ... 1 more ... & { ...; }), ... 4 more ..., {}>; <ResultDoc = any>(id: any, projection?: ProjectionType<...>, options?...' has signatures, but none of those signatures are compatible with each other.
+
+113       const currency = await Currency.findById(currencyId);
+                                          ~~~~~~~~
+
+server/services/trading.service.mongo.ts:237:32 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & Required<...> & { ...; })[], ... 4 more ..., {}>; <ResultDoc = any>(filter: RootFilterQuery<...>, projection?: ProjectionType<...>, options?: QueryOptions<...>):...' has signatures, but none of those signatures are compatible with each other.
+
+237       return await Transaction.find({ userId })
+                                   ~~~~
+
+server/services/trading.service.mongo.ts:256:46 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & Required<...> & { ...; })[], ... 4 more ..., {}>; <ResultDoc = any>(filter: RootFilterQuery<...>, projection?: ProjectionType<...>, options?: QueryOptions<...>):...' has signatures, but none of those signatures are compatible with each other.
+
+256       const transactions = await Transaction.find({ userId })
+                                                 ~~~~
+
+server/services/trading.service.mongo.ts:270:41 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & Required<...> & { ...; })[], ... 4 more ..., {}>; <ResultDoc = any>(filter: RootFilterQuery<...>, projection?: ProjectionType<...>, options?: QueryOptions<...>):...' has signatures, but none of those signatures are compatible with each other.
+
+270       const currencies = await Currency.find({
+                                            ~~~~
+
+server/services/wallet.service.ts:44:7 - error TS2353: Object literal may only specify known properties, and 'versions' does not exist in type 'TinySecp256k1Interface'.
+
+44       versions: { private: network.bip32.private, public: network.bip32.public }
+         ~~~~~~~~
+
+server/services/wallet.service.ts:54:7 - error TS2740: Type 'Uint8Array<ArrayBufferLike>' is missing the following properties from type 'Buffer<ArrayBufferLike>': write, toJSON, equals, compare, and 66 more.
+
+54       pubkey: child.publicKey,
+         ~~~~~~
+
+  node_modules/bitcoinjs-lib/src/payments/index.d.ts:30:5
+    30     pubkey?: Buffer;
+           ~~~~~~
+    The expected type comes from property 'pubkey' which is declared here on type 'Payment'
+
+server/services/wallet.service.ts:109:46 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & ... 1 more ... & { ...; })[] | (FlattenMaps<...> & ... 1 more ... & { ...; }), ... 4 more ..., {}>; <ResultDoc = any>(filter?: RootFilterQuery<...>, projection?:...' has signatures, but none of those signatures are compatible with each other.
+
+109       const highestWallet = await UserWallet.findOne({})
+                                                 ~~~~~~~
+
+server/services/wallet.service.ts:126:39 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & ... 1 more ... & { ...; })[] | (FlattenMaps<...> & ... 1 more ... & { ...; }), ... 4 more ..., {}>; <ResultDoc = any>(filter?: RootFilterQuery<...>, projection?:...' has signatures, but none of those signatures are compatible with each other.
+
+126       const currency = await Currency.findOne({ symbol: currencySymbol.toUpperCase() });
+                                          ~~~~~~~
+
+server/services/wallet.service.ts:133:47 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & ... 1 more ... & { ...; })[] | (FlattenMaps<...> & ... 1 more ... & { ...; }), ... 4 more ..., {}>; <ResultDoc = any>(filter?: RootFilterQuery<...>, projection?:...' has signatures, but none of those signatures are compatible with each other.
+
+133       const existingWallet = await UserWallet.findOne({
+                                                  ~~~~~~~
+
+server/services/wallet.service.ts:160:49 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & ... 1 more ... & { ...; })[] | (FlattenMaps<...> & ... 1 more ... & { ...; }), ... 4 more ..., {}>; <ResultDoc = any>(filter?: RootFilterQuery<...>, projection?:...' has signatures, but none of those signatures are compatible with each other.
+
+160       const existingBalance = await UserBalance.findOne({
+                                                    ~~~~~~~
+
+server/services/wallet.service.ts:190:41 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & Required<...> & { ...; })[], ... 4 more ..., {}>; <ResultDoc = any>(filter: RootFilterQuery<...>, projection?: ProjectionType<...>, options?: QueryOptions<...>):...' has signatures, but none of those signatures are compatible with each other.
+
+190       const currencies = await Currency.find({
+                                            ~~~~
+
+server/services/wallet.service.ts:215:40 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & Required<...> & { ...; })[], ... 4 more ..., {}>; <ResultDoc = any>(filter: RootFilterQuery<...>, projection?: ProjectionType<...>, options?: QueryOptions<...>):...' has signatures, but none of those signatures are compatible with each other.
+
+215       const wallets = await UserWallet.find({ userId })
+                                           ~~~~
+
+server/services/wallet.service.ts:235:39 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & ... 1 more ... & { ...; })[] | (FlattenMaps<...> & ... 1 more ... & { ...; }), ... 4 more ..., {}>; <ResultDoc = any>(filter?: RootFilterQuery<...>, projection?:...' has signatures, but none of those signatures are compatible with each other.
+
+235       const wallet = await UserWallet.findOne({ address });
+                                          ~~~~~~~
+
+server/services/wallet.service.ts:243:44 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & ... 1 more ... & { ...; })[] | (FlattenMaps<...> & ... 1 more ... & { ...; }), ... 4 more ..., {}>; <ResultDoc = any>(filter?: RootFilterQuery<...>, projection?:...' has signatures, but none of those signatures are compatible with each other.
+
+243       const existingTx = await Transaction.findOne({ txHash });
+                                               ~~~~~~~
+
+server/services/wallet.service.ts:251:45 - error TS2349: This expression is not callable.
+  Each member of the union type '{ <ResultDoc = any>(filter: RootFilterQuery<any>, projection: ProjectionType<any>, options: QueryOptions<any> & { lean: true; }): Query<(FlattenMaps<...> & ... 1 more ... & { ...; })[] | (FlattenMaps<...> & ... 1 more ... & { ...; }), ... 4 more ..., {}>; <ResultDoc = any>(filter?: RootFilterQuery<...>, projection?:...' has signatures, but none of those signatures are compatible with each other.
+
+251       const userBalance = await UserBalance.findOne({
+                                                ~~~~~~~
+
+shared/schema.ts:259:3 - error TS2322: Type 'true' is not assignable to type 'never'.
+
+259   uid: true,
+      ~~~
+
+shared/schema.ts:260:3 - error TS2322: Type 'true' is not assignable to type 'never'.
+
+260   createdAt: true,
+      ~~~~~~~~~
+
+shared/schema.ts:265:3 - error TS2322: Type 'true' is not assignable to type 'never'.
+
+265   createdAt: true,
+      ~~~~~~~~~
+
+shared/schema.ts:270:3 - error TS2322: Type 'true' is not assignable to type 'never'.
+
+270   updatedAt: true,
+      ~~~~~~~~~
+
+shared/schema.ts:275:3 - error TS2322: Type 'true' is not assignable to type 'never'.
+
+275   createdAt: true,
+      ~~~~~~~~~
+
+shared/schema.ts:280:3 - error TS2322: Type 'true' is not assignable to type 'never'.
+
+280   createdAt: true,
+      ~~~~~~~~~
+
+shared/schema.ts:281:3 - error TS2322: Type 'true' is not assignable to type 'never'.
+
+281   updatedAt: true,
+      ~~~~~~~~~
+
+shared/schema.ts:286:3 - error TS2322: Type 'true' is not assignable to type 'never'.
+
+286   createdAt: true,
+      ~~~~~~~~~
+
+shared/schema.ts:291:3 - error TS2322: Type 'true' is not assignable to type 'never'.
+
+291   createdAt: true,
+      ~~~~~~~~~
+
+shared/schema.ts:292:3 - error TS2322: Type 'true' is not assignable to type 'never'.
+
+292   updatedAt: true,
+      ~~~~~~~~~
+
+shared/schema.ts:297:3 - error TS2322: Type 'true' is not assignable to type 'never'.
+
+297   lastUpdated: true,
+      ~~~~~~~~~~~
+
+shared/schema.ts:302:3 - error TS2322: Type 'true' is not assignable to type 'never'.
+
+302   createdAt: true,
+      ~~~~~~~~~
+
+shared/schema.ts:303:3 - error TS2322: Type 'true' is not assignable to type 'never'.
+
+303   updatedAt: true,
+      ~~~~~~~~~
+
+shared/schema.ts:308:3 - error TS2322: Type 'true' is not assignable to type 'never'.
+
+308   createdAt: true,
+      ~~~~~~~~~
+
+shared/schema.ts:313:3 - error TS2322: Type 'true' is not assignable to type 'never'.
+
+313   createdAt: true,
+      ~~~~~~~~~
+
+shared/schema.ts:318:3 - error TS2322: Type 'true' is not assignable to type 'never'.
+
+318   createdAt: true,
+      ~~~~~~~~~
+
+
+Found 558 errors in 37 files.
+
+Errors  Files
+     2  client/src/components/protected-route.tsx:43
+     1  client/src/lib/chart-state-manager.ts:155
+     1  client/src/pages/account/login.tsx:263
+     1  client/src/pages/account/register.tsx:437
+     1  client/src/pages/mobile/deposit-details.tsx:42
+     9  client/src/pages/mobile/home.tsx:353
+     1  client/src/pages/mobile/kyc-status.tsx:37
+     1  client/src/pages/mobile/news.tsx:244
+     5  client/src/pages/mobile/security.tsx:69
+     8  client/src/pages/mobile/settings.tsx:53
+     1  client/src/pages/mobile/trade.tsx:212
+     1  client/src/pages/mobile/transfer-details.tsx:11
+     1  client/src/pages/mobile/verification-submitted.tsx:36
+     2  client/src/pages/mobile/withdrawal-details.tsx:42
+     2  client/src/pages/platform/staking.tsx:162
+     1  client/src/pages/platform/trading.tsx:51
+     1  client/src/pages/platform/wallet.tsx:161
+     5  server/api/admin-kyc-routes.ts:17
+   115  server/api/admin-panel-routes.ts:38
+    18  server/api/admin-routes.ts:20
+     1  server/api/chatbot-routes.ts:89
+    73  server/api/futures-trading-routes.ts:27
+     2  server/api/market-data-routes.ts:232
+    26  server/api/referral-routes.ts:25
+    24  server/api/spot-trading-routes.ts:6
+    11  server/api/staking-routes.ts:5
+     9  server/api/trading-routes.mongo.ts:4
+     4  server/api/verification-routes.ts:32
+     6  server/api/wallet-routes.ts:7
+     6  server/mongodb.ts:62
+    35  server/mongoStorage.ts:92
+   116  server/routes.mongo.ts:60
+    17  server/services/deposit.service.ts:7
+    15  server/services/staking.service.ts:12
+     9  server/services/trading.service.mongo.ts:5
+    11  server/services/wallet.service.ts:44
+    16  shared/schema.ts:259
+npm error code 2
+npm error path C:\Users\MANA\Documents\Dell\Nedaxer
+npm error command failed
+npm error command C:\WINDOWS\system32\cmd.exe /d /s /c npm run check
+npm error A complete log of this run can be found in: C:\Users\MANA\AppData\Local\npm-cache\_logs\2025-07-04T12_23_35_076Z-debug-0.log
