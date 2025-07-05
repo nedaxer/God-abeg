@@ -5,8 +5,8 @@ services:
     env: node
     region: oregon
     plan: starter
-    buildCommand: chmod +x render-final-deployment.sh && ./render-final-deployment.sh
-    startCommand: node dist/index.cjs
+    buildCommand: chmod +x render-minimal-deploy.sh && ./render-minimal-deploy.sh
+    startCommand: node dist/server.cjs
     healthCheckPath: /api/health
     envVars:
       - key: NODE_ENV
