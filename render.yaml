@@ -5,7 +5,7 @@ services:
     env: node
     region: oregon
     plan: starter
-    buildCommand: npm ci --ignore-scripts
+    buildCommand: npm ci --ignore-scripts && npm install tsx --save
     startCommand: NODE_ENV=development tsx server/index.ts
     healthCheckPath: /api/crypto/realtime-prices
     envVars:
