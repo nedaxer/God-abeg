@@ -5,8 +5,8 @@ services:
     env: node
     region: oregon
     plan: starter
-    buildCommand: chmod +x render-simple-react-build.sh && ./render-simple-react-build.sh
-    startCommand: npx tsx server/index.production.ts
+    buildCommand: chmod +x render-final-deployment.sh && ./render-final-deployment.sh
+    startCommand: node dist/index.cjs
     healthCheckPath: /api/health
     envVars:
       - key: NODE_ENV
