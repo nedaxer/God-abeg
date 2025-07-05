@@ -1,0 +1,60 @@
+~/workspace$ chmod +x render-production-build.sh && ./render-production-build.sh
+🚀 Building Complete Nedaxer Trading Application...
+📦 Installing dependencies (skipping TypeScript checks)...
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'vite@7.0.2',
+npm warn EBADENGINE   required: { node: '^20.19.0 || >=22.12.0' },
+npm warn EBADENGINE   current: { node: 'v20.18.1', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm warn deprecated rimraf@2.7.1: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+npm warn deprecated uuid@3.4.0: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
+npm warn deprecated ethereumjs-wallet@1.0.2: New package name format for new versions: @ethereumjs/wallet. Please update.
+
+added 1038 packages, and audited 1039 packages in 21s
+
+134 packages are looking for funding
+  run `npm fund` for details
+
+20 vulnerabilities (1 moderate, 19 high)
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+🔧 Installing build tools...
+
+changed 1 package, and audited 1039 packages in 3s
+
+134 packages are looking for funding
+  run `npm fund` for details
+
+20 vulnerabilities (1 moderate, 19 high)
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+🎨 Building React frontend...
+failed to load config from /home/runner/workspace/vite.config.ts
+error during build:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'vite' imported from /home/runner/workspace/node_modules/.vite-temp/vite.config.ts.timestamp-1751741106648-21358e58d3515.mjs
+    at packageResolve (node:internal/modules/esm/resolve:854:9)
+    at moduleResolve (node:internal/modules/esm/resolve:927:18)
+    at defaultResolve (node:internal/modules/esm/resolve:1169:11)
+    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:542:12)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:510:25)
+    at ModuleLoader.getModuleJob (node:internal/modules/esm/loader:239:38)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:96:40)
+    at link (node:internal/modules/esm/module_job:95:36)
+❌ Frontend build failed - no dist/public directory
+📋 Checking for alternative build output...
+total 32
+drwxr-xr-x 1 runner runner   72 Jul  5 18:12 .
+drwxr-xr-x 1 runner runner 3862 Jul  5 18:41 ..
+-rw-r--r-- 1 runner runner 3586 Jul  5 17:18 index.cjs
+-rw-r--r-- 1 runner runner 3586 Jul  5 17:17 index.js
+-rw-r--r-- 1 runner runner 9878 Jul  5 18:23 server.cjs
+-rw-r--r-- 1 runner runner 7903 Jul  5 18:12 server.js
+~/workspace$ 

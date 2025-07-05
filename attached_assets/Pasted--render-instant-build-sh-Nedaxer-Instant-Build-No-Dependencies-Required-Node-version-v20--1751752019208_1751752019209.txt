@@ -1,0 +1,93 @@
+/render-instant-build.sh
+🚀 Nedaxer Instant Build - No Dependencies Required
+📊 Node version: v20.18.1
+🧹 Setting up build directories...
+🎨 Creating standalone Nedaxer application...
+🖥️ Creating production server...
+✅ Instant build completed successfully!
+
+🎯 Build Summary:
+📱 Frontend: Standalone HTML5 application with embedded React-like functionality
+🖥️ Backend: Express.js server with MongoDB and crypto API support
+🔗 Zero dependencies installation required
+🌐 Ready for immediate deployment
+
+🧪 Test the application:
+   cd dist && node server.js
+
+🚀 For Render deployment:
+   Build Command: ./render-instant-build.sh
+   Start Command: cd dist && node server.js
+
+📝 Features included:
+   ✅ Real-time cryptocurrency prices
+   ✅ Trading interface simulation
+   ✅ User authentication
+   ✅ Portfolio management
+   ✅ Mobile-responsive design
+   ✅ Live market data integration
+
+🔧 Optional environment variables:
+   MONGODB_URI - For database features
+   COINGECKO_API_KEY - For enhanced crypto data
+~/workspace$ cd dist && node server.js
+file:///home/runner/workspace/dist/server.js:1
+const express = require('express');
+                ^
+
+ReferenceError: require is not defined in ES module scope, you can use import instead
+This file is being treated as an ES module because it has a '.js' file extension and '/home/runner/workspace/package.json' contains "type": "module". To treat it as a CommonJS script, rename it to use the '.cjs' file extension.
+    at file:///home/runner/workspace/dist/server.js:1:17
+    at ModuleJob.run (node:internal/modules/esm/module_job:234:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:473:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:122:5)
+
+Node.js v20.18.1
+~/workspace/dist$ rm -rf node_modules package-lock.json
+~/workspace/dist$ ./render-instant-build.sh
+bash: ./render-instant-build.sh: No such file or directory
+~/workspace/dist$ ./render-instant-build.sh
+bash: ./render-instant-build.sh: No such file or directory
+~/workspace/dist$ npm install
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'vite@7.0.2',
+npm warn EBADENGINE   required: { node: '^20.19.0 || >=22.12.0' },
+npm warn EBADENGINE   current: { node: 'v20.18.1', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm warn deprecated @esbuild-kit/esm-loader@2.6.5: Merged into tsx: https://tsx.is
+npm warn deprecated @esbuild-kit/core-utils@3.3.2: Merged into tsx: https://tsx.is
+npm warn deprecated rimraf@2.7.1: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+npm warn deprecated ethereumjs-wallet@1.0.2: New package name format for new versions: @ethereumjs/wallet. Please update.
+npm warn deprecated uuid@3.4.0: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
+
+> rest-express@1.0.0 postinstall
+> npm run check
+
+
+> rest-express@1.0.0 check
+> tsc
+
+server/vite.ts:43:5 - error TS2322: Type '{ middlewareMode: boolean; hmr: { server: Server<typeof IncomingMessage, typeof ServerResponse>; host: string; port: number; }; allowedHosts: boolean; }' is not assignable to type 'ResolvedServerOptions | ServerOptions$1'.
+  Type '{ middlewareMode: boolean; hmr: { server: Server<typeof IncomingMessage, typeof ServerResponse>; host: string; port: number; }; allowedHosts: boolean; }' is not assignable to type 'ServerOptions$1'.
+    Types of property 'allowedHosts' are incompatible.
+      Type 'boolean' is not assignable to type 'true | string[]'.
+
+43     server: serverOptions,
+       ~~~~~~
+
+  node_modules/vite/dist/node/index.d.ts:3374:3
+    3374   server: ResolvedServerOptions;
+           ~~~~~~
+    The expected type comes from property 'server' which is declared here on type 'ResolvedConfig | InlineConfig'
+
+
+Found 1 error in server/vite.ts:43
+
+npm error code 2
+npm error path /home/runner/workspace
+npm error command failed
+npm error command sh -c npm run check
+npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2025-07-05T21_45_27_372Z-debug-0.log
+~/workspace/dist$ 

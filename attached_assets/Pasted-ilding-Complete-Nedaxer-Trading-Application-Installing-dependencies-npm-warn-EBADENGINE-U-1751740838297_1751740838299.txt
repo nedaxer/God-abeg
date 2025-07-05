@@ -1,0 +1,74 @@
+ilding Complete Nedaxer Trading Application...
+📦 Installing dependencies...
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'vite@7.0.2',
+npm warn EBADENGINE   required: { node: '^20.19.0 || >=22.12.0' },
+npm warn EBADENGINE   current: { node: 'v20.18.1', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm warn deprecated ethereumjs-wallet@1.0.2: New package name format for new versions: @ethereumjs/wallet. Please update.
+npm warn deprecated uuid@3.4.0: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
+npm warn deprecated rimraf@2.7.1: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+
+> rest-express@1.0.0 postinstall
+> npm run check
+
+
+> rest-express@1.0.0 check
+> tsc
+
+server/vite.ts:4:64 - error TS2307: Cannot find module 'vite' or its corresponding type declarations.
+
+4 import { createServer as createViteServer, createLogger } from "vite";
+                                                                 ~~~~~~
+
+vite.config.ts:1:30 - error TS2307: Cannot find module 'vite' or its corresponding type declarations.
+
+1 import { defineConfig } from "vite";
+                               ~~~~~~
+
+vite.config.ts:2:19 - error TS2307: Cannot find module '@vitejs/plugin-react' or its corresponding type declarations.
+
+2 import react from "@vitejs/plugin-react";
+                    ~~~~~~~~~~~~~~~~~~~~~~
+
+vite.config.ts:5:33 - error TS2307: Cannot find module '@replit/vite-plugin-runtime-error-modal' or its corresponding type declarations.
+
+5 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
+                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+vite.config.ts:15:24 - error TS2307: Cannot find module '@replit/vite-plugin-cartographer' or its corresponding type declarations.
+
+15           await import("@replit/vite-plugin-cartographer").then((m) =>
+                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+Found 5 errors in 2 files.
+
+Errors  Files
+     1  server/vite.ts:4
+     4  vite.config.ts:1
+npm error code 2
+npm error path /home/runner/workspace
+npm error command failed
+npm error command sh -c npm run check
+npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2025-07-05T18_39_08_957Z-debug-0.log
+🎨 Building React frontend...
+Need to install the following packages:
+vite@6.3.5
+Ok to proceed? (y) y
+
+failed to load config from /home/runner/workspace/vite.config.ts
+error during build:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'vite' imported from /home/runner/workspace/node_modules/.vite-temp/vite.config.ts.timestamp-1751740807864-f923a97568801.mjs
+    at packageResolve (node:internal/modules/esm/resolve:854:9)
+    at moduleResolve (node:internal/modules/esm/resolve:927:18)
+    at defaultResolve (node:internal/modules/esm/resolve:1169:11)
+    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:542:12)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:510:25)
+    at ModuleLoader.getModuleJob (node:internal/modules/esm/loader:239:38)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:96:40)
+    at link (node:internal/modules/esm/module_job:95:36)
+❌ Frontend build failed - no dist/public directory
+~/workspace$ 

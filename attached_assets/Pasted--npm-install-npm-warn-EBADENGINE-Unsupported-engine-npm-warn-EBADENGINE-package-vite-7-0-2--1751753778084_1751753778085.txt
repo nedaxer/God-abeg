@@ -1,0 +1,104 @@
+ npm install
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'vite@7.0.2',
+npm warn EBADENGINE   required: { node: '^20.19.0 || >=22.12.0' },
+npm warn EBADENGINE   current: { node: 'v22.10.0', npm: '10.9.0' }
+npm warn EBADENGINE }
+
+> rest-express@1.0.0 postinstall
+> npm run check
+
+
+> rest-express@1.0.0 check
+> tsc
+
+server/vite.ts:43:5 - error TS2322: Type '{ middlewareMode: boolean; hmr: { server: Server<typeof IncomingMessage, typeof ServerResponse>; host: string; port: number; }; allowedHosts: boolean; }' is not assignable to type 'ResolvedServerOptions | ServerOptions$1'.
+  Type '{ middlewareMode: boolean; hmr: { server: Server<typeof IncomingMessage, typeof ServerResponse>; host: string; port: number; }; allowedHosts: boolean; }' is not assignable to type 'ServerOptions$1'.
+    Types of property 'allowedHosts' are incompatible.
+      Type 'boolean' is not assignable to type 'true | string[]'.
+
+43     server: serverOptions,
+       ~~~~~~
+
+  node_modules/vite/dist/node/index.d.ts:3374:3
+    3374   server: ResolvedServerOptions;
+           ~~~~~~
+    The expected type comes from property 'server' which is declared here on type 'ResolvedConfig | InlineConfig'
+
+
+Found 1 error in server/vite.ts:43
+
+npm error code 1
+npm error path /home/runner/workspace
+npm error command failed
+npm error command sh -c npm run check
+npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2025-07-05T22_05_57_358Z-debug-0.log
+~/workspace$ npm build
+Unknown command: "build"
+
+
+Did you mean this?
+  npm run build # run the "build" package script
+To see a list of supported npm commands, run:
+  npm help
+~/workspace$ npm run build
+
+> rest-express@1.0.0 build
+> vite build && esbuild server/index.production.ts --platform=node --packages=external --bundle --format=esm --outdir=dist --external:vite --external:mongodb --external:sharp
+
+vite v7.0.2 building for production...
+✓ 2293 modules transformed.
+../dist/public/assets/20250618_001710_1750207793694-AoeJmqxR.png                            6.10 kB
+../dist/public/assets/20250618_001938_1750207793727-DUrGtuRJ.png                            6.11 kB
+../dist/public/index.html                                                                   6.16 kB │ gzip:   1.67 kB
+../dist/public/assets/20250618_001828_1750207793703-BhML_qVO.png                            7.96 kB
+../dist/public/assets/20250618_001748_1750207793698-Bulh0HhN.png                            7.96 kB
+../dist/public/assets/20250618_002006_1750207793730-C1o41KA5.png                            8.15 kB
+../dist/public/assets/20250618_001640_1750207793691-DAS_T2Q3.png                            8.56 kB
+../dist/public/assets/20250618_001859_1750207793716-7erD0uLz.png                            8.87 kB
+../dist/public/assets/20250618_042459_1750217238332-BbcqRReD.png                           53.63 kB
+../dist/public/assets/Refresh  app logo_1750782062607-Dentd8Fq.png                        307.36 kB
+../dist/public/assets/Picsart_25-06-28_15-49-20-738 (1)_1751125238732--_rr9HCK.png        665.25 kB
+../dist/public/assets/file_00000000e0d461f9b4be5c8627966318_1750209747614-DbMqjedn.png  1,585.86 kB
+../dist/public/assets/index-BbsfGVSb.css                                                  130.66 kB │ gzip:  20.24 kB
+../dist/public/assets/qr-scanner-worker.min-D85Z9gVD.js                                    43.95 kB │ gzip:  10.40 kB
+../dist/public/assets/index-CivWLMXt.js                                                 1,414.69 kB │ gzip: 353.25 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 6.92s
+
+  dist/index.production.js  825b 
+
+⚡ Done in 3ms
+~/workspace$ npm start
+
+> rest-express@1.0.0 prestart
+> npm run check
+
+
+> rest-express@1.0.0 check
+> tsc
+
+server/vite.ts:43:5 - error TS2322: Type '{ middlewareMode: boolean; hmr: { server: Server<typeof IncomingMessage, typeof ServerResponse>; host: string; port: number; }; allowedHosts: boolean; }' is not assignable to type 'ResolvedServerOptions | ServerOptions$1'.
+  Type '{ middlewareMode: boolean; hmr: { server: Server<typeof IncomingMessage, typeof ServerResponse>; host: string; port: number; }; allowedHosts: boolean; }' is not assignable to type 'ServerOptions$1'.
+    Types of property 'allowedHosts' are incompatible.
+      Type 'boolean' is not assignable to type 'true | string[]'.
+
+43     server: serverOptions,
+       ~~~~~~
+
+  node_modules/vite/dist/node/index.d.ts:3374:3
+    3374   server: ResolvedServerOptions;
+           ~~~~~~
+    The expected type comes from property 'server' which is declared here on type 'ResolvedConfig | InlineConfig'
+
+
+Found 1 error in server/vite.ts:43
+
+~/workspace$ cd dist/index.production.js  
+bash: cd: dist/index.production.js: Not a directory
+~/workspace$ cd dist && node index.production.js
+✅ Nedaxer production server running on port 3000
