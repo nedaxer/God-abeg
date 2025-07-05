@@ -1,18 +1,18 @@
 services:
-  # Single Full-Stack Application (Frontend + Backend on Port 5000)
+  # Nedaxer Trading Platform - Final Working Configuration
   - type: web
     name: nedaxer-app
     env: node
     region: oregon
     plan: starter
-    buildCommand: chmod +x render-simple-deploy.sh && ./render-simple-deploy.sh
+    buildCommand: npm ci && npm run build
     startCommand: npx tsx server/index.ts
     healthCheckPath: /api/health
     envVars:
       - key: NODE_ENV
         value: production
       - key: PORT
-        value: 5000
+        fromSecret: PORT
       - key: MONGODB_URI
         fromSecret: MONGODB_URI
       - key: SESSION_SECRET
@@ -38,10 +38,3 @@ services:
       - key: BASE_URL
         value: https://nedaxer.onrender.com
     autoDeploy: true
-
-databases:
-  # Optional: MongoDB Atlas connection (if not using external service)
-  # Uncomment if you want Render to manage your database
-  # - name: nedaxer-mongo
-  #   databaseName: nedaxer
-  #   user: nedaxer-user
