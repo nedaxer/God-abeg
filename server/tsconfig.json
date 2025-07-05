@@ -24,8 +24,10 @@
   },
   "include": [
     "**/*.ts",
-    "**/*.js"
+    "**/*.js",
+    "types/**/*.d.ts"
   ],
+  "typeRoots": ["./types", "./node_modules/@types"],
   "exclude": [
     "node_modules",
     "dist"
