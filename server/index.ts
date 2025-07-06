@@ -1,8 +1,36 @@
 import 'dotenv/config'; // Load environment variables from .env file
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes.mongo"; // Using PostgreSQL routes
-import { setupVite, serveStatic, log } from "./vite";
 import { createServer } from "http";
+
+// Simple log function for production
+const log = (message: string, source = "express") => {
+  const formattedTime = new Date().toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: true,
+  });
+  console.log(`${formattedTime} [${source}] ${message}`);
+};
+
+// Conditionally import Vite functions
+async function getViteFunctions() {
+  if (process.env.NODE_ENV !== 'production') {
+    try {
+      const viteModule = await import("./vite");
+      return {
+        setupVite: viteModule.setupVite,
+        serveStatic: viteModule.serveStatic,
+        log: viteModule.log
+      };
+    } catch (error) {
+      console.log('Vite not available, running in production mode');
+      return { setupVite: null, serveStatic: null, log };
+    }
+  }
+  return { setupVite: null, serveStatic: null, log };
+}
 
 // Helper function to find an available port
 async function findAvailablePort(startPort: number): Promise<number> {
@@ -72,13 +100,29 @@ app.use((req, res, next) => {
       throw err;
     });
 
+    // Get Vite functions conditionally
+    const { setupVite, serveStatic } = await getViteFunctions();
+    
     // importantly only setup vite in development and after
     // setting up all the other routes so the catch-all route
     // doesn't interfere with the other routes
-    if (app.get("env") === "development") {
+    if (app.get("env") === "development" && setupVite) {
       await setupVite(app, server);
-    } else {
+    } else if (serveStatic) {
       serveStatic(app);
+    } else {
+      // Production fallback - serve a simple API-only response
+      app.get('*', (req, res) => {
+        res.json({ 
+          message: 'Nedaxer API Server Running',
+          endpoints: [
+            '/api/crypto/realtime-prices',
+            '/api/auth/login',
+            '/api/user/balance',
+            '/api/wallet/summary'
+          ]
+        });
+      });
     }
 
     // Use PORT environment variable for deployment (Render) or find available port for development

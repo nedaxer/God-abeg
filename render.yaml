@@ -5,12 +5,12 @@ services:
     env: node
     region: oregon
     plan: starter
-    buildCommand: npm ci --ignore-scripts && npm install tsx --save
-    startCommand: NODE_ENV=development tsx server/index.ts
+    buildCommand: npm ci --ignore-scripts && npm install -D tsx vite typescript
+    startCommand: npx tsx server/index.ts
     healthCheckPath: /api/crypto/realtime-prices
     envVars:
       - key: NODE_ENV
-        value: development
+        value: production
       - key: PORT
         value: 5000
       - key: MONGODB_URI
