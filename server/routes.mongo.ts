@@ -18,6 +18,7 @@ import { sendEmail, sendVerificationEmail, sendWelcomeEmail, sendPasswordResetEm
 import { imageOptimizer } from "./image-optimizer";
 import { exchangeRateService } from "./exchange-rate-service";
 import { getNewsSourceLogo } from "./logo-service";
+import { priceService } from "./services/price.service";
 import './passport-config';
 import passport from 'passport';
 
@@ -3919,9 +3920,9 @@ Timestamp: ${new Date().toISOString().replace('T', ' ').substring(0, 19)}(UTC)`,
   // Add periodic price updates for real-time BTC price
   setInterval(async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/crypto/realtime-prices');
-      if (response.ok) {
-        const priceData = await response.json();
+      // Use CoinGecko API call instead of external fetch to avoid localhost issues
+      const priceData = await getCoinGeckoPrices();
+      if (priceData && priceData.length > 0) {
         broadcastToSubscribers('prices', {
           type: 'PRICE_UPDATE',
           data: priceData

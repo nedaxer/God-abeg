@@ -111,18 +111,75 @@ app.use((req, res, next) => {
     } else if (serveStatic) {
       serveStatic(app);
     } else {
-      // Production fallback - serve a simple API-only response
-      app.get('*', (req, res) => {
-        res.json({ 
-          message: 'Nedaxer API Server Running',
-          endpoints: [
-            '/api/crypto/realtime-prices',
-            '/api/auth/login',
-            '/api/user/balance',
-            '/api/wallet/summary'
-          ]
+      // Production mode - serve built React app
+      const path = await import('path');
+      const distPath = path.resolve(process.cwd(), 'dist', 'public');
+      
+      try {
+        // Check if build directory exists
+        const fs = await import('fs');
+        if (fs.existsSync(distPath)) {
+          // Serve static files
+          app.use(express.static(distPath));
+          
+          // Handle React Router - serve index.html for all non-API routes
+          app.get('*', (req, res) => {
+            res.sendFile(path.resolve(distPath, 'index.html'));
+          });
+          
+          console.log('✅ Serving production React app from:', distPath);
+        } else {
+          console.log('⚠️  Production build not found, serving minimal HTML');
+          // Fallback HTML with redirect to mobile app
+          app.get('*', (req, res) => {
+            res.send(`
+              <!DOCTYPE html>
+              <html lang="en">
+              <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Nedaxer Trading Platform</title>
+                <style>
+                  body { margin: 0; font-family: Arial, sans-serif; background: #0a0a2e; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column; }
+                  .loading { text-align: center; }
+                  .subtitle { opacity: 0.8; margin-top: 10px; }
+                </style>
+              </head>
+              <body>
+                <div class="loading">
+                  <h1>Nedaxer Trading Platform</h1>
+                  <p class="subtitle">Loading your trading interface...</p>
+                  <p>✅ Real-time prices for 106+ cryptocurrencies</p>
+                  <p>✅ Advanced mobile trading interface</p>
+                  <p>✅ Secure user authentication & KYC</p>
+                </div>
+                <script>
+                  // Redirect to mobile app
+                  setTimeout(() => {
+                    if (window.location.pathname === '/') {
+                      window.location.href = '/mobile';
+                    }
+                  }, 3000);
+                </script>
+              </body>
+              </html>
+            `);
+          });
+        }
+      } catch (error) {
+        console.error('Error setting up production static serving:', error);
+        app.get('*', (req, res) => {
+          res.json({ 
+            message: 'Nedaxer API Server Running',
+            endpoints: [
+              '/api/crypto/realtime-prices',
+              '/api/auth/login',
+              '/api/user/balance',
+              '/api/wallet/summary'
+            ]
+          });
         });
-      });
+      }
     }
 
     // Use PORT environment variable for deployment (Render) or find available port for development
