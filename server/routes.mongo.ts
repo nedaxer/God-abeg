@@ -33,7 +33,7 @@ import adminKycRoutes from "./api/admin-kyc-routes";
 import compression from "compression";
 import serveStatic from "serve-static";
 import Parser from 'rss-parser';
-import { registerBackupRestoreRoutes } from "./backup-restore";
+
 
 // Extend express-session types
 declare module "express-session" {
@@ -4090,8 +4090,7 @@ Timestamp: ${new Date().toISOString().replace('T', ' ').substring(0, 19)}(UTC)`,
   // Register chatbot routes
   app.use('/api/chatbot', chatbotRoutes);
   
-  // Register standalone backup/restore system
-  registerBackupRestoreRoutes(app);
+
   
   // Register verification routes
   const { default: verificationRoutes } = await import('./api/verification-routes');
@@ -4941,6 +4940,45 @@ Timestamp: ${new Date().toISOString().replace('T', ' ').substring(0, 19)}(UTC)`,
 
   // Store WebSocket server for broadcasting updates
   app.set('wss', wss);
+  
+  // Store WebSocket reference globally for broadcasting
+  (global as any).wss = wss;
+  
+  // Periodic crypto price broadcasting every 10 seconds
+  setInterval(async () => {
+    try {
+      if (wss.clients.size > 0) {
+        // Import and call the crypto prices function
+        const { getRealtimePrices } = await import('./api/realtime-prices');
+        
+        // Create a fake request/response to get the data
+        const fakeReq = {} as any;
+        const fakeRes = {
+          json: (data: any) => {
+            // Send the data to all WebSocket clients
+            const wsMessage = {
+              type: 'crypto_prices',
+              ...data,
+              timestamp: new Date().toISOString()
+            };
+            
+            wss.clients.forEach((client: any) => {
+              if (client.readyState === 1) { // WebSocket.OPEN
+                client.send(JSON.stringify(wsMessage));
+              }
+            });
+            
+            console.log('📡 Periodic crypto prices broadcasted to', wss.clients.size, 'WebSocket clients');
+          }
+        } as any;
+        
+        // Call the function to get fresh data
+        await getRealtimePrices(fakeReq, fakeRes);
+      }
+    } catch (error) {
+      console.error('Periodic crypto broadcast error:', error);
+    }
+  }, 10000); // Every 10 seconds
   
   // TEMPORARY: Test endpoint to update user KYC status for testing
   app.post('/api/test/update-kyc-status', async (req: Request, res: Response) => {

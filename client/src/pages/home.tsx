@@ -7,6 +7,7 @@ import { MarketFeatures } from "@/components/market-features";
 import { PlatformFeatures } from "@/components/platform-features";
 import { LearningResources } from "@/components/learning-resources";
 import { CTASection } from "@/components/cta-section";
+import { CryptoCoinList } from "@/components/crypto-coin-list";
 import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
@@ -126,77 +127,7 @@ export default function Home() {
         <main className="w-full">
           <HeroSlider />
           <TradeOptions />
-          <section className="py-12 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-8 text-[#0033a0]">Explore Markets</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-        
-            <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-              <div className="flex items-center mb-4">
-                <img src="/logos/btc-logo.svg" alt="Bitcoin" className="w-8 h-8 mr-3" />
-                <h3 className="text-xl font-bold text-blue-600">Bitcoin</h3>
-              </div>
-              <p className="text-blue-600 mb-4">
-                Trade the original cryptocurrency and largest digital asset by market capitalization.
-              </p>
-              <Link 
-                href="/markets/bitcoin" 
-                className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
-              >
-                View Bitcoin Markets <ArrowRight className="ml-1 h-4 w-4" />
-              </Link>
-            </div>
-
-            <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-              <div className="flex items-center mb-4">
-                <img src="/logos/eth-logo.svg" alt="Ethereum" className="w-8 h-8 mr-3" />
-                <h3 className="text-xl font-bold text-blue-600">Ethereum</h3>
-              </div>
-              <p className="text-blue-600 mb-4">
-                Trade the second-largest cryptocurrency powering thousands of decentralized applications.
-              </p>
-              <Link 
-                href="/markets/ethereum" 
-                className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
-              >
-                View Ethereum Markets <ArrowRight className="ml-1 h-4 w-4" />
-              </Link>
-            </div>
-
-            <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-              <div className="flex items-center mb-4">
-                <Coins className="text-[#0033a0] h-8 w-8 mr-3" />
-                <h3 className="text-xl font-bold text-blue-600">Altcoins</h3>
-              </div>
-              <p className="text-blue-600 mb-4">
-                Trade alternative cryptocurrencies including Solana, Cardano, Ripple, and more.
-              </p>
-              <Link 
-                href="/markets/altcoins" 
-                className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
-              >
-                View Altcoin Markets <ArrowRight className="ml-1 h-4 w-4" />
-              </Link>
-            </div>
-
-            <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-              <div className="flex items-center mb-4">
-                <Calendar className="text-[#0033a0] h-8 w-8 mr-3" />
-                <h3 className="text-xl font-bold text-blue-600">Crypto Events</h3>
-              </div>
-              <p className="text-blue-600 mb-4">
-                Trade major crypto events including ETF decisions, protocol upgrades, and regulatory announcements.
-              </p>
-              <Link 
-                href="/markets/events" 
-                className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
-              >
-                View Event Markets <ArrowRight className="ml-1 h-4 w-4" />
-              </Link>
-            </div>
-        </div>
-      </div>
-    </section>
+          <CryptoCoinList />
           <PlatformFeatures />
           <LearningResources />
           <CTASection />
@@ -213,78 +144,7 @@ export default function Home() {
       <main className="flex-grow">
         <HeroSlider />
         <TradeOptions />
-        <section className="py-12 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-8 text-[#0033a0]">Explore Markets</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-        
-            <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-              <div className="flex items-center mb-4">
-                <img src="/logos/btc-logo.svg" alt="Bitcoin" className="w-8 h-8 mr-3" />
-                <h3 className="text-xl font-bold text-blue-600">Bitcoin</h3>
-              </div>
-              <p className="text-blue-600 mb-4">
-                Trade the original cryptocurrency and largest digital asset by market capitalization.
-              </p>
-              <Link 
-                href="/markets/bitcoin" 
-                className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
-              >
-                View Bitcoin Markets <ArrowRight className="ml-1 h-4 w-4" />
-              </Link>
-            </div>
-
-            <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-              <div className="flex items-center mb-4">
-                <img src="/logos/eth-logo.svg" alt="Ethereum" className="w-8 h-8 mr-3" />
-                <h3 className="text-xl font-bold text-blue-600">Ethereum</h3>
-              </div>
-              <p className="text-blue-600 mb-4">
-                Trade the second-largest cryptocurrency powering thousands of decentralized applications.
-              </p>
-              <Link 
-                href="/markets/ethereum" 
-                className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
-              >
-                View Ethereum Markets <ArrowRight className="ml-1 h-4 w-4" />
-              </Link>
-            </div>
-
-            <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-              <div className="flex items-center mb-4">
-                <Coins className="text-[#0033a0] h-8 w-8 mr-3" />
-                <h3 className="text-xl font-bold text-blue-600">Altcoins</h3>
-              </div>
-              <p className="text-blue-600 mb-4">
-                Trade alternative cryptocurrencies including Solana, Cardano, Ripple, and more.
-              </p>
-              <Link 
-                href="/markets/altcoins" 
-                className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
-              >
-                View Altcoin Markets <ArrowRight className="ml-1 h-4 w-4" />
-              </Link>
-            </div>
-
-            <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-              <div className="flex items-center mb-4">
-                <Calendar className="text-[#0033a0] h-8 w-8 mr-3" />
-                <h3 className="text-xl font-bold text-blue-600">Crypto Events</h3>
-              </div>
-              <p className="text-blue-600 mb-4">
-                Trade major crypto events including ETF decisions, protocol upgrades, and regulatory announcements.
-              </p>
-              <Link 
-                href="/markets/events" 
-                className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
-              >
-                View Event Markets <ArrowRight className="ml-1 h-4 w-4" />
-              </Link>
-            </div>
-        </div>
-      </div>
-    </section>
-        <MarketFeatures />
+        <CryptoCoinList />
         <PlatformFeatures />
         <LearningResources />
         <CTASection />

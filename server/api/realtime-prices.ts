@@ -33,7 +33,7 @@ export async function getRealtimePrices(req: Request, res: Response) {
     // Direct API call to CoinGecko for essential coins
     const API_KEY = process.env.COINGECKO_API_KEY || '';
     
-    // Complete list of coins from CRYPTO_PAIRS for full coverage
+    // Complete list of 120 coins from CRYPTO_PAIRS for full coverage
     const allCryptoPairCoins = [
       'bitcoin', 'ethereum', 'solana', 'binancecoin', 'ripple', 'usd-coin', 'dogecoin', 'cardano',
       'tron', 'avalanche-2', 'chainlink', 'the-open-network', 'shiba-inu', 'sui', 'polkadot',
@@ -265,6 +265,28 @@ export async function getRealtimePrices(req: Request, res: Response) {
     lastCacheTime = now;
     
     console.log(`🎉 Successfully fetched ${tickers.length} crypto prices (${allCryptoPairCoins.length} requested)`);
+    
+    // Broadcast WebSocket updates to all connected clients
+    try {
+      if ((global as any).wss) {
+        const wsMessage = {
+          type: 'crypto_prices',
+          success: true,
+          data: tickers,
+          timestamp: new Date().toISOString()
+        };
+        
+        (global as any).wss.clients.forEach((client: any) => {
+          if (client.readyState === 1) { // WebSocket.OPEN
+            client.send(JSON.stringify(wsMessage));
+          }
+        });
+        
+        console.log('📡 Broadcasted crypto prices to', (global as any).wss.clients.size, 'WebSocket clients');
+      }
+    } catch (error) {
+      console.error('WebSocket broadcast error:', error);
+    }
     
     res.json({ success: true, data: tickers });
     

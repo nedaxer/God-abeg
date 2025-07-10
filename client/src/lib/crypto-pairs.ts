@@ -41,7 +41,7 @@ export const CRYPTO_PAIRS: CryptoPair[] = [
   { symbol: 'ETCUSDT', baseAsset: 'ETC', quoteAsset: 'USDT', name: 'Ethereum Classic', tradingViewSymbol: 'BYBIT:ETCUSDT', coinGeckoId: 'ethereum-classic' },
   { symbol: 'MATICUSDT', baseAsset: 'MATIC', quoteAsset: 'USDT', name: 'Polygon', tradingViewSymbol: 'BYBIT:MATICUSDT', coinGeckoId: 'matic-network' },
   { symbol: 'FILUSDT', baseAsset: 'FIL', quoteAsset: 'USDT', name: 'Filecoin', tradingViewSymbol: 'BYBIT:FILUSDT', coinGeckoId: 'filecoin' },
-  { symbol: 'WIFUSDT', baseAsset: 'WIF', quoteAsset: 'USDT', name: 'dogwifhat', tradingViewSymbol: 'BYBIT:WIFUSDT', coinGeckoId: 'dogwifcoin' },
+
   { symbol: 'INJUSDT', baseAsset: 'INJ', quoteAsset: 'USDT', name: 'Injective', tradingViewSymbol: 'BYBIT:INJUSDT', coinGeckoId: 'injective-protocol' },
   { symbol: 'BONKUSDT', baseAsset: 'BONK', quoteAsset: 'USDT', name: 'Bonk', tradingViewSymbol: 'BYBIT:BONKUSDT', coinGeckoId: 'bonk' },
   { symbol: 'VETUSDT', baseAsset: 'VET', quoteAsset: 'USDT', name: 'VeChain', tradingViewSymbol: 'BYBIT:VETUSDT', coinGeckoId: 'vechain' },
@@ -56,11 +56,11 @@ export const CRYPTO_PAIRS: CryptoPair[] = [
   { symbol: 'OPUSDT', baseAsset: 'OP', quoteAsset: 'USDT', name: 'Optimism', tradingViewSymbol: 'BYBIT:OPUSDT', coinGeckoId: 'optimism' },
   { symbol: 'AAVEUSDT', baseAsset: 'AAVE', quoteAsset: 'USDT', name: 'Aave', tradingViewSymbol: 'BYBIT:AAVEUSDT', coinGeckoId: 'aave' },
   { symbol: 'MKRUSDT', baseAsset: 'MKR', quoteAsset: 'USDT', name: 'Maker', tradingViewSymbol: 'BYBIT:MKRUSDT', coinGeckoId: 'maker' },
-  { symbol: 'PYTHUSDT', baseAsset: 'PYTH', quoteAsset: 'USDT', name: 'Pyth Network', tradingViewSymbol: 'BYBIT:PYTHUSDT', coinGeckoId: 'pyth-network' },
+
   { symbol: 'SEIUSDT', baseAsset: 'SEI', quoteAsset: 'USDT', name: 'Sei', tradingViewSymbol: 'BYBIT:SEIUSDT', coinGeckoId: 'sei-network' },
   { symbol: 'FLOKIUSDT', baseAsset: 'FLOKI', quoteAsset: 'USDT', name: 'Floki', tradingViewSymbol: 'BYBIT:FLOKIUSDT', coinGeckoId: 'floki' },
   { symbol: 'LDOUSDT', baseAsset: 'LDO', quoteAsset: 'USDT', name: 'Lido DAO', tradingViewSymbol: 'BYBIT:LDOUSDT', coinGeckoId: 'lido-dao' },
-  { symbol: 'GALAUSDT', baseAsset: 'GALA', quoteAsset: 'USDT', name: 'Gala', tradingViewSymbol: 'BYBIT:GALAUSDT', coinGeckoId: 'gala' },
+
   { symbol: 'TIAUSDT', baseAsset: 'TIA', quoteAsset: 'USDT', name: 'Celestia', tradingViewSymbol: 'BYBIT:TIAUSDT', coinGeckoId: 'celestia' },
   { symbol: 'SANDUSDT', baseAsset: 'SAND', quoteAsset: 'USDT', name: 'The Sandbox', tradingViewSymbol: 'BYBIT:SANDUSDT', coinGeckoId: 'the-sandbox' },
 
@@ -78,7 +78,7 @@ export const CRYPTO_PAIRS: CryptoPair[] = [
   { symbol: 'AXSUSDT', baseAsset: 'AXS', quoteAsset: 'USDT', name: 'Axie Infinity', tradingViewSymbol: 'BYBIT:AXSUSDT', coinGeckoId: 'axie-infinity' },
 
   { symbol: 'IMXUSDT', baseAsset: 'IMX', quoteAsset: 'USDT', name: 'Immutable X', tradingViewSymbol: 'BYBIT:IMXUSDT', coinGeckoId: 'immutable-x' },
-  { symbol: 'ARKMUSDT', baseAsset: 'ARKM', quoteAsset: 'USDT', name: 'Arkham', tradingViewSymbol: 'BYBIT:ARKMUSDT', coinGeckoId: 'arkham' },
+
   { symbol: 'STRKUSDT', baseAsset: 'STRK', quoteAsset: 'USDT', name: 'Starknet', tradingViewSymbol: 'BYBIT:STRKUSDT', coinGeckoId: 'starknet' },
   { symbol: 'FETUSDT', baseAsset: 'FET', quoteAsset: 'USDT', name: 'Fetch.ai', tradingViewSymbol: 'BYBIT:FETUSDT', coinGeckoId: 'fetch-ai' },
 
@@ -88,7 +88,7 @@ export const CRYPTO_PAIRS: CryptoPair[] = [
   { symbol: 'ENJUSDT', baseAsset: 'ENJ', quoteAsset: 'USDT', name: 'Enjin Coin', tradingViewSymbol: 'BYBIT:ENJUSDT', coinGeckoId: 'enjincoin' },
   { symbol: 'AXLUSDT', baseAsset: 'AXL', quoteAsset: 'USDT', name: 'Axelar', tradingViewSymbol: 'BYBIT:AXLUSDT', coinGeckoId: 'axelar' },
 
-  { symbol: 'ETHFIUSDT', baseAsset: 'ETHFI', quoteAsset: 'USDT', name: 'Ether.fi', tradingViewSymbol: 'BYBIT:ETHFIUSDT', coinGeckoId: 'ether-fi' },
+
   { symbol: 'GMXUSDT', baseAsset: 'GMX', quoteAsset: 'USDT', name: 'GMX', tradingViewSymbol: 'BYBIT:GMXUSDT', coinGeckoId: 'gmx' },
 
 
@@ -103,11 +103,11 @@ export const CRYPTO_PAIRS: CryptoPair[] = [
   { symbol: 'ONDOUSDT', baseAsset: 'ONDO', quoteAsset: 'USDT', name: 'Ondo', tradingViewSymbol: 'BYBIT:ONDOUSDT', coinGeckoId: 'ondo-finance' },
   { symbol: 'YFIUSDT', baseAsset: 'YFI', quoteAsset: 'USDT', name: 'yearn.finance', tradingViewSymbol: 'BYBIT:YFIUSDT', coinGeckoId: 'yearn-finance' },
   { symbol: 'JASMYUSDT', baseAsset: 'JASMY', quoteAsset: 'USDT', name: 'JasmyCoin', tradingViewSymbol: 'BYBIT:JASMYUSDT', coinGeckoId: 'jasmycoin' },
-  { symbol: 'JTOUSDT', baseAsset: 'JTO', quoteAsset: 'USDT', name: 'Jito', tradingViewSymbol: 'BYBIT:JTOUSDT', coinGeckoId: 'jito-governance-token' },
+
   { symbol: 'KSMUSDT', baseAsset: 'KSM', quoteAsset: 'USDT', name: 'Kusama', tradingViewSymbol: 'BYBIT:KSMUSDT', coinGeckoId: 'kusama' },
   { symbol: 'ZECUSDT', baseAsset: 'ZEC', quoteAsset: 'USDT', name: 'Zcash', tradingViewSymbol: 'BYBIT:ZECUSDT', coinGeckoId: 'zcash' },
   { symbol: 'BATUSDT', baseAsset: 'BAT', quoteAsset: 'USDT', name: 'Basic Attention Token', tradingViewSymbol: 'BYBIT:BATUSDT', coinGeckoId: 'basic-attention-token' },
-  { symbol: 'CKBUSDT', baseAsset: 'CKB', quoteAsset: 'USDT', name: 'Nervos Network', tradingViewSymbol: 'BYBIT:CKBUSDT', coinGeckoId: 'nervos-network' },
+
   { symbol: 'EOSUSDT', baseAsset: 'EOS', quoteAsset: 'USDT', name: 'EOS', tradingViewSymbol: 'BYBIT:EOSUSDT', coinGeckoId: 'eos' },
   { symbol: 'GMTUSDT', baseAsset: 'GMT', quoteAsset: 'USDT', name: 'STEPN', tradingViewSymbol: 'BYBIT:GMTUSDT', coinGeckoId: 'stepn' },
   { symbol: 'ENAUSDT', baseAsset: 'ENA', quoteAsset: 'USDT', name: 'Ethena', tradingViewSymbol: 'BYBIT:ENAUSDT', coinGeckoId: 'ethena' },
@@ -115,8 +115,22 @@ export const CRYPTO_PAIRS: CryptoPair[] = [
   { symbol: 'ANKRUSDT', baseAsset: 'ANKR', quoteAsset: 'USDT', name: 'Ankr', tradingViewSymbol: 'BYBIT:ANKRUSDT', coinGeckoId: 'ankr' },
   { symbol: 'CELOUSDT', baseAsset: 'CELO', quoteAsset: 'USDT', name: 'Celo', tradingViewSymbol: 'BYBIT:CELOUSDT', coinGeckoId: 'celo' },
   { symbol: 'KAVAUSDT', baseAsset: 'KAVA', quoteAsset: 'USDT', name: 'Kava', tradingViewSymbol: 'BYBIT:KAVAUSDT', coinGeckoId: 'kava' },
-  { symbol: 'KDAUSDT', baseAsset: 'KDA', quoteAsset: 'USDT', name: 'Kadena', tradingViewSymbol: 'BYBIT:KDAUSDT', coinGeckoId: 'kadena' },
-  { symbol: 'COREUSDT', baseAsset: 'CORE', quoteAsset: 'USDT', name: 'Core', tradingViewSymbol: 'BYBIT:COREUSDT', coinGeckoId: 'coredaoorg' }
+  
+  // Additional Tier (Rank 119-120) - To reach exactly 120 cryptocurrencies
+  { symbol: 'THETAUSDT', baseAsset: 'THETA', quoteAsset: 'USDT', name: 'Theta Token', tradingViewSymbol: 'BYBIT:THETAUSDT', coinGeckoId: 'theta-token' },
+  { symbol: 'BLURXUSDT', baseAsset: 'BLUR', quoteAsset: 'USDT', name: 'Blur', tradingViewSymbol: 'BYBIT:BLURXUSDT', coinGeckoId: 'blur' },
+  { symbol: 'HELIUMUSDT', baseAsset: 'HNT', quoteAsset: 'USDT', name: 'Helium', tradingViewSymbol: 'BYBIT:HELIUMUSDT', coinGeckoId: 'helium' },
+  { symbol: 'XMRUSDT', baseAsset: 'XMR', quoteAsset: 'USDT', name: 'Monero', tradingViewSymbol: 'BYBIT:XMRUSDT', coinGeckoId: 'monero' },
+  { symbol: 'CFXUSDT', baseAsset: 'CFX', quoteAsset: 'USDT', name: 'Conflux', tradingViewSymbol: 'BYBIT:CFXUSDT', coinGeckoId: 'conflux-token' },
+  { symbol: 'RUNEUSDT', baseAsset: 'RUNE', quoteAsset: 'USDT', name: 'THORChain', tradingViewSymbol: 'BYBIT:RUNEUSDT', coinGeckoId: 'thorchain' },
+  { symbol: 'CROYSDT', baseAsset: 'CRO', quoteAsset: 'USDT', name: 'Cronos', tradingViewSymbol: 'BYBIT:CROUSDT', coinGeckoId: 'cronos' },
+  { symbol: 'NEXOUSDT', baseAsset: 'NEXO', quoteAsset: 'USDT', name: 'Nexo', tradingViewSymbol: 'BYBIT:NEXOUSDT', coinGeckoId: 'nexo' },
+  { symbol: 'FTTSDT', baseAsset: 'FTT', quoteAsset: 'USDT', name: 'FTX Token', tradingViewSymbol: 'BYBIT:FTTUSDT', coinGeckoId: 'ftx-token' },
+  { symbol: 'KSUSDT', baseAsset: 'KCS', quoteAsset: 'USDT', name: 'KuCoin Shares', tradingViewSymbol: 'BYBIT:KCSUSDT', coinGeckoId: 'kucoin-shares' },
+  { symbol: 'FLDOUSDT', baseAsset: 'FDUSD', quoteAsset: 'USDT', name: 'First Digital USD', tradingViewSymbol: 'BYBIT:FDUSDT', coinGeckoId: 'first-digital-usd' },
+  { symbol: 'CKBUSDT', baseAsset: 'CKB', quoteAsset: 'USDT', name: 'Nervos Network', tradingViewSymbol: 'BYBIT:CKBUSDT', coinGeckoId: 'nervos-network' },
+  { symbol: 'JTOUSDT', baseAsset: 'JTO', quoteAsset: 'USDT', name: 'Jito', tradingViewSymbol: 'BYBIT:JTOUSDT', coinGeckoId: 'jito-governance-token' },
+  { symbol: 'AKASHUSDT', baseAsset: 'AKT', quoteAsset: 'USDT', name: 'Akash Network', tradingViewSymbol: 'BYBIT:AKTUSDT', coinGeckoId: 'akash-network' }
 ];
 
 // Helper functions

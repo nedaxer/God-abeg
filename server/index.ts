@@ -182,13 +182,7 @@ app.use((req, res, next) => {
       }
     }
 
-    // Start automatic backup system
-    try {
-      const { backupTask } = await import('../scripts/scheduleBackup.js');
-      console.log('✅ MongoDB auto-backup system started (every 5 minutes)');
-    } catch (error) {
-      console.warn('⚠️  Auto-backup system failed to start:', error.message);
-    }
+
 
     // Use PORT environment variable for deployment (Render) or default to 5000
     const port = process.env.PORT ? parseInt(process.env.PORT) : 5000;

@@ -242,41 +242,76 @@ The application successfully balances type safety with development velocity by s
 
 **Deployment Script**: `render.yaml` - Ready-to-use Render deployment with Vite dependencies installed as production packages
 
-## MongoDB Automatic Backup & Restore System
+## MongoDB Backup System - REMOVED
 
-### System Overview (July 9, 2025)
-Implemented comprehensive MongoDB backup and restore system for data protection and deployment continuity:
+### System Removal (January 10, 2025)
+Completely removed MongoDB backup and restore system to resolve dependency conflicts and simplify the application:
 
-**Automatic Features:**
-- **Auto-backup every 5 minutes**: Uses node-cron scheduler integrated into main server startup
-- **MongoDB Atlas support**: Works with both Atlas and local MongoDB instances using mongodump/mongorestore
-- **Timestamped backups**: Stored in `db_backups/backup-YYYY-MM-DDTHH-MM-SS/` format
-- **Automatic cleanup**: Keeps only 20 most recent backups to manage disk space
-- **Console logging**: Detailed success/failure logging for monitoring backup operations
+**Removed Components:**
+- **Automatic backup scheduler**: Removed node-cron integration and 5-minute backup scheduling
+- **Backup scripts**: Deleted backup-manager.js, scripts/backup.js, scripts/restore.js, scripts/scheduleBackup.js
+- **Restore functionality**: Removed server/backup-restore.ts and all backup/restore endpoints
+- **Debug tools**: Removed debug-backup-restore-issues.js and related testing scripts
+- **Backup directories**: Cleaned up db_backups/ directory and related storage
 
-**Manual Management:**
-- **backup-manager.js**: Easy-to-use CLI tool for manual backup operations
-- **Restore functionality**: Can restore from latest backup or specific backup by name
-- **List backups**: View all available backups with timestamps and file counts
-- **Redeployment support**: Restore data when changing MongoDB URIs
+**Dependencies Removed:**
+- `node-cron`: Automatic backup scheduling dependency uninstalled
+- **Backup routes**: Removed registerBackupRestoreRoutes from server initialization
 
-**Commands Available:**
-```bash
-node backup-manager.js backup          # Create immediate backup
-node backup-manager.js restore         # Restore from latest backup
-node backup-manager.js list            # List available backups
-node backup-manager.js restore <name>  # Restore from specific backup
-```
+**Server Changes:**
+- Removed backup system initialization from server/index.ts
+- Removed backup/restore route registration from server/routes.mongo.ts
+- Simplified server startup without backup dependencies
 
-**Dependencies:**
-- `node-cron`: Scheduling automatic backups
-- `mongodb-tools`: MongoDB CLI tools (mongodump, mongorestore)
+## Landing Page Explore Markets Section Removal (January 10, 2025)
 
-**Environment Variables:**
-- `MONGODB_URI`: Source database for backups
-- `NEW_MONGO_URI`: Target database for restores (optional)
+### Complete Explore Markets Section Removal
+Successfully removed the entire "Explore Markets" section from the landing page:
+
+**Removed Sections:**
+- **Bitcoin Markets Card**: Removed Bitcoin trading information and "View Bitcoin Markets" link
+- **Ethereum Markets Card**: Removed Ethereum trading information and "View Ethereum Markets" link  
+- **Altcoins Markets Card**: Removed Altcoins trading information and "View Altcoin Markets" link
+- **Crypto Events Card**: Removed crypto events trading information with ETF decisions, protocol upgrades, and regulatory announcements
+- **Explore Markets Header**: Completely removed "Explore Markets" section title and entire container
+
+**Technical Changes:**
+- Updated both desktop and mobile versions of the landing page in `client/src/pages/home.tsx`
+- Completely removed the entire "Explore Markets" section with all 4 cards
+- Simplified landing page layout by removing the gray background section
+- Landing page now flows directly from TradeOptions to PlatformFeatures/MarketFeatures
 
 ## Recent Issues Fixed
+
+### Dynamic Crypto Coin List Implementation (January 10, 2025)
+
+**Feature Added:**
+- **Live Crypto Price Display**: Implemented dynamic crypto coin list component on landing page displaying major trading pairs with real-time data from CoinGecko API
+- **Professional Card Layout**: Modern responsive card design with crypto logos, current prices, 24-hour changes, and trading volumes
+- **Real-time Updates**: Component fetches fresh data every 30 seconds with live price indicators and percentage changes
+- **Landing Page Integration**: Added component between TradeOptions and PlatformFeatures sections on both desktop and mobile layouts
+
+**Technical Implementation:**
+- **CryptoCoinList Component**: Created comprehensive React component with CoinGecko API integration using TanStack Query
+- **Major Coins Display**: Shows top 10 trading pairs (BTC, ETH, SOL, BNB, XRP, DOGE, ADA, TRX, AVAX, LINK) from existing crypto pairs configuration
+- **Authentic Data**: Uses real-time price data from CoinGecko API with proper error handling and loading states  
+- **Responsive Design**: Professional card layout with hover effects, color-coded price changes, and mobile optimization
+- **Visual Indicators**: Green/red badges for price changes with trending arrows and real-time volume information
+
+**User Experience Features:**
+- **Live Price Updates**: Displays current cryptocurrency prices with automatic refresh every 30 seconds
+- **Color-coded Changes**: Green for positive changes, red for negative changes with percentage indicators
+- **Professional Styling**: Modern card design with crypto logos, hover effects, and "Click to trade" indicators
+- **Volume Information**: 24-hour trading volume displayed in millions for each cryptocurrency
+- **Loading States**: Animated skeleton loading while fetching data and proper error handling
+
+**API Integration:**
+- **CoinGecko API**: Leverages existing `/api/crypto/realtime-prices` endpoint that fetches data for 106+ cryptocurrencies
+- **Data Mapping**: Filters and displays major coins from trading pairs configuration with proper symbol mapping
+- **Error Handling**: Comprehensive error states with retry logic and fallback displays
+- **Rate Limiting**: Respects API rate limits with 30-second refresh intervals and proper caching
+
+**Result**: Landing page now features live cryptocurrency price display with professional card layout, real-time updates, and seamless integration with existing CoinGecko API infrastructure.
 
 ### Hardcoded Admin Credentials System Implementation (July 9, 2025)
 

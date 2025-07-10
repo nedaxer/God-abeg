@@ -302,7 +302,6 @@ export default function LiveMarkets() {
           <CardContent className="p-4">
             <div className="text-center text-sm text-gray-500">
               <p>Market data updates automatically every 10 seconds</p>
-              <p>Data provided by CoinGecko API</p>
             </div>
           </CardContent>
         </Card>
