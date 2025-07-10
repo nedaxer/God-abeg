@@ -6,7 +6,7 @@ export const getNewsSourceLogo = (sourceName: string): string | null => {
     'Decrypt': 'https://decrypt.co/favicon.ico', 
     'CryptoSlate': '/logos/cryptoslate.jpg',
     'CryptoBriefing': '/logos/cryptobriefing.png',
-    'BeInCrypto': '/logos/beincrypto.jpg',
+    'BeInCrypto': '/api/assets/download_1751940923486.jpeg',
     'CryptoNews': 'https://cryptonews.com/favicon.ico',
     'Google News - Crypto': '/logos/google-news.jpg',
     'Google News - Bitcoin': '/logos/google-news.jpg',

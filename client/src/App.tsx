@@ -11,6 +11,7 @@ import { PWAInstallPrompt } from '@/components/pwa-install-prompt';
 import { SplashScreen } from '@/components/splash-screen';
 import { BottomSlideBanner } from '@/components/bottom-slide-banner';
 import { useBottomBanner } from '@/hooks/use-bottom-banner';
+import { ErrorBoundary } from '@/components/error-boundary';
 
 import { LanguageProvider } from '@/contexts/language-context';
 import { ThemeProvider } from '@/contexts/theme-context';
@@ -108,11 +109,12 @@ import MobileSecurity from '@/pages/mobile/security';
 import LanguageSelection from '@/pages/mobile/language-selection';
 import AssetsHistory from '@/pages/mobile/assets-history';
 import DepositDetails from '@/pages/mobile/deposit-details';
-import WithdrawalDetails from '@/pages/mobile/withdrawal-details';
+import WithdrawalDetailsAdaptive from '@/pages/withdrawal-details-adaptive';
 import TransferDetails from '@/pages/mobile/transfer-details';
 import Transfer from '@/pages/mobile/transfer';
 import MobileWithdrawal from '@/pages/mobile/withdrawal';
 import MessagesPage from '@/pages/mobile/messages';
+import DepositSelectionPage from '@/pages/mobile/deposit-selection';
 import { VerificationFlow } from '@/pages/mobile/verification/VerificationFlow';
 import MobileKYCStatus from '@/pages/mobile/kyc-status';
 import VerificationSubmitted from '@/pages/mobile/verification-submitted';
@@ -146,13 +148,42 @@ export default function App() {
   useEffect(() => {
     // Error boundary to catch app crashes
     const handleError = (error: ErrorEvent) => {
-      console.error('App crashed:', error);
+      console.error('App error:', error);
+      
+      // Don't crash app for common network or authentication errors
+      if (error.message?.includes('fetch') || 
+          error.message?.includes('Network') ||
+          error.message?.includes('auth') ||
+          error.message?.includes('401')) {
+        console.log('Network/auth error, not crashing app');
+        return;
+      }
+      
       setAppCrashed(true);
     };
 
     const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
       console.error('Unhandled promise rejection:', event.reason);
-      setAppCrashed(true);
+      
+      // Always prevent default to stop the error from crashing the app
+      event.preventDefault();
+      
+      // Don't crash app for any expected errors
+      if (event.reason?.message?.includes('Not authenticated') || 
+          event.reason?.message?.includes('401') ||
+          event.reason?.message?.includes('WebSocket') ||
+          event.reason?.message?.includes('websocket') ||
+          event.reason?.message?.includes('vite') ||
+          event.reason?.status === 401 ||
+          event.reason?.type === 'unhandledrejection') {
+        console.log('Expected error (auth/websocket/vite), not crashing app');
+        return;
+      }
+      
+      // Only crash for actual critical application errors
+      if (event.reason?.stack && event.reason?.name !== 'TypeError') {
+        setAppCrashed(true);
+      }
     };
 
     window.addEventListener('error', handleError);
@@ -216,12 +247,29 @@ export default function App() {
   }
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <LanguageProvider>
-        <ThemeProvider>
-          <AuthProvider>
-            <WithdrawalProvider>
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <LanguageProvider>
+          <ThemeProvider>
+            <AuthProvider>
+              <WithdrawalProvider>
               <Router hook={useHashLocation}>
+                <ErrorBoundary 
+                  fallback={
+                    <div className="min-h-screen bg-[#0a0a2e] flex items-center justify-center p-4">
+                      <div className="text-center max-w-sm mx-auto">
+                        <h1 className="text-2xl font-bold text-white mb-4">Loading...</h1>
+                        <p className="text-gray-400 mb-8">Please wait while we load the application.</p>
+                        <button 
+                          onClick={() => window.location.reload()}
+                          className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg"
+                        >
+                          Refresh
+                        </button>
+                      </div>
+                    </div>
+                  }
+                >
             <Switch>
             {/* Home route with auth redirect */}
             <Route path="/">
@@ -310,35 +358,34 @@ export default function App() {
             <Route path="/deposit">{() => <Redirect to="/mobile" />}</Route>
             <Route path="/withdraw">{() => <Redirect to="/mobile" />}</Route>
 
-            {/* Mobile App Routes */}
-            <Route path="/mobile" component={MobileHome} />
-            <Route path="/mobile/assets" component={MobileAssets} />
-            <Route path="/mobile/trade" component={MobileTrade} />
-            <Route path="/mobile/markets" component={MobileMarkets} />
-            <Route path="/mobile/earn" component={MobileEarn} />
-            <Route path="/mobile/profile" component={MobileProfile} />
+            {/* Mobile App Routes - All require authentication */}
+            <ProtectedRoute path="/mobile" component={MobileHome} />
+            <ProtectedRoute path="/mobile/assets" component={MobileAssets} />
+            <ProtectedRoute path="/mobile/trade" component={MobileTrade} />
+            <ProtectedRoute path="/mobile/markets" component={MobileMarkets} />
+            <ProtectedRoute path="/mobile/earn" component={MobileEarn} />
+            <ProtectedRoute path="/mobile/profile" component={MobileProfile} />
 
-            <Route path="/mobile/futures" component={MobileFutures} />
-            <Route path="/mobile/spot" component={MobileSpot} />
-            <Route path="/mobile/invite-friends" component={MobileInviteFriends} />
-            <Route path="/mobile/notifications" component={MobileNotifications} />
-            <Route path="/mobile/notification-settings" component={NotificationSettings} />
-            <Route path="/mobile/chatbot" component={Chatbot} />
-            <Route path="/mobile/messages" component={MessagesPage} />
+            <ProtectedRoute path="/mobile/futures" component={MobileFutures} />
+            <ProtectedRoute path="/mobile/spot" component={MobileSpot} />
+            <ProtectedRoute path="/mobile/invite-friends" component={MobileInviteFriends} />
+            <ProtectedRoute path="/mobile/notifications" component={MobileNotifications} />
+            <ProtectedRoute path="/mobile/notification-settings" component={NotificationSettings} />
+            <ProtectedRoute path="/mobile/chatbot" component={Chatbot} />
+            <ProtectedRoute path="/mobile/messages" component={MessagesPage} />
 
-            <Route path="/mobile/news" component={MobileNews} />
-            <Route path="/mobile/settings" component={MobileSettings} />
-            <Route path="/mobile/security" component={MobileSecurity} />
-            <Route path="/mobile/language-selection" component={LanguageSelection} />
-            <Route path="/mobile/assets-history" component={AssetsHistory} />
-            <Route path="/mobile/deposit-details/:transactionId" component={DepositDetails} />
-            <Route path="/mobile/withdrawal-details/:transactionId" component={WithdrawalDetails} />
-            <Route path="/mobile/transfer-details/:transactionId" component={TransferDetails} />
-            <Route path="/mobile/currency-selection">
-              {() => <div>Currency Selection</div>}
-            </Route>
-            <Route path="/mobile/transfer" component={Transfer} />
-            <Route path="/mobile/withdrawal" component={MobileWithdrawal} />
+            <ProtectedRoute path="/mobile/news" component={MobileNews} />
+            <ProtectedRoute path="/mobile/settings" component={MobileSettings} />
+            <ProtectedRoute path="/mobile/security" component={MobileSecurity} />
+            <ProtectedRoute path="/mobile/language-selection" component={LanguageSelection} />
+            <ProtectedRoute path="/mobile/assets-history" component={AssetsHistory} />
+            <ProtectedRoute path="/mobile/deposit-details/:transactionId" component={DepositDetails} />
+            <ProtectedRoute path="/mobile/withdrawal-details/:transactionId" component={WithdrawalDetailsAdaptive} />
+            <ProtectedRoute path="/mobile/transfer-details/:transactionId" component={TransferDetails} />
+            <ProtectedRoute path="/mobile/currency-selection" component={() => <div>Currency Selection</div>} />
+            <ProtectedRoute path="/mobile/transfer" component={Transfer} />
+            <ProtectedRoute path="/mobile/withdrawal" component={MobileWithdrawal} />
+            <ProtectedRoute path="/mobile/deposit-selection" component={DepositSelectionPage} />
             <ProtectedRoute path="/mobile/verification" component={VerificationFlow} />
             <ProtectedRoute path="/mobile/kyc-status" component={MobileKYCStatus} />
             <ProtectedRoute path="/mobile/verification-submitted" component={VerificationSubmitted} />
@@ -357,6 +404,7 @@ export default function App() {
             {/* 404 Route */}
             <Route component={NotFound} />
             </Switch>
+                </ErrorBoundary>
             <BottomSlideBanner 
               notification={currentBanner}
               onDismiss={dismissBanner}
@@ -369,5 +417,6 @@ export default function App() {
       </ThemeProvider>
     </LanguageProvider>
   </QueryClientProvider>
+  </ErrorBoundary>
   );
 }

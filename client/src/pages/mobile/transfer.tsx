@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'wouter';
-import { ArrowLeft, ChevronDown, HelpCircle, Copy, User, Loader2, X } from 'lucide-react';
+import { ArrowLeft, ChevronDown, HelpCircle, Copy, User, Loader2, X, CheckCircle } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -11,9 +11,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { apiRequest, queryClient } from '@/lib/queryClient';
 import { useAuth } from '@/hooks/use-auth';
-import { showSuccessBanner, showErrorBanner } from '@/hooks/use-bottom-banner';
+import { showSuccessBanner, showErrorBanner, useBottomBanner } from '@/hooks/use-bottom-banner';
 import { TransferDepositRequiredModal } from '@/components/transfer-deposit-required-modal';
 import { DepositModal } from '@/components/deposit-modal';
+import AdaptiveLayout from '@/components/adaptive-layout';
+import DesktopTransfer from '@/components/desktop-pages/desktop-transfer';
 
 
 interface RecipientInfo {
@@ -26,7 +28,7 @@ interface RecipientInfo {
   profilePicture?: string;
 }
 
-export default function Transfer() {
+function MobileTransferContent() {
   const { user } = useAuth();
   // const { toast } = useToast(); // Replaced with bottom banner system
   
@@ -40,6 +42,15 @@ export default function Transfer() {
   const [inputType, setInputType] = useState<'email' | 'uid'>('uid');
   const [showDepositRequiredModal, setShowDepositRequiredModal] = useState(false);
   const [showDepositModal, setShowDepositModal] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [showSuccessAnimation, setShowSuccessAnimation] = useState(false);
+  const [successData, setSuccessData] = useState<{
+    amount: string;
+    recipientName: string;
+  } | null>(null);
+
+  // Bottom banner hooks
+  const { dismissBanner } = useBottomBanner();
 
 
   // Fetch user balance
@@ -250,10 +261,28 @@ export default function Transfer() {
       return data;
     },
     onSuccess: () => {
-      showSuccessBanner(
-        'Transfer Successful',
-        `Successfully transferred $${parseFloat(withdrawAmount).toFixed(2)} USD`
-      );
+      // Dismiss any existing banners
+      dismissBanner();
+      
+      // Stop processing state
+      setIsProcessing(false);
+      
+      // Set success data for animation
+      setSuccessData({
+        amount: parseFloat(withdrawAmount).toFixed(2),
+        recipientName: recipientInfo?.firstName && recipientInfo?.lastName 
+          ? `${recipientInfo.firstName} ${recipientInfo.lastName}`
+          : recipientInfo?.username || recipientInfo?.email || 'Unknown'
+      });
+      
+      // Show success animation
+      setShowSuccessAnimation(true);
+      
+      // Hide animation after 4 seconds
+      setTimeout(() => {
+        setShowSuccessAnimation(false);
+        setSuccessData(null);
+      }, 4000);
       
       // Invalidate queries to refresh balances
       queryClient.invalidateQueries({ queryKey: ['/api/wallet/summary'] });
@@ -267,6 +296,9 @@ export default function Transfer() {
       setSelectedMethod(null);
     },
     onError: (error: any) => {
+      // Stop processing state
+      setIsProcessing(false);
+      
       showErrorBanner(
         'Transfer Failed',
         error.message || 'Failed to transfer funds'
@@ -330,6 +362,9 @@ export default function Transfer() {
       return;
     }
 
+    // Show processing animation
+    setIsProcessing(true);
+    
     transferMutation.mutate({
       recipientId: recipientInfo._id,
       amount: transferAmount,
@@ -351,7 +386,8 @@ export default function Transfer() {
   };
 
   return (
-    <div className="h-screen bg-[#0a0a2e] text-white flex flex-col overflow-hidden">
+    <AdaptiveLayout title="Nedaxer - Transfer">
+      <div className="h-screen bg-[#0a0a2e] text-white flex flex-col overflow-hidden">
       {/* Header */}
       <div className="flex items-center justify-between p-4 bg-[#0a0a2e] border-b border-gray-700">
         <Link href="/mobile/assets">
@@ -440,7 +476,7 @@ export default function Transfer() {
 
         {/* Transfer Amount */}
         <div className="space-y-2">
-          <Label className="text-white text-xs font-medium">Withdraw Amount</Label>
+          <Label className="text-white text-xs font-medium">Transfer Amount</Label>
           <div className="relative">
             <Input
               type="number"
@@ -498,19 +534,19 @@ export default function Transfer() {
           {transferMutation.isPending ? (
             <div className="flex items-center space-x-2">
               <Loader2 className="w-4 h-4 animate-spin" />
-              <span>Sending...</span>
+              <span>Transferring...</span>
             </div>
           ) : (
-            'Send'
+            'Transfer'
           )}
         </Button>
       </div>
 
       {/* Dropdown Modal - Send Mode Selection */}
       {showDropdown && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-end">
-          <div className="w-full bg-[#0a0a2e] rounded-t-2xl p-4 space-y-3 animate-in slide-in-from-bottom duration-300">
-            <div className="flex items-center justify-between">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[60] flex items-end">
+          <div className="w-full bg-[#0a0a2e] rounded-t-2xl p-4 space-y-3 animate-in slide-in-from-bottom duration-300 border-t border-gray-600">
+            <div className="flex items-center justify-between mb-4">
               <h3 className="text-white text-lg font-semibold">Send Mode</h3>
               <button
                 onClick={() => setShowDropdown(false)}
@@ -520,14 +556,22 @@ export default function Transfer() {
               </button>
             </div>
             
-            <div className="space-y-2">
+            <div className="space-y-3">
               <button
                 onClick={() => handleMethodSelection('email')}
-                className="w-full p-3 text-left text-white hover:bg-[#1a1a40] rounded-lg flex items-center justify-between"
+                className="w-full p-4 text-left text-white hover:bg-[#1a1a40] rounded-lg flex items-center justify-between border border-gray-600 hover:border-orange-500 transition-colors"
               >
-                <span className="font-medium">Email</span>
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center">
+                    <span className="text-white font-bold text-sm">@</span>
+                  </div>
+                  <div>
+                    <div className="font-medium text-white">Email</div>
+                    <div className="text-gray-400 text-sm">Send via email address</div>
+                  </div>
+                </div>
                 {selectedMethod === 'email' && (
-                  <svg className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-5 h-5 text-orange-500" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
                 )}
@@ -535,11 +579,19 @@ export default function Transfer() {
               
               <button
                 onClick={() => handleMethodSelection('uid')}
-                className="w-full p-3 text-left text-white hover:bg-[#1a1a40] rounded-lg flex items-center justify-between"
+                className="w-full p-4 text-left text-white hover:bg-[#1a1a40] rounded-lg flex items-center justify-between border border-gray-600 hover:border-orange-500 transition-colors"
               >
-                <span className="font-medium">Nedaxer UID</span>
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center">
+                    <span className="text-white font-bold text-sm">#</span>
+                  </div>
+                  <div>
+                    <div className="font-medium text-white">Nedaxer UID</div>
+                    <div className="text-gray-400 text-sm">Send via unique ID</div>
+                  </div>
+                </div>
                 {selectedMethod === 'uid' && (
-                  <svg className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-5 h-5 text-orange-500" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
                 )}
@@ -562,6 +614,57 @@ export default function Transfer() {
         onClose={() => setShowDepositModal(false)}
         onSelectMethod={handleDepositMethod}
       />
-    </div>
+
+      {/* Processing Animation */}
+      {isProcessing && (
+        <div className="fixed inset-0 bg-black bg-opacity-90 z-[9999] flex items-center justify-center">
+          <div className="bg-[#1a1a40] rounded-2xl p-8 max-w-sm mx-4 text-center">
+            <div className="w-16 h-16 border-4 border-orange-500 border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
+            <div className="text-white">
+              <h3 className="text-lg font-semibold mb-2">Processing...</h3>
+              <p className="text-gray-300 text-sm">
+                Your transfer is being processed. Please wait...
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Success Animation - Checkmark and Success Message */}
+      {showSuccessAnimation && successData && (
+        <div className="fixed inset-0 bg-black bg-opacity-90 z-[9999] flex items-center justify-center">
+          <div className="bg-[#1a1a40] rounded-2xl p-8 max-w-sm mx-4 text-center">
+            <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
+              <CheckCircle className="w-10 h-10 text-white" />
+            </div>
+            <div className="text-white">
+              <h3 className="text-lg font-semibold mb-2">Transfer Successful!</h3>
+              <p className="text-gray-300 text-sm mb-4">
+                Your transfer of ${successData.amount} to {successData.recipientName} 
+                has been processed successfully.
+              </p>
+              <div className="flex items-center justify-center text-green-400">
+                <CheckCircle className="w-5 h-5 mr-2" />
+                <span className="text-sm font-medium">Transaction Complete</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      </div>
+    </AdaptiveLayout>
+  );
+}
+
+export default function MobileTransfer() {
+  return (
+    <AdaptiveLayout 
+      mobileComponent={<MobileTransferContent />}
+      desktopComponent={<DesktopTransfer />}
+      title="Nedaxer - Transfer"
+      hideBottomNav={true}
+    >
+      <MobileTransferContent />
+    </AdaptiveLayout>
   );
 }

@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import { footerLinks } from "@/lib/constants";
 import { Logo } from "./logo";
 import { Button } from "@/components/ui/button";
-import { Facebook, Twitter, Linkedin, Instagram, Youtube, Download } from "lucide-react";
+import { Facebook, Twitter, Linkedin, Instagram, Youtube } from "lucide-react";
 
 export const Footer = () => {
   return (
@@ -73,18 +73,7 @@ export const Footer = () => {
                   </Link>
                 </li>
               ))}
-              <li className="pt-2">
-                <Button
-                  asChild
-                  variant="outline"
-                  className="border-white text-white hover:bg-white hover:text-gray-900 w-full"
-                >
-                  <a href="https://play.google.com/store/apps/details?id=com.nadex.touch" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center">
-                    <Download className="mr-2 h-4 w-4" />
-                    Download App
-                  </a>
-                </Button>
-              </li>
+
             </ul>
           </div>
 

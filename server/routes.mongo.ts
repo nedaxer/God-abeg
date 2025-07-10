@@ -9,6 +9,7 @@ import { mongoStorage as storage } from "./mongoStorage";
 import bcrypt from "bcrypt";
 // Schema imports moved to avoid circular dependencies
 import { z } from "zod";
+import { insertMongoUserSchema } from "../shared/mongo-schema";
 import session from "express-session";
 import MemoryStore from "memorystore";
 import MongoStore from "connect-mongodb-session";
@@ -19,6 +20,9 @@ import { imageOptimizer } from "./image-optimizer";
 import { exchangeRateService } from "./exchange-rate-service";
 import { getNewsSourceLogo } from "./logo-service";
 import { priceService } from "./services/price.service";
+// reCAPTCHA functionality removed
+import { getStableCryptoPrices } from "./api/stable-crypto-prices";
+import { getRealtimePrices } from "./api/realtime-prices";
 import './passport-config';
 import passport from 'passport';
 
@@ -29,6 +33,7 @@ import adminKycRoutes from "./api/admin-kyc-routes";
 import compression from "compression";
 import serveStatic from "serve-static";
 import Parser from 'rss-parser';
+import { registerBackupRestoreRoutes } from "./backup-restore";
 
 // Extend express-session types
 declare module "express-session" {
@@ -104,6 +109,12 @@ const requireAdmin = async (req: Request, res: Response, next: NextFunction) => 
     return res.status(401).json({ success: false, message: "Not authenticated" });
   }
 
+  // Special handling for admin user ID
+  if (req.session.userId === 'ADMIN001') {
+    console.log('✓ Admin user (ADMIN001) authenticated');
+    return next();
+  }
+
   const user = await storage.getUser(req.session.userId);
   if (!user || !user.isAdmin) {
     return res.status(403).json({ success: false, message: "Admin access required" });
@@ -115,20 +126,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Connect to MongoDB first
   await connectToDatabase();
   
-  // Setup MongoDB session store
-  const MongoDBStore = MongoStore(session);
-  const mongoUri = process.env.MONGODB_URI;
-  if (!mongoUri) {
-    throw new Error('MONGODB_URI environment variable is required');
-  }
-  const store = new MongoDBStore({
-    uri: mongoUri,
-    collection: 'sessions'
-  });
-
-  // Handle session store errors
-  store.on('error', function(error) {
-    console.log('Session store error:', error);
+  // Setup session store - use memory store for development
+  console.log('Using memory session store for development');
+  const MemoryStoreSession = MemoryStore(session);
+  const store = new MemoryStoreSession({
+    checkPeriod: 86400000 // prune expired entries every 24h
   });
 
   app.use(session({
@@ -235,32 +237,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Crypto prices endpoint
-  app.get('/api/config/recaptcha', async (req: Request, res: Response) => {
-    try {
-      const siteKey = process.env.RECAPTCHA_SITE_KEY || '';
-      res.json({ 
-        success: true, 
-        siteKey: siteKey 
-      });
-    } catch (error) {
-      console.error('Error getting reCAPTCHA config:', error);
-      res.status(500).json({ 
-        success: false, 
-        message: 'Failed to get reCAPTCHA configuration' 
-      });
-    }
-  });
+  // reCAPTCHA configuration endpoint removed
 
-  app.get('/api/crypto/prices', async (req: Request, res: Response) => {
-    try {
-      const prices = await getCoinGeckoPrices();
-      res.json({ success: true, data: prices });
-    } catch (error) {
-      console.error('Error fetching crypto prices:', error);
-      res.status(500).json({ success: false, message: 'Failed to fetch crypto prices' });
-    }
-  });
+  // SINGLE UNIFIED CRYPTO PRICES ENDPOINT - replaces all conflicting APIs
+  app.get('/api/crypto/prices', getStableCryptoPrices);
+  app.get('/api/crypto/stable-prices', getStableCryptoPrices);
+  app.get('/api/crypto/realtime-prices', getRealtimePrices);
 
   // Currency conversion rates endpoint with multi-source real-time data
   app.get('/api/market-data/conversion-rates', async (req: Request, res: Response) => {
@@ -820,20 +802,46 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const userId = req.session.userId!;
       const { transactionId } = req.params;
       
+      console.log(`🔍 Transfer details request for ID: ${transactionId}, User: ${userId}`);
+      
       // Import models
       const { Transfer } = await import('./models/Transfer');
       const { User } = await import('./models/User');
       
-      // Find transfer by transaction ID where user is involved
-      const transfer = await Transfer.findOne({
-        transactionId,
-        $or: [
-          { fromUserId: userId },
-          { toUserId: userId }
-        ]
-      })
-      .populate('fromUserId', 'firstName lastName email uid')
-      .populate('toUserId', 'firstName lastName email uid');
+      // Check if it's a MongoDB ObjectId or transactionId
+      let transfer;
+      
+      // First try to find by MongoDB _id (24-character hex string)
+      if (transactionId.match(/^[0-9a-fA-F]{24}$/)) {
+        console.log('🔍 Looking up transfer by MongoDB _id');
+        transfer = await Transfer.findOne({
+          _id: transactionId,
+          $or: [
+            { fromUserId: userId },
+            { toUserId: userId }
+          ]
+        })
+        .populate('fromUserId', 'firstName lastName email uid')
+        .populate('toUserId', 'firstName lastName email uid');
+      }
+      
+      // If not found, try by transactionId field
+      if (!transfer) {
+        console.log('🔍 Looking up transfer by transactionId field');
+        transfer = await Transfer.findOne({
+          transactionId,
+          $or: [
+            { fromUserId: userId },
+            { toUserId: userId }
+          ]
+        })
+        .populate('fromUserId', 'firstName lastName email uid')
+        .populate('toUserId', 'firstName lastName email uid');
+      }
+      
+      if (transfer) {
+        console.log(`✅ Found transfer: ${transfer._id}, amount: ${transfer.amount}`);
+      }
       
       if (!transfer) {
         return res.status(404).json({
@@ -880,8 +888,43 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Add realtime prices endpoint with caching
-  const { getRealtimePrices } = await import('./api/realtime-prices');
-  app.get('/api/crypto/realtime-prices', getRealtimePrices);
+  // DISABLED - replaced with unified stable endpoint
+  // app.get('/api/crypto/realtime-prices', getRealtimePrices);
+
+  // Serve attached assets
+  app.get('/api/assets/:filename', (req: Request, res: Response) => {
+    try {
+      const { filename } = req.params;
+      const path = require('path');
+      const fs = require('fs');
+      
+      const filePath = path.join(process.cwd(), 'attached_assets', filename);
+      
+      if (fs.existsSync(filePath)) {
+        // Set appropriate content type based on file extension
+        const ext = path.extname(filename).toLowerCase();
+        const contentTypes: { [key: string]: string } = {
+          '.png': 'image/png',
+          '.jpg': 'image/jpeg',
+          '.jpeg': 'image/jpeg',
+          '.gif': 'image/gif',
+          '.webp': 'image/webp'
+        };
+        
+        const contentType = contentTypes[ext] || 'application/octet-stream';
+        res.setHeader('Content-Type', contentType);
+        res.setHeader('Cache-Control', 'public, max-age=86400'); // Cache for 24 hours
+        
+        const fileStream = fs.createReadStream(filePath);
+        fileStream.pipe(res);
+      } else {
+        res.status(404).send('Asset not found');
+      }
+    } catch (error) {
+      console.error('Asset serving error:', error);
+      res.status(500).send('Error serving asset');
+    }
+  });
 
   // News source logo endpoint
   app.get('/api/news/logo/:source', async (req: Request, res: Response) => {
@@ -1180,7 +1223,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
                   'CoinDesk': '/logos/coindesk.png',
                   'CryptoSlate': '/logos/cryptoslate.jpg',
                   'CryptoBriefing': '/logos/cryptobriefing.png',
-                  'BeInCrypto': '/logos/beincrypto.jpg',
+                  'BeInCrypto': '/api/assets/download_1751940923486.jpeg',
                   'Google News - Crypto': '/logos/google-news.jpg',
                   'Google News - Bitcoin': '/logos/google-news.jpg',
                   'CoinTelegraph': 'https://cointelegraph.com/favicon.ico',
@@ -1258,11 +1301,47 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Auth endpoint to get current user data with profile picture persistence
   app.get('/api/auth/user', async (req: Request, res: Response) => {
     try {
+      console.log('🔍 Auth request debug:', {
+        hasSession: !!req.session,
+        sessionId: req.sessionID,
+        userId: req.session?.userId,
+        hasUserId: !!req.session?.userId,
+        sessionKeys: req.session ? Object.keys(req.session) : []
+      });
+
       if (!req.session?.userId) {
+        console.log('❌ Auth failed - no userId in session');
         return res.status(401).json({ success: false, message: "Not authenticated" });
       }
 
       console.log('🔍 Auth request - Session userId:', req.session.userId);
+
+      // Special handling for admin users
+      const { isAdminUserId, ADMIN_CREDENTIALS } = await import('./admin-credentials');
+      if (isAdminUserId(req.session.userId)) {
+        console.log('✓ Admin user detected, bypassing MongoDB lookup');
+        const adminCredential = ADMIN_CREDENTIALS.find(cred => cred.adminId === req.session.userId);
+        return res.json({
+          success: true,
+          user: {
+            _id: req.session.userId,
+            uid: req.session.userId,
+            username: adminCredential?.email || 'admin',
+            email: adminCredential?.email || 'admin@nedaxer.com',
+            firstName: 'System',
+            lastName: 'Administrator',
+            profilePicture: '',
+            isVerified: true,
+            isAdmin: true,
+            balance: 0,
+            kycStatus: 'verified',
+            withdrawalAccess: true,
+            transferAccess: true,
+            requiresDeposit: false,
+            allFeaturesDisabled: false
+          }
+        });
+      }
 
       // Standard user lookup from MongoDB
       const { mongoStorage } = await import('./mongoStorage');
@@ -1323,33 +1402,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         password: req.body.password ? '********' : undefined
       });
 
-      // Verify reCAPTCHA if provided
-      if (req.body.recaptchaToken) {
-        try {
-          const axios = (await import('axios')).default;
-          const response = await axios.post('https://www.google.com/recaptcha/api/siteverify', null, {
-            params: {
-              secret: process.env.RECAPTCHA_SECRET_KEY,
-              response: req.body.recaptchaToken
-            }
-          });
-
-          if (!response.data.success) {
-            console.log('reCAPTCHA verification failed:', response.data);
-            return res.status(400).json({
-              success: false,
-              message: "reCAPTCHA verification failed. Please try again."
-            });
-          }
-          console.log('✓ reCAPTCHA verification successful for registration');
-        } catch (recaptchaError) {
-          console.error('reCAPTCHA verification error:', recaptchaError);
-          return res.status(500).json({
-            success: false,
-            message: "Unable to verify reCAPTCHA. Please try again."
-          });
-        }
-      }
+      // reCAPTCHA verification removed - direct registration enabled
 
       // Validate input with zod schema
       const result = insertMongoUserSchema.safeParse(req.body);
@@ -1364,6 +1417,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const { username, email, password, firstName, lastName } = result.data;
+      
+      // Check for referral code in query parameters or body
+      const referralCode = req.query.ref || req.body.referralCode;
+      let referrerId = null;
+      
+      // Validate referral code if provided
+      if (referralCode) {
+        try {
+          const { User } = await import('./models/User');
+          const referrer = await User.findOne({ referralCode }).select('_id firstName lastName');
+          
+          if (referrer) {
+            referrerId = referrer._id.toString();
+            console.log(`Valid referral code found: ${referralCode} from ${referrer.firstName} ${referrer.lastName}`);
+          } else {
+            console.log(`Invalid referral code provided: ${referralCode}`);
+            // Don't fail registration for invalid referral code, just ignore it
+          }
+        } catch (referralError) {
+          console.warn('Error validating referral code:', referralError);
+          // Continue with registration even if referral validation fails
+        }
+      }
 
       // Check if username already exists
       const existingUsername = await storage.getUserByUsername(username);
@@ -1383,13 +1459,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      // Create new user (automatically verified)
+      // Generate unique bot-style avatar using DiceBear (modern API)
+      const avatarUrl = `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(username)}`;
+      
+      console.log(`Generated DiceBear avatar for ${username}: ${avatarUrl}`);
+
+      // Create new user (automatically verified) with avatar and referral info
       const newUser = await storage.createUser({
         username,
         email,
         password,
         firstName,
-        lastName
+        lastName,
+        profilePicture: avatarUrl,  // Store the DiceBear avatar URL
+        referredBy: referrerId  // Store who referred this user
       });
 
       // Automatically verify the user
@@ -1437,7 +1520,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           firstName: newUser.firstName,
           lastName: newUser.lastName,
           isVerified: true,
-          profilePicture: null,
+          profilePicture: newUser.profilePicture, // Use the saved avatar from database
           isAdmin: false
         }
       });
@@ -1451,10 +1534,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // reCAPTCHA verification endpoint removed - verification no longer required
+
   // Login endpoint with hardcoded admin bypass
   app.post('/api/auth/login', async (req: Request, res: Response) => {
     try {
-      const { username, password, recaptchaToken } = req.body;
+      const { username, password } = req.body;
       
       if (!username || !password) {
         return res.status(400).json({ 
@@ -1463,46 +1548,33 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      // Verify reCAPTCHA for non-admin users
-      if (recaptchaToken) {
-        try {
-          const axios = (await import('axios')).default;
-          const response = await axios.post('https://www.google.com/recaptcha/api/siteverify', null, {
-            params: {
-              secret: process.env.RECAPTCHA_SECRET_KEY,
-              response: recaptchaToken
-            }
-          });
+      // reCAPTCHA verification removed - direct login enabled
 
-          if (!response.data.success) {
-            console.log('reCAPTCHA verification failed:', response.data);
-            return res.status(400).json({
-              success: false,
-              message: "reCAPTCHA verification failed. Please try again."
-            });
-          }
-          console.log('✓ reCAPTCHA verification successful');
-        } catch (recaptchaError) {
-          console.error('reCAPTCHA verification error:', recaptchaError);
-          return res.status(500).json({
-            success: false,
-            message: "Unable to verify reCAPTCHA. Please try again."
-          });
-        }
-      }
-
-      // HARDCODED ADMIN LOGIN - bypasses MongoDB completely
-      const adminEmail = 'nedaxer.us@gmail.com';
-      const adminPassword = 'SMART456';
+      // HARDCODED ADMIN LOGIN - bypasses MongoDB completely  
+      // Multiple admin credentials for reliability across environment changes
+      const adminCredentials = [
+        { email: 'admin@nedaxer.com', password: 'SMART456' },
+        { email: 'admin@nedaxer.com', password: 'admin123' },
+        { email: 'nedaxer.admin@gmail.com', password: 'SMART456' },
+        { email: 'nedaxer.admin@gmail.com', password: 'admin123' },
+        { email: 'support@nedaxer.com', password: 'SMART456' },
+        { email: 'root@nedaxer.com', password: 'SMART456' },
+        { email: 'super@nedaxer.com', password: 'SMART456' },
+        { email: 'admin', password: 'SMART456' },
+        { email: 'admin', password: 'admin123' }
+      ];
       
       console.log('Checking admin login:', { 
         inputEmail: username.toLowerCase(), 
-        adminEmail, 
-        emailMatch: username.toLowerCase() === adminEmail,
-        passwordMatch: password === adminPassword 
+        availableCredentials: adminCredentials.length 
       });
       
-      if (username.toLowerCase() === adminEmail && password === adminPassword) {
+      // Check if credentials match any hardcoded admin
+      const matchingCredential = adminCredentials.find(cred => 
+        cred.email.toLowerCase() === username.toLowerCase() && cred.password === password
+      );
+      
+      if (matchingCredential) {
         console.log('✓ Admin hardcoded login successful - bypassing all MongoDB checks');
         
         // Set admin session
@@ -1561,6 +1633,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       console.log('✅ Password valid for user:', user.email);
 
+      // Generate avatar for users who don't have one
+      if (!user.profilePicture) {
+        const avatarUrl = `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(user.username)}`;
+        await storage.updateUserProfile(user._id.toString(), { profilePicture: avatarUrl });
+        user.profilePicture = avatarUrl;
+        console.log(`Generated DiceBear avatar for existing user ${user.username}: ${avatarUrl}`);
+      }
+
       // Set session
       req.session.userId = user._id.toString();
 
@@ -1574,6 +1654,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           email: user.email,
           firstName: user.firstName,
           lastName: user.lastName,
+          profilePicture: user.profilePicture,
           isVerified: user.isVerified,
           isAdmin: user.isAdmin
         }
@@ -1590,14 +1671,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Logout endpoint
   app.post('/api/auth/logout', (req: Request, res: Response) => {
+    console.log('🚪 Logout endpoint called for user:', req.session.userId);
+    
     req.session.destroy((err) => {
       if (err) {
+        console.error('Session destroy error:', err);
         return res.status(500).json({ 
           success: false, 
           message: "Failed to logout" 
         });
       }
+      
+      // Clear all session-related cookies
       res.clearCookie('connect.sid');
+      res.clearCookie('connect.sid', { path: '/' });
+      res.clearCookie('connect.sid', { path: '/', domain: req.hostname });
+      
+      // Clear any other authentication cookies
+      res.clearCookie('auth');
+      res.clearCookie('session');
+      res.clearCookie('user');
+      
+      console.log('✅ Session destroyed and cookies cleared');
+      
       res.json({ 
         success: true, 
         message: "Logout successful" 
@@ -1605,7 +1701,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     });
   });
 
-  // Debug endpoint to check callback URL
+  // Debug endpoint to check callback URL and OAuth config
   app.get('/api/auth/debug-callback', (req: Request, res: Response) => {
     const getCallbackURL = () => {
       if (process.env.BASE_URL) {
@@ -1619,11 +1715,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
     
     res.json({
       callbackURL: getCallbackURL(),
+      googleOAuthConfig: {
+        clientID: process.env.GOOGLE_CLIENT_ID ? `${process.env.GOOGLE_CLIENT_ID.substring(0, 20)}...` : 'NOT SET',
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET ? `${process.env.GOOGLE_CLIENT_SECRET.substring(0, 8)}...` : 'NOT SET',
+        expectedClientID: '319209339658-mhi810s4krhb64ehso7sohd4nl4kcg7h.apps.googleusercontent.com'
+      },
       environment: {
         BASE_URL: process.env.BASE_URL || 'not set',
         REPLIT_DOMAINS: process.env.REPLIT_DOMAINS || 'not set',
         NODE_ENV: process.env.NODE_ENV || 'not set'
       }
+    });
+  });
+
+  // Debug Google OAuth URL generation
+  app.get('/api/auth/google-debug-url', (req: Request, res: Response) => {
+    const clientID = process.env.GOOGLE_CLIENT_ID;
+    const callbackURL = `https://${process.env.REPLIT_DOMAINS}/auth/google/callback`;
+    
+    const googleAuthURL = `https://accounts.google.com/o/oauth2/auth?` +
+      `client_id=${clientID}&` +
+      `redirect_uri=${encodeURIComponent(callbackURL)}&` +
+      `scope=profile+email&` +
+      `response_type=code&` +
+      `access_type=offline`;
+    
+    res.json({
+      googleAuthURL,
+      clientID,
+      callbackURL,
+      message: 'Use this URL to test Google OAuth manually'
     });
   });
 
@@ -1986,22 +2107,40 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { email, password } = req.body;
       console.log('Admin login attempt for:', email);
       
-      if (email === 'admin@nedaxer.com' && password === 'SMART456') {
+      // HARDCODED ADMIN LOGIN - bypasses MongoDB completely
+      const { validateAdminCredentials, createAdminUser } = await import('./admin-credentials');
+      
+      console.log('Checking admin login:', { 
+        inputEmail: email.toLowerCase() 
+      });
+      
+      // Check if credentials match any hardcoded admin
+      const matchingCredential = validateAdminCredentials(email, password);
+      
+      if (matchingCredential) {
+        console.log('✓ Admin hardcoded login successful - bypassing all MongoDB checks');
+        
+        // Set admin session with unique admin ID
+        req.session.userId = matchingCredential.adminId;
         req.session.adminAuthenticated = true;
         req.session.adminId = 'admin';
-        console.log('Setting admin session, ID:', req.sessionID);
         
+        // Force session save
         req.session.save((err) => {
           if (err) {
             console.error('Session save error:', err);
             return res.status(500).json({ success: false, message: "Session save failed" });
           }
-          console.log('Admin session saved successfully');
-          res.json({ success: true, message: "Admin authentication successful" });
+          
+          console.log('✓ Admin session saved successfully');
+          res.json({ 
+            success: true, 
+            message: "Admin authentication successful"
+          });
         });
       } else {
-        console.log('Invalid admin credentials provided');
-        res.status(401).json({ success: false, message: "Invalid admin credentials" });
+        console.log('✗ Admin login failed - invalid credentials');
+        return res.status(401).json({ success: false, message: "Invalid admin credentials" });
       }
     } catch (error) {
       console.error('Admin login error:', error);
@@ -2021,15 +2160,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Admin middleware for new portal
-  const requireAdminAuth = (req: Request, res: Response, next: NextFunction) => {
+  const requireAdminAuth = async (req: Request, res: Response, next: NextFunction) => {
     console.log('Admin auth check:', { 
       sessionExists: !!req.session, 
       adminAuth: req.session?.adminAuthenticated,
+      userId: req.session?.userId,
       sessionId: req.sessionID
     });
     
-    if (!req.session?.adminAuthenticated) {
-      return res.status(401).json({ success: false, message: "Not authenticated" });
+    // Check both adminAuthenticated flag and hardcoded admin IDs
+    const { ADMIN_IDS, isAdminUserId } = await import('./admin-credentials');
+    const isAdminAuthenticated = req.session?.adminAuthenticated === true || 
+                                isAdminUserId(req.session?.userId);
+    
+    console.log('Admin auth result:', { isAdminAuthenticated });
+    
+    if (!isAdminAuthenticated) {
+      return res.status(401).json({ success: false, message: "Admin authentication required" });
     }
     next();
   };
@@ -2661,18 +2808,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Real-time WebSocket notification for withdrawal access update
       if ((global as any).wss) {
+        const broadcastData = {
+          type: 'WITHDRAWAL_ACCESS_UPDATE',
+          userId: userId,
+          withdrawalAccess: withdrawalAccess,
+          timestamp: new Date().toISOString()
+        };
+        
+        const adminSuccessData = {
+          type: 'admin_action_success',
+          message: `Withdrawal access ${withdrawalAccess ? 'enabled' : 'disabled'} for ${user.username}`,
+          action: 'withdrawal_access_toggle',
+          timestamp: new Date().toISOString()
+        };
+        
         (global as any).wss.clients.forEach((client: any) => {
           if (client.readyState === 1) { // WebSocket.OPEN
-            client.send(JSON.stringify({
-              type: 'WITHDRAWAL_ACCESS_UPDATE',
-              userId: userId,
-              withdrawalAccess: withdrawalAccess,
-              timestamp: new Date().toISOString()
-            }));
+            client.send(JSON.stringify(broadcastData));
+            client.send(JSON.stringify(adminSuccessData));
           }
         });
         
-        console.log(`📡 Real-time withdrawal access update broadcasted for user ${userId}`);
+        console.log(`📡 Real-time withdrawal access update and success message broadcasted for user ${userId}`);
       }
       
       res.json({ 
@@ -2722,18 +2879,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Real-time WebSocket notification for transfer access update
       if ((global as any).wss) {
+        const broadcastData = {
+          type: 'TRANSFER_ACCESS_UPDATE',
+          userId: userId,
+          transferAccess: transferAccess,
+          timestamp: new Date().toISOString()
+        };
+        
+        const adminSuccessData = {
+          type: 'admin_action_success',
+          message: `Transfer access ${transferAccess ? 'enabled' : 'disabled'} for ${user.username}`,
+          action: 'transfer_access_toggle',
+          timestamp: new Date().toISOString()
+        };
+        
         (global as any).wss.clients.forEach((client: any) => {
           if (client.readyState === 1) { // WebSocket.OPEN
-            client.send(JSON.stringify({
-              type: 'TRANSFER_ACCESS_UPDATE',
-              userId: userId,
-              transferAccess: transferAccess,
-              timestamp: new Date().toISOString()
-            }));
+            client.send(JSON.stringify(broadcastData));
+            client.send(JSON.stringify(adminSuccessData));
           }
         });
         
-        console.log(`📡 Real-time transfer access update broadcasted for user ${userId}`);
+        console.log(`📡 Real-time transfer access update and success message broadcasted for user ${userId}`);
       }
       
       res.json({ 
@@ -2931,13 +3098,37 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { mongoStorage } = await import('./mongoStorage');
       await mongoStorage.addFundsToUser(userId, parseFloat(amount));
       
-      console.log(`✓ Admin added $${amount} to user ${userId}`);
-      console.log(`📧 Notification: User received $${amount} virtual USD funds`);
+      // Get updated user balance
+      const user = await mongoStorage.getUser(userId);
+      const newBalance = user?.balance || 0;
+      
+      console.log(`✓ Admin added $${amount} to user ${userId}, new balance: $${newBalance}`);
+      
+      // Broadcast WebSocket update for real-time updates
+      if (wss) {
+        const message = JSON.stringify({
+          type: 'ADMIN_FUNDS_ADDED',
+          userId: userId,
+          amount: parseFloat(amount),
+          newBalance: newBalance,
+          timestamp: new Date().toISOString()
+        });
+        
+        wss.clients.forEach((client: any) => {
+          if (client.readyState === 1) { // WebSocket.OPEN
+            client.send(message);
+          }
+        });
+      }
       
       res.json({ 
         success: true, 
         message: `Successfully added $${amount} to user account`,
-        notification: "Deposit successful: You've received virtual USD funds."
+        data: {
+          userId,
+          amount: parseFloat(amount),
+          newBalance: newBalance
+        }
       });
     } catch (error) {
       console.error('Admin add funds error:', error);
@@ -2945,29 +3136,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Admin remove funds
-  app.post('/api/admin/users/remove-funds', requireAdminAuth, async (req: Request, res: Response) => {
-    try {
-      const { userId, amount } = req.body;
-      
-      if (!userId || !amount || amount <= 0) {
-        return res.status(400).json({ success: false, message: "Valid user ID and amount required" });
-      }
 
-      const { mongoStorage } = await import('./mongoStorage');
-      await mongoStorage.removeFundsFromUser(userId, parseFloat(amount));
-      
-      console.log(`✓ Admin removed $${amount} from user ${userId}`);
-      
-      res.json({ 
-        success: true, 
-        message: `Successfully removed $${amount} from user account`
-      });
-    } catch (error) {
-      console.error('Admin remove funds error:', error);
-      res.status(500).json({ success: false, message: "Failed to remove funds" });
-    }
-  });
 
   // Admin remove funds
   app.post('/api/admin/users/remove-funds', requireAdminAuth, async (req: Request, res: Response) => {
@@ -2981,11 +3150,37 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { mongoStorage } = await import('./mongoStorage');
       await mongoStorage.removeFundsFromUser(userId, parseFloat(amount));
       
-      console.log(`✓ Admin removed $${amount} from user ${userId}`);
+      // Get updated user balance
+      const user = await mongoStorage.getUser(userId);
+      const newBalance = user?.balance || 0;
+      
+      console.log(`✓ Admin removed $${amount} from user ${userId}, new balance: $${newBalance}`);
+      
+      // Broadcast WebSocket update for real-time updates
+      if (wss) {
+        const message = JSON.stringify({
+          type: 'ADMIN_FUNDS_REMOVED',
+          userId: userId,
+          amount: parseFloat(amount),
+          newBalance: newBalance,
+          timestamp: new Date().toISOString()
+        });
+        
+        wss.clients.forEach((client: any) => {
+          if (client.readyState === 1) { // WebSocket.OPEN
+            client.send(message);
+          }
+        });
+      }
       
       res.json({ 
         success: true, 
-        message: `Successfully removed $${amount} from user account`
+        message: `Successfully removed $${amount} from user account`,
+        data: {
+          userId,
+          amount: parseFloat(amount),
+          newBalance: newBalance
+        }
       });
     } catch (error) {
       console.error('Admin remove funds error:', error);
@@ -3025,6 +3220,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Function to get correct deposit address based on crypto symbol and chain
+  const getDepositAddress = (cryptoSymbol: string, chainType: string): string => {
+    const addresses = {
+      'USDT': {
+        'ERC20': '0x126975caaf44D603307a95E2d2670F6Ef46e563C',
+        'TRC20': 'THA5iGZk9mBq5742scd9NsvqAPiJcgt4QL',
+        'BSC': '0x126975caaf44D603307a95E2d2670F6Ef46e563C'
+      },
+      'BTC': {
+        'Bitcoin': 'bc1qq35fj5pxkwflsrlt4xk8jta5wx22qy4knnt2q2'
+      },
+      'ETH': {
+        'ETH': '0x126975caaf44D603307a95E2d2670F6Ef46e563C',
+        'ETH (BEP-20)': '0x126975caaf44D603307a95E2d2670F6Ef46e563C'
+      },
+      'BNB': {
+        'BEP-20': '0x126975caaf44D603307a95E2d2670F6Ef46e563C'
+      }
+    };
+    
+    return addresses[cryptoSymbol as keyof typeof addresses]?.[chainType as keyof typeof addresses[keyof typeof addresses]] || '';
+  };
+
   // Admin create deposit transaction
   app.post('/api/admin/deposits/create', requireAdminAuth, async (req: Request, res: Response) => {
     try {
@@ -3054,6 +3272,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const cryptoAmount = usdAmount / cryptoPrice;
       const adminId = req.session?.adminId || 'admin';
 
+      // Get the correct deposit address based on crypto symbol and chain type
+      const actualDepositAddress = getDepositAddress(cryptoSymbol, chainType);
+
       // Create deposit transaction
       const transaction = await mongoStorage.createDepositTransaction({
         userId,
@@ -3062,7 +3283,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         cryptoName,
         chainType,
         networkName,
-        senderAddress,
+        senderAddress: actualDepositAddress, // Use the correct deposit address
         usdAmount,
         cryptoAmount,
         cryptoPrice
@@ -3075,7 +3296,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const notificationMessage = `Dear valued Nedaxer trader,
 Your deposit has been confirmed.
 Deposit amount: ${cryptoAmount.toFixed(8)} ${cryptoSymbol}
-Deposit address: ${senderAddress}
+Deposit address: ${actualDepositAddress}
 Timestamp: ${new Date().toISOString().replace('T', ' ').substring(0, 19)}(UTC)`;
 
       const notification = await mongoStorage.createNotification({
@@ -3088,7 +3309,7 @@ Timestamp: ${new Date().toISOString().replace('T', ' ').substring(0, 19)}(UTC)`;
           cryptoSymbol,
           cryptoAmount,
           usdAmount,
-          senderAddress,
+          senderAddress: actualDepositAddress, // Use the correct deposit address
           chainType,
           networkName
         }
@@ -3127,6 +3348,156 @@ Timestamp: ${new Date().toISOString().replace('T', ' ').substring(0, 19)}(UTC)`;
     } catch (error) {
       console.error('Admin create deposit error:', error);
       res.status(500).json({ success: false, message: "Failed to create deposit" });
+    }
+  });
+
+  // MongoDB-based referral stats endpoint
+  app.get('/api/referrals/stats', requireAuth, async (req: Request, res: Response) => {
+    try {
+      const userId = req.session.userId!;
+      
+      // Import models
+      const { User } = await import('./models/User');
+      const { ReferralEarning } = await import('./models/ReferralEarning');
+      
+      // Get user's referral code, generate if doesn't exist
+      const user = await User.findById(userId);
+      if (!user) {
+        return res.status(404).json({ success: false, message: 'User not found' });
+      }
+      
+      let referralCode = user.referralCode;
+      if (!referralCode) {
+        // Generate unique referral code
+        const initials = `${user.firstName?.charAt(0) || 'U'}${user.lastName?.charAt(0) || 'S'}`.toUpperCase();
+        const randomString = Math.random().toString(36).substring(2, 8).toUpperCase();
+        const year = new Date().getFullYear();
+        referralCode = `NEDAXER_${initials}${year}_${randomString}`;
+        
+        user.referralCode = referralCode;
+        await user.save();
+      }
+
+      // Get total earnings
+      const totalEarningsResult = await ReferralEarning.aggregate([
+        { $match: { referrerId: userId } },
+        { $group: { _id: null, total: { $sum: '$amount' } } }
+      ]);
+      const totalEarnings = totalEarningsResult[0]?.total || 0;
+
+      // Get total referrals count (unique referred users)
+      const totalReferralsResult = await ReferralEarning.aggregate([
+        { $match: { referrerId: userId } },
+        { $group: { _id: '$referredUserId' } },
+        { $count: 'count' }
+      ]);
+      const totalReferrals = totalReferralsResult[0]?.count || 0;
+
+      // Get monthly earnings (current month)
+      const currentMonth = new Date();
+      const startOfMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1);
+      
+      const monthlyEarningsResult = await ReferralEarning.aggregate([
+        { 
+          $match: { 
+            referrerId: userId,
+            createdAt: { $gte: startOfMonth }
+          }
+        },
+        { $group: { _id: null, monthly: { $sum: '$amount' } } }
+      ]);
+      const monthlyEarnings = monthlyEarningsResult[0]?.monthly || 0;
+
+      // Get recent earnings with user info
+      const recentEarnings = await ReferralEarning.find({ referrerId: userId })
+        .populate('referredUserId', 'email')
+        .sort({ createdAt: -1 })
+        .limit(10);
+
+      const stats = {
+        totalEarnings: Number(totalEarnings),
+        totalReferrals: Number(totalReferrals),
+        monthlyEarnings: Number(monthlyEarnings),
+        referralCode,
+        recentEarnings: recentEarnings.map(earning => ({
+          id: earning._id,
+          amount: Number(earning.amount),
+          percentage: Number(earning.percentage),
+          transactionType: earning.transactionType,
+          referredUserEmail: earning.referredUserId?.email || 'Unknown',
+          createdAt: earning.createdAt.toISOString()
+        }))
+      };
+
+      res.json({ success: true, data: stats });
+    } catch (error) {
+      console.error('Error fetching referral stats:', error);
+      res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+  });
+
+  // Validate referral code during registration
+  app.get('/api/referrals/validate/:code', async (req: Request, res: Response) => {
+    try {
+      const { code } = req.params;
+      
+      const { User } = await import('./models/User');
+      
+      const referrer = await User.findOne({ referralCode: code }).select('_id firstName lastName');
+      
+      if (!referrer) {
+        return res.status(404).json({ success: false, message: 'Invalid referral code' });
+      }
+
+      res.json({ 
+        success: true, 
+        data: { 
+          referrerId: referrer._id,
+          referrerName: `${referrer.firstName} ${referrer.lastName}`
+        }
+      });
+    } catch (error) {
+      console.error('Error validating referral code:', error);
+      res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+  });
+
+  // Add referral earning (called when referred user performs an action)
+  app.post('/api/referrals/add-earning', requireAuth, async (req: Request, res: Response) => {
+    try {
+      const { referredUserId, amount, percentage, transactionType, originalAmount, currencyId } = req.body;
+      const referrerId = req.session.userId!;
+
+      const { User } = await import('./models/User');
+      const { ReferralEarning } = await import('./models/ReferralEarning');
+      
+      // Verify the referred user exists and was referred by this user
+      const referredUser = await User.findOne({
+        _id: referredUserId,
+        referredBy: referrerId
+      });
+
+      if (!referredUser) {
+        return res.status(400).json({ success: false, message: 'Invalid referral relationship' });
+      }
+
+      // Add the earning record
+      const earning = new ReferralEarning({
+        referrerId,
+        referredUserId,
+        amount: Number(amount),
+        percentage: Number(percentage),
+        transactionType,
+        originalAmount: Number(originalAmount),
+        currencyId: currencyId || 'USD'
+      });
+
+      await earning.save();
+
+      res.json({ success: true, message: 'Referral earning added successfully' });
+    } catch (error) {
+      console.error('Error adding referral earning:', error);
+      res.status(500).json({ success: false, message: 'Internal server error' });
     }
   });
 
@@ -3407,10 +3778,14 @@ Timestamp: ${new Date().toISOString().replace('T', ' ').substring(0, 19)}(UTC)`;
 
       // Get user's current balance
       const { mongoStorage } = await import('./mongoStorage');
-      const userBalance = await mongoStorage.getUserBalance(userId, 'USD');
+      const userBalanceResult = await mongoStorage.getUserBalance(userId, 'USD');
       
-      if (!userBalance || userBalance.balance < usdAmount) {
-        return res.status(400).json({ success: false, message: "Insufficient balance" });
+      if (!userBalanceResult || userBalanceResult.balance < parseFloat(usdAmount.toString())) {
+        const currentBalance = userBalanceResult ? userBalanceResult.balance : 0;
+        return res.status(400).json({ 
+          success: false, 
+          message: `Insufficient balance. Current balance: $${currentBalance.toFixed(2)}, Requested: $${parseFloat(usdAmount.toString()).toFixed(2)}` 
+        });
       }
 
       // Get crypto price for validation
@@ -3636,23 +4011,87 @@ Timestamp: ${new Date().toISOString().replace('T', ' ').substring(0, 19)}(UTC)`,
     }
   });
 
+  // Get unread support message count for support icon badge
+  app.get('/api/notifications/support-unread-count', requireAuth, async (req: Request, res: Response) => {
+    try {
+      const userId = req.session.userId!;
+      
+      const { mongoStorage } = await import('./mongoStorage');
+      const notifications = await mongoStorage.getUserNotifications(userId);
+      
+      // Count unread support messages (type 'system' with notificationType 'message')
+      const supportUnreadCount = notifications.filter(n => 
+        !n.isRead && 
+        (n.type === 'system' && n.data?.notificationType === 'message' && n.data?.from === 'support')
+      ).length;
+      
+      console.log(`💬 Unread support messages for user ${userId}: ${supportUnreadCount}`);
+      
+      res.json({ 
+        success: true, 
+        supportUnreadCount: supportUnreadCount
+      });
+    } catch (error) {
+      console.error('Get support unread count error:', error);
+      res.status(500).json({ success: false, message: "Failed to get support unread count" });
+    }
+  });
+
   // Mark notification as read
   app.put('/api/notifications/:notificationId/read', requireAuth, async (req: Request, res: Response) => {
     try {
       const { notificationId } = req.params;
+      const userId = req.session.userId!;
+      
+      console.log(`📖 User ${userId} marking notification as read:`, notificationId);
       
       const { mongoStorage } = await import('./mongoStorage');
+      
+      // Verify notification belongs to user before marking as read
+      const notifications = await mongoStorage.getUserNotifications(userId);
+      const notification = notifications.find(n => n._id.toString() === notificationId);
+      
+      if (!notification) {
+        console.warn(`⚠️ Notification ${notificationId} not found for user ${userId}`);
+        return res.status(404).json({ 
+          success: false, 
+          message: "Notification not found or access denied" 
+        });
+      }
+      
+      if (notification.isRead) {
+        console.log(`📖 Notification ${notificationId} already marked as read`);
+        return res.json({ 
+          success: true, 
+          message: "Notification already marked as read",
+          alreadyRead: true 
+        });
+      }
+      
       await mongoStorage.markNotificationAsRead(notificationId);
       
-      res.json({ success: true, message: "Notification marked as read" });
+      console.log(`✅ Successfully marked notification ${notificationId} as read for user ${userId}`);
+      
+      res.json({ 
+        success: true, 
+        message: "Notification marked as read successfully",
+        notificationId: notificationId
+      });
     } catch (error) {
-      console.error('Mark notification as read error:', error);
-      res.status(500).json({ success: false, message: "Failed to mark notification as read" });
+      console.error('❌ Mark notification as read error:', error);
+      res.status(500).json({ 
+        success: false, 
+        message: "Failed to mark notification as read",
+        error: error instanceof Error ? error.message : 'Unknown error'
+      });
     }
   });
 
   // Register chatbot routes
   app.use('/api/chatbot', chatbotRoutes);
+  
+  // Register standalone backup/restore system
+  registerBackupRestoreRoutes(app);
   
   // Register verification routes
   const { default: verificationRoutes } = await import('./api/verification-routes');
@@ -3661,6 +4100,23 @@ Timestamp: ${new Date().toISOString().replace('T', ' ').substring(0, 19)}(UTC)`,
   // Register admin KYC routes
   const { default: adminKycRoutes } = await import('./api/admin-kyc-routes');
   app.use('/api/admin', adminKycRoutes);
+
+  // Register push notification routes
+  const {
+    getVapidKey,
+    subscribeToPushNotifications,
+    unsubscribeFromPushNotifications,
+    sendTestNotification,
+    getSubscriptionStatus,
+    getAllSubscriptions
+  } = await import('./api/push-notifications');
+  
+  app.get('/api/notifications/vapid-key', getVapidKey);
+  app.post('/api/notifications/subscribe', subscribeToPushNotifications);
+  app.post('/api/notifications/unsubscribe', unsubscribeFromPushNotifications);
+  app.post('/api/notifications/test', sendTestNotification);
+  app.get('/api/notifications/subscription/:userId', getSubscriptionStatus);
+  app.get('/api/notifications/subscriptions', requireAdminAuth, getAllSubscriptions);
 
 
 
@@ -3710,6 +4166,15 @@ Timestamp: ${new Date().toISOString().replace('T', ' ').substring(0, 19)}(UTC)`,
           notificationType: 'message'
         }
       });
+
+      // Send push notification
+      try {
+        const { sendSupportMessageNotification } = await import('./api/push-notifications');
+        await sendSupportMessageNotification(userId, message.trim());
+        console.log(`📲 Push notification sent to user ${userId}`);
+      } catch (pushError) {
+        console.error('Push notification error:', pushError);
+      }
 
       // Broadcast real-time notification update
       const wss = app.get('wss');
@@ -3917,21 +4382,21 @@ Timestamp: ${new Date().toISOString().replace('T', ' ').substring(0, 19)}(UTC)`,
     console.log(`📡 Broadcasted ${data.type} to ${sentCount} ${subscriptionType} subscribers`);
   };
   
-  // Add periodic price updates for real-time BTC price
-  setInterval(async () => {
-    try {
-      // Use CoinGecko API call instead of external fetch to avoid localhost issues
-      const priceData = await getCoinGeckoPrices();
-      if (priceData && priceData.length > 0) {
-        broadcastToSubscribers('prices', {
-          type: 'PRICE_UPDATE',
-          data: priceData
-        });
-      }
-    } catch (error) {
-      console.error('❌ Failed to fetch prices for broadcast:', error);
-    }
-  }, 5000); // Broadcast price updates every 5 seconds
+  // DISABLED: WebSocket price broadcasting conflicts with unified pricing system
+  // Prices are now handled through stable API endpoints with 60-second intervals
+  // setInterval(async () => {
+  //   try {
+  //     const priceData = await getCoinGeckoPrices();
+  //     if (priceData && priceData.length > 0) {
+  //       broadcastToSubscribers('prices', {
+  //         type: 'PRICE_UPDATE',
+  //         data: priceData
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.error('❌ Failed to broadcast price updates:', error);
+  //   }
+  // }, 30000); // DISABLED - was causing price flickering conflicts
   
   // =======================
   // CONNECTION REQUEST ROUTES
@@ -4461,8 +4926,120 @@ Timestamp: ${new Date().toISOString().replace('T', ' ').substring(0, 19)}(UTC)`,
 
 
 
+  // Chat bot API endpoint
+  app.post('/api/chat', async (req: Request, res: Response) => {
+    try {
+      const { handleChatMessage } = await import('./api/chat');
+      await handleChatMessage(req, res);
+    } catch (error) {
+      console.error('Chat API error:', error);
+      res.json({
+        response: 'I\'m experiencing some technical difficulties. Please try again later.'
+      });
+    }
+  });
+
   // Store WebSocket server for broadcasting updates
   app.set('wss', wss);
+  
+  // TEMPORARY: Test endpoint to update user KYC status for testing
+  app.post('/api/test/update-kyc-status', async (req: Request, res: Response) => {
+    try {
+      const { User } = await import('./models/User');
+      
+      const testUser = await User.findOne({ username: 'testuser' });
+      if (!testUser) {
+        return res.status(404).json({ success: false, message: 'Test user not found' });
+      }
+      
+      testUser.kycStatus = 'pending';
+      testUser.kycData = {
+        dateOfBirth: { day: 15, month: 6, year: 1990 },
+        sourceOfIncome: 'Employment',
+        documentType: 'driving_license',
+        documents: {
+          front: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==',
+          back: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=='
+        }
+      };
+      testUser.kycSubmittedAt = new Date();
+      
+      await testUser.save();
+      
+      res.json({ 
+        success: true, 
+        message: 'Test user KYC status updated to pending',
+        userId: testUser._id 
+      });
+      
+    } catch (error) {
+      console.error('Error updating test user KYC:', error);
+      res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+  });
+
+  // Asset serving endpoints for belncrypto images - using already imported modules
+  
+  app.get('/api/assets/download_1751940923486.jpeg', (req: Request, res: Response, next: any) => {
+    try {
+      const filePath = path.join(__dirname, '../attached_assets/download_1751940923486.jpeg');
+      console.log('Serving JPEG asset from:', filePath);
+      
+      if (fs.existsSync(filePath)) {
+        res.setHeader('Content-Type', 'image/jpeg');
+        res.setHeader('Cache-Control', 'public, max-age=86400');
+        return res.sendFile(path.resolve(filePath));
+      } else {
+        console.log('JPEG file not found at:', filePath);
+        return res.status(404).json({ error: 'Image not found' });
+      }
+    } catch (error) {
+      console.error('Error serving JPEG asset:', error);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
+  app.get('/api/assets/download%20(1)_1751940902760.png', (req: Request, res: Response, next: any) => {
+    try {
+      const filePath = path.join(__dirname, '../attached_assets/download (1)_1751940902760.png');
+      console.log('Serving PNG asset from:', filePath);
+      
+      if (fs.existsSync(filePath)) {
+        res.setHeader('Content-Type', 'image/png');
+        res.setHeader('Cache-Control', 'public, max-age=86400');
+        return res.sendFile(path.resolve(filePath));
+      } else {
+        console.log('PNG file not found at:', filePath);
+        return res.status(404).json({ error: 'Image not found' });
+      }
+    } catch (error) {
+      console.error('Error serving PNG asset:', error);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
+  // Simplified direct file serving without middleware interference
+  app.get('/api/assets/:filename', (req: Request, res: Response) => {
+    try {
+      const filename = req.params.filename;
+      const filePath = path.join(__dirname, '../attached_assets', filename);
+      
+      if (fs.existsSync(filePath)) {
+        if (filename.endsWith('.jpeg') || filename.endsWith('.jpg')) {
+          res.setHeader('Content-Type', 'image/jpeg');
+        } else if (filename.endsWith('.png')) {
+          res.setHeader('Content-Type', 'image/png');
+        }
+        res.setHeader('Cache-Control', 'public, max-age=86400');
+        res.sendFile(path.resolve(filePath));
+      } else {
+        res.status(404).json({ error: 'Asset not found' });
+      }
+    } catch (error) {
+      console.error('Error serving asset:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
   
   return httpServer;
 }

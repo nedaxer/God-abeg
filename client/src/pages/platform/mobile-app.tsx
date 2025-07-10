@@ -1,41 +1,16 @@
 import { PageLayout } from "@/components/page-layout";
 import { Button } from "@/components/ui/button";
 import { Download, Smartphone, Tablet, BarChart3, Zap } from "lucide-react";
-import { useState, useEffect } from "react";
 import { Check, ArrowRight } from "lucide-react";
 import { FaApple, FaGooglePlay } from "react-icons/fa";
 import { Link } from "wouter";
+import { usePWAInstall } from "@/hooks/usePWAInstall";
 
 export default function MobileApp() {
-  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
-
-  useEffect(() => {
-    const handleBeforeInstallPrompt = (e: Event) => {
-      e.preventDefault();
-      setDeferredPrompt(e);
-    };
-
-    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-
-    return () => {
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-    };
-  }, []);
+  const { installPWA, canInstall, isInstalled } = usePWAInstall();
 
   const handleInstall = async () => {
-    if (!deferredPrompt) return;
-
-    try {
-      await deferredPrompt.prompt();
-      const choiceResult = await deferredPrompt.userChoice;
-
-      if (choiceResult.outcome === 'accepted') {
-        console.log('User accepted the install prompt');
-      }
-      setDeferredPrompt(null);
-    } catch (err) {
-      console.error('Installation failed:', err);
-    }
+    await installPWA();
   };
 
   const appFeatures = [
@@ -93,15 +68,19 @@ export default function MobileApp() {
           <Button
             onClick={handleInstall}
             className="bg-[#ff5900] hover:bg-opacity-90 text-white font-semibold px-8 py-3 text-lg"
-            disabled={!deferredPrompt}
           >
             <Download className="mr-2 h-5 w-5" />
-            Install Nedaxer App
+            {isInstalled ? 'Open Nedaxer App' : 'Install Nedaxer App'}
           </Button>
-          {!deferredPrompt && (
+          {!canInstall && !isInstalled && (
             <p className="mt-2 text-sm text-gray-600">
               If you've already installed the app or your browser doesn't support installation,
               you can access it through your device's home screen.
+            </p>
+          )}
+          {isInstalled && (
+            <p className="mt-2 text-sm text-green-600">
+              App successfully installed! You can access it from your home screen.
             </p>
           )}
         </div>
@@ -136,31 +115,27 @@ export default function MobileApp() {
                 <p className="mb-6">Experience cryptocurrency trading on the go with our secure and feature-rich mobile application. Available for iOS and Android devices.</p>
                 
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <a 
-                    href="https://apps.apple.com" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
+                  <button 
+                    onClick={handleInstall}
                     className="bg-black text-white rounded-lg px-6 py-3 flex items-center justify-center hover:bg-opacity-80 transition-all"
                   >
                     <FaApple className="text-2xl mr-3" />
                     <div className="text-left">
-                      <div className="text-xs">Download on the</div>
-                      <div className="text-xl font-semibold">App Store</div>
+                      <div className="text-xs">Install the</div>
+                      <div className="text-xl font-semibold">Nedaxer App</div>
                     </div>
-                  </a>
+                  </button>
                   
-                  <a 
-                    href="https://play.google.com" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
+                  <button 
+                    onClick={handleInstall}
                     className="bg-black text-white rounded-lg px-6 py-3 flex items-center justify-center hover:bg-opacity-80 transition-all"
                   >
                     <FaGooglePlay className="text-2xl mr-3" />
                     <div className="text-left">
-                      <div className="text-xs">GET IT ON</div>
-                      <div className="text-xl font-semibold">Google Play</div>
+                      <div className="text-xs">Install the</div>
+                      <div className="text-xl font-semibold">Nedaxer App</div>
                     </div>
-                  </a>
+                  </button>
                 </div>
               </div>
               
@@ -278,22 +253,18 @@ export default function MobileApp() {
               <h3 className="text-lg font-bold mb-2">Download App</h3>
               <p className="text-gray-700 mb-4">Get the app directly from the App Store or Google Play Store.</p>
               <div className="flex flex-col items-center space-y-2">
-                <a 
-                  href="https://apps.apple.com" 
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button 
+                  onClick={handleInstall}
                   className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
                 >
-                  <FaApple className="mr-2" /> Download for iOS <ArrowRight className="ml-1 h-4 w-4" />
-                </a>
-                <a 
-                  href="https://play.google.com" 
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  <FaApple className="mr-2" /> Install Nedaxer App <ArrowRight className="ml-1 h-4 w-4" />
+                </button>
+                <button 
+                  onClick={handleInstall}
                   className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
                 >
-                  <FaGooglePlay className="mr-2" /> Download for Android <ArrowRight className="ml-1 h-4 w-4" />
-                </a>
+                  <FaGooglePlay className="mr-2" /> Install Nedaxer App <ArrowRight className="ml-1 h-4 w-4" />
+                </button>
               </div>
             </div>
             
@@ -324,31 +295,27 @@ export default function MobileApp() {
             <p className="mb-6">Trade cryptocurrencies anywhere, anytime with our powerful blockchain-enabled mobile trading platform.</p>
             
             <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-              <a 
-                href="https://apps.apple.com" 
-                target="_blank" 
-                rel="noopener noreferrer"
+              <button 
+                onClick={handleInstall}
                 className="bg-black text-white rounded-lg px-6 py-3 flex items-center justify-center hover:bg-opacity-80 transition-all"
               >
                 <FaApple className="text-2xl mr-3" />
                 <div className="text-left">
-                  <div className="text-xs">Download on the</div>
-                  <div className="text-xl font-semibold">App Store</div>
+                  <div className="text-xs">Install the</div>
+                  <div className="text-xl font-semibold">Nedaxer App</div>
                 </div>
-              </a>
+              </button>
               
-              <a 
-                href="https://play.google.com" 
-                target="_blank" 
-                rel="noopener noreferrer"
+              <button 
+                onClick={handleInstall}
                 className="bg-black text-white rounded-lg px-6 py-3 flex items-center justify-center hover:bg-opacity-80 transition-all"
               >
                 <FaGooglePlay className="text-2xl mr-3" />
                 <div className="text-left">
-                  <div className="text-xs">GET IT ON</div>
-                  <div className="text-xl font-semibold">Google Play</div>
+                  <div className="text-xs">Install the</div>
+                  <div className="text-xl font-semibold">Nedaxer App</div>
                 </div>
-              </a>
+              </button>
             </div>
           </div>
         </div>

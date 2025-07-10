@@ -1,0 +1,182 @@
+~/workspace$ PORT=6000npx tsx server/index.ts
+MongoDB storage initialized
+Using REPLIT_DOMAINS for Google OAuth callback: https://81e6ad32-7841-473a-918f-22f4e7973629-00-12qlqbpuoq4ik.kirk.replit.dev/auth/google/callback
+Connecting to MongoDB Atlas...
+Using MongoDB Atlas cluster
+MongoDB Atlas connection established successfully
+Creating initial data for development...
+Currencies initialized: USD, BTC, ETH, BNB, USDT
+Database initialization complete - currencies created successfully
+Initial data creation completed successfully
+Starting background image optimization...
+Background image optimization skipped (WebP binaries not available)
+12:55:06 AM [express] serving on port 6000
+❌ Failed to fetch prices for broadcast: TypeError: fetch failed
+    at node:internal/deps/undici/undici:13392:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Timeout._onTimeout (/home/runner/workspace/server/routes.mongo.ts:3922:24) {
+  [cause]: Error: connect ECONNREFUSED 127.0.0.1:5000
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16) {
+    errno: -111,
+    code: 'ECONNREFUSED',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 5000
+  }
+}
+❌ Failed to fetch prices for broadcast: TypeError: fetch failed
+    at node:internal/deps/undici/undici:13392:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Timeout._onTimeout (/home/runner/workspace/server/routes.mongo.ts:3922:24) {
+  [cause]: Error: connect ECONNREFUSED 127.0.0.1:5000
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16) {
+    errno: -111,
+    code: 'ECONNREFUSED',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 5000
+  }
+}
+❌ Failed to fetch prices for broadcast: TypeError: fetch failed
+    at node:internal/deps/undici/undici:13392:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Timeout._onTimeout (/home/runner/workspace/server/routes.mongo.ts:3922:24) {
+  [cause]: Error: connect ECONNREFUSED 127.0.0.1:5000
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16) {
+    errno: -111,
+    code: 'ECONNREFUSED',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 5000
+  }
+}
+❌ Failed to fetch prices for broadcast: TypeError: fetch failed
+    at node:internal/deps/undici/undici:13392:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Timeout._onTimeout (/home/runner/workspace/server/routes.mongo.ts:3922:24) {
+  [cause]: Error: connect ECONNREFUSED 127.0.0.1:5000
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16) {
+    errno: -111,
+    code: 'ECONNREFUSED',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 5000
+  }
+}
+❌ Failed to fetch prices for broadcast: TypeError: fetch failed
+    at node:internal/deps/undici/undici:13392:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Timeout._onTimeout (/home/runner/workspace/server/routes.mongo.ts:3922:24) {
+  [cause]: Error: connect ECONNREFUSED 127.0.0.1:5000
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16) {
+    errno: -111,
+    code: 'ECONNREFUSED',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 5000
+  }
+}
+❌ Failed to fetch prices for broadcast: TypeError: fetch failed
+    at node:internal/deps/undici/undici:13392:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Timeout._onTimeout (/home/runner/workspace/server/routes.mongo.ts:3922:24) {
+  [cause]: Error: connect ECONNREFUSED 127.0.0.1:5000
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16) {
+    errno: -111,
+    code: 'ECONNREFUSED',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 5000
+  }
+}
+❌ Failed to fetch prices for broadcast: TypeError: fetch failed
+    at node:internal/deps/undici/undici:13392:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Timeout._onTimeout (/home/runner/workspace/server/routes.mongo.ts:3922:24) {
+  [cause]: Error: connect ECONNREFUSED 127.0.0.1:5000
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16) {
+    errno: -111,
+    code: 'ECONNREFUSED',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 5000
+  }
+}
+❌ Failed to fetch prices for broadcast: TypeError: fetch failed
+    at node:internal/deps/undici/undici:13392:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Timeout._onTimeout (/home/runner/workspace/server/routes.mongo.ts:3922:24) {
+  [cause]: Error: connect ECONNREFUSED 127.0.0.1:5000
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16) {
+    errno: -111,
+    code: 'ECONNREFUSED',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 5000
+  }
+}
+❌ Failed to fetch prices for broadcast: TypeError: fetch failed
+    at node:internal/deps/undici/undici:13392:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Timeout._onTimeout (/home/runner/workspace/server/routes.mongo.ts:3922:24) {
+  [cause]: Error: connect ECONNREFUSED 127.0.0.1:5000
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16) {
+    errno: -111,
+    code: 'ECONNREFUSED',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 5000
+  }
+}
+❌ Failed to fetch prices for broadcast: TypeError: fetch failed
+    at node:internal/deps/undici/undici:13392:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Timeout._onTimeout (/home/runner/workspace/server/routes.mongo.ts:3922:24) {
+  [cause]: Error: connect ECONNREFUSED 127.0.0.1:5000
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16) {
+    errno: -111,
+    code: 'ECONNREFUSED',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 5000
+  }
+}
+❌ Failed to fetch prices for broadcast: TypeError: fetch failed
+    at node:internal/deps/undici/undici:13392:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Timeout._onTimeout (/home/runner/workspace/server/routes.mongo.ts:3922:24) {
+  [cause]: Error: connect ECONNREFUSED 127.0.0.1:5000
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16) {
+    errno: -111,
+    code: 'ECONNREFUSED',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 5000
+  }
+}
+❌ Failed to fetch prices for broadcast: TypeError: fetch failed
+    at node:internal/deps/undici/undici:13392:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Timeout._onTimeout (/home/runner/workspace/server/routes.mongo.ts:3922:24) {
+  [cause]: Error: connect ECONNREFUSED 127.0.0.1:5000
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16) {
+    errno: -111,
+    code: 'ECONNREFUSED',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 5000
+  }
+}
+❌ Failed to fetch prices for broadcast: TypeError: fetch failed
+    at node:internal/deps/undici/undici:13392:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Timeout._onTimeout (/home/runner/workspace/server/routes.mongo.ts:3922:24) {
+  [cause]: Error: connect ECONNREFUSED 127.0.0.1:5000
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16) {
+    errno: -111,
+    code: 'ECONNREFUSED',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 5000
+  }
+}

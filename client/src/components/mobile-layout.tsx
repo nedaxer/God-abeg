@@ -3,6 +3,8 @@ import { useLocation } from 'wouter';
 import { BottomNavigation } from './bottom-navigation';
 import { PWAInstallPrompt } from './pwa-install-prompt';
 import { useTheme } from '@/contexts/theme-context';
+import AnimatedChatBot from './animated-chat-bot';
+import MobileHeader from './mobile-header';
 
 interface MobileLayoutProps {
   children: ReactNode;
@@ -15,9 +17,9 @@ export default function MobileLayout({ children, className = '', hideBottomNav =
   const [location] = useLocation();
   const { getBackgroundClass, getTextClass } = useTheme();
   
-  // Force mobile viewport for mobile app routes
+  // Enhanced viewport configuration for mobile and desktop compatibility
   useEffect(() => {
-    // Set mobile viewport meta tag
+    // Set responsive viewport meta tag
     let viewport = document.querySelector('meta[name="viewport"]');
     if (!viewport) {
       viewport = document.createElement('meta');
@@ -25,29 +27,48 @@ export default function MobileLayout({ children, className = '', hideBottomNav =
       document.head.appendChild(viewport);
     }
     
-    // Force mobile view with specific constraints
-    viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover');
+    // Responsive viewport that works on both mobile and desktop
+    viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover');
     
-    // Responsive layout that adapts to screen size
+    // Enhanced responsive layout styling
     const style = document.getElementById('responsive-mobile-view') || document.createElement('style');
     style.id = 'responsive-mobile-view';
     style.textContent = `
       @media screen {
         body {
           overflow-x: hidden !important;
+          margin: 0 !important;
+          padding: 0 !important;
         }
         
-        /* Mobile layout styling */
+        /* Mobile layout styling - works on all screen sizes */
         [data-layout="mobile"] {
           width: 100% !important;
+          min-height: 100vh !important;
           box-sizing: border-box !important;
+          position: relative !important;
         }
         
-        /* Desktop responsive behavior */
-        @media (min-width: 431px) {
+        /* Enhanced desktop behavior - mobile app works on desktop */
+        @media (min-width: 768px) {
           [data-layout="mobile"] {
             max-width: none !important;
             width: 100% !important;
+            margin: 0 auto !important;
+          }
+          
+          /* Ensure mobile components scale properly on desktop */
+          .mobile-container {
+            padding: 0 !important;
+            margin: 0 !important;
+          }
+        }
+        
+        /* Large desktop screens - maintain mobile app layout */
+        @media (min-width: 1200px) {
+          [data-layout="mobile"] {
+            width: 100% !important;
+            max-width: none !important;
           }
         }
       }
@@ -57,15 +78,17 @@ export default function MobileLayout({ children, className = '', hideBottomNav =
       document.head.appendChild(style);
     }
     
-    // Force body styling for mobile
-    document.body.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+    // Enhanced body styling for cross-platform compatibility
+    document.body.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
     document.body.style.fontSize = '16px';
     document.body.style.lineHeight = '1.5';
+    document.body.style.WebkitTextSizeAdjust = '100%';
+    document.body.style.MozTextSizeAdjust = '100%';
     
     return () => {
-      // Cleanup on unmount (though this component rarely unmounts)
+      // Cleanup on unmount
       const mobileStyle = document.getElementById('responsive-mobile-view');
-      if (mobileStyle) {
+      if (mobileStyle && document.head.contains(mobileStyle)) {
         mobileStyle.remove();
       }
     };
@@ -79,14 +102,22 @@ export default function MobileLayout({ children, className = '', hideBottomNav =
     location.includes('/security') || 
     location.includes('/notifications') || 
     location.includes('/notification-settings') ||
-    location.includes('/invite-friends');
+    location.includes('/invite-friends') ||
+    location.includes('/transfer') ||
+    location.includes('/deposit-details') ||
+    location.includes('/withdrawal-details') ||
+    location.includes('/transfer-details') ||
+    location.includes('/withdrawal');
 
   return (
     <div className={`min-h-screen ${getBackgroundClass()} ${getTextClass()}`}>
-      <div className={`${shouldHideBottomNav ? 'pb-4' : 'pb-16'} ${className}`} data-layout="mobile">
+      {/* Mobile Header removed per user request */}
+      
+      <div className={`${shouldHideBottomNav ? 'pb-4 pt-4' : 'pb-16 pt-4'} ${className}`} data-layout="mobile">
         {children}
       </div>
       {!shouldHideBottomNav && <BottomNavigation />}
+      {/* Chat bot removed from mobile - only for desktop */}
       <PWAInstallPrompt />
     </div>
   );

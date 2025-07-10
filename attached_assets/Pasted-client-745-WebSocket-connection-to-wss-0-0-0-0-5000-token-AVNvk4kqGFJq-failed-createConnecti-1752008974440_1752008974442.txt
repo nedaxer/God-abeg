@@ -1,0 +1,509 @@
+client:745 WebSocket connection to 'wss://0.0.0.0:5000/?token=AVNvk4kqGFJq' failed: 
+createConnection @ client:745
+connect @ client:412
+connect @ client:751
+connect @ client:290
+connect @ client:374
+(anonymous) @ client:822
+client:772 [vite] failed to connect to websocket (Error: WebSocket closed without opened.). 
+connect @ client:772
+await in connect
+connect @ client:290
+connect @ client:374
+(anonymous) @ client:822
+client:809 [vite] Error: WebSocket closed without opened.
+    at WebSocket.<anonymous> (client:424:30)
+error @ client:809
+(anonymous) @ client:158
+Promise.catch
+send @ client:157
+send @ client:119
+sendError @ (index):61
+(anonymous) @ (index):69
+client:424 Uncaught (in promise) Error: WebSocket closed without opened.
+    at WebSocket.<anonymous> (client:424:30)
+(anonymous) @ client:424
+chunk-B4524ZT7.js?v=d1048f01:21609 Download the React DevTools for a better development experience: https://reactjs.org/link/react-devtools
+main.tsx:146 All caches cleared
+/#/mobil:1 Error while trying to use the following icon from the Manifest: https://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev/icons/icon-144x144.png (Resource size is not correct - typo in the Manifest?)
+use-auth.tsx:63 🔍 Calling /api/auth/user endpoint...
+main.tsx:207 
+            
+            
+           GET https://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev/api/auth/user 401 (Unauthorized)
+window.fetch @ main.tsx:207
+queryFn @ use-auth.tsx:65
+fetchFn @ @tanstack_react-query.js?v=d1048f01:852
+run @ @tanstack_react-query.js?v=d1048f01:495
+start @ @tanstack_react-query.js?v=d1048f01:536
+fetch @ @tanstack_react-query.js?v=d1048f01:935
+#executeFetch @ @tanstack_react-query.js?v=d1048f01:2043
+onSubscribe @ @tanstack_react-query.js?v=d1048f01:1926
+subscribe @ @tanstack_react-query.js?v=d1048f01:19
+(anonymous) @ @tanstack_react-query.js?v=d1048f01:3084
+subscribeToStore @ chunk-B4524ZT7.js?v=d1048f01:12032
+commitHookEffectListMount @ chunk-B4524ZT7.js?v=d1048f01:16963
+commitPassiveMountOnFiber @ chunk-B4524ZT7.js?v=d1048f01:18206
+commitPassiveMountEffects_complete @ chunk-B4524ZT7.js?v=d1048f01:18179
+commitPassiveMountEffects_begin @ chunk-B4524ZT7.js?v=d1048f01:18169
+commitPassiveMountEffects @ chunk-B4524ZT7.js?v=d1048f01:18159
+flushPassiveEffectsImpl @ chunk-B4524ZT7.js?v=d1048f01:19543
+flushPassiveEffects @ chunk-B4524ZT7.js?v=d1048f01:19500
+(anonymous) @ chunk-B4524ZT7.js?v=d1048f01:19381
+workLoop @ chunk-B4524ZT7.js?v=d1048f01:197
+flushWork @ chunk-B4524ZT7.js?v=d1048f01:176
+performWorkUntilDeadline @ chunk-B4524ZT7.js?v=d1048f01:384
+use-auth.tsx:73 Auth API response status: 401
+use-auth.tsx:83 Auth query response: {success: false, hasUser: false, status: 401}
+use-auth.tsx:91 User not authenticated (401)
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+use-auth.tsx:185 Login successful, updating cache with user: {_id: '686bcc978ed0bdc5f76dc23f', uid: '2618334824', username: 'test24@gmail.com', email: 'test24@gmail.com', firstName: 'mark', …}
+auth-redirect.tsx:38 User is authenticated, redirecting to: /mobile
+auth-redirect.tsx:38 User is authenticated, redirecting to: /mobile
+protected-route.tsx:33 ProtectedRoute check: {user: true, isLoading: false, adminOnly: false, path: '/mobile'}
+protected-route.tsx:53 User authenticated successfully, rendering component
+home.tsx:257 🏠 Home: KYC Status Debug: {user: true, kycLoading: true, kycError: undefined, kycStatus: undefined, kycData: undefined, …}
+desktop-dashboard.tsx:189 🔌 Connecting to WebSocket: wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev
+use-auth.tsx:63 🔍 Calling /api/auth/user endpoint...
+home.tsx:152 WebSocket connection to 'wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev/' failed: 
+(anonymous) @ home.tsx:152
+commitHookEffectListMount @ chunk-B4524ZT7.js?v=d1048f01:16963
+commitPassiveMountOnFiber @ chunk-B4524ZT7.js?v=d1048f01:18206
+commitPassiveMountEffects_complete @ chunk-B4524ZT7.js?v=d1048f01:18179
+commitPassiveMountEffects_begin @ chunk-B4524ZT7.js?v=d1048f01:18169
+commitPassiveMountEffects @ chunk-B4524ZT7.js?v=d1048f01:18159
+flushPassiveEffectsImpl @ chunk-B4524ZT7.js?v=d1048f01:19543
+flushPassiveEffects @ chunk-B4524ZT7.js?v=d1048f01:19500
+commitRootImpl @ chunk-B4524ZT7.js?v=d1048f01:19469
+commitRoot @ chunk-B4524ZT7.js?v=d1048f01:19330
+performSyncWorkOnRoot @ chunk-B4524ZT7.js?v=d1048f01:18948
+flushSyncCallbacks @ chunk-B4524ZT7.js?v=d1048f01:9166
+(anonymous) @ chunk-B4524ZT7.js?v=d1048f01:18677
+home.tsx:548 🏠 Real-time BTC Price from CoinGecko: {btcTicker: {…}, price: 108687, marketData: {…}}
+protected-route.tsx:33 ProtectedRoute check: {user: true, isLoading: false, adminOnly: false, path: '/mobile'}
+protected-route.tsx:53 User authenticated successfully, rendering component
+home.tsx:548 🏠 Real-time BTC Price from CoinGecko: {btcTicker: {…}, price: 108687, marketData: {…}}
+home.tsx:177 WebSocket error: Event {isTrusted: true, type: 'error', target: WebSocket, currentTarget: WebSocket, eventPhase: 2, …}
+ws.onerror @ home.tsx:177
+home.tsx:173 🔌 WebSocket disconnected
+home.tsx:548 🏠 Real-time BTC Price from CoinGecko: {btcTicker: {…}, price: 108687, marketData: {…}}
+VerificationBanner.tsx:35 🎯 VerificationBanner: Rendering banner for user: mark
+VerificationBanner.tsx:20 🎯 VerificationBanner: Render Logic Debug: {userName: 'mark', questionsCompleted: false, kycStatus: 'none', shouldShow: true, willRender: true}
+home.tsx:257 🏠 Home: KYC Status Debug: {user: true, kycLoading: false, kycError: undefined, kycStatus: {…}, kycData: {…}, …}
+home.tsx:548 🏠 Real-time BTC Price from CoinGecko: {btcTicker: {…}, price: 108687, marketData: {…}}
+VerificationBanner.tsx:35 🎯 VerificationBanner: Rendering banner for user: mark
+home.tsx:548 🏠 Real-time BTC Price from CoinGecko: {btcTicker: {…}, price: 108687, marketData: {…}}
+VerificationBanner.tsx:35 🎯 VerificationBanner: Rendering banner for user: mark
+use-auth.tsx:73 Auth API response status: 200
+use-auth.tsx:83 Auth query response: {success: undefined, hasUser: false, status: 200}
+use-auth.tsx:125 ✅ User authenticated (direct format): test24@gmail.com
+protected-route.tsx:33 ProtectedRoute check: {user: true, isLoading: false, adminOnly: false, path: '/mobile'}
+protected-route.tsx:53 User authenticated successfully, rendering component
+home.tsx:548 🏠 Real-time BTC Price from CoinGecko: {btcTicker: {…}, price: 108687, marketData: {…}}
+VerificationBanner.tsx:35 🎯 VerificationBanner: Rendering banner for user: mark
+home.tsx:632 WebSocket connection to 'wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev/ws' failed: WebSocket is closed before the connection is established.
+(anonymous) @ home.tsx:632
+safelyCallDestroy @ chunk-B4524ZT7.js?v=d1048f01:16796
+commitHookEffectListUnmount @ chunk-B4524ZT7.js?v=d1048f01:16923
+commitPassiveUnmountOnFiber @ chunk-B4524ZT7.js?v=d1048f01:18282
+commitPassiveUnmountEffects_complete @ chunk-B4524ZT7.js?v=d1048f01:18263
+commitPassiveUnmountEffects_begin @ chunk-B4524ZT7.js?v=d1048f01:18254
+commitPassiveUnmountEffects @ chunk-B4524ZT7.js?v=d1048f01:18219
+flushPassiveEffectsImpl @ chunk-B4524ZT7.js?v=d1048f01:19542
+flushPassiveEffects @ chunk-B4524ZT7.js?v=d1048f01:19500
+commitRootImpl @ chunk-B4524ZT7.js?v=d1048f01:19469
+commitRoot @ chunk-B4524ZT7.js?v=d1048f01:19330
+performSyncWorkOnRoot @ chunk-B4524ZT7.js?v=d1048f01:18948
+flushSyncCallbacks @ chunk-B4524ZT7.js?v=d1048f01:9166
+(anonymous) @ chunk-B4524ZT7.js?v=d1048f01:18677
+home.tsx:257 🏠 Home: KYC Status Debug: {user: true, kycLoading: false, kycError: undefined, kycStatus: {…}, kycData: {…}, …}
+home.tsx:622 WebSocket error: Event {isTrusted: true, type: 'error', target: WebSocket, currentTarget: WebSocket, eventPhase: 2, …}
+socket.onerror @ home.tsx:622
+home.tsx:617 WebSocket disconnected, attempting to reconnect...
+login.tsx:95 Login successful, redirecting to mobile app
+desktop-dashboard.tsx:41 WebSocket connection to 'wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev/' failed: 
+(anonymous) @ desktop-dashboard.tsx:41
+commitHookEffectListMount @ chunk-B4524ZT7.js?v=d1048f01:16963
+commitPassiveMountOnFiber @ chunk-B4524ZT7.js?v=d1048f01:18206
+commitPassiveMountEffects_complete @ chunk-B4524ZT7.js?v=d1048f01:18179
+commitPassiveMountEffects_begin @ chunk-B4524ZT7.js?v=d1048f01:18169
+commitPassiveMountEffects @ chunk-B4524ZT7.js?v=d1048f01:18159
+flushPassiveEffectsImpl @ chunk-B4524ZT7.js?v=d1048f01:19543
+flushPassiveEffects @ chunk-B4524ZT7.js?v=d1048f01:19500
+performSyncWorkOnRoot @ chunk-B4524ZT7.js?v=d1048f01:18921
+flushSyncCallbacks @ chunk-B4524ZT7.js?v=d1048f01:9166
+commitRootImpl @ chunk-B4524ZT7.js?v=d1048f01:19485
+commitRoot @ chunk-B4524ZT7.js?v=d1048f01:19330
+finishConcurrentRender @ chunk-B4524ZT7.js?v=d1048f01:18858
+performConcurrentWorkOnRoot @ chunk-B4524ZT7.js?v=d1048f01:18768
+workLoop @ chunk-B4524ZT7.js?v=d1048f01:197
+flushWork @ chunk-B4524ZT7.js?v=d1048f01:176
+performWorkUntilDeadline @ chunk-B4524ZT7.js?v=d1048f01:384
+protected-route.tsx:33 ProtectedRoute check: {user: true, isLoading: false, adminOnly: false, path: '/mobile/assets'}
+protected-route.tsx:53 User authenticated successfully, rendering component
+home.tsx:181 WebSocket connection to 'wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev/' failed: WebSocket is closed before the connection is established.
+(anonymous) @ home.tsx:181
+safelyCallDestroy @ chunk-B4524ZT7.js?v=d1048f01:16796
+commitHookEffectListUnmount @ chunk-B4524ZT7.js?v=d1048f01:16923
+commitPassiveUnmountInsideDeletedTreeOnFiber @ chunk-B4524ZT7.js?v=d1048f01:18333
+commitPassiveUnmountEffectsInsideOfDeletedTree_begin @ chunk-B4524ZT7.js?v=d1048f01:18295
+commitPassiveUnmountEffects_begin @ chunk-B4524ZT7.js?v=d1048f01:18231
+commitPassiveUnmountEffects @ chunk-B4524ZT7.js?v=d1048f01:18219
+flushPassiveEffectsImpl @ chunk-B4524ZT7.js?v=d1048f01:19542
+flushPassiveEffects @ chunk-B4524ZT7.js?v=d1048f01:19500
+commitRootImpl @ chunk-B4524ZT7.js?v=d1048f01:19469
+commitRoot @ chunk-B4524ZT7.js?v=d1048f01:19330
+performSyncWorkOnRoot @ chunk-B4524ZT7.js?v=d1048f01:18948
+flushSyncCallbacks @ chunk-B4524ZT7.js?v=d1048f01:9166
+(anonymous) @ chunk-B4524ZT7.js?v=d1048f01:18677
+home.tsx:632 WebSocket connection to 'wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev/ws' failed: WebSocket is closed before the connection is established.
+(anonymous) @ home.tsx:632
+safelyCallDestroy @ chunk-B4524ZT7.js?v=d1048f01:16796
+commitHookEffectListUnmount @ chunk-B4524ZT7.js?v=d1048f01:16923
+commitPassiveUnmountInsideDeletedTreeOnFiber @ chunk-B4524ZT7.js?v=d1048f01:18333
+commitPassiveUnmountEffectsInsideOfDeletedTree_begin @ chunk-B4524ZT7.js?v=d1048f01:18295
+commitPassiveUnmountEffects_begin @ chunk-B4524ZT7.js?v=d1048f01:18231
+commitPassiveUnmountEffects @ chunk-B4524ZT7.js?v=d1048f01:18219
+flushPassiveEffectsImpl @ chunk-B4524ZT7.js?v=d1048f01:19542
+flushPassiveEffects @ chunk-B4524ZT7.js?v=d1048f01:19500
+commitRootImpl @ chunk-B4524ZT7.js?v=d1048f01:19469
+commitRoot @ chunk-B4524ZT7.js?v=d1048f01:19330
+performSyncWorkOnRoot @ chunk-B4524ZT7.js?v=d1048f01:18948
+flushSyncCallbacks @ chunk-B4524ZT7.js?v=d1048f01:9166
+(anonymous) @ chunk-B4524ZT7.js?v=d1048f01:18677
+assets.tsx:232 💰 Assets Real-time BTC Price from CoinGecko: {btcTicker: {…}, price: 108687, priceData: {…}}
+assets.tsx:232 💰 Assets Real-time BTC Price from CoinGecko: {btcTicker: {…}, price: 108687, priceData: {…}}
+desktop-dashboard.tsx:189 🔌 Connecting to WebSocket: wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev
+home.tsx:177 WebSocket error: Event {isTrusted: true, type: 'error', target: WebSocket, currentTarget: WebSocket, eventPhase: 2, …}
+ws.onerror @ home.tsx:177
+home.tsx:173 🔌 WebSocket disconnected
+home.tsx:622 WebSocket error: Event {isTrusted: true, type: 'error', target: WebSocket, currentTarget: WebSocket, eventPhase: 2, …}
+socket.onerror @ home.tsx:622
+home.tsx:617 WebSocket disconnected, attempting to reconnect...
+desktop-dashboard.tsx:191 WebSocket connection to 'wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev/' failed: 
+connectWebSocket @ desktop-dashboard.tsx:191
+(anonymous) @ desktop-dashboard.tsx:235
+commitHookEffectListMount @ chunk-B4524ZT7.js?v=d1048f01:16963
+commitPassiveMountOnFiber @ chunk-B4524ZT7.js?v=d1048f01:18206
+commitPassiveMountEffects_complete @ chunk-B4524ZT7.js?v=d1048f01:18179
+commitPassiveMountEffects_begin @ chunk-B4524ZT7.js?v=d1048f01:18169
+commitPassiveMountEffects @ chunk-B4524ZT7.js?v=d1048f01:18159
+flushPassiveEffectsImpl @ chunk-B4524ZT7.js?v=d1048f01:19543
+flushPassiveEffects @ chunk-B4524ZT7.js?v=d1048f01:19500
+performSyncWorkOnRoot @ chunk-B4524ZT7.js?v=d1048f01:18921
+flushSyncCallbacks @ chunk-B4524ZT7.js?v=d1048f01:9166
+commitRootImpl @ chunk-B4524ZT7.js?v=d1048f01:19485
+commitRoot @ chunk-B4524ZT7.js?v=d1048f01:19330
+finishConcurrentRender @ chunk-B4524ZT7.js?v=d1048f01:18858
+performConcurrentWorkOnRoot @ chunk-B4524ZT7.js?v=d1048f01:18768
+workLoop @ chunk-B4524ZT7.js?v=d1048f01:197
+flushWork @ chunk-B4524ZT7.js?v=d1048f01:176
+performWorkUntilDeadline @ chunk-B4524ZT7.js?v=d1048f01:384
+desktop-dashboard.tsx:224 ❌ WebSocket error: Event {isTrusted: true, type: 'error', target: WebSocket, currentTarget: WebSocket, eventPhase: 2, …}
+ws.onerror @ desktop-dashboard.tsx:224
+desktop-dashboard.tsx:211 🔌 WebSocket disconnected, code: 1006 reason: 
+assets.tsx:232 💰 Assets Real-time BTC Price from CoinGecko: {btcTicker: {…}, price: 108687, priceData: {…}}
+protected-route.tsx:33 ProtectedRoute check: {user: true, isLoading: false, adminOnly: false, path: '/mobile/assets'}
+protected-route.tsx:53 User authenticated successfully, rendering component
+assets.tsx:232 💰 Assets Real-time BTC Price from CoinGecko: {btcTicker: {…}, price: 108687, priceData: {…}}
+desktop-dashboard.tsx:191 WebSocket connection to 'wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev/' failed: 
+connectWebSocket @ desktop-dashboard.tsx:191
+(anonymous) @ desktop-dashboard.tsx:235
+commitHookEffectListMount @ chunk-B4524ZT7.js?v=d1048f01:16963
+commitPassiveMountOnFiber @ chunk-B4524ZT7.js?v=d1048f01:18206
+commitPassiveMountEffects_complete @ chunk-B4524ZT7.js?v=d1048f01:18179
+commitPassiveMountEffects_begin @ chunk-B4524ZT7.js?v=d1048f01:18169
+commitPassiveMountEffects @ chunk-B4524ZT7.js?v=d1048f01:18159
+flushPassiveEffectsImpl @ chunk-B4524ZT7.js?v=d1048f01:19543
+flushPassiveEffects @ chunk-B4524ZT7.js?v=d1048f01:19500
+performSyncWorkOnRoot @ chunk-B4524ZT7.js?v=d1048f01:18921
+flushSyncCallbacks @ chunk-B4524ZT7.js?v=d1048f01:9166
+commitRootImpl @ chunk-B4524ZT7.js?v=d1048f01:19485
+commitRoot @ chunk-B4524ZT7.js?v=d1048f01:19330
+finishConcurrentRender @ chunk-B4524ZT7.js?v=d1048f01:18858
+performConcurrentWorkOnRoot @ chunk-B4524ZT7.js?v=d1048f01:18768
+workLoop @ chunk-B4524ZT7.js?v=d1048f01:197
+flushWork @ chunk-B4524ZT7.js?v=d1048f01:176
+performWorkUntilDeadline @ chunk-B4524ZT7.js?v=d1048f01:384
+desktop-dashboard.tsx:224 ❌ WebSocket error: Event {isTrusted: true, type: 'error', target: WebSocket, currentTarget: WebSocket, eventPhase: 2, …}
+ws.onerror @ desktop-dashboard.tsx:224
+desktop-dashboard.tsx:211 🔌 WebSocket disconnected, code: 1006 reason: 
+desktop-dashboard.tsx:41 WebSocket connection to 'wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev/' failed: 
+(anonymous) @ desktop-dashboard.tsx:41
+commitHookEffectListMount @ chunk-B4524ZT7.js?v=d1048f01:16963
+commitPassiveMountOnFiber @ chunk-B4524ZT7.js?v=d1048f01:18206
+commitPassiveMountEffects_complete @ chunk-B4524ZT7.js?v=d1048f01:18179
+commitPassiveMountEffects_begin @ chunk-B4524ZT7.js?v=d1048f01:18169
+commitPassiveMountEffects @ chunk-B4524ZT7.js?v=d1048f01:18159
+flushPassiveEffectsImpl @ chunk-B4524ZT7.js?v=d1048f01:19543
+flushPassiveEffects @ chunk-B4524ZT7.js?v=d1048f01:19500
+performSyncWorkOnRoot @ chunk-B4524ZT7.js?v=d1048f01:18921
+flushSyncCallbacks @ chunk-B4524ZT7.js?v=d1048f01:9166
+commitRootImpl @ chunk-B4524ZT7.js?v=d1048f01:19485
+commitRoot @ chunk-B4524ZT7.js?v=d1048f01:19330
+finishConcurrentRender @ chunk-B4524ZT7.js?v=d1048f01:18858
+performConcurrentWorkOnRoot @ chunk-B4524ZT7.js?v=d1048f01:18768
+workLoop @ chunk-B4524ZT7.js?v=d1048f01:197
+flushWork @ chunk-B4524ZT7.js?v=d1048f01:176
+performWorkUntilDeadline @ chunk-B4524ZT7.js?v=d1048f01:384
+home.tsx:583 WebSocket connected for real-time home page updates
+desktop-dashboard.tsx:217 🔄 Attempting WebSocket reconnection...
+desktop-dashboard.tsx:189 🔌 Connecting to WebSocket: wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev
+desktop-dashboard.tsx:217 🔄 Attempting WebSocket reconnection...
+desktop-dashboard.tsx:189 🔌 Connecting to WebSocket: wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev
+home.tsx:583 WebSocket connected for real-time home page updates
+assets.tsx:232 💰 Assets Real-time BTC Price from CoinGecko: {btcTicker: {…}, price: 108687, priceData: {…}}
+desktop-dashboard.tsx:191 WebSocket connection to 'wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev/' failed: 
+connectWebSocket @ desktop-dashboard.tsx:191
+(anonymous) @ desktop-dashboard.tsx:218
+desktop-dashboard.tsx:224 ❌ WebSocket error: Event {isTrusted: true, type: 'error', target: WebSocket, currentTarget: WebSocket, eventPhase: 2, …}
+ws.onerror @ desktop-dashboard.tsx:224
+desktop-dashboard.tsx:211 🔌 WebSocket disconnected, code: 1006 reason: 
+desktop-dashboard.tsx:191 WebSocket connection to 'wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev/' failed: 
+connectWebSocket @ desktop-dashboard.tsx:191
+(anonymous) @ desktop-dashboard.tsx:218
+desktop-dashboard.tsx:224 ❌ WebSocket error: Event {isTrusted: true, type: 'error', target: WebSocket, currentTarget: WebSocket, eventPhase: 2, …}
+ws.onerror @ desktop-dashboard.tsx:224
+desktop-dashboard.tsx:211 🔌 WebSocket disconnected, code: 1006 reason: 
+assets.tsx:232 💰 Assets Real-time BTC Price from CoinGecko: {btcTicker: {…}, price: 108687, priceData: {…}}
+desktop-dashboard.tsx:217 🔄 Attempting WebSocket reconnection...
+desktop-dashboard.tsx:189 🔌 Connecting to WebSocket: wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev
+desktop-dashboard.tsx:217 🔄 Attempting WebSocket reconnection...
+desktop-dashboard.tsx:189 🔌 Connecting to WebSocket: wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev
+desktop-dashboard.tsx:191 WebSocket connection to 'wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev/' failed: 
+connectWebSocket @ desktop-dashboard.tsx:191
+(anonymous) @ desktop-dashboard.tsx:218
+desktop-dashboard.tsx:224 ❌ WebSocket error: Event {isTrusted: true, type: 'error', target: WebSocket, currentTarget: WebSocket, eventPhase: 2, …}
+ws.onerror @ desktop-dashboard.tsx:224
+desktop-dashboard.tsx:211 🔌 WebSocket disconnected, code: 1006 reason: 
+desktop-dashboard.tsx:191 WebSocket connection to 'wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev/' failed: 
+connectWebSocket @ desktop-dashboard.tsx:191
+(anonymous) @ desktop-dashboard.tsx:218
+desktop-dashboard.tsx:224 ❌ WebSocket error: Event {isTrusted: true, type: 'error', target: WebSocket, currentTarget: WebSocket, eventPhase: 2, …}
+ws.onerror @ desktop-dashboard.tsx:224
+desktop-dashboard.tsx:211 🔌 WebSocket disconnected, code: 1006 reason: 
+desktop-dashboard.tsx:217 🔄 Attempting WebSocket reconnection...
+desktop-dashboard.tsx:189 🔌 Connecting to WebSocket: wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev
+desktop-dashboard.tsx:191 WebSocket connection to 'wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev/' failed: 
+connectWebSocket @ desktop-dashboard.tsx:191
+(anonymous) @ desktop-dashboard.tsx:218
+desktop-dashboard.tsx:224 ❌ WebSocket error: Event {isTrusted: true, type: 'error', target: WebSocket, currentTarget: WebSocket, eventPhase: 2, …}
+ws.onerror @ desktop-dashboard.tsx:224
+desktop-dashboard.tsx:211 🔌 WebSocket disconnected, code: 1006 reason: 
+desktop-dashboard.tsx:217 🔄 Attempting WebSocket reconnection...
+desktop-dashboard.tsx:189 🔌 Connecting to WebSocket: wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev
+desktop-dashboard.tsx:191 WebSocket connection to 'wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev/' failed: 
+connectWebSocket @ desktop-dashboard.tsx:191
+(anonymous) @ desktop-dashboard.tsx:218
+desktop-dashboard.tsx:224 ❌ WebSocket error: Event {isTrusted: true, type: 'error', target: WebSocket, currentTarget: WebSocket, eventPhase: 2, …}
+ws.onerror @ desktop-dashboard.tsx:224
+desktop-dashboard.tsx:211 🔌 WebSocket disconnected, code: 1006 reason: 
+desktop-dashboard.tsx:217 🔄 Attempting WebSocket reconnection...
+desktop-dashboard.tsx:189 🔌 Connecting to WebSocket: wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev
+desktop-dashboard.tsx:191 WebSocket connection to 'wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev/' failed: 
+connectWebSocket @ desktop-dashboard.tsx:191
+(anonymous) @ desktop-dashboard.tsx:218
+desktop-dashboard.tsx:224 ❌ WebSocket error: Event {isTrusted: true, type: 'error', target: WebSocket, currentTarget: WebSocket, eventPhase: 2, …}
+ws.onerror @ desktop-dashboard.tsx:224
+desktop-dashboard.tsx:211 🔌 WebSocket disconnected, code: 1006 reason: 
+desktop-dashboard.tsx:217 🔄 Attempting WebSocket reconnection...
+desktop-dashboard.tsx:189 🔌 Connecting to WebSocket: wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev
+desktop-dashboard.tsx:191 WebSocket connection to 'wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev/' failed: 
+connectWebSocket @ desktop-dashboard.tsx:191
+(anonymous) @ desktop-dashboard.tsx:218
+desktop-dashboard.tsx:224 ❌ WebSocket error: Event {isTrusted: true, type: 'error', target: WebSocket, currentTarget: WebSocket, eventPhase: 2, …}
+ws.onerror @ desktop-dashboard.tsx:224
+desktop-dashboard.tsx:211 🔌 WebSocket disconnected, code: 1006 reason: 
+assets.tsx:232 💰 Assets Real-time BTC Price from CoinGecko: {btcTicker: {…}, price: 108687, priceData: {…}}
+desktop-dashboard.tsx:217 🔄 Attempting WebSocket reconnection...
+desktop-dashboard.tsx:189 🔌 Connecting to WebSocket: wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev
+desktop-dashboard.tsx:191 WebSocket connection to 'wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev/' failed: 
+connectWebSocket @ desktop-dashboard.tsx:191
+(anonymous) @ desktop-dashboard.tsx:218
+desktop-dashboard.tsx:224 ❌ WebSocket error: Event {isTrusted: true, type: 'error', target: WebSocket, currentTarget: WebSocket, eventPhase: 2, …}
+ws.onerror @ desktop-dashboard.tsx:224
+desktop-dashboard.tsx:211 🔌 WebSocket disconnected, code: 1006 reason: 
+desktop-dashboard.tsx:217 🔄 Attempting WebSocket reconnection...
+desktop-dashboard.tsx:189 🔌 Connecting to WebSocket: wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev
+desktop-dashboard.tsx:191 WebSocket connection to 'wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev/' failed: 
+connectWebSocket @ desktop-dashboard.tsx:191
+(anonymous) @ desktop-dashboard.tsx:218
+desktop-dashboard.tsx:224 ❌ WebSocket error: Event {isTrusted: true, type: 'error', target: WebSocket, currentTarget: WebSocket, eventPhase: 2, …}
+ws.onerror @ desktop-dashboard.tsx:224
+desktop-dashboard.tsx:211 🔌 WebSocket disconnected, code: 1006 reason: 
+desktop-dashboard.tsx:217 🔄 Attempting WebSocket reconnection...
+desktop-dashboard.tsx:189 🔌 Connecting to WebSocket: wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev
+desktop-dashboard.tsx:191 WebSocket connection to 'wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev/' failed: 
+connectWebSocket @ desktop-dashboard.tsx:191
+(anonymous) @ desktop-dashboard.tsx:218
+desktop-dashboard.tsx:224 ❌ WebSocket error: Event {isTrusted: true, type: 'error', target: WebSocket, currentTarget: WebSocket, eventPhase: 2, …}
+ws.onerror @ desktop-dashboard.tsx:224
+desktop-dashboard.tsx:211 🔌 WebSocket disconnected, code: 1006 reason: 
+assets.tsx:232 💰 Assets Real-time BTC Price from CoinGecko: {btcTicker: {…}, price: 108687, priceData: {…}}
+desktop-dashboard.tsx:217 🔄 Attempting WebSocket reconnection...
+desktop-dashboard.tsx:189 🔌 Connecting to WebSocket: wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev
+desktop-dashboard.tsx:217 🔄 Attempting WebSocket reconnection...
+desktop-dashboard.tsx:189 🔌 Connecting to WebSocket: wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev
+desktop-dashboard.tsx:191 WebSocket connection to 'wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev/' failed: 
+connectWebSocket @ desktop-dashboard.tsx:191
+(anonymous) @ desktop-dashboard.tsx:218
+desktop-dashboard.tsx:224 ❌ WebSocket error: Event {isTrusted: true, type: 'error', target: WebSocket, currentTarget: WebSocket, eventPhase: 2, …}
+ws.onerror @ desktop-dashboard.tsx:224
+desktop-dashboard.tsx:211 🔌 WebSocket disconnected, code: 1006 reason: 
+desktop-dashboard.tsx:191 WebSocket connection to 'wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev/' failed: 
+connectWebSocket @ desktop-dashboard.tsx:191
+(anonymous) @ desktop-dashboard.tsx:218
+desktop-dashboard.tsx:224 ❌ WebSocket error: Event {isTrusted: true, type: 'error', target: WebSocket, currentTarget: WebSocket, eventPhase: 2, …}
+ws.onerror @ desktop-dashboard.tsx:224
+desktop-dashboard.tsx:211 🔌 WebSocket disconnected, code: 1006 reason: 
+desktop-dashboard.tsx:217 🔄 Attempting WebSocket reconnection...
+desktop-dashboard.tsx:189 🔌 Connecting to WebSocket: wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev
+desktop-dashboard.tsx:217 🔄 Attempting WebSocket reconnection...
+desktop-dashboard.tsx:189 🔌 Connecting to WebSocket: wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev
+desktop-dashboard.tsx:191 WebSocket connection to 'wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev/' failed: 
+connectWebSocket @ desktop-dashboard.tsx:191
+(anonymous) @ desktop-dashboard.tsx:218
+desktop-dashboard.tsx:224 ❌ WebSocket error: Event {isTrusted: true, type: 'error', target: WebSocket, currentTarget: WebSocket, eventPhase: 2, …}
+ws.onerror @ desktop-dashboard.tsx:224
+desktop-dashboard.tsx:211 🔌 WebSocket disconnected, code: 1006 reason: 
+desktop-dashboard.tsx:191 WebSocket connection to 'wss://9ecaaca4-8099-4064-8d5e-21a0258ca1e5-00-5jeh0f23gd12.janeway.replit.dev/' failed: 
+connectWebSocket @ desktop-dashboard.tsx:191
+(anonymous) @ desktop-dashboard.tsx:218
+desktop-dashboard.tsx:224 ❌ WebSocket error: Event {isTrusted: true, type: 'error', target: WebSocket, currentTarget: WebSocket, eventPhase: 2, …}
+ws.onerror @ desktop-dashboard.tsx:224
+desktop-dashboard.tsx:211 🔌 WebSocket disconnected, code: 1006 reason: 

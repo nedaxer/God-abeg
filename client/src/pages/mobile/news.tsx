@@ -1,4 +1,3 @@
-import MobileLayout from '@/components/mobile-layout';
 // @ts-nocheck
 // TypeScript error suppression for development productivity - 1 news page type conflict
 import { useState, useEffect, useRef } from 'react';
@@ -8,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/language-context';
 import { useTheme } from '@/contexts/theme-context';
 import { PullToRefresh } from '@/components/pull-to-refresh';
+import AdaptiveLayout from '@/components/adaptive-layout';
 
 interface NewsArticle {
   title: string;
@@ -141,7 +141,7 @@ export default function MobileNews() {
       'CoinDesk': '/logos/coindesk.png',
       'CryptoSlate': '/logos/cryptoslate.jpg',
       'CryptoBriefing': '/logos/cryptobriefing.png',
-      'BeInCrypto': '/logos/beincrypto.jpg',
+      'BeInCrypto': '/api/assets/download_1751940923486.jpeg',
       'Google News - Crypto': '/logos/google-news.jpg',
       'Google News - Bitcoin': '/logos/google-news.jpg',
       'CoinTelegraph': 'https://cointelegraph.com/favicon.ico',
@@ -157,7 +157,7 @@ export default function MobileNews() {
   };
 
   return (
-    <MobileLayout>
+    <AdaptiveLayout title="Nedaxer - News">
       <PullToRefresh onRefresh={handleRefresh}>
       <div className="bg-[#0a0a2e] px-4 py-4 border-b border-[#1a1a40]">
         <div className="flex items-center justify-between">
@@ -274,7 +274,12 @@ export default function MobileNews() {
                       <img 
                         src={getSourceLogo(article.source?.name || 'Crypto News')}
                         alt={article.source?.name || 'News'}
-                        className="w-full h-full object-contain p-2 bg-blue-900 rounded-lg"
+                        className="w-full h-full object-cover p-1 bg-gray-800 rounded-lg"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = '/logos/google-news.jpg';
+                          target.className = "w-full h-full object-cover p-1 bg-gray-800 rounded-lg";
+                        }}
                       />
                     )}
                   </div>
@@ -302,6 +307,6 @@ export default function MobileNews() {
         </div>
       )}
       </PullToRefresh>
-    </MobileLayout>
+    </AdaptiveLayout>
   );
 }

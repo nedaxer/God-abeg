@@ -8,6 +8,8 @@ import { useQuery } from '@tanstack/react-query';
 import { apiRequest } from '@/lib/queryClient';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import AdaptiveLayout from '@/components/adaptive-layout';
+import DesktopWithdrawalDetails from '@/components/desktop-pages/desktop-withdrawal-details';
 
 // Crypto logos
 const btcLogo = '/logos/btc-logo.svg';
@@ -40,7 +42,8 @@ const generateLongTransactionId = (shortId: string): string => {
   return `${prefix}${shortId.slice(-8).toUpperCase()}${suffix}`;
 };
 
-export default function WithdrawalDetails() {
+function MobileWithdrawalDetails() {
+  // All hooks must be called at the top level, before any conditional returns
   const { transactionId } = useParams();
   const [copied, setCopied] = useState(false);
   const { toast } = useToast();
@@ -65,6 +68,11 @@ export default function WithdrawalDetails() {
     });
   };
 
+  // Generate computed values after all hooks are called
+  const longTransactionId = transaction ? generateLongTransactionId(transaction._id) : '';
+  const cryptoLogo = transaction ? getCryptoLogo(transaction.cryptoSymbol) : null;
+
+  // Now safe to have conditional returns after all hooks
   if (isLoading) {
     return (
       <div className="min-h-screen bg-[#0a0a2e] text-white">
@@ -110,9 +118,6 @@ export default function WithdrawalDetails() {
       </div>
     );
   }
-
-  const longTransactionId = generateLongTransactionId(transaction._id);
-  const cryptoLogo = getCryptoLogo(transaction.cryptoSymbol);
 
   return (
     <div className="min-h-screen bg-[#0a0a2e] text-white">
@@ -260,3 +265,16 @@ export default function WithdrawalDetails() {
     </div>
   );
 }
+
+// Adaptive wrapper component
+export default function WithdrawalDetails() {
+  return (
+    <AdaptiveLayout
+      title="Nedaxer - Withdrawal Details"
+      mobileComponent={<MobileWithdrawalDetails />}
+      desktopComponent={<DesktopWithdrawalDetails />}
+      hideBottomNav={true}
+    />
+  );
+}
+

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import MobileLayout from '@/components/mobile-layout';
+import AdaptiveLayout from '@/components/adaptive-layout';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { 
@@ -216,7 +216,7 @@ export default function MobileProfile() {
   ];
 
   return (
-    <MobileLayout>
+    <AdaptiveLayout title="Nedaxer - Profile">
       <div className="flex flex-col h-full">
         {/* Header */}
         <div className="flex items-center justify-between p-3 bg-[#0a0a2e]">
@@ -323,18 +323,14 @@ export default function MobileProfile() {
 
       {/* Account Actions - Fixed at bottom */}
       <div className="px-4 py-3 space-y-2 mt-auto">
-        <Button 
-          variant="outline" 
-          className="w-full bg-gray-800 border-gray-600 text-white hover:bg-gray-700 text-xs py-1.5"
-        >
-          Switch/Create Account
-        </Button>
 
         <Button 
           variant="destructive" 
           className="w-full bg-red-900 hover:bg-red-800 text-white text-xs py-1.5"
           onClick={async () => {
             try {
+              console.log('🔴 Profile logout button clicked');
+              
               // Auto-backup user data before logout
               if (user?.id) {
                 await fetch('/api/user/backup', {
@@ -343,19 +339,29 @@ export default function MobileProfile() {
                 }).catch(err => console.log('Backup failed:', err));
               }
               
-              // Clear all caches before logout
-              queryClient.clear();
-              
-              // Perform logout
+              // Perform logout (auth hook will handle all cleanup and redirect)
               await logoutMutation.mutateAsync();
               
-              // Force redirect to login page after successful logout
-              window.location.href = '/account/login';
-              
             } catch (error) {
-              console.error('Error during logout:', error);
-              // Force logout and redirect even if there's an error
-              queryClient.clear();
+              console.error('🔴 Profile logout error:', error);
+              
+              // Force manual cleanup if mutation fails
+              localStorage.clear();
+              sessionStorage.clear();
+              
+              // Clear cookies manually with all variations
+              const cookies = document.cookie.split(";");
+              cookies.forEach((cookie) => {
+                const eqPos = cookie.indexOf("=");
+                const name = eqPos > -1 ? cookie.substr(0, eqPos).trim() : cookie.trim();
+                document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
+                document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;domain=${window.location.hostname}`;
+                document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;domain=.${window.location.hostname}`;
+                document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;secure`;
+                document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;secure;samesite=strict`;
+              });
+              
+              // Force redirect even on complete failure
               window.location.href = '/account/login';
             }
           }}
@@ -372,6 +378,6 @@ export default function MobileProfile() {
           </div>
         </div>
       </div>
-    </MobileLayout>
+    </AdaptiveLayout>
   );
 }

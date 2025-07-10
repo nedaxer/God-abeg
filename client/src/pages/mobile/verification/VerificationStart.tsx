@@ -4,7 +4,7 @@ import { ArrowLeft, X } from 'lucide-react';
 import { useAuth } from '@/hooks/use-auth';
 import { useLocation } from 'wouter';
 import MobileLayout from '@/components/mobile-layout';
-import professionalImage from '@assets/Picsart_25-06-28_15-49-20-738 (1)_1751125238732.png';
+import verificationImage from '@assets/verification-image-optimized.webp';
 
 interface VerificationStartProps {
   onNext: () => void;
@@ -45,12 +45,14 @@ export const VerificationStart: React.FC<VerificationStartProps> = ({ onNext, on
       <div className="flex-1 flex flex-col px-6">
         {/* Main content area - centered */}
         <div className="flex-1 flex flex-col items-center justify-center">
-          {/* Professional Illustration - Bigger */}
+          {/* Professional Illustration - Optimized Image */}
           <div className="mb-6">
             <img 
-              src={professionalImage} 
-              alt="Professional verification" 
-              className="w-80 h-64 object-contain"
+              src={verificationImage} 
+              alt="Professional Verification" 
+              className="w-80 h-64 object-contain rounded-lg"
+              loading="eager"
+              style={{ imageRendering: 'crisp-edges' }}
             />
           </div>
 

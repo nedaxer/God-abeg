@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { AdminPullToRefresh } from "@/components/admin-pull-to-refresh";
+import { ProfessionalAdminPullRefresh } from "@/components/professional-admin-pull-refresh";
 import AdminDepositCreator from "@/components/admin-deposit-creator";
 import AdminWithdrawalCreator from "@/components/admin-withdrawal-creator";
 import ContactMessagesManager from "@/components/contact-messages-manager";
@@ -98,6 +98,11 @@ export default function UnifiedAdminPortal() {
   const [newPasswordForReset, setNewPasswordForReset] = useState("");
   const [activeTab, setActiveTab] = useState("overview");
   const [adminCredentials, setAdminCredentials] = useState({ email: "", password: "" });
+  
+  // Admin notification banner state
+  const [showNotificationBanner, setShowNotificationBanner] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState("");
+  const [notificationTimer, setNotificationTimer] = useState<NodeJS.Timeout | null>(null);
   const [showUsersList, setShowUsersList] = useState(true);
   const [showKycPanel, setShowKycPanel] = useState(true);
   const [copiedId, setCopiedId] = useState("");
@@ -112,6 +117,33 @@ export default function UnifiedAdminPortal() {
   const [currentDocumentIndex, setCurrentDocumentIndex] = useState(0);
   const { toast } = useToast();
   const queryClient = useQueryClient();
+
+  // Helper function to show notification banner
+  const displayNotificationBanner = (message: string) => {
+    setNotificationMessage(message);
+    setShowNotificationBanner(true);
+    
+    // Clear existing timer
+    if (notificationTimer) {
+      clearTimeout(notificationTimer);
+    }
+    
+    // Auto-hide banner after 3 seconds
+    const timer = setTimeout(() => {
+      setShowNotificationBanner(false);
+    }, 3000);
+    
+    setNotificationTimer(timer);
+  };
+
+  // Clean up timer on component unmount
+  useEffect(() => {
+    return () => {
+      if (notificationTimer) {
+        clearTimeout(notificationTimer);
+      }
+    };
+  }, [notificationTimer]);
 
   // WebSocket connection for real-time admin updates
   useEffect(() => {
@@ -146,11 +178,36 @@ export default function UnifiedAdminPortal() {
                 queryClient.invalidateQueries({ queryKey: ['/api/admin/users/search'] });
                 break;
               case 'admin_action_success':
+                // Show notification banner for immediate feedback
+                displayNotificationBanner(data.message || "Admin action successful");
+                
+                // Also show toast for persistent feedback
                 toast({
                   title: "Action Completed",
-                  description: data.message || "Admin action successful",
+                  description: data.message || "Admin action successful", 
                   variant: "default",
                 });
+                
+                // Refresh data based on action type
+                if (data.action === 'kyc_approval' || data.action === 'withdrawal_access_toggle' || data.action === 'transfer_access_toggle') {
+                  queryClient.invalidateQueries({ queryKey: ['/api/admin/users/all'] });
+                  queryClient.invalidateQueries({ queryKey: ['/api/admin/users/search'] });
+                  queryClient.invalidateQueries({ queryKey: ['/api/admin/pending-kyc'] });
+                }
+                break;
+                
+              case 'kyc_status_changed':
+                // Real-time KYC status updates
+                displayNotificationBanner(`KYC ${data.status} for ${data.username}`);
+                queryClient.invalidateQueries({ queryKey: ['/api/admin/pending-kyc'] });
+                queryClient.invalidateQueries({ queryKey: ['/api/admin/users/all'] });
+                break;
+                
+              case 'WITHDRAWAL_ACCESS_UPDATE':
+              case 'TRANSFER_ACCESS_UPDATE':
+                // Real-time access updates
+                queryClient.invalidateQueries({ queryKey: ['/api/admin/users/all'] });
+                queryClient.invalidateQueries({ queryKey: ['/api/admin/users/search'] });
                 break;
             }
           } catch (error) {
@@ -289,7 +346,7 @@ export default function UnifiedAdminPortal() {
     },
   });
 
-  // Get all users for admin overview with auto-refresh
+  // Get all users for admin overview with optimized caching
   const { data: allUsers = [], refetch: refetchUsers } = useQuery({
     queryKey: ["/api/admin/users/all"],
     queryFn: async () => {
@@ -301,7 +358,9 @@ export default function UnifiedAdminPortal() {
       return data.data || [];
     },
     enabled: isAuthenticated,
-    refetchInterval: 5000,
+    staleTime: 30000, // Data considered fresh for 30 seconds
+    cacheTime: 300000, // Keep in cache for 5 minutes
+    refetchInterval: 10000, // Reduced frequency for better performance
   });
 
   // Get user analytics
@@ -357,7 +416,7 @@ export default function UnifiedAdminPortal() {
     refetchInterval: 2000,
   });
 
-  // Get pending KYC verifications
+  // Get pending KYC verifications with optimized caching
   const { data: pendingKyc = [], refetch: refetchKyc } = useQuery({
     queryKey: ["/api/admin/pending-kyc"],
     queryFn: async () => {
@@ -369,16 +428,33 @@ export default function UnifiedAdminPortal() {
       return data.data || [];
     },
     enabled: isAuthenticated,
-    refetchInterval: 5000,
+    staleTime: 20000, // Data considered fresh for 20 seconds
+    cacheTime: 180000, // Keep in cache for 3 minutes
+    refetchInterval: 15000, // Reduced frequency for better performance
   });
 
   // Add funds mutation
   const addFundsMutation = useMutation({
     mutationFn: async ({ userId, amount }: { userId: string; amount: number }) => {
-      const response = await apiRequest("POST", "/api/admin/users/add-funds", { userId, amount });
-      return response.json();
+      console.log('🏦 Admin adding funds:', { userId, amount });
+      const response = await apiRequest("/api/admin/users/add-funds", { 
+        method: "POST", 
+        data: { userId, amount } 
+      });
+      const result = await response.json();
+      console.log('✅ Add funds response:', result);
+      return result;
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      // Update selected user balance immediately
+      if (selectedUser && data.data) {
+        setSelectedUser({
+          ...selectedUser,
+          balance: data.data.newBalance
+        } as any);
+      }
+      
+      displayNotificationBanner("Funds added successfully!");
       toast({
         title: "Funds Added",
         description: "User balance updated successfully",
@@ -402,10 +478,25 @@ export default function UnifiedAdminPortal() {
   // Remove funds mutation
   const removeFundsMutation = useMutation({
     mutationFn: async ({ userId, amount }: { userId: string; amount: number }) => {
-      const response = await apiRequest("POST", "/api/admin/users/remove-funds", { userId, amount });
-      return response.json();
+      console.log('🏦 Admin removing funds:', { userId, amount });
+      const response = await apiRequest("/api/admin/users/remove-funds", { 
+        method: "POST", 
+        data: { userId, amount } 
+      });
+      const result = await response.json();
+      console.log('✅ Remove funds response:', result);
+      return result;
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      // Update selected user balance immediately
+      if (selectedUser && data.data) {
+        setSelectedUser({
+          ...selectedUser,
+          balance: data.data.newBalance
+        } as any);
+      }
+      
+      displayNotificationBanner("Funds removed successfully!");
       toast({
         title: "Funds Removed",
         description: "User balance updated successfully",
@@ -429,8 +520,14 @@ export default function UnifiedAdminPortal() {
   // Toggle deposit requirement mutation
   const toggleDepositRequirementMutation = useMutation({
     mutationFn: async ({ userId, requiresDeposit }: { userId: string; requiresDeposit: boolean }) => {
-      const response = await apiRequest("POST", "/api/admin/users/toggle-deposit-requirement", { userId, requiresDeposit });
-      return response.json();
+      console.log('🏦 Admin toggling deposit requirement:', { userId, requiresDeposit });
+      const response = await apiRequest("/api/admin/users/toggle-deposit-requirement", { 
+        method: "POST", 
+        data: { userId, requiresDeposit } 
+      });
+      const result = await response.json();
+      console.log('✅ Toggle deposit requirement response:', result);
+      return result;
     },
     onSuccess: (data) => {
       // Update the selected user state immediately
@@ -441,6 +538,8 @@ export default function UnifiedAdminPortal() {
         } as any);
       }
       
+      const actionText = data.data.requiresDeposit ? 'enabled' : 'disabled';
+      displayNotificationBanner(`Deposit requirement ${actionText} successfully!`);
       toast({
         title: "Deposit Requirement Updated",
         description: data.message,
@@ -463,8 +562,14 @@ export default function UnifiedAdminPortal() {
   // Toggle all features disabled mutation
   const toggleAllFeaturesDisabledMutation = useMutation({
     mutationFn: async ({ userId, allFeaturesDisabled }: { userId: string; allFeaturesDisabled: boolean }) => {
-      const response = await apiRequest("POST", "/api/admin/users/toggle-all-features", { userId, allFeaturesDisabled });
-      return response.json();
+      console.log('🏦 Admin toggling all features:', { userId, allFeaturesDisabled });
+      const response = await apiRequest("/api/admin/users/toggle-all-features", { 
+        method: "POST", 
+        data: { userId, allFeaturesDisabled } 
+      });
+      const result = await response.json();
+      console.log('✅ Toggle all features response:', result);
+      return result;
     },
     onSuccess: (data) => {
       // Update the selected user state immediately
@@ -474,6 +579,9 @@ export default function UnifiedAdminPortal() {
           allFeaturesDisabled: data.data.allFeaturesDisabled
         } as any);
       }
+      
+      const actionText = data.data.allFeaturesDisabled ? 'disabled' : 'enabled';
+      displayNotificationBanner(`All features ${actionText} successfully!`);
       
       toast({
         title: "Feature Access Updated",
@@ -497,11 +605,17 @@ export default function UnifiedAdminPortal() {
   // Toggle withdrawal access mutation
   const toggleWithdrawalAccessMutation = useMutation({
     mutationFn: async ({ userId, withdrawalAccess }: { userId: string; withdrawalAccess: boolean }) => {
-      const response = await apiRequest("POST", "/api/admin/users/toggle-withdrawal-access", { userId, withdrawalAccess });
-      return response.json();
+      console.log('🏦 Admin toggling withdrawal access:', { userId, withdrawalAccess });
+      const response = await apiRequest("/api/admin/users/toggle-withdrawal-access", { 
+        method: "POST", 
+        data: { userId, withdrawalAccess } 
+      });
+      const result = await response.json();
+      console.log('✅ Toggle withdrawal access response:', result);
+      return result;
     },
     onSuccess: (data) => {
-      // Update the selected user state immediately
+      // Update the selected user state immediately for real-time UI updates
       if (selectedUser) {
         setSelectedUser({
           ...selectedUser,
@@ -509,11 +623,16 @@ export default function UnifiedAdminPortal() {
         } as any);
       }
       
+      const actionText = data.data.withdrawalAccess ? 'enabled' : 'disabled';
+      displayNotificationBanner(`Withdrawal access ${actionText} successfully!`);
+      
       toast({
         title: "Withdrawal Access Updated",
-        description: data.message,
+        description: `User withdrawal access has been ${actionText}`,
         variant: "default",
       });
+      
+      // Immediate cache invalidation for real-time updates
       queryClient.invalidateQueries({ queryKey: ["/api/admin/users/search"] });
       queryClient.invalidateQueries({ queryKey: ["/api/admin/users/all"] });
       refetchGeneralSearch();
@@ -528,13 +647,19 @@ export default function UnifiedAdminPortal() {
     },
   });
 
-  // Delete user mutation
-  const deleteUserMutation = useMutation({
+  // Use the correct DELETE endpoint for user deletion
+  const fixedDeleteUserMutation = useMutation({
     mutationFn: async (userId: string) => {
-      const response = await apiRequest("DELETE", `/api/admin/users/${userId}`);
+      console.log('🗑️ Admin deleting user:', userId);
+      const response = await fetch(`/api/admin/users/${userId}`, {
+        method: "DELETE",
+        credentials: 'include'
+      });
+      if (!response.ok) throw new Error('Failed to delete user');
       return response.json();
     },
     onSuccess: () => {
+      displayNotificationBanner("User deleted successfully!");
       toast({
         title: "Account Deleted",
         description: "User account permanently deleted from MongoDB",
@@ -558,17 +683,30 @@ export default function UnifiedAdminPortal() {
   // KYC Approval mutation
   const approveKycMutation = useMutation({
     mutationFn: async ({ userId, status, reason }: { userId: string; status: 'verified' | 'rejected'; reason?: string }) => {
-      const response = await apiRequest("POST", "/api/admin/approve-kyc", { userId, status, reason });
-      return response.json();
+      console.log('🔍 Processing KYC:', { userId, status, reason });
+      const response = await apiRequest("/api/admin/approve-kyc", { 
+        method: "POST", 
+        data: { userId, status, reason } 
+      });
+      const result = await response.json();
+      console.log('✅ KYC response:', result);
+      return result;
     },
     onSuccess: (data, variables) => {
+      const actionText = variables.status === 'verified' ? 'approved' : 'rejected';
+      displayNotificationBanner(`KYC ${actionText} successfully!`);
+      
       toast({
         title: variables.status === 'verified' ? "KYC Approved" : "KYC Rejected",
         description: `User verification ${variables.status} successfully`,
         variant: "default",
       });
       queryClient.invalidateQueries({ queryKey: ["/api/admin/pending-kyc"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/users/all"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/users/search"] });
       refetchKyc();
+      refetchUsers();
+      refetchGeneralSearch();
     },
     onError: (error: any) => {
       toast({
@@ -582,11 +720,17 @@ export default function UnifiedAdminPortal() {
   // Toggle transfer access mutation
   const toggleTransferAccessMutation = useMutation({
     mutationFn: async ({ userId, transferAccess }: { userId: string; transferAccess: boolean }) => {
-      const response = await apiRequest("POST", "/api/admin/users/toggle-transfer-access", { userId, transferAccess });
-      return response.json();
+      console.log('🔄 Admin toggling transfer access:', { userId, transferAccess });
+      const response = await apiRequest("/api/admin/users/toggle-transfer-access", { 
+        method: "POST", 
+        data: { userId, transferAccess } 
+      });
+      const result = await response.json();
+      console.log('✅ Toggle transfer access response:', result);
+      return result;
     },
     onSuccess: (data) => {
-      // Update the selected user state immediately
+      // Update the selected user state immediately for real-time UI updates
       if (selectedUser) {
         setSelectedUser({
           ...selectedUser,
@@ -594,11 +738,16 @@ export default function UnifiedAdminPortal() {
         } as any);
       }
       
+      const actionText = data.data.transferAccess ? 'enabled' : 'disabled';
+      displayNotificationBanner(`Transfer access ${actionText} successfully!`);
+      
       toast({
-        title: "Transfer Access Updated",
-        description: data.message,
+        title: "Transfer Access Updated", 
+        description: `User transfer access has been ${actionText}`,
         variant: "default",
       });
+      
+      // Immediate cache invalidation for real-time updates
       queryClient.invalidateQueries({ queryKey: ["/api/admin/users/search"] });
       queryClient.invalidateQueries({ queryKey: ["/api/admin/users/all"] });
       refetchGeneralSearch();
@@ -686,8 +835,14 @@ export default function UnifiedAdminPortal() {
   // Update withdrawal message mutation
   const updateWithdrawalMessageMutation = useMutation({
     mutationFn: async ({ userId, message }: { userId: string; message: string }) => {
-      const response = await apiRequest("POST", "/api/admin/users/update-withdrawal-message", { userId, message });
-      return response.json();
+      console.log('🔧 Updating withdrawal message:', { userId, message });
+      const response = await apiRequest("/api/admin/users/update-withdrawal-message", { 
+        method: "POST", 
+        data: { userId, message } 
+      });
+      const result = await response.json();
+      console.log('✅ Withdrawal message update response:', result);
+      return result;
     },
     onSuccess: (data) => {
       // Update the selected user state immediately
@@ -697,6 +852,9 @@ export default function UnifiedAdminPortal() {
           withdrawalRestrictionMessage: data.data.withdrawalRestrictionMessage
         } as any);
       }
+      
+      // Show success banner for immediate feedback
+      displayNotificationBanner("Withdrawal message updated successfully!");
       
       toast({
         title: "Withdrawal Message Updated",
@@ -720,10 +878,17 @@ export default function UnifiedAdminPortal() {
   // Send message to user mutation
   const sendMessageMutation = useMutation({
     mutationFn: async ({ userId, message }: { userId: string; message: string }) => {
-      const response = await apiRequest("POST", "/api/admin/send-message", { userId, message });
-      return response.json();
+      console.log('📧 Admin sending support message:', { userId, message });
+      const response = await apiRequest("/api/admin/send-message", { 
+        method: "POST", 
+        data: { userId, message } 
+      });
+      const result = await response.json();
+      console.log('✅ Send message response:', result);
+      return result;
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      displayNotificationBanner("Support message sent successfully!");
       toast({
         title: "Message Sent",
         description: "Message sent to user successfully",
@@ -750,15 +915,22 @@ export default function UnifiedAdminPortal() {
       customMessage: string; 
       successMessage: string; 
     }) => {
-      const response = await apiRequest("POST", "/api/admin/connection-request/send", { 
-        userId, 
-        serviceName, 
-        customMessage, 
-        successMessage 
+      console.log('🔗 Admin sending connection request:', { userId, serviceName, customMessage, successMessage });
+      const response = await apiRequest("/api/admin/connection-request/send", { 
+        method: "POST", 
+        data: { 
+          userId, 
+          serviceName, 
+          customMessage, 
+          successMessage 
+        }
       });
-      return response.json();
+      const result = await response.json();
+      console.log('✅ Connection request response:', result);
+      return result;
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      displayNotificationBanner("Connection request sent successfully!");
       toast({
         title: "Connection Request Sent",
         description: "Connection request sent to user successfully",
@@ -769,6 +941,9 @@ export default function UnifiedAdminPortal() {
         customMessage: '',
         successMessage: ''
       });
+      // Refresh admin data
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/users/all"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/users/search"] });
     },
     onError: (error: any) => {
       toast({
@@ -879,7 +1054,7 @@ export default function UnifiedAdminPortal() {
     }
 
     if (confirm(`Are you sure you want to permanently delete ${user.username}? This action cannot be undone.`)) {
-      deleteUserMutation.mutate(user._id);
+      fixedDeleteUserMutation.mutate(user._id);
     }
   };
 
@@ -921,26 +1096,38 @@ export default function UnifiedAdminPortal() {
     });
   };
 
-  // Optimized admin dashboard refresh function
+  // Comprehensive admin dashboard refresh function
   const handleAdminRefresh = async () => {
     try {
-      // Only refresh essential data for faster performance
+      console.log('🔄 Starting comprehensive admin refresh...');
+      
+      // Refresh all critical admin data for fast loading
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: ["/api/admin/users/all"] }),
         queryClient.invalidateQueries({ queryKey: ["/api/admin/users/analytics"] }),
+        queryClient.invalidateQueries({ queryKey: ["/api/admin/pending-kyc"] }),
+        queryClient.invalidateQueries({ queryKey: ["/api/admin/users/search"] }),
         refetchUsers(),
-        refetchAnalytics()
+        refetchAnalytics(),
+        refetchKyc(),
+        refetchGeneralSearch()
       ]);
       
+      // Show success banner for admin action
+      displayNotificationBanner("Dashboard refreshed successfully!");
+      
       toast({
-        title: "Data Refreshed",
-        description: "Admin dashboard updated with latest data",
+        title: "Dashboard Refreshed",
+        description: "All admin data updated with latest information",
         variant: "default",
       });
+      
+      console.log('✅ Admin refresh completed successfully');
     } catch (error) {
+      console.error('❌ Admin refresh failed:', error);
       toast({
         title: "Refresh Failed",
-        description: "Failed to refresh admin data",
+        description: "Failed to refresh admin data. Please try again.",
         variant: "destructive",
       });
     }
@@ -992,8 +1179,27 @@ export default function UnifiedAdminPortal() {
 
   // Main dashboard
   return (
-    <AdminPullToRefresh onRefresh={handleAdminRefresh}>
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 p-2">
+    <ProfessionalAdminPullRefresh onRefresh={handleAdminRefresh}>
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 p-2 md:p-6">
+        {/* Notification Banner */}
+        {showNotificationBanner && (
+          <div className="fixed top-4 left-4 right-4 z-50 animate-in slide-in-from-top-2 duration-300">
+            <div className="bg-green-500 text-white px-4 py-3 rounded-lg shadow-lg flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <CheckCircle className="w-5 h-5" />
+                <span className="font-medium">{notificationMessage}</span>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowNotificationBanner(false)}
+                className="text-white hover:bg-white/20 h-auto p-1"
+              >
+                <X className="w-4 h-4" />
+              </Button>
+            </div>
+          </div>
+        )}
         {/* Enhanced Header - Mobile Optimized */}
         <div className="mb-4">
           <div className="flex flex-col items-start justify-between mb-4 space-y-3">
@@ -1300,12 +1506,21 @@ export default function UnifiedAdminPortal() {
                                     <div className="space-y-1">
                                       <label className="text-xs text-gray-400">Front Side</label>
                                       <img
-                                        src={`data:image/jpeg;base64,${verification.kycData.documents.front}`}
+                                        src={verification.kycData.documents.front.startsWith('data:') 
+                                          ? verification.kycData.documents.front 
+                                          : `data:image/jpeg;base64,${verification.kycData.documents.front}`}
                                         alt="Document Front"
                                         className="w-full h-32 object-cover rounded-lg border border-white/20 cursor-pointer hover:border-orange-500/50 transition-colors"
+                                        onError={(e) => {
+                                          console.log('Image load error for front document');
+                                          e.currentTarget.style.display = 'none';
+                                        }}
                                         onClick={(e) => {
                                           e.stopPropagation();
-                                          setSelectedDocumentImage(`data:image/jpeg;base64,${verification.kycData.documents.front}`);
+                                          const imgSrc = verification.kycData.documents.front.startsWith('data:') 
+                                            ? verification.kycData.documents.front 
+                                            : `data:image/jpeg;base64,${verification.kycData.documents.front}`;
+                                          setSelectedDocumentImage(imgSrc);
                                           setDocumentModalOpen(true);
                                         }}
                                       />
@@ -1315,12 +1530,21 @@ export default function UnifiedAdminPortal() {
                                     <div className="space-y-1">
                                       <label className="text-xs text-gray-400">Back Side</label>
                                       <img
-                                        src={`data:image/jpeg;base64,${verification.kycData.documents.back}`}
+                                        src={verification.kycData.documents.back.startsWith('data:') 
+                                          ? verification.kycData.documents.back 
+                                          : `data:image/jpeg;base64,${verification.kycData.documents.back}`}
                                         alt="Document Back"
                                         className="w-full h-32 object-cover rounded-lg border border-white/20 cursor-pointer hover:border-orange-500/50 transition-colors"
+                                        onError={(e) => {
+                                          console.log('Image load error for back document');
+                                          e.currentTarget.style.display = 'none';
+                                        }}
                                         onClick={(e) => {
                                           e.stopPropagation();
-                                          setSelectedDocumentImage(`data:image/jpeg;base64,${verification.kycData.documents.back}`);
+                                          const imgSrc = verification.kycData.documents.back.startsWith('data:') 
+                                            ? verification.kycData.documents.back 
+                                            : `data:image/jpeg;base64,${verification.kycData.documents.back}`;
+                                          setSelectedDocumentImage(imgSrc);
                                           setDocumentModalOpen(true);
                                         }}
                                       />
@@ -1330,12 +1554,21 @@ export default function UnifiedAdminPortal() {
                                     <div className="space-y-1 col-span-2">
                                       <label className="text-xs text-gray-400">Document</label>
                                       <img
-                                        src={`data:image/jpeg;base64,${verification.kycData.documents.single}`}
+                                        src={verification.kycData.documents.single.startsWith('data:') 
+                                          ? verification.kycData.documents.single 
+                                          : `data:image/jpeg;base64,${verification.kycData.documents.single}`}
                                         alt="Document"
                                         className="w-full h-32 object-cover rounded-lg border border-white/20 cursor-pointer hover:border-orange-500/50 transition-colors"
+                                        onError={(e) => {
+                                          console.log('Image load error for single document');
+                                          e.currentTarget.style.display = 'none';
+                                        }}
                                         onClick={(e) => {
                                           e.stopPropagation();
-                                          setSelectedDocumentImage(`data:image/jpeg;base64,${verification.kycData.documents.single}`);
+                                          const imgSrc = verification.kycData.documents.single.startsWith('data:') 
+                                            ? verification.kycData.documents.single 
+                                            : `data:image/jpeg;base64,${verification.kycData.documents.single}`;
+                                          setSelectedDocumentImage(imgSrc);
                                           setDocumentModalOpen(true);
                                         }}
                                       />
@@ -1780,8 +2013,7 @@ export default function UnifiedAdminPortal() {
                             </div>
                             <Button
                               onClick={() => {
-                                const currentAccess = (selectedUser as any).transferAccess !== false;
-                                const newAccess = !currentAccess;
+                                const newAccess = !(selectedUser as any).transferAccess;
                                 toggleTransferAccessMutation.mutate({
                                   userId: selectedUser._id,
                                   transferAccess: newAccess
@@ -1790,12 +2022,12 @@ export default function UnifiedAdminPortal() {
                               disabled={toggleTransferAccessMutation.isPending}
                               size="sm"
                               className={`${
-                                (selectedUser as any).transferAccess !== false
+                                (selectedUser as any).transferAccess 
                                   ? 'bg-green-600 hover:bg-green-700' 
                                   : 'bg-gray-600 hover:bg-gray-700'
                               } text-white px-3 py-1`}
                             >
-                              {(selectedUser as any).transferAccess !== false ? 'ENABLED' : 'DISABLED'}
+                              {(selectedUser as any).transferAccess ? 'ENABLED' : 'DISABLED'}
                             </Button>
                           </div>
                         </div>
@@ -1902,7 +2134,7 @@ export default function UnifiedAdminPortal() {
 
                         <Button
                           onClick={() => handleDeleteUser(selectedUser)}
-                          disabled={deleteUserMutation.isPending || selectedUser.isAdmin}
+                          disabled={fixedDeleteUserMutation.isPending || selectedUser.isAdmin}
                           variant="outline"
                           className="w-full border-red-500/30 text-red-300 hover:bg-red-500/20"
                         >
@@ -2175,6 +2407,6 @@ export default function UnifiedAdminPortal() {
           </div>
         </div>
       )}
-    </AdminPullToRefresh>
+    </ProfessionalAdminPullRefresh>
   );
 }

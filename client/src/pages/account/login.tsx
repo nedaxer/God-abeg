@@ -10,13 +10,10 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { showSuccessBanner, showErrorBanner } from "@/hooks/use-bottom-banner";
 import { useAuth } from "@/hooks/use-auth";
 import { EyeIcon, EyeOffIcon, LockIcon, UserIcon, Loader2Icon } from "lucide-react";
+import { NotificationPermissionModal } from "@/components/notification-permission-modal";
+import { VirtualRecaptcha } from "@/components/virtual-recaptcha";
 
-// Declare global grecaptcha type
-declare global {
-  interface Window {
-    grecaptcha: any;
-  }
-}
+// reCAPTCHA functionality removed
 
 export default function Login() {
   // Check if we have a stored username from a recent registration
@@ -26,41 +23,16 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [recaptchaToken, setRecaptchaToken] = useState<string>("");
+  const [showNotificationModal, setShowNotificationModal] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
+  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
+  const [recaptchaVerified, setRecaptchaVerified] = useState(false);
   const [, setLocation] = useLocation();
 
   const { user, loginMutation } = useAuth();
   const queryClient = useQueryClient();
   
-  // Load reCAPTCHA script and setup callbacks
-  useEffect(() => {
-    const loadRecaptchaScript = () => {
-      if (window.grecaptcha) return;
-      
-      const script = document.createElement('script');
-      script.src = 'https://www.google.com/recaptcha/api.js';
-      script.async = true;
-      script.defer = true;
-      document.head.appendChild(script);
-    };
-
-    // Setup global reCAPTCHA callbacks
-    (window as any).onRecaptchaCallback = (token: string) => {
-      setRecaptchaToken(token);
-    };
-
-    (window as any).onRecaptchaExpired = () => {
-      setRecaptchaToken("");
-    };
-
-    loadRecaptchaScript();
-
-    // Cleanup
-    return () => {
-      delete (window as any).onRecaptchaCallback;
-      delete (window as any).onRecaptchaExpired;
-    };
-  }, []);
+  // reCAPTCHA script loading removed - no longer needed
 
   // If user is already logged in, redirect appropriately
   useEffect(() => {
@@ -88,6 +60,16 @@ export default function Login() {
     }
   }, [user, lastUsername, setLocation]);
 
+  const handleRecaptchaVerify = (token: string) => {
+    setRecaptchaToken(token);
+    setRecaptchaVerified(true);
+  };
+
+  const handleRecaptchaExpire = () => {
+    setRecaptchaToken(null);
+    setRecaptchaVerified(false);
+  };
+
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -100,22 +82,22 @@ export default function Login() {
       return;
     }
 
-    // Check reCAPTCHA
-    if (!recaptchaToken) {
+    // Check if reCAPTCHA is verified
+    if (!recaptchaVerified) {
       showErrorBanner(
-        "reCAPTCHA Required",
+        "Verification Required",
         "Please complete the reCAPTCHA verification to continue."
       );
       return;
     }
-    
+
     // Clear any existing error states
     const errorElements = document.querySelectorAll('[data-error]');
     errorElements.forEach(el => el.remove());
     
     // Use mutation.mutate to handle the login request
     loginMutation.mutate(
-      { username, password, recaptchaToken },
+      { username, password },
       {
         onSuccess: async () => {
           // Save user preference if remember me is checked
@@ -132,11 +114,16 @@ export default function Login() {
             `Hello ${username}! You're now connected to your Nedaxer trading account. All your features are ready to use.`
           );
           
-          // Navigate to mobile app after successful login
+          // Show notification permission modal after successful login
+          setTimeout(() => {
+            setShowNotificationModal(true);
+          }, 1000);
+          
+          // Navigate to mobile app after notification modal
           setTimeout(() => {
             console.log('Login successful, redirecting to mobile app');
             setLocation('/mobile');
-          }, 500);
+          }, showNotificationModal ? 5000 : 2000);
         },
         onError: (error: Error) => {
           // Handle all login errors gracefully - no red browser errors
@@ -167,7 +154,15 @@ export default function Login() {
     );
   };
 
-
+  const handleGoogleSignIn = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    setGoogleLoading(true);
+    
+    // Navigate to Google OAuth after showing loading animation
+    setTimeout(() => {
+      window.location.href = "/auth/google";
+    }, 800);
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -256,14 +251,14 @@ export default function Login() {
               </div>
             </div>
 
-            {/* reCAPTCHA Widget */}
+            {/* Virtual reCAPTCHA Widget */}
             <div className="flex justify-center">
-              <div 
-                className="g-recaptcha" 
-                data-sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY || "6LeX_XMrAAAAAOE1YUBRSnQb70l9FJra_s2Ohb8u"}
-                data-callback="onRecaptchaCallback"
-                data-expired-callback="onRecaptchaExpired"
-              ></div>
+              <VirtualRecaptcha 
+                onVerify={handleRecaptchaVerify}
+                onExpire={handleRecaptchaExpire}
+                theme="light"
+                size="normal"
+              />
             </div>
 
             <Button 
@@ -294,15 +289,25 @@ export default function Login() {
           <div className="mb-6">
             <a 
               href="/auth/google"
-              className="flex items-center justify-center w-full py-2.5 px-4 border border-gray-300 rounded-md shadow-sm bg-white hover:bg-gray-50 text-sm font-medium text-gray-700 transition-colors"
+              onClick={handleGoogleSignIn}
+              className="flex items-center justify-center w-full py-2.5 px-4 border border-gray-300 rounded-md shadow-sm bg-white hover:bg-gray-50 text-sm font-medium text-gray-700 transition-colors disabled:opacity-50"
             >
-              <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
-                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-              </svg>
-              Sign in with Google
+              {googleLoading ? (
+                <>
+                  <div className="mr-2 h-5 w-5 animate-spin rounded-full border-2 border-gray-400 border-t-transparent"></div>
+                  Connecting to Google...
+                </>
+              ) : (
+                <>
+                  <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                  </svg>
+                  Sign in with Google
+                </>
+              )}
             </a>
           </div>
 
@@ -317,6 +322,13 @@ export default function Login() {
         </div>
       </main>
       <Footer />
+      
+      {/* Notification Permission Modal */}
+      <NotificationPermissionModal
+        isOpen={showNotificationModal}
+        onClose={() => setShowNotificationModal(false)}
+        showOnLogin={true}
+      />
     </div>
   );
 }

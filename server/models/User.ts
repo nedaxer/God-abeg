@@ -37,6 +37,9 @@ export interface IUser {
   allFeaturesDisabled?: boolean;
   // OAuth fields
   googleId?: string;
+  // Referral system fields
+  referralCode?: string;
+  referredBy?: string;
   // KYC verification fields
   kycStatus?: 'none' | 'pending' | 'verified' | 'rejected';
   kycData?: {
@@ -98,6 +101,9 @@ const UserSchema = new mongoose.Schema({
   allFeaturesDisabled: { type: Boolean, default: false },
   // OAuth fields
   googleId: { type: String, sparse: true, unique: true },
+  // Referral system fields
+  referralCode: { type: String, sparse: true, unique: true },
+  referredBy: { type: String },
   // KYC verification fields
   kycStatus: { type: String, enum: ['none', 'pending', 'verified', 'rejected'], default: 'none' },
   kycData: {

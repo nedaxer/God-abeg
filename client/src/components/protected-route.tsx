@@ -20,56 +20,50 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
 }) => {
   const { user, isLoading } = useAuth();
 
-  // Memoize loading component to prevent re-renders - must be at top level
+  // Memoize loading component to prevent re-renders
   const loadingComponent = useMemo(() => (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50">
+    <div className="flex items-center justify-center min-h-screen bg-[#0a0a2e]">
       <div className="text-center">
-        <Loader2 className="h-8 w-8 animate-spin text-[#0033a0] mx-auto mb-4" />
-        <p className="text-gray-600">Verifying access...</p>
+        <Loader2 className="h-8 w-8 animate-spin text-orange-500 mx-auto mb-4" />
+        <p className="text-gray-300">Verifying access...</p>
       </div>
     </div>
   ), []);
 
-  console.log('ProtectedRoute check:', { user, isLoading, adminOnly, path });
+  console.log('ProtectedRoute check:', { user: !!user, isLoading, adminOnly, path });
 
+  // Always show loading while checking authentication
   if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
-      </div>
-    );
+    return loadingComponent;
   }
 
-  // Development mode: Allow access to mobile routes without authentication for testing
-  // But protect sensitive routes like verification flows
-  const isDevelopment = import.meta.env.DEV || process.env.NODE_ENV === 'development';
-  const isMobileRoute = path.startsWith('/mobile');
-  const isVerificationRoute = path.includes('/verification') || path.includes('/kyc-status');
-  
-  if (!user && !(isDevelopment && isMobileRoute && !isVerificationRoute)) {
-    console.log('No user found, redirecting to login');
+  // Strict authentication - no bypasses for mobile routes
+  // All mobile pages require valid user authentication
+  if (!user) {
+    console.log('No authenticated user found, redirecting to login');
     return <Redirect to="/account/login" />;
   }
 
+  // Check admin permissions for admin-only routes
   if (adminOnly && !user.isAdmin) {
-    console.log('User is not admin, redirecting to mobile');
+    console.log('User is not admin, redirecting to mobile home');
     return <Redirect to="/mobile" />;
   }
 
-  console.log('User authenticated, rendering component');
+  console.log('User authenticated successfully, rendering component');
 
   return (
     <Route path={path}>
       {(routeParams) => {
+        // Double-check authentication in route handler
         if (isLoading) {
           return loadingComponent;
         }
 
-        if (!user && !(isDevelopment && isMobileRoute && !isVerificationRoute)) {
+        if (!user) {
           return <Redirect to="/account/login" />;
         }
 
-        // Additional check for admin routes
         if (adminOnly && !user.isAdmin) {
           return <Redirect to="/mobile" />;
         }

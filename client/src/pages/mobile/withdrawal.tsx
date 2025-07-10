@@ -3,9 +3,11 @@ import { Link, useLocation } from 'wouter';
 import { ArrowLeft, ChevronDown, HelpCircle, QrCode, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { showSuccessBanner, showErrorBanner } from '@/hooks/use-bottom-banner';
+import { showSuccessBanner, showErrorBanner, useBottomBanner } from '@/hooks/use-bottom-banner';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAuth } from '@/hooks/use-auth';
+import AdaptiveLayout from '@/components/adaptive-layout';
+import DesktopWithdrawal from '@/components/desktop-pages/desktop-withdrawal-new';
 
 import QrScanner from 'qr-scanner';
 
@@ -80,25 +82,26 @@ const cryptoOptions: CryptoOption[] = [
         networkId: 'erc20',
         networkName: 'Ethereum (ERC20)',
         chainType: 'ERC20',
-        minWithdrawal: 10
+        minWithdrawal: 100
       },
       {
         networkId: 'trc20',
         networkName: 'TRON (TRC20)',
         chainType: 'TRC20',
-        minWithdrawal: 1
+        minWithdrawal: 100
       },
       {
         networkId: 'bep20',
         networkName: 'BNB Smart Chain (BEP20)',
         chainType: 'BEP20',
-        minWithdrawal: 1
+        minWithdrawal: 100
       }
     ]
   }
 ];
 
-export default function MobileWithdrawal() {
+function MobileWithdrawalContent() {
+  // All hooks must be called at the top level, before any conditional returns
   const [location, navigate] = useLocation();
   const { user } = useAuth();
 
@@ -108,9 +111,13 @@ export default function MobileWithdrawal() {
 
   // Form states
   const [selectedCrypto, setSelectedCrypto] = useState<CryptoOption>(cryptoOptions[0]);
-  const [selectedNetwork, setSelectedNetwork] = useState<NetworkOption | null>(
-    cryptoOptions[0].networks.length === 1 ? cryptoOptions[0].networks[0] : null
-  );
+  const [selectedNetwork, setSelectedNetwork] = useState<NetworkOption | null>(() => {
+    const defaultCrypto = cryptoOptions[0];
+    if (defaultCrypto.symbol === 'USDT') {
+      return defaultCrypto.networks.find(n => n.chainType === 'ERC20') || defaultCrypto.networks[0];
+    }
+    return defaultCrypto.networks.length === 1 ? defaultCrypto.networks[0] : null;
+  });
   const [withdrawalAddress, setWithdrawalAddress] = useState('');
   const [cryptoAmount, setCryptoAmount] = useState('');
   const [usdAmount, setUsdAmount] = useState('');
@@ -118,25 +125,78 @@ export default function MobileWithdrawal() {
   const [showNetworkDropdown, setShowNetworkDropdown] = useState(false);
   const [showQrScanner, setShowQrScanner] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [showPendingModal, setShowPendingModal] = useState(false);
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showProcessingAnimation, setShowProcessingAnimation] = useState(false);
+  const [showSuccessAnimation, setShowSuccessAnimation] = useState(false);
   const [successData, setSuccessData] = useState<{
     usdAmount: string;
     cryptoAmount: string;
     cryptoSymbol: string;
   } | null>(null);
 
-  // Fetch user balance
+  // Bottom banner hooks
+  const { dismissBanner } = useBottomBanner();
+
+  // Fetch user balance with real-time updates
   const { data: balanceData } = useQuery({
     queryKey: ['/api/wallet/summary'],
     enabled: !!user,
+    refetchInterval: 5000, // Update every 5 seconds for real-time feel
+    staleTime: 3000,
   });
 
-  // Fetch crypto prices
+  // Fetch crypto prices with real-time updates
   const { data: priceData } = useQuery({
     queryKey: ['/api/crypto/realtime-prices'],
-    refetchInterval: 30000,
-    staleTime: 25000,
+    refetchInterval: 5000, // More frequent updates
+    staleTime: 3000,
+  });
+
+  // Cleanup QR scanner on unmount
+  useEffect(() => {
+    return () => {
+      if (qrScannerRef.current) {
+        qrScannerRef.current.stop();
+        qrScannerRef.current.destroy();
+      }
+    };
+  }, []);
+
+  // Withdrawal mutation
+  const withdrawalMutation = useMutation({
+    mutationFn: async (data: {
+      cryptoSymbol: string;
+      cryptoName: string;
+      chainType: string;
+      networkName: string;
+      withdrawalAddress: string;
+      usdAmount: number;
+      cryptoAmount: number;
+    }) => {
+      console.log('Sending withdrawal request:', data);
+      
+      const response = await fetch('/api/withdrawals/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ message: 'Network error' }));
+        throw new Error(errorData.message || 'Failed to create withdrawal');
+      }
+
+      return response.json();
+    },
+    onError: (error: any) => {
+      console.error('Withdrawal error:', error);
+      const errorMessage = error.message || 'Failed to process withdrawal. Please try again.';
+      showErrorBanner(errorMessage);
+    },
+    onSettled: () => {
+      setIsProcessing(false);
+    }
   });
 
   const userBalance = (balanceData as any)?.data?.totalUSDValue || (balanceData as any)?.data?.usdBalance || 0;
@@ -188,7 +248,13 @@ export default function MobileWithdrawal() {
   // Handle crypto selection
   const handleCryptoSelect = (crypto: CryptoOption) => {
     setSelectedCrypto(crypto);
-    setSelectedNetwork(crypto.networks.length === 1 ? crypto.networks[0] : null);
+    // For USDT, default to ERC20 network, otherwise use first network if only one
+    if (crypto.symbol === 'USDT') {
+      const erc20Network = crypto.networks.find(n => n.chainType === 'ERC20');
+      setSelectedNetwork(erc20Network || crypto.networks[0]);
+    } else {
+      setSelectedNetwork(crypto.networks.length === 1 ? crypto.networks[0] : null);
+    }
     setShowCryptoDropdown(false);
   };
 
@@ -234,71 +300,7 @@ export default function MobileWithdrawal() {
     setShowQrScanner(false);
   };
 
-  // Cleanup QR scanner on unmount
-  useEffect(() => {
-    return () => {
-      if (qrScannerRef.current) {
-        qrScannerRef.current.stop();
-        qrScannerRef.current.destroy();
-      }
-    };
-  }, []);
-
-  // Withdrawal mutation
-  const withdrawalMutation = useMutation({
-    mutationFn: async (data: {
-      cryptoSymbol: string;
-      cryptoName: string;
-      chainType: string;
-      networkName: string;
-      withdrawalAddress: string;
-      usdAmount: number;
-      cryptoAmount: number;
-    }) => {
-      console.log('Sending withdrawal request:', data);
-      
-      const response = await fetch('/api/withdrawals/create', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-      
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Withdrawal failed');
-      }
-      
-      return response.json();
-    },
-    onSuccess: (data) => {
-      showSuccessBanner(
-        "Withdrawal Processed",
-        `Successfully withdrew $${usdAmount} USD via ${selectedCrypto.symbol}`
-      );
-      
-      // Invalidate and refetch all related data for real-time updates
-      queryClient.invalidateQueries({ queryKey: ['/api/wallet/summary'] });
-      queryClient.invalidateQueries({ queryKey: ['/api/balances'] });
-      queryClient.invalidateQueries({ queryKey: ['/api/withdrawals/history'] });
-      queryClient.invalidateQueries({ queryKey: ['/api/assets/history'] });
-      queryClient.invalidateQueries({ queryKey: ['/api/notifications/unread-count'] });
-      
-      // Reset form
-      setWithdrawalAddress('');
-      setCryptoAmount('');
-      setUsdAmount('');
-      
-      navigate('/mobile/assets');
-    },
-    onError: (error: any) => {
-      showErrorBanner(
-        "Withdrawal Failed",
-        error.message || "Failed to process withdrawal. Please try again."
-      );
-    },
-  });
+  // Withdrawal mutation was moved to top level - removed duplicate
 
   // Handle withdrawal submission
   const handleWithdraw = async () => {
@@ -355,45 +357,47 @@ export default function MobileWithdrawal() {
     }
 
     setIsProcessing(true);
-    setShowPendingModal(true);
+    
+    // Show processing animation first
+    setShowProcessingAnimation(true);
     
     try {
-      // Show pending modal for 3 seconds
-      await new Promise(resolve => setTimeout(resolve, 3000));
-      
       await withdrawalMutation.mutateAsync({
         cryptoSymbol: selectedCrypto.symbol,
         cryptoName: selectedCrypto.name,
         chainType: selectedNetwork.chainType,
         networkName: selectedNetwork.networkName,
         withdrawalAddress,
-        usdAmount: usdAmountNum,
-        cryptoAmount: cryptoAmountNum,
+        usdAmount: parseFloat(usdAmountNum.toString()),
+        cryptoAmount: parseFloat(cryptoAmountNum.toString()),
       });
       
-      // Store success data
+      // Dismiss any existing banners
+      dismissBanner();
+      
+      // Hide processing animation and show success
+      setShowProcessingAnimation(false);
+      
+      // Store success data for animation
       setSuccessData({
         usdAmount: usdAmount,
         cryptoAmount: cryptoAmount,
         cryptoSymbol: selectedCrypto.symbol
       });
       
-      // Hide pending modal and show success
-      setShowPendingModal(false);
-      setShowSuccessModal(true);
+      // Show success animation
+      setShowSuccessAnimation(true);
       
-      // Show success for 2 seconds then hide
+      // Hide success animation after 4 seconds
       setTimeout(() => {
-        setShowSuccessModal(false);
+        setShowSuccessAnimation(false);
         setSuccessData(null);
-        
-        // Clear form
-        setUsdAmount('');
-        setCryptoAmount('');
-        setWithdrawalAddress('');
-        
-
-      }, 2000);
+      }, 4000);
+      
+      // Clear form
+      setUsdAmount('');
+      setCryptoAmount('');
+      setWithdrawalAddress('');
       
       // Invalidate notifications and balance queries to refresh data
       queryClient.invalidateQueries({ queryKey: ['/api/notifications'] });
@@ -401,6 +405,10 @@ export default function MobileWithdrawal() {
       queryClient.invalidateQueries({ queryKey: ['/api/wallet/summary'] });
       queryClient.invalidateQueries({ queryKey: ['/api/balances'] });
       
+    } catch (error) {
+      // Hide processing animation on error
+      setShowProcessingAnimation(false);
+      throw error;
     } finally {
       setIsProcessing(false);
     }
@@ -559,7 +567,7 @@ export default function MobileWithdrawal() {
                 inputMode="decimal"
                 value={usdAmount}
                 onChange={handleUsdAmountChange}
-                placeholder="Enter amount like 100.00"
+                placeholder=""
                 className="w-full bg-[#1a1a40] border border-[#2a2a50] rounded-md text-white placeholder:text-gray-500 pr-16 h-10 text-sm px-3 focus:outline-none focus:ring-2 focus:ring-orange-500"
               />
               <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex items-center space-x-1">
@@ -590,6 +598,11 @@ export default function MobileWithdrawal() {
               </div>
             </div>
             
+            {/* Min Withdrawal Amount */}
+            <div className="mt-2 text-xs text-gray-400">
+              Min. Withdrawal Amount: 100
+            </div>
+            
             {/* Live Conversion Display */}
             {usdAmount && cryptoAmount && parseFloat(usdAmount) > 0 && (
               <div className="mt-2 flex items-center justify-between text-xs">
@@ -609,42 +622,41 @@ export default function MobileWithdrawal() {
           </div>
       </div>
 
-      {/* Fixed Bottom Section - Withdrawal Summary and Button */}
-      <div className="fixed bottom-0 left-0 right-0 bg-[#0a0a2e] border-t border-[#1a1a40] z-20">
-        {/* Withdrawal Summary */}
-        <div className="px-3 pt-2 pb-2">
-          {/* Withdrawal Fees */}
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-gray-400 text-sm">Withdrawal Fees</span>
-            <span className="text-white font-medium text-sm">0.00011 {selectedCrypto.symbol}</span>
+      {/* Withdrawal Summary - Always show fees */}
+      <div className="px-3 pt-4 pb-2">
+        {/* Withdrawal Fees */}
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-gray-400 text-sm">Withdrawal Fees</span>
+          <span className="text-white font-medium text-sm">0.00 {selectedNetwork ? selectedNetwork.chainType : selectedCrypto.symbol}</span>
+        </div>
+        
+        {/* Amount Received */}
+        {cryptoAmount && parseFloat(cryptoAmount) > 0 && (
+          <div className="flex items-center justify-between">
+            <span className="text-gray-400 text-sm">Amount Received</span>
+            <span className="text-white font-bold text-lg">
+              {parseFloat(cryptoAmount).toFixed(8)} {selectedCrypto.symbol}
+            </span>
           </div>
-          
-          {/* Amount Received */}
-          {cryptoAmount && parseFloat(cryptoAmount) > 0 && (
-            <div className="flex items-center justify-between">
-              <span className="text-gray-400 text-sm">Amount Received <span className="text-orange-500">Setting</span></span>
-              <span className="text-white font-bold text-lg">
-                {parseFloat(cryptoAmount).toFixed(8)} {selectedCrypto.symbol}
-              </span>
-            </div>
-          )}
-        </div>
+        )}
+      </div>
 
-        {/* Withdraw Button */}
-        <div className="p-3">
-          <Button
-            onClick={handleWithdraw}
-            disabled={!selectedNetwork || !withdrawalAddress || !usdAmount || parseFloat(usdAmount || '0') <= 0 || isProcessing}
-            className="w-full bg-orange-500 hover:bg-orange-600 disabled:bg-gray-600 disabled:text-gray-400 text-white py-4 rounded-lg font-medium text-lg flex items-center justify-center space-x-2"
-          >
-            <span>{isProcessing ? 'Processing...' : 'Withdraw'}</span>
-            {!isProcessing && usdAmount && parseFloat(usdAmount) > 0 && cryptoAmount && (
-              <span className="text-white font-bold">
-                {parseFloat(cryptoAmount).toFixed(8)} {selectedCrypto.symbol}
-              </span>
-            )}
-          </Button>
-        </div>
+      {/* Withdraw Button - Styled like Transfer Button */}
+      <div className="px-4 pb-4">
+        <Button
+          onClick={handleWithdraw}
+          disabled={!selectedNetwork || !withdrawalAddress || !usdAmount || parseFloat(usdAmount || '0') <= 0 || isProcessing}
+          className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 h-12 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {isProcessing ? (
+            <div className="flex items-center space-x-2">
+              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              <span>Processing...</span>
+            </div>
+          ) : (
+            'WITHDRAW'
+          )}
+        </Button>
       </div>
 
       {/* QR Scanner Modal */}
@@ -665,94 +677,56 @@ export default function MobileWithdrawal() {
         </div>
       )}
 
-      {/* Enhanced Success Modal */}
-      {showSuccessModal && successData && (
-        <div className="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm z-50 flex items-center justify-center animate-[fadeIn_0.3s_ease-out]">
-          <div className="bg-gradient-to-br from-[#1a1a40] to-[#0f0f2a] p-8 rounded-2xl border border-[#2a2a50] shadow-2xl flex flex-col items-center space-y-6 mx-4 max-w-sm w-full animate-[slideUp_0.4s_ease-out] relative overflow-hidden">
-            
-            {/* Animated Background Particles */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              <div className="absolute top-4 left-4 w-2 h-2 bg-green-400 rounded-full animate-[float_3s_ease-in-out_infinite]"></div>
-              <div className="absolute top-8 right-6 w-1 h-1 bg-orange-400 rounded-full animate-[float_2s_ease-in-out_infinite_0.5s]"></div>
-              <div className="absolute bottom-6 left-8 w-1.5 h-1.5 bg-blue-400 rounded-full animate-[float_2.5s_ease-in-out_infinite_1s]"></div>
-              <div className="absolute bottom-4 right-4 w-1 h-1 bg-purple-400 rounded-full animate-[float_3.5s_ease-in-out_infinite_1.5s]"></div>
+      {/* Processing Animation */}
+      {showProcessingAnimation && (
+        <div className="fixed inset-0 bg-black bg-opacity-90 z-[9999] flex items-center justify-center">
+          <div className="bg-[#1a1a40] rounded-2xl p-8 max-w-sm mx-4 text-center">
+            <div className="w-16 h-16 border-4 border-orange-500 border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
+            <div className="text-white">
+              <h3 className="text-lg font-semibold mb-2">Processing...</h3>
+              <p className="text-gray-300 text-sm">
+                Your withdrawal is being processed. Please wait...
+              </p>
             </div>
+          </div>
+        </div>
+      )}
 
-            {/* Animated Checkmark with Enhanced Effects */}
-            <div className="relative animate-[scaleIn_0.6s_ease-out_0.2s_both]">
-              <div className="w-24 h-24 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center shadow-lg animate-[pulse_2s_ease-in-out_infinite]">
-                <svg 
-                  className="w-14 h-14" 
-                  viewBox="0 0 24 24" 
-                  fill="none" 
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M9 12l2 2 4-4"
-                    stroke="white"
-                    strokeWidth="3"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeDasharray="10"
-                    strokeDashoffset="10"
-                    className="animate-[draw_1s_ease-in-out_0.5s_forwards]"
-                  />
-                </svg>
-              </div>
-              <div className="absolute inset-0 w-24 h-24 border-4 border-green-300 rounded-full animate-[ripple_1.5s_ease-out_infinite] opacity-60"></div>
-              <div className="absolute inset-0 w-24 h-24 border-2 border-green-200 rounded-full animate-[ripple_1.5s_ease-out_infinite_0.5s] opacity-40"></div>
+      {/* Success Animation - Checkmark and Success Message */}
+      {showSuccessAnimation && successData && (
+        <div className="fixed inset-0 bg-black bg-opacity-90 z-[9999] flex items-center justify-center">
+          <div className="bg-[#1a1a40] rounded-2xl p-8 max-w-sm mx-4 text-center">
+            <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
+              <CheckCircle className="w-10 h-10 text-white" />
             </div>
-            
-            {/* Enhanced Success Text with Animations */}
-            <div className="text-center space-y-4 animate-[slideUp_0.5s_ease-out_0.8s_both]">
-              <div className="space-y-2">
-                <h3 className="text-white font-bold text-2xl bg-gradient-to-r from-white to-gray-200 bg-clip-text">
-                  Withdrawal Successful!
-                </h3>
-                <div className="flex items-center justify-center space-x-1">
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-[bounce_1s_infinite]"></div>
-                  <p className="text-green-400 text-sm font-medium">
-                    Transaction processed successfully
-                  </p>
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-[bounce_1s_infinite_0.2s]"></div>
-                </div>
-              </div>
-              
-              <div className="bg-gradient-to-r from-[#0a0a2e] to-[#1a1a3e] rounded-xl p-4 border border-[#2a2a50] shadow-inner">
-                <div className="flex items-center justify-center space-x-2 mb-2">
-                  <div className="w-3 h-3 bg-orange-500 rounded-full animate-[ping_1s_infinite]"></div>
-                  <span className="text-gray-300 text-xs font-medium">TRANSACTION DETAILS</span>
-                  <div className="w-3 h-3 bg-orange-500 rounded-full animate-[ping_1s_infinite_0.5s]"></div>
-                </div>
-                <p className="text-orange-400 font-mono text-lg font-bold">
-                  ${parseFloat(successData.usdAmount).toFixed(2)} → {parseFloat(successData.cryptoAmount).toFixed(8)} {successData.cryptoSymbol}
-                </p>
+            <div className="text-white">
+              <h3 className="text-lg font-semibold mb-2">Withdrawal Successful!</h3>
+              <p className="text-gray-300 text-sm mb-4">
+                Your withdrawal of {successData.cryptoAmount} {successData.cryptoSymbol} 
+                (${successData.usdAmount}) has been processed successfully.
+              </p>
+              <div className="flex items-center justify-center text-green-400">
+                <CheckCircle className="w-5 h-5 mr-2" />
+                <span className="text-sm font-medium">Transaction Complete</span>
               </div>
             </div>
           </div>
         </div>
       )}
 
-      {/* Pending Processing Modal */}
-      {showPendingModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm z-50 flex items-center justify-center">
-          <div className="bg-[#1a1a40] p-8 rounded-xl border border-[#2a2a50] flex flex-col items-center space-y-4">
-            {/* Spinning Wheel */}
-            <div className="w-16 h-16 border-4 border-gray-600 border-t-orange-500 rounded-full animate-spin"></div>
-            
-            {/* Processing Text */}
-            <div className="text-center">
-              <h3 className="text-white font-medium text-lg mb-2">Processing Withdrawal</h3>
-              <p className="text-gray-400 text-sm">
-                Your withdrawal is being processed...
-              </p>
-              <p className="text-orange-500 text-xs mt-2">
-                ${parseFloat(usdAmount || '0').toFixed(2)} → {parseFloat(cryptoAmount || '0').toFixed(8)} {selectedCrypto.symbol}
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
+  );
+}
+
+export default function MobileWithdrawal() {
+  return (
+    <AdaptiveLayout 
+      mobileComponent={<MobileWithdrawalContent />}
+      desktopComponent={<DesktopWithdrawal />}
+      title="Nedaxer - Withdrawal"
+      hideBottomNav={true}
+    >
+      <MobileWithdrawalContent />
+    </AdaptiveLayout>
   );
 }

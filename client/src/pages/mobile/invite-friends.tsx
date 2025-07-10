@@ -26,12 +26,16 @@ export default function InviteFriends() {
   const { toast } = useToast();
   const { t } = useLanguage();
 
-  // Fetch referral stats
+  // Fetch referral stats with real-time updates
   const { data: referralStats } = useQuery<ReferralStats>({
-    queryKey: ['/api/referrals/stats']
+    queryKey: ['/api/referrals/stats'],
+    refetchInterval: 5000, // Real-time updates every 5 seconds
+    staleTime: 2000, // Consider data stale after 2 seconds
+    refetchOnWindowFocus: true, // Refresh when user returns to tab
+    refetchOnMount: true // Always fetch fresh data on mount
   });
 
-  const referralLink = `https://nedaxer.app/register?ref=${referralStats?.referralCode || 'LOADING'}`;
+  const referralLink = `https://nedaxer.onrender.com/register?ref=${referralStats?.referralCode || 'LOADING'}`;
 
   const copyToClipboard = async (text: string) => {
     try {

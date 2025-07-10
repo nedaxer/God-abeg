@@ -8,30 +8,10 @@ import { useQuery } from '@tanstack/react-query';
 import { apiRequest } from '@/lib/queryClient';
 import { useState } from 'react';
 import { showSuccessBanner } from '@/hooks/use-bottom-banner';
+import AdaptiveLayout from '@/components/adaptive-layout';
+import DesktopDepositDetails from '@/components/desktop-pages/desktop-deposit-details';
 
-// Crypto logos
-const btcLogo = '/logos/btc-logo.svg';
-const ethLogo = '/logos/eth-logo.svg';
-const usdtLogo = '/logos/usdt-logo.svg';
-const bnbLogo = '/logos/bnb-logo.svg';
-
-const getCryptoLogo = (symbol: string): string | null => {
-  switch (symbol.toLowerCase()) {
-    case 'btc':
-    case 'bitcoin':
-      return btcLogo;
-    case 'eth':
-    case 'ethereum':
-      return ethLogo;
-    case 'usdt':
-    case 'tether':
-      return usdtLogo;
-    case 'bnb':
-      return bnbLogo;
-    default:
-      return null;
-  }
-};
+import CryptoLogo from '@/components/crypto-logo';
 
 const generateLongTransactionId = (shortId: string): string => {
   // Generate a long transaction ID that looks like a crypto address
@@ -40,7 +20,31 @@ const generateLongTransactionId = (shortId: string): string => {
   return `${prefix}${shortId.slice(-8).toUpperCase()}${suffix}`;
 };
 
-export default function DepositDetails() {
+// Function to get correct deposit address based on crypto symbol and chain
+const getDepositAddress = (cryptoSymbol: string, chainType: string): string => {
+  const addresses = {
+    'USDT': {
+      'ERC20': '0x126975caaf44D603307a95E2d2670F6Ef46e563C',
+      'TRC20': 'THA5iGZk9mBq5742scd9NsvqAPiJcgt4QL',
+      'BSC': '0x126975caaf44D603307a95E2d2670F6Ef46e563C'
+    },
+    'BTC': {
+      'Bitcoin': 'bc1qq35fj5pxkwflsrlt4xk8jta5wx22qy4knnt2q2'
+    },
+    'ETH': {
+      'ETH': '0x126975caaf44D603307a95E2d2670F6Ef46e563C',
+      'ETH (BEP-20)': '0x126975caaf44D603307a95E2d2670F6Ef46e563C'
+    },
+    'BNB': {
+      'BEP-20': '0x126975caaf44D603307a95E2d2670F6Ef46e563C'
+    }
+  };
+  
+  return addresses[cryptoSymbol as keyof typeof addresses]?.[chainType as keyof typeof addresses[keyof typeof addresses]] || '';
+};
+
+// Mobile-specific component
+function MobileDepositDetails() {
   const { transactionId } = useParams();
   const [copied, setCopied] = useState(false);
   // const { toast } = useToast(); // Replaced with bottom banner system
@@ -175,13 +179,13 @@ export default function DepositDetails() {
             <p className="text-gray-400 text-xs mb-2">Deposit Address</p>
             <div className="flex items-center justify-between">
               <p className="text-white text-xs font-mono break-all pr-2">
-                {generateLongTransactionId(transaction._id)}
+                {getDepositAddress(transaction.cryptoSymbol, transaction.chainType)}
               </p>
               <Button
                 variant="ghost"
                 size="sm"
                 className="h-5 w-5 p-0 text-gray-400 hover:text-white flex-shrink-0"
-                onClick={() => copyToClipboard(generateLongTransactionId(transaction._id))}
+                onClick={() => copyToClipboard(getDepositAddress(transaction.cryptoSymbol, transaction.chainType))}
               >
                 {copied ? (
                   <CheckCircle className="w-3 h-3 text-green-400" />
@@ -208,5 +212,17 @@ export default function DepositDetails() {
         </div>
       </div>
     </div>
+  );
+}
+
+// Adaptive wrapper component
+export default function DepositDetails() {
+  return (
+    <AdaptiveLayout
+      title="Nedaxer - Deposit Details"
+      mobileComponent={<MobileDepositDetails />}
+      desktopComponent={<DesktopDepositDetails />}
+      hideBottomNav={true}
+    />
   );
 }

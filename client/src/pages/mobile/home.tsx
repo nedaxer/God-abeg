@@ -1,6 +1,6 @@
 // @ts-nocheck
 // TypeScript error suppression for development productivity - 8 React/mobile component type conflicts
-import MobileLayout from '@/components/mobile-layout';
+import AdaptiveLayout from '@/components/adaptive-layout';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -15,7 +15,6 @@ import EligibilityModal from '@/components/eligibility-modal';
 import { 
   Search, 
   Bell, 
-  Headphones, 
   ChevronDown, 
   Eye, 
   EyeOff,
@@ -43,6 +42,7 @@ import { useTheme } from '@/contexts/theme-context';
 import { VerificationBanner } from '@/components/VerificationBanner';
 import UserMessageBox from '@/components/user-message-box';
 import { BannerDebugPanel } from '@/components/banner-debug-panel';
+import MobileVideoChatBot from '@/components/mobile-video-chat-bot';
 // import { useAppState } from '@/lib/app-state';
 // import { usePersistentState } from '@/hooks/use-persistent-state';
 
@@ -70,6 +70,7 @@ export default function MobileHome() {
   const [showEligibilityModal, setShowEligibilityModal] = useState(false);
   const [showDebugPanel, setShowDebugPanel] = useState(false);
   const [debugTapCount, setDebugTapCount] = useState(0);
+  const [isDesktop, setIsDesktop] = useState(false);
 
   // Debug panel trigger (5 quick taps on profile)
   const handleProfileDebugTap = () => {
@@ -81,6 +82,18 @@ export default function MobileHome() {
     // Reset tap count after 2 seconds
     setTimeout(() => setDebugTapCount(0), 2000);
   };
+
+  // Desktop detection
+  useEffect(() => {
+    const checkDesktop = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+    
+    checkDesktop();
+    window.addEventListener('resize', checkDesktop);
+    
+    return () => window.removeEventListener('resize', checkDesktop);
+  }, []);
 
   // Save balance visibility state to localStorage
   useEffect(() => {
@@ -181,13 +194,15 @@ export default function MobileHome() {
     retry: 1,
   });
 
-  // Fetch real-time prices - prioritize loading this first
+  // Fetch real-time prices with enhanced 3-second updates for BTC price accuracy
   const { data: priceData, isLoading: priceLoading } = useQuery({
     queryKey: ['/api/crypto/realtime-prices'],
-    refetchInterval: 30000,
-    staleTime: 25000,
+    refetchInterval: 3000, // 3-second real-time updates for BTC price accuracy
+    staleTime: 2500, // Keep data fresh for 2.5 seconds
     retry: 1,
-    retryDelay: 500
+    retryDelay: 500,
+    refetchOnWindowFocus: false, // Prevent refetch on focus changes
+    refetchOnReconnect: false // Prevent refetch on reconnection
   });
 
   // Fetch user favorites - lower priority, longer cache
@@ -211,9 +226,22 @@ export default function MobileHome() {
   const { data: notificationCount } = useQuery({
     queryKey: ['/api/notifications/unread-count'],
     enabled: !!user,
-    refetchInterval: 10000, // Check every 10 seconds for real-time updates
-    staleTime: 5000,
-    retry: 1
+    refetchInterval: 30000, // Reduced frequency to prevent notification reset
+    staleTime: 25000, // Increased cache time
+    retry: 1,
+    refetchOnWindowFocus: false, // Prevent refetch on focus changes
+    refetchOnReconnect: false // Prevent refetch on reconnection
+  });
+
+  // Fetch unread support message count for support icon badge
+  const { data: supportNotificationCount } = useQuery({
+    queryKey: ['/api/notifications/support-unread-count'],
+    enabled: !!user,
+    refetchInterval: 30000, // Auto-refresh every 30 seconds
+    staleTime: 25000,
+    retry: 1,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false
   });
 
   // Fetch KYC verification status for verification banner
@@ -521,26 +549,33 @@ export default function MobileHome() {
     return price || 0; // Return 0 if no real data available
   };
 
-  // Get user's USD balance
+  // Get user's actual USD balance
   const getUserUSDBalance = () => {
     return walletData?.data?.usdBalance || 0;
   };
 
-  // Convert USD to BTC
+  // Get user's actual BTC balance from balances data
+  const getUserBTCBalance = () => {
+    if (!balanceData?.balances || !Array.isArray(balanceData.balances)) return 0;
+    const btcBalance = balanceData.balances.find((balance: any) => balance.symbol === 'BTC');
+    return btcBalance ? parseFloat(btcBalance.amount) : 0;
+  };
+
+  // Convert BTC amount to USD using real-time price
+  const convertBTCToUSD = (btcAmount: number) => {
+    const btcPrice = getBTCPrice();
+    if (btcPrice === 0) return 0;
+    return btcAmount * btcPrice;
+  };
+
+  // Convert USD to BTC (kept for compatibility)
   const convertUSDToBTC = (usdAmount: number) => {
     const btcPrice = getBTCPrice();
     if (btcPrice === 0) return 0;
     return usdAmount / btcPrice;
   };
 
-  const handleHelperClick = () => {
-    if (!showHelperTooltip) {
-      setShowHelperTooltip(true);
-      setTimeout(() => {
-        setShowHelperTooltip(false);
-      }, 3000);
-    }
-  };
+
 
   // WebSocket connection for real-time updates
   useEffect(() => {
@@ -565,6 +600,7 @@ export default function MobileHome() {
           if (data.type === 'DEPOSIT_CREATED' || data.type === 'TRANSFER_CREATED' || data.type === 'notification_update' || data.type === 'kyc_status_update' || data.type === 'CONNECTION_REQUEST_CREATED' || data.type === 'CONNECTION_REQUEST_RESPONDED') {
             // Update notification badge and balance data instantly
             queryClient.invalidateQueries({ queryKey: ['/api/notifications/unread-count'] });
+            queryClient.invalidateQueries({ queryKey: ['/api/notifications/support-unread-count'] });
             queryClient.invalidateQueries({ queryKey: ['/api/wallet/summary'] });
             queryClient.invalidateQueries({ queryKey: ['/api/balances'] });
             
@@ -732,7 +768,7 @@ export default function MobileHome() {
   };
 
   return (
-    <MobileLayout>
+    <AdaptiveLayout title="Nedaxer - Home">
       <PullToRefresh onRefresh={handleRefresh}>
         {/* Verification Banner - Only show for unverified users who haven't submitted KYC */}
         {user && !kycLoading && kycStatus && (
@@ -770,49 +806,42 @@ export default function MobileHome() {
         </div>
         <div className="flex items-center space-x-3">
           <UserMessageBox className="flex-shrink-0" />
-          <div className="relative">
-            <div onClick={handleHelperClick}>
-              <Link href="/mobile/chatbot">
-                <Headphones className="w-6 h-6 text-gray-400 hover:text-white transition-colors cursor-pointer" />
-              </Link>
-            </div>
-            {showHelperTooltip && (
-              <div className="absolute top-8 -right-2 bg-orange-500 text-white px-3 py-2 rounded-lg text-sm whitespace-nowrap shadow-lg z-50 animate-in fade-in-0 slide-in-from-top-2 duration-300">
-                <div className="absolute -top-1 right-4 w-2 h-2 bg-orange-500 rotate-45"></div>
+          {/* Small video chatbot for mobile */}
+          {!isDesktop && (
+            <div className="relative">
+              <MobileVideoChatBot 
+                user={user}
+                supportNotificationCount={supportNotificationCount}
+              />
+              {showHelperTooltip && (
+                <div className="absolute top-8 -right-2 bg-orange-500 text-white px-3 py-2 rounded-lg text-sm whitespace-nowrap shadow-lg z-50 animate-in fade-in-0 slide-in-from-top-2 duration-300">
+                  <div className="absolute -top-1 right-4 w-2 h-2 bg-orange-500 rotate-45"></div>
 {t('welcome_helper').replace('Welcome!', `${t('welcome')} ${user?.firstName || user?.username || 'User'}!`)}
-              </div>
-            )}
-          </div>
-          <Link href="/mobile/notifications">
-            <div className="relative cursor-pointer">
-              <Bell className="w-6 h-6 text-gray-400 hover:text-white transition-colors" />
-              {notificationCount?.unreadCount > 0 && (
-                <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center">
-                  <span className="text-white text-[10px] font-bold">
-                    {notificationCount.unreadCount > 9 ? '9+' : notificationCount.unreadCount}
-                  </span>
                 </div>
               )}
             </div>
-          </Link>
+          )}
+          {/* Notification Tab - Only show on mobile (under 768px) */}
+          {!isDesktop && (
+            <Link href="/mobile/notifications">
+              <div className="relative cursor-pointer">
+                <Bell className={`w-6 h-6 text-gray-400 hover:text-white transition-colors ${
+                  notificationCount?.unreadCount > 0 ? 'animate-shake' : ''
+                }`} />
+                {notificationCount?.unreadCount > 0 && (
+                  <div className="absolute -top-2 -right-2 min-w-[18px] h-[18px] bg-orange-500 rounded-full flex items-center justify-center border-2 border-[#0a0a2e]">
+                    <span className="text-white text-[9px] font-bold px-1">
+                      {notificationCount.unreadCount > 99 ? '99+' : notificationCount.unreadCount}
+                    </span>
+                  </div>
+                )}
+              </div>
+            </Link>
+          )}
         </div>
       </div>
 
-      {/* Search Bar */}
-      <div className="px-4 pb-4">
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-          <Input 
-            placeholder="BDXN/USDT"
-            className="pl-10 bg-blue-900 border-blue-700 text-white placeholder-gray-400"
-          />
-          <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-            <button onClick={handleQRScan} className="w-6 h-6 bg-blue-800 rounded flex items-center justify-center">
-              <QrCode className="w-4 h-4 text-gray-400" />
-            </button>
-          </div>
-        </div>
-      </div>
+
 
       {/* Balance Section */}
       <div className="px-4 pb-6">
@@ -838,9 +867,7 @@ export default function MobileHome() {
         <div className="mb-2">
           <div className="flex items-baseline space-x-2">
             <span className="text-3xl font-bold text-white">
-              {showBalance ? (
-                user ? `${getCurrencySymbol(selectedCurrency)}${parseFloat(convertToSelectedCurrency(getUserUSDBalance())).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : `${getCurrencySymbol(selectedCurrency)}0.00`
-              ) : '****'}
+              {showBalance ? `${getCurrencySymbol(selectedCurrency)}${parseFloat(convertToSelectedCurrency(getUserUSDBalance())).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : '****'}
             </span>
             <button 
               onClick={() => setCurrentView('currency-selection')}
@@ -877,21 +904,7 @@ export default function MobileHome() {
         </Card>
       </div>
 
-      {/* Quick Actions Grid */}
-      <div className="px-4 pb-6">
-        <div className="grid grid-cols-2 gap-4">
-          {quickActions.map((action, index) => (
-            <Link key={index} href={action.href}>
-              <div className="flex flex-col items-center space-y-2 cursor-pointer hover:opacity-80 transition-opacity">
-                <div className="w-12 h-12 bg-blue-900 rounded-lg flex items-center justify-center">
-                  <action.icon className={`w-6 h-6 ${action.color}`} />
-                </div>
-                <span className="text-xs text-gray-300 text-center">{action.name}</span>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </div>
+
 
       {/* Watchlist Section */}
       <div className="px-4">
@@ -1018,6 +1031,6 @@ export default function MobileHome() {
       {showDebugPanel && (
         <BannerDebugPanel onClose={() => setShowDebugPanel(false)} />
       )}
-    </MobileLayout>
+    </AdaptiveLayout>
   );
 }

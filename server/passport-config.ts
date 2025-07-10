@@ -13,18 +13,28 @@ if (!clientID || !clientSecret) {
 
 // Dynamic callback URL based on environment
 const getCallbackURL = () => {
-  if (process.env.BASE_URL) {
-    console.log(`Using BASE_URL for Google OAuth callback: ${process.env.BASE_URL}/auth/google/callback`);
-    return `${process.env.BASE_URL}/auth/google/callback`;
+  // Check multiple environment variables for domain detection
+  const possibleDomains = [
+    process.env.BASE_URL,
+    process.env.REPLIT_DOMAINS,
+    process.env.REPLIT_DEV_DOMAIN,
+    process.env.REPL_SLUG && process.env.REPL_OWNER ? 
+      `https://${process.env.REPL_SLUG}.${process.env.REPL_OWNER}.replit.dev` : null,
+    // Auto-detect from headers if available
+    process.env.REPLIT_URL
+  ].filter(Boolean);
+
+  console.log('Available domain options:', possibleDomains);
+
+  for (const domain of possibleDomains) {
+    if (domain) {
+      const cleanDomain = domain.startsWith('http') ? domain : `https://${domain}`;
+      const callbackUrl = `${cleanDomain}/auth/google/callback`;
+      console.log(`Using domain for Google OAuth callback: ${callbackUrl}`);
+      return callbackUrl;
+    }
   }
-  
-  // Fallback logic for different environments
-  if (process.env.REPLIT_DOMAINS) {
-    const replatCallback = `https://${process.env.REPLIT_DOMAINS}/auth/google/callback`;
-    console.log(`Using REPLIT_DOMAINS for Google OAuth callback: ${replatCallback}`);
-    return replatCallback;
-  }
-  
+
   // Production fallback
   const renderCallback = "https://nedaxer.onrender.com/auth/google/callback";
   console.log(`Using fallback for Google OAuth callback: ${renderCallback}`);
@@ -39,6 +49,25 @@ passport.use(new GoogleStrategy({
   callbackURL: callbackURL
 }, async (accessToken, refreshToken, profile, done) => {
   try {
+    console.log('🔧 Google OAuth Configuration Debug:', {
+      clientID: clientID ? `SET (${clientID.substring(0, 12)}...)` : 'MISSING',
+      clientSecret: clientSecret ? `SET (${clientSecret.substring(0, 8)}...)` : 'MISSING',
+      callbackURL: callbackURL,
+      currentDomain: process.env.REPLIT_DOMAINS || process.env.REPLIT_DEV_DOMAIN || 'unknown',
+      allReplitEnvVars: {
+        REPLIT_DOMAINS: process.env.REPLIT_DOMAINS,
+        REPLIT_DEV_DOMAIN: process.env.REPLIT_DEV_DOMAIN,
+        REPL_SLUG: process.env.REPL_SLUG,
+        REPL_OWNER: process.env.REPL_OWNER,
+        BASE_URL: process.env.BASE_URL,
+        REPLIT_URL: process.env.REPLIT_URL
+      }
+    });
+
+    console.log('🌐 IMPORTANT: Add this domain to Google Cloud Console:');
+    console.log('   Authorized JavaScript origins:', callbackURL.replace('/auth/google/callback', ''));
+    console.log('   Authorized redirect URIs:', callbackURL);
+
     console.log('Google OAuth profile received:', {
       id: profile.id,
       email: profile.emails?.[0]?.value,
@@ -46,14 +75,14 @@ passport.use(new GoogleStrategy({
     });
 
     const email = profile.emails?.[0]?.value;
-    
+
     if (!email) {
       return done(new Error('No email found in Google profile'), undefined);
     }
 
     // Check if user already exists with this email
     let user = await storage.getUserByEmail(email);
-    
+
     if (user) {
       console.log('Existing user found, logging in:', user.email);
       return done(null, user);

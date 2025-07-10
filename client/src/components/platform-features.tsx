@@ -61,13 +61,6 @@ export const PlatformFeatures = () => {
           >
             <Link href="#">Open Account</Link>
           </Button>
-          <Button
-            asChild
-            variant="outline"
-            className="ml-4 bg-transparent border border-white hover:bg-white hover:bg-opacity-20 text-white font-semibold px-8 py-3 rounded-md"
-          >
-            <Link href="#">Try Demo</Link>
-          </Button>
         </div>
       </div>
     </section>

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { navItems } from "@/lib/constants";
-import { ChevronDown, Menu, X, Download } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import { Logo } from "./logo";
 
 export const Header = () => {
@@ -61,16 +61,6 @@ export const Header = () => {
             </div>
             <Button
               asChild
-              variant="outline"
-              className="border-[#0033a0] text-[#0033a0] hover:bg-[#0033a0] hover:text-white"
-            >
-              <a href="https://play.google.com/store/apps/details?id=com.nadex.touch" target="_blank" rel="noopener noreferrer" className="flex items-center">
-                <Download className="mr-2 h-4 w-4" />
-                Download App
-              </a>
-            </Button>
-            <Button
-              asChild
               className="bg-[#ff5900] hover:bg-opacity-90 text-white"
             >
               <a href="/#/account/register">Open Account</a>
@@ -124,16 +114,6 @@ export const Header = () => {
               >
                 Login to your account
               </a>
-              <Button
-                asChild
-                variant="outline"
-                className="border-[#0033a0] text-[#0033a0] hover:bg-[#0033a0] hover:text-white w-full"
-              >
-                <a href="https://play.google.com/store/apps/details?id=com.nadex.touch" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center">
-                  <Download className="mr-2 h-4 w-4" />
-                  Download App
-                </a>
-              </Button>
               <Button
                 asChild
                 className="bg-[#ff5900] hover:bg-opacity-90 text-white w-full"

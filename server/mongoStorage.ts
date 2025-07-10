@@ -103,8 +103,9 @@ export class MongoStorage implements IMongoStorage {
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
+        password: user.password, // Include password for authentication
         isAdmin: user.isAdmin || false,
-        isVerified: false, // Temporarily set to false for testing verification banner
+        isVerified: user.isVerified || false, // Use actual verification status from database
         profilePicture: user.profilePicture || null, // Ensure explicit null if not set
         preferences: user.preferences,
         favorites: user.favorites || [],
@@ -134,10 +135,14 @@ export class MongoStorage implements IMongoStorage {
       console.log('MongoStorage: getUserByUsername called with:', username);
       console.log('User model available:', !!User);
       
-      // Try to find by username first, then by email
-      let result = await User.findOne({ username });
+      // Try to find by username first (case-insensitive), then by email (case-insensitive)
+      let result = await User.findOne({ 
+        username: { $regex: new RegExp(`^${username}$`, 'i') }
+      });
       if (!result) {
-        result = await User.findOne({ email: username });
+        result = await User.findOne({ 
+          email: { $regex: new RegExp(`^${username}$`, 'i') }
+        });
       }
       
       console.log('MongoStorage: getUserByUsername result:', result ? 'FOUND' : 'NOT FOUND');
@@ -152,7 +157,9 @@ export class MongoStorage implements IMongoStorage {
     try {
       console.log('MongoStorage: getUserByEmail called with:', email);
       console.log('User model available:', !!User);
-      const result = await User.findOne({ email });
+      const result = await User.findOne({ 
+        email: { $regex: new RegExp(`^${email}$`, 'i') }
+      });
       console.log('MongoStorage: getUserByEmail result:', result ? 'FOUND' : 'NOT FOUND');
       return result;
     } catch (error) {
@@ -200,6 +207,7 @@ export class MongoStorage implements IMongoStorage {
         lastName: userData.lastName,
         isVerified: userData.isVerified || false, // Use provided value or default to false
         profilePicture: userData.profilePicture,
+        referredBy: userData.referredBy || null, // Support referral system
         googleId: userData.googleId, // Support Google OAuth
       });
       
@@ -467,14 +475,35 @@ export class MongoStorage implements IMongoStorage {
       const { User } = await import('./models/User');
       const { UserBalance } = await import('./models/UserBalance');
       const { Currency } = await import('./models/Currency');
+      const { ObjectId } = await import('mongodb');
       
       console.log(`💰 Adding $${amount} to user ${userId}`);
       
-      // Get current user
-      const user = await User.findById(userId);
+      // Convert userId to ObjectId if it's a string
+      let userObjectId;
+      try {
+        userObjectId = typeof userId === 'string' ? new ObjectId(userId) : userId;
+        console.log('💰 Converted to ObjectId:', userObjectId);
+      } catch (error) {
+        console.error('Invalid ObjectId format:', userId, error);
+        throw new Error('Invalid user ID format');
+      }
+      
+      // Get current user - try multiple approaches
+      let user = await User.findById(userObjectId);
       if (!user) {
+        // Try finding by string _id
+        console.log('💰 User not found by ObjectId, trying string _id...');
+        user = await User.findOne({ _id: userId });
+      }
+      if (!user) {
+        console.log('💰 User still not found, checking available users...');
+        const allUsers = await User.find({}).limit(5);
+        console.log('💰 Available users:', allUsers.map(u => ({ _id: u._id, email: u.email })));
         throw new Error('User not found');
       }
+      
+      console.log('💰 Found user:', { _id: user._id, email: user.email });
 
       // Find USD currency
       const usdCurrency = await Currency.findOne({ symbol: 'USD' });
@@ -484,7 +513,7 @@ export class MongoStorage implements IMongoStorage {
 
       // Update balance in UserBalance collection (what mobile app uses)
       const existingBalance = await UserBalance.findOne({ 
-        userId: userId, 
+        userId: userObjectId.toString(), 
         currencyId: usdCurrency._id 
       });
       
@@ -494,7 +523,7 @@ export class MongoStorage implements IMongoStorage {
         const newAmount = currentAmount + amount;
         
         await UserBalance.findOneAndUpdate(
-          { userId: userId, currencyId: usdCurrency._id },
+          { userId: userObjectId.toString(), currencyId: usdCurrency._id },
           { amount: newAmount, updatedAt: new Date() },
           { new: true }
         );
@@ -503,7 +532,7 @@ export class MongoStorage implements IMongoStorage {
       } else {
         // Create new balance record
         await UserBalance.create({
-          userId: userId,
+          userId: userObjectId.toString(),
           currencyId: usdCurrency._id,
           amount: amount
         });
@@ -532,11 +561,21 @@ export class MongoStorage implements IMongoStorage {
       const { User } = await import('./models/User');
       const { UserBalance } = await import('./models/UserBalance');
       const { Currency } = await import('./models/Currency');
+      const { ObjectId } = await import('mongodb');
       
       console.log(`💸 Removing $${amount} from user ${userId}`);
       
+      // Convert userId to ObjectId if it's a string
+      let userObjectId;
+      try {
+        userObjectId = typeof userId === 'string' ? new ObjectId(userId) : userId;
+      } catch (error) {
+        console.error('Invalid ObjectId format:', userId, error);
+        throw new Error('Invalid user ID format');
+      }
+      
       // Get current user
-      const user = await User.findById(userId);
+      const user = await User.findById(userObjectId);
       if (!user) {
         throw new Error('User not found');
       }
@@ -549,7 +588,7 @@ export class MongoStorage implements IMongoStorage {
 
       // Get current balance from UserBalance collection
       const existingBalance = await UserBalance.findOne({ 
-        userId: userId, 
+        userId: userObjectId.toString(), 
         currencyId: usdCurrency._id 
       });
       
@@ -565,7 +604,7 @@ export class MongoStorage implements IMongoStorage {
       const newAmount = currentAmount - amount;
       
       await UserBalance.findOneAndUpdate(
-        { userId: userId, currencyId: usdCurrency._id },
+        { userId: userObjectId.toString(), currencyId: usdCurrency._id },
         { amount: newAmount, updatedAt: new Date() },
         { new: true }
       );
@@ -576,7 +615,7 @@ export class MongoStorage implements IMongoStorage {
       const currentUserBalance = user.balance || 0;
       const newUserBalance = Math.max(0, currentUserBalance - amount);
       
-      await User.findByIdAndUpdate(userId, { 
+      await User.findByIdAndUpdate(userObjectId, { 
         balance: newUserBalance 
       }, { new: true });
       
@@ -844,10 +883,20 @@ export class MongoStorage implements IMongoStorage {
 
   async markNotificationAsRead(notificationId: string): Promise<void> {
     try {
-      await Notification.findByIdAndUpdate(notificationId, { isRead: true });
-      console.log('Notification marked as read:', notificationId);
+      const result = await Notification.findByIdAndUpdate(
+        notificationId, 
+        { isRead: true },
+        { new: true }
+      );
+      
+      if (result) {
+        console.log('✅ Notification marked as read successfully:', notificationId, 'isRead:', result.isRead);
+      } else {
+        console.warn('⚠️ Notification not found:', notificationId);
+        throw new Error('Notification not found');
+      }
     } catch (error) {
-      console.error('Error marking notification as read:', error);
+      console.error('❌ Error marking notification as read:', error);
       throw error;
     }
   }

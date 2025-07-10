@@ -2,10 +2,7 @@ import { ArrowLeft, Copy, Save, Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
 import QRCode from 'qrcode';
-const btcLogo = '/logos/btc-logo.svg';
-const ethLogo = '/logos/eth-logo.svg';
-const usdtLogo = '/logos/usdt-logo.svg';
-const bnbLogo = '/logos/bnb-logo.svg';
+import CryptoLogo from '@/components/crypto-logo';
 
 interface AddressDisplayProps {
   onBack: () => void;
@@ -58,20 +55,7 @@ export function AddressDisplay({ onBack, selectedCrypto, selectedChain }: Addres
     }
   }, [address]);
 
-  const getCryptoIcon = (crypto: string) => {
-    switch (crypto) {
-      case 'USDT':
-        return usdtLogo;
-      case 'BTC':
-        return btcLogo;
-      case 'ETH':
-        return ethLogo;
-      case 'BNB':
-        return bnbLogo;
-      default:
-        return btcLogo;
-    }
-  };
+
 
   const copyAddress = async () => {
     try {
@@ -102,17 +86,10 @@ export function AddressDisplay({ onBack, selectedCrypto, selectedChain }: Addres
           </button>
           <div className="flex items-center space-x-2">
             <div className="w-6 h-6 rounded-full overflow-hidden bg-orange-500 flex items-center justify-center">
-              <img 
-                src={getCryptoIcon(selectedCrypto)} 
-                alt={selectedCrypto}
+              <CryptoLogo 
+                symbol={selectedCrypto}
+                size={16}
                 className="w-4 h-4"
-                onError={(e) => {
-                  e.currentTarget.style.display = 'none';
-                  const span = document.createElement('span');
-                  span.className = 'text-xs font-bold text-white';
-                  span.textContent = selectedCrypto.charAt(0);
-                  e.currentTarget.parentElement!.replaceChildren(span);
-                }}
               />
             </div>
             <h1 className="text-lg font-semibold">{selectedCrypto}-Deposit</h1>
@@ -149,17 +126,10 @@ export function AddressDisplay({ onBack, selectedCrypto, selectedChain }: Addres
               <img src={qrCodeUrl} alt="QR Code" className="w-64 h-64" />
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center">
-                  <img 
-                    src={getCryptoIcon(selectedCrypto)} 
-                    alt={selectedCrypto}
+                  <CryptoLogo 
+                    symbol={selectedCrypto}
+                    size={20}
                     className="w-5 h-5"
-                    onError={(e) => {
-                      e.currentTarget.style.display = 'none';
-                      const span = document.createElement('span');
-                      span.className = 'text-xs font-bold text-white';
-                      span.textContent = selectedCrypto.charAt(0);
-                      e.currentTarget.parentElement!.appendChild(span);
-                    }}
                   />
                 </div>
               </div>

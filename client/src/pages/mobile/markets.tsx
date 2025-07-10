@@ -1,4 +1,4 @@
-import MobileLayout from '@/components/mobile-layout';
+import AdaptiveLayout from '@/components/adaptive-layout';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -20,6 +20,7 @@ import { hapticLight } from '@/lib/haptics';
 import { useLanguage } from '@/contexts/language-context';
 import { useTheme } from '@/contexts/theme-context';
 import { CRYPTO_PAIRS, CryptoPair, getPairDisplayName } from '@/lib/crypto-pairs';
+import { useStablePrices } from '@/hooks/use-stable-prices';
 
 interface CryptoTicker {
   symbol: string;
@@ -109,21 +110,15 @@ export default function MobileMarkets() {
     localStorage.setItem('favoriteCoins', JSON.stringify(newFavorites));
   };
 
-  // Fetch live market data from CoinGecko API (10-second auto-refresh)
-  const { data: marketData, isLoading, refetch, error } = useQuery({
-    queryKey: ['/api/crypto/realtime-prices'],
-    queryFn: async (): Promise<CoinGeckoResponse> => {
-      const response = await fetch('/api/crypto/realtime-prices');
-      if (!response.ok) {
-        throw new Error(`Failed to fetch market data: ${response.statusText}`);
-      }
-      const data = await response.json();
+  // Use the centralized stable prices hook to prevent conflicts
+  const { data: marketData, isLoading, error } = useStablePrices();
+  
+  // Update last update time when data changes
+  useEffect(() => {
+    if (marketData?.data) {
       setLastUpdate(new Date());
-      return data;
-    },
-    refetchInterval: 10000, // Refresh every 10 seconds
-    retry: 3,
-  });
+    }
+  }, [marketData]);
 
   // Process comprehensive crypto pairs with live price data
   const processedMarkets = CRYPTO_PAIRS.map((pair: CryptoPair) => {
@@ -240,7 +235,7 @@ export default function MobileMarkets() {
   };
 
   return (
-    <MobileLayout>
+    <AdaptiveLayout title="Nedaxer - Markets">
       {/* Search Bar */}
       <div className="p-4 bg-[#0a0a2e]">
         <div className="relative">
@@ -346,6 +341,6 @@ export default function MobileMarkets() {
           ))
         )}
       </div>
-    </MobileLayout>
+    </AdaptiveLayout>
   );
 }

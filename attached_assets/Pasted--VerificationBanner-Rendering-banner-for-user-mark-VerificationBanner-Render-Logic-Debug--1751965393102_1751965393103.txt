@@ -1,0 +1,59 @@
+🎯 VerificationBanner: Rendering banner for user: mark
+🎯 VerificationBanner: Render Logic Debug: 
+Object {userName: "mark", questionsCompleted: false, kycStatus: "none", shouldShow: true, willRender: true}
+ProtectedRoute check: 
+Object {user: true, isLoading: false, adminOnly: false, path: "/mobile"}
+User authenticated successfully, rendering component
+🏠 Real-time BTC Price from CoinGecko: 
+Object {btcTicker: {…}, price: 108274, marketData: {…}}
+🎯 VerificationBanner: Rendering banner for user: mark
+🏠 Real-time BTC Price from CoinGecko: 
+Object {btcTicker: {…}, price: 108274, marketData: {…}}
+ProtectedRoute check: 
+Object {user: true, isLoading: false, adminOnly: false, path: "/mobile/assets"}
+User authenticated successfully, rendering component
+💰 Assets Real-time BTC Price from CoinGecko: 
+Object {btcTicker: {…}, price: 108274, priceData: {…}}
+WebSocket error: 
+Event {isTrusted: true}
+
+🔌 WebSocket disconnected
+WebSocket error: 
+Event {isTrusted: true}
+
+WebSocket disconnected, attempting to reconnect...
+ProtectedRoute check: 
+Object {user: true, isLoading: false, adminOnly: false, path: "/mobile/withdrawal"}
+User authenticated successfully, rendering component
+WebSocket connected for real-time home page updates
+Rendered fewer hooks than expected. This may be caused by an accidental early return statement.
+JavaScript error prevented: 
+Error {_suppressLogging: true}
+App error: 
+ErrorEvent {isTrusted: true}
+
+Warning: Cannot update a component (&#x60;App&#x60;) while rendering a different component (&#x60;MobileWithdrawal&#x60;). To locate the bad setState() call inside &#x60;MobileWithdrawal&#x60;, follow the stack trace as described in https://reactjs.org/link/setstate-in-render
+    at MobileWithdrawal (https://9c1a89da-f7cb-47f3-aa00-72ad19cfa300-00-2zm93xptifv2q.kirk.replit.dev/src/pages/mobile/withdrawal.tsx:115:32)
+    at Route (https://9c1a89da-f7cb-47f3-aa00-72ad19cfa300-00-2zm93xptifv2q.kirk.replit.dev/node_modules/.vite/deps/wouter.js?v=d1048f01:205:16)
+    at ProtectedRoute (https://9c1a89da-f7cb-47f3-aa00-72ad19cfa300-00-2zm93xptifv2q.kirk.replit.dev/src/components/protected-route.tsx:23:3)
+    at Switch (https://9c1a89da-f7cb-47f3-aa00-72ad19cfa300-00-2zm93xptifv2q.kirk.replit.dev/node_modules/.vite/deps/wouter.js?v=d1048f01:261:17)
+    at ErrorBoundary (https://9c1a89da-f7cb-47f3-aa00-72ad19cfa300-00-2zm93xptifv2q.kirk.replit.dev/src/components/error-boundary.tsx:7:5)
+    at Router (https://9c1a89da-f7cb-47f3-aa00-72ad19cfa300-00-2zm93xptifv2q.kirk.replit.dev/node_modules/.vite/deps/wouter.js?v=d1048f01:161:17)
+    at WithdrawalProvider (https://9c1a89da-f7cb-47f3-aa00-72ad19cfa300-00-2zm93xptifv2q.kirk.replit.dev/src/contexts/withdrawal-context.tsx:32:38)
+    at AuthProvider (https://9c1a89da-f7cb-47f3-aa00-72ad19cfa300-00-2zm93xptifv2q.kirk.replit.dev/src/hooks/use-auth.tsx:25:32)
+    at ThemeProvider (https://9c1a89da-f7cb-47f3-aa00-72ad19cfa300-00-2zm93xptifv2q.kirk.replit.dev/src/contexts/theme-context.tsx:29:33)
+    at LanguageProvider (https://9c1a89da-f7cb-47f3-aa00-72ad19cfa300-00-2zm93xptifv2q.kirk.replit.dev/src/contexts/language-context.tsx:905:36)
+    at QueryClientProvider (https://9c1a89da-f7cb-47f3-aa00-72ad19cfa300-00-2zm93xptifv2q.kirk.replit.dev/node_modules/.vite/deps/@tanstack_react-query.js?v=d1048f01:2873:3)
+    at ErrorBoundary (https://9c1a89da-f7cb-47f3-aa00-72ad19cfa300-00-2zm93xptifv2q.kirk.replit.dev/src/components/error-boundary.tsx:7:5)
+    at App (https://9c1a89da-f7cb-47f3-aa00-72ad19cfa300-00-2zm93xptifv2q.kirk.replit.dev/src/App.tsx?v=RHzH8GZuYzQB_oSnVd9C2:118:39)
+Rendered fewer hooks than expected. This may be caused by an accidental early return statement.
+JavaScript error prevented: 
+Error {_suppressLogging: true}
+App error: 
+ErrorEvent {isTrusted: true}
+
+[vite] 
+Error {}
+
+[vite] 
+Error {}

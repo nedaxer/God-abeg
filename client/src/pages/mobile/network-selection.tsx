@@ -1,11 +1,7 @@
 import { ArrowLeft } from 'lucide-react';
 import MobileLayout from '@/components/mobile-layout';
 import { useLanguage } from '@/contexts/language-context';
-
-const btcLogo = '/logos/btc-logo.svg';
-const ethLogo = '/logos/eth-logo.svg';
-const usdtLogo = '/logos/usdt-logo.svg';
-const bnbLogo = '/logos/bnb-logo.svg';
+import CryptoLogo from '@/components/crypto-logo';
 
 interface NetworkSelectionProps {
   onBack: () => void;
@@ -19,7 +15,7 @@ export function NetworkSelection({ onBack, selectedCrypto, onSelectChain }: Netw
     switch (crypto) {
       case 'BTC':
         return {
-          logo: btcLogo,
+          symbol: 'BTC',
           name: 'Bitcoin',
           chains: [
             { 
@@ -32,7 +28,7 @@ export function NetworkSelection({ onBack, selectedCrypto, onSelectChain }: Netw
         };
       case 'ETH':
         return {
-          logo: ethLogo,
+          symbol: 'ETH',
           name: 'Ethereum',
           chains: [
             { 
@@ -51,7 +47,7 @@ export function NetworkSelection({ onBack, selectedCrypto, onSelectChain }: Netw
         };
       case 'USDT':
         return {
-          logo: usdtLogo,
+          symbol: 'USDT',
           name: 'Tether',
           chains: [
             { 
@@ -76,7 +72,7 @@ export function NetworkSelection({ onBack, selectedCrypto, onSelectChain }: Netw
         };
       case 'BNB':
         return {
-          logo: bnbLogo,
+          symbol: 'BNB',
           name: 'BNB',
           chains: [
             { 
@@ -88,16 +84,16 @@ export function NetworkSelection({ onBack, selectedCrypto, onSelectChain }: Netw
           ]
         };
       default:
-        return { logo: '', name: '', chains: [] };
+        return { symbol: '', name: '', chains: [] };
     }
   };
 
   const cryptoInfo = getCryptoInfo(selectedCrypto);
 
   return (
-    <MobileLayout>
+    <div className="min-h-screen bg-[#0a0a2e] text-white">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 bg-blue-950 border-b border-blue-700">
+      <div className="flex items-center justify-between p-4 bg-[#0a0a2e] border-b border-gray-700/30">
         <button onClick={onBack} className="text-gray-400 hover:text-white">
           <ArrowLeft className="w-6 h-6" />
         </button>
@@ -106,12 +102,12 @@ export function NetworkSelection({ onBack, selectedCrypto, onSelectChain }: Netw
       </div>
 
       {/* Selected Crypto Info */}
-      <div className="p-4 border-b border-blue-700 bg-blue-950">
+      <div className="p-4 border-b border-gray-700/30 bg-[#0a0a2e]">
         <div className="flex items-center space-x-3">
-          <img
-            src={cryptoInfo.logo}
-            alt={selectedCrypto}
-            className="w-10 h-10 rounded-full"
+          <CryptoLogo
+            symbol={selectedCrypto}
+            size={40}
+            className="w-10 h-10"
           />
           <div>
             <h3 className="text-white font-semibold text-base">{selectedCrypto}</h3>
@@ -121,12 +117,12 @@ export function NetworkSelection({ onBack, selectedCrypto, onSelectChain }: Netw
       </div>
 
       {/* Chain List */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-2 bg-blue-950">
+      <div className="flex-1 overflow-y-auto p-4 space-y-2 bg-[#0a0a2e]">
         {cryptoInfo.chains.map((chain) => (
           <button
             key={chain.name}
             onClick={() => onSelectChain(chain.name)}
-            className="w-full bg-blue-900 hover:bg-blue-800 rounded-lg p-3 transition-colors"
+            className="w-full bg-gray-800/50 hover:bg-gray-700/50 rounded-lg p-4 transition-colors border border-gray-700/30"
           >
             <div className="flex items-center justify-between">
               <div className="text-left">
@@ -154,7 +150,7 @@ export function NetworkSelection({ onBack, selectedCrypto, onSelectChain }: Netw
       </div>
 
       {/* Warning */}
-      <div className="p-4 bg-yellow-900/20 border-t border-blue-700">
+      <div className="p-4 bg-yellow-900/20 border-t border-gray-700/30">
         <div className="flex items-start space-x-2">
           <div className="w-4 h-4 text-yellow-500 mt-0.5">
             <svg fill="currentColor" viewBox="0 0 20 20">
@@ -169,6 +165,6 @@ export function NetworkSelection({ onBack, selectedCrypto, onSelectChain }: Netw
           </div>
         </div>
       </div>
-    </MobileLayout>
+    </div>
   );
 }

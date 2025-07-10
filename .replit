@@ -1,10 +1,10 @@
-modules = ["postgresql-16", "python-3.11", "web", "nodejs-22"]
+modules = ["postgresql-16", "python-3.11", "web", "nodejs-20"]
 run = "npm run dev"
 hidden = [".config", ".git", "generated-icon.png", "node_modules", "dist"]
 
 [nix]
 channel = "stable-24_05"
-packages = ["imagemagick", "openssh_hpn", "np"]
+packages = ["imagemagick", "openssh_hpn", "np", "mongodb-tools"]
 
 [deployment]
 deploymentTarget = "autoscale"
@@ -25,6 +25,14 @@ externalPort = 80
 [[ports]]
 localPort = 5001
 externalPort = 3001
+
+[[ports]]
+localPort = 5002
+externalPort = 3002
+
+[[ports]]
+localPort = 6000
+externalPort = 6000
 
 [workflows]
 runButton = "Project"

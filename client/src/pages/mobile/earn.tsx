@@ -1,4 +1,4 @@
-import MobileLayout from '@/components/mobile-layout';
+import AdaptiveLayout from '@/components/adaptive-layout';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { DepositActivationModal } from '@/components/deposit-activation-modal';
@@ -76,7 +76,7 @@ export default function MobileEarn() {
   const events: any[] = [];
 
   return (
-    <MobileLayout>
+    <AdaptiveLayout title="Nedaxer - Earn">
       {/* Header */}
       <div className="flex items-center justify-between p-4 bg-blue-950">
         <h1 className="text-xl font-bold text-white">Earnings</h1>
@@ -188,6 +188,6 @@ export default function MobileEarn() {
         onClose={() => setDepositModalOpen(false)}
         onSelectMethod={handlePaymentMethodSelect}
       />
-    </MobileLayout>
+    </AdaptiveLayout>
   );
 }

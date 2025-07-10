@@ -15,11 +15,11 @@ import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import { apiRequest } from '@/lib/queryClient';
 import { useLanguage } from '@/contexts/language-context';
 import { useTheme } from '@/contexts/theme-context';
+import AdaptiveLayout from '@/components/adaptive-layout';
 
 interface UserSettings {
   nickname?: string;
   language: string;
-  currency: string;
   theme: string;
   screenLock: boolean;
 }
@@ -33,10 +33,10 @@ export default function MobileSettings() {
   const { currentLanguage, t } = useLanguage();
   const { getBackgroundClass, getTextClass, getBorderClass, getCardClass } = useTheme();
 
+  // All state hooks MUST be called before any conditional returns
   const [settings, setSettings] = useState<UserSettings>({
     nickname: user?.username || '',
     language: currentLanguage.name,
-    currency: 'USD',
     theme: 'Dark Mode',
     screenLock: false
   });
@@ -49,7 +49,7 @@ export default function MobileSettings() {
   // Use the actual UID from the database
   const userUID = user?.uid || 'N/A';
 
-  // Fetch security settings for real-time status
+  // Fetch security settings for real-time status - MUST be called before conditional returns
   const { data: securityData } = useQuery({
     queryKey: ['security', 'settings', user?.id],
     queryFn: () => apiRequest('/api/user/security/settings'),
@@ -57,7 +57,7 @@ export default function MobileSettings() {
     refetchInterval: 30000, // Real-time updates every 30 seconds
   });
 
-  // Fetch KYC status
+  // Fetch KYC status - MUST be called before conditional returns
   const { data: kycData } = useQuery({
     queryKey: ['/api/verification/status'],
     queryFn: () => apiRequest('/api/verification/status'),
@@ -85,7 +85,7 @@ export default function MobileSettings() {
     return { level: 'Low', color: 'text-red-500' };
   };
 
-  // Listen for profile updates and currency changes from other components
+  // Listen for profile updates from other components
   useEffect(() => {
     const handleProfileUpdate = () => {
       queryClient.invalidateQueries({ queryKey: ['/api/auth/user'] });
@@ -95,31 +95,19 @@ export default function MobileSettings() {
       queryClient.invalidateQueries({ queryKey: ['security', 'settings'] });
     };
 
-    const handleCurrencyUpdate = () => {
-      const savedCurrency = localStorage.getItem('selectedCurrency');
-      if (savedCurrency) {
-        setSettings(prev => ({ ...prev, currency: savedCurrency }));
-      }
-    };
-
-    // Check for currency changes when component becomes visible
-    handleCurrencyUpdate();
-
     window.addEventListener('profileUpdated', handleProfileUpdate);
     window.addEventListener('securityUpdated', handleSecurityUpdate);
-    window.addEventListener('focus', handleCurrencyUpdate);
 
     return () => {
       window.removeEventListener('profileUpdated', handleProfileUpdate);
       window.removeEventListener('securityUpdated', handleSecurityUpdate);
-      window.removeEventListener('focus', handleCurrencyUpdate);
     };
   }, [queryClient]);
 
   const updateProfileMutation = useMutation({
-    mutationFn: async (data: { nickname?: string; profilePicture?: string }) => {
-      const response = await fetch('/api/user/update-profile', {
-        method: 'PATCH',
+    mutationFn: async (data: { nickname?: string; profilePicture?: string; firstName?: string; lastName?: string }) => {
+      const response = await fetch('/api/auth/profile', {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -203,8 +191,17 @@ export default function MobileSettings() {
   };
 
   const handleNicknameSave = () => {
-    if (tempNickname.trim() && tempNickname !== settings.nickname) {
-      updateProfileMutation.mutate({ nickname: tempNickname.trim() });
+    if (tempNickname.trim()) {
+      // Split the name into first and last name
+      const nameParts = tempNickname.trim().split(' ');
+      const firstName = nameParts[0];
+      const lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : '';
+      
+      updateProfileMutation.mutate({ 
+        nickname: tempNickname.trim(),
+        firstName: firstName,
+        lastName: lastName
+      });
       setSettings(prev => ({ ...prev, nickname: tempNickname.trim() }));
     }
     setIsEditingNickname(false);
@@ -249,7 +246,8 @@ export default function MobileSettings() {
   };
 
   return (
-    <div className={`min-h-screen ${getBackgroundClass()} ${getTextClass()}`}>
+    <AdaptiveLayout title="Nedaxer - Settings">
+      <div className={`min-h-screen ${getBackgroundClass()} ${getTextClass()}`}>
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-blue-800">
         <Button
@@ -269,7 +267,7 @@ export default function MobileSettings() {
         <div className="bg-gray-900/40 rounded-xl p-6 backdrop-blur-sm border border-gray-800/50">
           <h2 className="text-xl font-bold mb-6 text-white flex items-center gap-2">
             <User className="h-5 w-5 text-orange-500" />
-            {t('account_info')}
+            Account Info
           </h2>
 
           {/* Profile Picture */}
@@ -427,51 +425,10 @@ export default function MobileSettings() {
         {/* Settings Section */}
         <div>
           <h2 className="text-lg font-semibold mb-4">{t('settings')}</h2>
-
-          {/* Language */}
-          <Button
-            variant="ghost"
-            onClick={() => setLocation('/mobile/language-selection')}
-            className={`w-full justify-between py-3 h-auto ${getTextClass()} hover:bg-gray-100 hover:bg-opacity-10`}
-          >
-            <span>{t('language')}</span>
-            <div className="flex items-center gap-2">
-              <div className="flex items-center gap-1">
-                <span className="text-xl">{currentLanguage.flag}</span>
-                <span className="text-gray-400 text-sm">{currentLanguage.nativeName}</span>
-              </div>
-              <ChevronRight className="h-4 w-4" />
-            </div>
-          </Button>
-
-          {/* Currency Display */}
-          <Button
-            variant="ghost"
-            onClick={() => setLocation('/mobile/currency-selection')}
-            className="w-full justify-between py-3 h-auto text-gray-300 hover:bg-blue-900"
-          >
-            <span>{t('currency_display')}</span>
-            <div className="flex items-center gap-2">
-              <span className="text-gray-400 text-sm">
-                {settings.currency}
-              </span>
-              <ChevronRight className="h-4 w-4" />
-            </div>
-          </Button>
-
-
-
-          {/* Always on (no screen lock) */}
-          <div className="flex items-center justify-between py-3">
-            <span className="text-gray-300">Always on (no screen lock)</span>
-            <Switch
-              checked={settings.screenLock}
-              onCheckedChange={(checked) => setSettings(prev => ({ ...prev, screenLock: checked }))}
-              className="data-[state=checked]:bg-blue-600"
-            />
-          </div>
+          {/* Settings items removed as requested */}
         </div>
       </div>
-    </div>
+      </div>
+    </AdaptiveLayout>
   );
 }

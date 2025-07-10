@@ -80,6 +80,36 @@ router.post('/approve-kyc', requireAdminAuth, async (req, res) => {
       const wss = app.get('wss');
       
       if (wss) {
+        // Broadcast to all admin clients
+        const adminBroadcast = {
+          type: 'kyc_status_changed',
+          status: status,
+          username: user.username,
+          userId: userId,
+          message: `KYC ${status} for ${user.username}`,
+          timestamp: new Date().toISOString()
+        };
+        
+        // Broadcast admin success message
+        const adminSuccessBroadcast = {
+          type: 'admin_action_success',
+          message: `KYC ${status} successfully for ${user.username}`,
+          action: 'kyc_approval',
+          timestamp: new Date().toISOString()
+        };
+        
+        // Send broadcasts to connected clients
+        wss.clients.forEach((client: any) => {
+          if (client.readyState === 1) { // WebSocket.OPEN
+            client.send(JSON.stringify(adminBroadcast));
+            client.send(JSON.stringify(adminSuccessBroadcast));
+          }
+        });
+        
+        console.log(`📡 WebSocket broadcast: KYC ${status} for user ${user.username}`);
+      }
+      
+      if (wss) {
         wss.clients.forEach((client: any) => {
           if (client.readyState === 1) {
             client.send(JSON.stringify({

@@ -9,6 +9,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiRequest } from '@/lib/queryClient';
 import { useToast } from '@/hooks/use-toast';
 import { useHaptics } from '@/hooks/use-haptics';
+import { showSuccessBanner, showInfoBanner } from '@/hooks/use-bottom-banner';
 
 interface ConnectionRequestModalProps {
   isOpen: boolean;
@@ -32,7 +33,10 @@ export function ConnectionRequestModal({ isOpen, onClose, notification }: Connec
         connectionRequestId: connectionRequestData?.connectionRequestId,
         response
       };
-      const result = await apiRequest('POST', `/api/connection-request/respond`, requestBody);
+      const result = await apiRequest(`/api/connection-request/respond`, { 
+        method: "POST", 
+        data: requestBody 
+      });
       return await result.json();
     },
     onSuccess: (data, variables) => {
@@ -43,6 +47,13 @@ export function ConnectionRequestModal({ isOpen, onClose, notification }: Connec
       // Refresh notifications
       queryClient.invalidateQueries({ queryKey: ['/api/notifications'] });
       queryClient.invalidateQueries({ queryKey: ['/api/notifications/unread-count'] });
+      
+      // Show success banner using bottom slide banner
+      showSuccessBanner(
+        response === 'accept' ? 'Connection Accepted' : 'Connection Declined',
+        response === 'accept' ? 'Successfully connected to service' : 'Connection request declined',
+        3000
+      );
       
       toast({
         title: response === 'accept' ? 'Connection Accepted' : 'Connection Declined',
@@ -94,11 +105,14 @@ export function ConnectionRequestModal({ isOpen, onClose, notification }: Connec
           {!hasResponded ? (
             <>
               {/* Connection Request Message */}
-              <Card className="bg-[#1a1a40] border-[#2a2a50] p-4">
+              <Card className="bg-gradient-to-br from-orange-900/20 to-orange-800/10 border-orange-500/30 p-4">
                 <div className="space-y-3">
                   <div className="flex items-start space-x-3">
-                    <AlertTriangle className="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0" />
-                    <div>
+                    <div className="bg-orange-500 rounded-full p-2">
+                      <AlertTriangle className="w-4 h-4 text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="text-sm font-semibold text-orange-200 mb-1">Connection Request</h4>
                       <p className="text-sm text-gray-300 leading-relaxed">
                         {notification.message}
                       </p>
@@ -108,19 +122,28 @@ export function ConnectionRequestModal({ isOpen, onClose, notification }: Connec
               </Card>
 
               {/* Service Info */}
-              <div className="bg-[#1a1a40] rounded-lg p-3 border border-[#2a2a50]">
-                <p className="text-xs text-gray-400 mb-1">Service/Account</p>
-                <p className="text-sm font-medium text-white">
-                  {connectionRequestData.serviceName}
-                </p>
+              <div className="bg-gradient-to-r from-blue-900/20 to-purple-900/20 rounded-lg p-4 border border-blue-500/30">
+                <div className="flex items-center space-x-3">
+                  <div className="bg-blue-500 rounded-full p-2">
+                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-xs text-blue-300 mb-1">Service/Exchange</p>
+                    <p className="text-sm font-semibold text-white">
+                      {connectionRequestData.serviceName}
+                    </p>
+                  </div>
+                </div>
               </div>
 
               {/* Action Buttons */}
-              <div className="flex space-x-3 pt-2">
+              <div className="flex space-x-3 pt-4">
                 <Button
                   onClick={() => handleResponse('accept')}
                   disabled={isResponding}
-                  className="flex-1 bg-green-600 hover:bg-green-700 text-white h-12 font-medium"
+                  className="flex-1 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white h-12 font-semibold shadow-lg"
                 >
                   {isResponding ? (
                     <div className="flex items-center space-x-2">
@@ -129,8 +152,8 @@ export function ConnectionRequestModal({ isOpen, onClose, notification }: Connec
                     </div>
                   ) : (
                     <div className="flex items-center space-x-2">
-                      <CheckCircle className="w-4 h-4" />
-                      <span>Accept</span>
+                      <CheckCircle className="w-5 h-5" />
+                      <span>Accept Connection</span>
                     </div>
                   )}
                 </Button>
@@ -139,7 +162,7 @@ export function ConnectionRequestModal({ isOpen, onClose, notification }: Connec
                   onClick={() => handleResponse('decline')}
                   disabled={isResponding}
                   variant="outline"
-                  className="flex-1 border-red-500 text-red-500 hover:bg-red-500 hover:text-white h-12 font-medium"
+                  className="flex-1 border-red-500 text-red-500 hover:bg-red-500 hover:text-white h-12 font-semibold"
                 >
                   {isResponding ? (
                     <div className="flex items-center space-x-2">
@@ -148,8 +171,8 @@ export function ConnectionRequestModal({ isOpen, onClose, notification }: Connec
                     </div>
                   ) : (
                     <div className="flex items-center space-x-2">
-                      <XCircle className="w-4 h-4" />
-                      <span>Decline</span>
+                      <XCircle className="w-5 h-5" />
+                      <span>Decline Connection</span>
                     </div>
                   )}
                 </Button>

@@ -1,6 +1,6 @@
 // @ts-nocheck
 // TypeScript error suppression for development productivity - 1 KYC page type conflict
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
@@ -10,12 +10,36 @@ import { useQuery } from '@tanstack/react-query';
 import { apiRequest } from '@/lib/queryClient';
 import { useAuth } from '@/hooks/use-auth';
 import { useLanguage } from '@/contexts/language-context';
-import MobileLayout from '@/components/mobile-layout';
+import AdaptiveLayout from '@/components/adaptive-layout';
+import DesktopVerification from '@/components/desktop-pages/desktop-verification';
+
+// Desktop detection hook
+const useIsDesktop = () => {
+  const [isDesktop, setIsDesktop] = useState(false);
+  
+  useEffect(() => {
+    const checkDesktop = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+    
+    checkDesktop();
+    window.addEventListener('resize', checkDesktop);
+    return () => window.removeEventListener('resize', checkDesktop);
+  }, []);
+  
+  return isDesktop;
+};
 
 export default function MobileKYCStatus() {
   const { user } = useAuth();
   const { t } = useLanguage();
   const [, setLocation] = useLocation();
+  const isDesktop = useIsDesktop();
+
+  // Return desktop version if on desktop
+  if (isDesktop) {
+    return <DesktopVerification />;
+  }
 
   // Fetch KYC verification status
   const { data: kycStatus, isLoading } = useQuery({
@@ -25,14 +49,14 @@ export default function MobileKYCStatus() {
 
   if (isLoading) {
     return (
-      <MobileLayout>
+      <AdaptiveLayout title="Nedaxer - KYC Status">
         <div className="flex items-center justify-center min-h-screen bg-[#0a0a2e]">
           <div className="text-center">
             <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
             <p className="text-gray-400">Loading verification status...</p>
           </div>
         </div>
-      </MobileLayout>
+      </AdaptiveLayout>
     );
   }
 
@@ -94,14 +118,19 @@ export default function MobileKYCStatus() {
   const StatusIcon = statusInfo.icon;
 
   return (
-    <MobileLayout>
-      {/* Header */}
-      <div className="flex items-center justify-between p-4 bg-[#0a0a2e]">
+    <AdaptiveLayout title="Nedaxer - KYC Status">
+      {/* Mobile Header */}
+      <div className="flex items-center justify-between p-4 bg-[#0a0a2e] md:hidden">
         <Link href="/mobile/profile">
           <ArrowLeft className="w-6 h-6 text-white" />
         </Link>
         <h1 className="text-white text-lg font-semibold">KYC Verification Status</h1>
         <div className="w-6 h-6" />
+      </div>
+      
+      {/* Desktop Header */}
+      <div className="hidden md:flex items-center justify-between p-6 bg-[#0a0a2e] border-b border-gray-700/50">
+        <h1 className="text-white text-2xl font-bold">KYC Verification Status</h1>
       </div>
 
       <div className="p-4 space-y-6 bg-[#0a0a2e] min-h-screen">
@@ -267,6 +296,6 @@ export default function MobileKYCStatus() {
 
         
       </div>
-    </MobileLayout>
+    </AdaptiveLayout>
   );
 }

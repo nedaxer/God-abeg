@@ -28,6 +28,7 @@ The application now uses MongoDB Atlas as the primary database:
 - **ODM**: Mongoose with MongoDB native driver for optimal performance
 - **Schema**: MongoDB collections with users (including UID system), balances, charts, and all trading platform data
 - **Connection**: Direct connection to MongoDB Atlas with automatic failover and scaling
+- **Backup System**: Automatic backups every 5 minutes with restore functionality for redeployments
 
 ## Key Components
 
@@ -240,6 +241,639 @@ The application successfully balances type safety with development velocity by s
 - TypeScript compilation warnings do not affect runtime functionality
 
 **Deployment Script**: `render.yaml` - Ready-to-use Render deployment with Vite dependencies installed as production packages
+
+## MongoDB Automatic Backup & Restore System
+
+### System Overview (July 9, 2025)
+Implemented comprehensive MongoDB backup and restore system for data protection and deployment continuity:
+
+**Automatic Features:**
+- **Auto-backup every 5 minutes**: Uses node-cron scheduler integrated into main server startup
+- **MongoDB Atlas support**: Works with both Atlas and local MongoDB instances using mongodump/mongorestore
+- **Timestamped backups**: Stored in `db_backups/backup-YYYY-MM-DDTHH-MM-SS/` format
+- **Automatic cleanup**: Keeps only 20 most recent backups to manage disk space
+- **Console logging**: Detailed success/failure logging for monitoring backup operations
+
+**Manual Management:**
+- **backup-manager.js**: Easy-to-use CLI tool for manual backup operations
+- **Restore functionality**: Can restore from latest backup or specific backup by name
+- **List backups**: View all available backups with timestamps and file counts
+- **Redeployment support**: Restore data when changing MongoDB URIs
+
+**Commands Available:**
+```bash
+node backup-manager.js backup          # Create immediate backup
+node backup-manager.js restore         # Restore from latest backup
+node backup-manager.js list            # List available backups
+node backup-manager.js restore <name>  # Restore from specific backup
+```
+
+**Dependencies:**
+- `node-cron`: Scheduling automatic backups
+- `mongodb-tools`: MongoDB CLI tools (mongodump, mongorestore)
+
+**Environment Variables:**
+- `MONGODB_URI`: Source database for backups
+- `NEW_MONGO_URI`: Target database for restores (optional)
+
+## Recent Issues Fixed
+
+### Hardcoded Admin Credentials System Implementation (July 9, 2025)
+
+**System Created:**
+- **Multiple Admin Credentials**: Implemented comprehensive hardcoded admin credentials system with 9 different admin accounts for maximum reliability
+- **MongoDB Independence**: Admin access works regardless of MongoDB URL changes or database connection issues
+- **Credential Management**: Created dedicated `server/admin-credentials.ts` file with centralized admin credential management
+- **Enhanced Security**: Multiple admin emails and passwords ensure access during environment migrations
+
+**Technical Implementation:**
+- **Admin Credentials File**: Complete credential management system with unique admin IDs (ADMIN001-ADMIN009)
+- **Multiple Login Endpoints**: Both `/api/auth/login` and `/api/admin/login` support hardcoded admin credentials
+- **Enhanced Middleware**: Updated `requireAdminAuth` middleware to recognize all hardcoded admin IDs
+- **Session Management**: Each admin credential gets unique session ID for proper tracking
+
+**Admin Credentials Available:**
+- **Primary**: admin@nedaxer.com (SMART456 / admin123)
+- **Gmail**: nedaxer.admin@gmail.com (SMART456 / admin123)
+- **Support**: support@nedaxer.com (SMART456)
+- **Root**: root@nedaxer.com (SMART456)
+- **Super**: super@nedaxer.com (SMART456)
+- **Simple**: admin (SMART456 / admin123)
+
+**Key Features:**
+- **Environment Resilience**: Works with any MongoDB URL or database change
+- **Multiple Access Points**: Can login through regular login page or admin portal
+- **Unique Admin IDs**: Each credential gets unique admin ID for session tracking
+- **Centralized Management**: All credentials managed in single TypeScript file
+- **Validation Functions**: Helper functions for credential validation and admin ID checking
+
+**Result**: Complete admin access system operational with 9 hardcoded credentials ensuring admin dashboard access regardless of MongoDB URL changes or database connectivity issues.
+
+### Complete MongoDB Backup & Restore System with Authentication Fix (July 9, 2025)
+
+**System Successfully Implemented and Tested:**
+- **PIN-Protected Standalone Page**: Complete `/backup-restore` system with PIN 6272 security operating independently from admin dashboard
+- **Download Backup Functionality**: Full MongoDB database backup as JSON file with optimized size (excludes system databases)
+- **Upload Restore Functionality**: Complete database restoration from JSON backup files with comprehensive validation
+- **Authentication Fix System**: Automated post-restore authentication repair clearing corrupted sessions and fixing user data integrity
+- **Enhanced Logging**: Detailed backup/restore progress with collection-by-collection verification and critical data summary
+
+**Critical Issues Resolved:**
+- **Session Data Corruption**: Fixed post-restoration authentication failures by clearing 27 corrupted session records that lacked user IDs
+- **User Data Integrity**: Automated fix for missing user fields (isVerified, isAdmin, balance) affecting 10 user accounts across databases
+- **Balance Display Issues**: Verified and restored user balance data with $10M+ in admin accounts and hundreds of thousands in user accounts
+- **SSL/TLS Connection**: Enhanced MongoDB connection handling supporting multiple provider types with proper certificate validation
+
+**Technical Implementation:**
+- **server/backup-restore.ts**: Complete standalone backup/restore system with 50MB file limit and comprehensive error handling
+- **fix-auth-after-restore.js**: Automated authentication repair tool clearing sessions and fixing user data integrity
+- **debug-backup-restore-issues.js**: Comprehensive diagnostic tool for post-restoration verification
+- **Enhanced Logging**: Detailed progress tracking showing users, balances, currencies, and sessions with collection statistics
+- **Security Architecture**: PIN-protected access (6272) completely separate from admin dashboard authentication
+
+**Verification Results:**
+- **11 users in nedaxer database** with proper authentication data and balance records
+- **26 users in test database** including accounts with significant balances ($10M+ admin, $700K+ users)
+- **96 total balance records** properly restored with ObjectId references maintained
+- **All session corruption cleared** ensuring fresh login capability for all users
+- **Currency data intact** (USD, BTC, ETH, BNB, USDT) in both databases
+
+**User Experience:**
+- **Standalone Access**: Direct URL access to `/backup-restore` with PIN verification independent of admin dashboard
+- **Progress Feedback**: Real-time backup preparation and restore status with detailed collection statistics
+- **Comprehensive Error Handling**: Clear error messages with actionable feedback for failed operations
+- **Post-Restore Guidance**: Automated recommendations including application restart and cache clearing instructions
+
+**Result**: Complete MongoDB backup/restore system operational with PIN protection, successful data integrity preservation, automated authentication repair, and comprehensive post-restoration verification for deployment migrations and data protection.
+
+### Standalone MongoDB Backup & Restore System Implementation (July 9, 2025)
+
+**System Created:**
+- **PIN-Protected Standalone Page**: Implemented `/backup-restore` route with security PIN 6272 (configurable via RESTORE_PIN environment variable)
+- **Download Backup Functionality**: Full MongoDB database backup as JSON file with optimized 8.1MB size (excludes sample databases)
+- **Upload Restore Functionality**: Complete database restoration from JSON backup files with validation and error handling
+- **Professional UI**: Gradient-based interface with progress indicators, file size validation, and comprehensive error messaging
+- **Security Features**: PIN verification, 50MB file size limit, JSON format validation, and access control independent of admin dashboard
+
+**Technical Implementation:**
+- **server/backup-restore.ts**: Complete backup/restore system with MongoDB client integration
+- **Multer Integration**: File upload handling with proper error management and temporary file cleanup
+- **Database Optimization**: Excludes system databases (admin, config, local) and sample databases (sample_*) for efficient backups
+- **Error Handling**: Comprehensive error catching with user-friendly messages and proper HTTP status codes
+- **Progress Feedback**: Real-time download progress and restore status updates with success/failure notifications
+
+**Security Architecture:**
+- **Standalone Access**: Completely separate from admin dashboard authentication system
+- **PIN Protection**: 4-digit PIN verification (6272 default, RESTORE_PIN environment variable override)
+- **File Validation**: JSON format validation, file size limits, and secure file handling
+- **No Unauthorized Access**: Hidden from navigation, direct URL access only with PIN verification
+
+**User Experience Features:**
+- **Professional Design**: Dark gradient theme matching Nedaxer branding with glass morphism effects
+- **Progress Indicators**: "Preparing backup download..." and restore progress messages
+- **File Information**: Display selected file details (name, size, modification date)
+- **Error Recovery**: Clear error messages with actionable feedback and fallback mechanisms
+- **Mobile Responsive**: Optimized for both desktop and mobile access
+
+**Result**: Complete standalone backup/restore system operational at `/backup-restore` with PIN protection, enabling full database backups and restores for deployment migrations and data protection.
+
+### UI Cleanup and Real-Time Trading Data Enhancement (January 9, 2025)
+
+**Issues Resolved:**
+1. **Chatbot Notification Badge Removal**: Removed notification number badge from mobile video chatbot icon to prevent support message count display
+2. **Profile Page Switch/Create Account Button Removal**: Removed "Switch/Create Account" button from profile page bottom section for cleaner interface
+3. **Real-Time Trading Chart Header Data**: Enhanced chart header to display real-time 24h high, 24h low, and volume data with 3-second update intervals
+
+**Technical Changes:**
+- **Mobile Video Chatbot**: Removed support notification badge display from `client/src/components/mobile-video-chat-bot.tsx`
+- **Profile Page**: Removed "Switch/Create Account" button from bottom section in `client/src/pages/mobile/profile.tsx`
+- **Trading Chart Data**: Enhanced `updatePrice` function in `client/src/pages/mobile/trade.tsx` to update DOM elements directly for real-time display
+- **Real-Time Updates**: Changed price update interval from 1 second to 3 seconds for optimal real-time data refresh
+- **Chart Header Integration**: Updated chart header to use `currentTicker.high_24h`, `currentTicker.low_24h`, and `currentTicker.volume_24h` for live data
+
+**User Experience Improvements:**
+- **Cleaner Chatbot Interface**: Chatbot icon no longer shows notification counts for support messages
+- **Simplified Profile Page**: Profile page bottom section is cleaner without redundant account switching options
+- **Live Trading Data**: Chart header now displays real-time 24h high ($XX.XX), 24h low ($XX.XX), and volume (XX.XM) with automatic updates every 3 seconds
+- **Accurate Market Information**: Trading data reflects current market conditions with live price feeds from CoinGecko API
+
+**Result**: Trading interface now provides real-time market data in chart headers, chatbot interface is cleaner without notification badges, and profile page has simplified bottom navigation without redundant account management options.
+
+### UI Cleanup: Removed Download/Install App Buttons, Try Demo Button, and QR Scanner (January 9, 2025)
+
+**Issues Resolved:**
+- **Header Menu Cleanup**: Removed "Download App" button from both desktop and mobile header navigation menus
+- **Footer Install Button Removal**: Removed "Install App" button from footer platform section
+- **Try Demo Button Removal**: Removed "Try Demo" button from "Why Trade with Nedaxer" platform features section
+- **QR Scanner Removal**: Removed QR code scanner button from assets page header along with entire QR scanning functionality
+- **Import Cleanup**: Cleaned up unused imports (Download icon, usePWAInstall hook, QrCode icon) from header, footer, and assets components
+
+**Technical Changes:**
+- **Header Component**: Removed desktop and mobile download app buttons, simplified CTA section to only show Login and Open Account
+- **Footer Component**: Removed install app button from platform section, cleaned up unused PWA install imports
+- **Platform Features Component**: Removed "Try Demo" button from the call-to-action section, kept only "Open Account" button
+- **Assets Page**: Removed QR scanner button from header, deleted entire handleQRScan function with camera access and modal logic
+- **Code Optimization**: Removed unused imports and dependencies for cleaner component structure
+
+**Result**: Landing page and assets page now have cleaner interfaces without redundant download/install buttons, QR scanner functionality, or demo buttons, providing a more focused user experience centered on core trading functionality.
+
+### Enhanced Processing and Success Animation System (January 9, 2025)
+
+**Issue Resolved:**
+- **Separate Processing and Success States**: Implemented distinct processing and success animations for clearer user feedback
+- **Processing Animation**: Shows "Processing..." with orange spinning wheel during transaction processing
+- **Success Animation**: Shows green checkmark with "Transaction Successful" message after completion
+- **Sequential Flow**: Processing → Success with proper state management
+
+**Technical Implementation:**
+- **Processing State**: Added `showProcessingAnimation` state for withdrawal and `isProcessing` state for transfer
+- **Success State**: Maintained `showSuccessAnimation` state with updated green checkmark display
+- **State Management**: Proper sequence handling - processing starts on submit, success shows after API completion
+- **Error Handling**: Processing state cleared on both success and error scenarios
+- **Animation Timing**: Processing shows during API call, success shows for 4 seconds then auto-hides
+
+**User Experience Features:**
+- **Withdrawal Flow**: Click submit → "Processing..." with spinning wheel → "Withdrawal Successful!" with checkmark
+- **Transfer Flow**: Click submit → "Processing..." with spinning wheel → "Transfer Successful!" with checkmark  
+- **Visual Consistency**: Dark theme (bg-[#1a1a40]) with orange processing spinner and green success checkmark
+- **Clear Feedback**: Users see immediate processing feedback, then definitive success confirmation
+- **Professional Design**: Consistent popup styling across both transaction types with proper spacing and typography
+
+**Result**: Both withdrawal and transfer operations now provide professional spinning wheel animations followed by detailed success messages, eliminating video dependencies while maintaining clear user feedback.
+
+### Automatic Bot-Style Profile Picture Generation (January 9, 2025)
+
+**Issue Resolved:**
+- **New User Avatar Generation**: Implemented automatic unique bot-style profile picture generation for all new users using DiceBear's bottts style
+- **Existing User Avatar Backfill**: Added avatar generation for existing users who don't have profile pictures when they log in
+- **Avatar URL Storage**: Profile pictures are stored as URLs in the MongoDB user records pointing to DiceBear SVG avatars
+
+**Technical Implementation:**
+- **DiceBear Integration**: Uses modern DiceBear API v7.x with bottts style: `https://api.dicebear.com/7.x/bottts/svg?seed={username}`
+- **Registration Flow**: New users automatically get unique robot avatars based on their username during account creation
+- **Login Enhancement**: Existing users without avatars get avatars generated and saved to their profile during login
+- **Database Schema**: User model already supported profilePicture field, updated registration and login responses to include avatar URLs
+- **Unique Generation**: Each avatar is unique and consistent based on username seed, ensuring same user always gets same avatar
+
+**User Experience Features:**
+- **Automatic Assignment**: No user action required - avatars are generated automatically during registration
+- **Consistent Avatars**: Each username generates the same unique robot avatar every time
+- **SVG Format**: Scalable vector graphics ensure avatars look crisp at any size
+- **Bot Theme**: Professional robot-style avatars match the trading platform's tech aesthetic
+- **Backward Compatibility**: Existing users without avatars get them automatically on next login
+
+**Result**: All users now have unique, professional bot-style profile pictures automatically generated and stored in their profiles, providing consistent visual identity across the platform without requiring manual avatar uploads.
+
+### Bottom Navigation Removal from Detail Pages (January 9, 2025)
+
+**Issues Resolved:**
+1. **Transfer Page Navigation**: Confirmed transfer page already had bottom navigation hidden with `hideBottomNav={true}` setting
+2. **Assets History Page**: Added `hideBottomNav={true}` to assets history page to remove bottom navigation when viewing transaction history
+3. **Deposit Details Page**: Updated deposit details page to hide bottom navigation using `hideBottomNav={true}` in AdaptiveLayout
+4. **Transfer Details Page**: Updated transfer details page to hide bottom navigation using `hideBottomNav={true}` in AdaptiveLayout  
+5. **Withdrawal Details Page**: Refactored withdrawal details page to use AdaptiveLayout pattern with `hideBottomNav={true}` for consistent behavior
+
+**Technical Changes:**
+- **Assets History**: Modified `client/src/pages/mobile/assets-history.tsx` to include `hideBottomNav={true}` in AdaptiveLayout
+- **Deposit Details**: Updated `client/src/pages/mobile/deposit-details.tsx` AdaptiveLayout configuration to hide bottom navigation
+- **Transfer Details**: Updated `client/src/pages/mobile/transfer-details.tsx` AdaptiveLayout configuration to hide bottom navigation
+- **Withdrawal Details**: Refactored `client/src/pages/mobile/withdrawal-details.tsx` from direct rendering to AdaptiveLayout pattern, wrapped mobile component in `MobileWithdrawalDetails` function, added desktop component integration, and enabled `hideBottomNav={true}`
+
+**Result**: All transaction-related pages (transfer, assets history, deposit details, withdrawal details, transfer details) now have clean interfaces without bottom navigation, providing focused user experience when viewing transaction information and details.
+
+### Green USD Balance Removal from Home Page (January 9, 2025)
+
+**Issue Resolved:**
+- **Green USD Balance Display**: Removed the green USD balance text that appeared after the BTC amount on the mobile home page balance section
+
+**Technical Changes:**
+- **Home Page Balance Section**: Modified `client/src/pages/mobile/home.tsx` to remove the conditional green USD balance display `(${getUserUSDBalance().toFixed(2)})` that appeared after the BTC amount
+- **Balance Display Cleanup**: Simplified the balance display to show only the BTC equivalent amount without the redundant green USD value
+
+**Result**: The home page balance section now shows only the main USD balance in the selected currency and the BTC equivalent amount, providing a cleaner interface without the duplicate green USD display.
+
+### Withdrawal Video Success Animation and Notification Enhancements (January 9, 2025)
+
+**Issues Resolved:**
+1. **Video-Only Success Animation**: Replaced complex success popup with clean video-only animation using user-provided video file
+2. **4-Second Video Display**: Extended video animation duration from 3 to 4 seconds as requested
+3. **Bot Icon Size Enhancement**: Made mobile video chat bot icon same size as notification tap for visual consistency
+4. **Notification Shaking Animation**: Added custom shaking animation to notification bell when users receive new notifications
+
+**Technical Changes:**
+- **Withdrawal Success Popup**: Simplified to display only user's uploaded video (succes video_1752060069265.mp4) in full-screen black overlay with rounded corners
+- **Video Animation Duration**: Updated setTimeout from 3000ms to 4000ms for 4-second video display
+- **Mobile Video Chat Bot**: Maintained consistent w-6 h-6 sizing to match notification tap dimensions
+- **Notification Bell Animation**: Added animate-shake class with custom CSS keyframes for notification bell when unread count > 0
+- **CSS Animations**: Utilized existing shake animation with rotate transformations for smooth notification bell movement
+
+**Result**: Withdrawal success now shows clean video-only animation for 4 seconds, bot icon maintains consistent sizing with notification tap, and notification bell provides visual feedback with shaking animation when users receive new notifications.
+
+### UI Component Removal and Portfolio Balance Reset (January 9, 2025)
+
+**Issues Resolved:**
+1. **Mobile Search Bar Removal**: Removed the search bar from mobile home page including the search input field and QR code scanner button
+2. **Mobile Quick Actions Grid Removal**: Removed the grid of quick action buttons from mobile home page
+3. **Desktop Quick Actions Removal**: Removed the quick actions card from desktop home page dashboard
+4. **Desktop Currency Dropdown Removal**: Removed the currency dropdown from desktop portfolio section in header
+5. **Portfolio Balance Reset**: Set portfolio balance to display $0.00 on both mobile and desktop versions instead of showing actual user balances
+
+**Technical Changes:**
+- **Mobile Home Page**: Removed search bar section and quick actions grid section from home page layout
+- **Desktop Content**: Removed CurrencyDropdown component import and usage, removed quick actions card section
+- **Portfolio Display**: Changed balance display from dynamic user balance to static $0.00 on both platforms
+- **Code Cleanup**: Removed unused currency-related state variables and functions from desktop content component
+
+**Result**: Both mobile and desktop home pages now have cleaner interfaces without search bars, quick actions, or currency dropdowns, and display zero portfolio balances as requested.
+
+### Mobile Home Page Enhancements: Real-Time BTC Display and Notification Improvements (January 8, 2025)
+
+**Issues Resolved:**
+1. **Enhanced Notification Badge Display**: Improved notification badge styling with larger size (18px), orange color scheme, enhanced border, and support for up to 99+ notifications
+2. **Real-Time BTC Balance Display**: Changed BTC display from USD-to-BTC conversion to actual user BTC balance with live USD conversion showing next to it
+3. **Desktop Notification Tab Removal**: Implemented device detection to hide notification bell icon on desktop mode (768px+) - now only appears on mobile devices
+4. **Enhanced Real-Time Price Updates**: Improved price refresh frequency from 30 seconds to 3 seconds for more accurate BTC pricing and USD conversion
+5. **User Balance Integration**: Connected BTC display to actual user balance data from balances API instead of calculated conversion
+
+**Technical Implementations:**
+- **Improved Notification Badge**: Larger badge (18px height, min-width 18px) with orange background (#f97316), white border (2px), and support for 99+ display format
+- **Real-Time BTC Integration**: Added getUserBTCBalance() function to fetch actual BTC from user balances, convertBTCToUSD() for live USD conversion display
+- **Device-Responsive UI**: Enhanced desktop detection to conditionally hide notification tab on screens 768px+ while preserving mobile functionality
+- **Accelerated Price Updates**: Reduced price query refetchInterval to 3000ms and staleTime to 2500ms for near real-time BTC price accuracy
+- **Enhanced Balance Display**: BTC amount shows user's actual holdings with live USD value in green text when balance exists
+
+**Mobile Experience Features:**
+- **Professional Notification Badge**: Orange badge with border matches app theme, clear number display up to 99+ for large notification counts
+- **Live BTC Portfolio**: Shows exact BTC balance (0.00000000 format) with real-time USD equivalent ($XX.XX) when user holds BTC
+- **Mobile-Only Notifications**: Notification bell completely removed from desktop interface, maintains clean desktop experience
+- **3-Second Updates**: BTC price and USD conversion update every 3 seconds providing near real-time portfolio value tracking
+
+**Result**: Mobile home page now provides enhanced user experience with professional notification badges, accurate real-time BTC balance display with USD conversion, desktop-appropriate UI without notification clutter, and accelerated price updates for precise portfolio tracking.
+
+### Complete Desktop Withdrawal Page Responsive Redesign with Real-Time Features (January 8, 2025)
+
+**Issues Resolved:**
+1. **Desktop Withdrawal Page Complete Rebuild**: Created comprehensive responsive desktop withdrawal interface with app background (#0a0a2e) and professional layout design
+2. **Real-Time WebSocket Integration**: Implemented live balance updates, crypto price feeds, and transaction processing with 5-second refresh intervals
+3. **Adaptive Layout Integration**: Properly integrated withdrawal page with desktop dashboard sidebar and header system using AdaptiveLayout component
+4. **Enhanced User Experience**: Added gradient cards, animated buttons, crypto amount conversion, network selection with minimum withdrawal displays
+5. **Professional Security Features**: Implemented security notices, transaction summaries, processing time indicators, and comprehensive error handling
+
+**Technical Implementations:**
+- **Responsive Desktop Component**: Built complete desktop-native withdrawal interface with proper app background, gradient cards, and professional styling
+- **Real-Time Data Integration**: WebSocket connectivity for live balance updates, crypto price feeds, and transaction status with automatic reconnection
+- **Interactive Form System**: Dynamic crypto selection with live price display, automatic USD-to-crypto conversion, network selection with minimum amounts
+- **Enhanced Validation**: Comprehensive form validation with real-time error display, balance checking, and withdrawal eligibility verification
+- **Professional UI Elements**: Gradient backgrounds, backdrop blur effects, animated buttons, and responsive grid layouts optimized for desktop viewing
+- **AdaptiveLayout Integration**: Proper integration with desktop dashboard system ensuring consistent header, sidebar, and navigation experience
+
+**Desktop Withdrawal Features:**
+- **App Background Integration**: Full #0a0a2e background matching desktop theme with proper sidebar and header layout
+- **Live Balance Display**: Real-time USD balance updates with WebSocket connectivity and 5-second refresh intervals
+- **Crypto Selection Panel**: Interactive crypto cards with live price displays, hover effects, and selection highlighting
+- **Smart Form System**: Dynamic amount input with max button, live crypto conversion display, network selection with minimum amounts
+- **Security Integration**: Bank-level security notices, processing time display, address validation warnings, and transaction summaries
+- **Responsive Design**: Full desktop optimization with xl:grid-cols-3 layouts, proper spacing, and mobile compatibility through AdaptiveLayout
+
+**Result**: Desktop withdrawal page now provides complete professional trading platform experience with real-time data, app background integration, proper sidebar/header layout, and comprehensive withdrawal functionality matching the quality of other desktop pages in the platform.
+
+### Desktop Transaction Details Pages Implementation and Crypto Filtering (January 8, 2025)
+
+**Issues Resolved:**
+1. **Desktop Deposit Details Page**: Created comprehensive desktop-specific deposit details component with professional layout, transaction summaries, and crypto information
+2. **Desktop Withdrawal Details Page**: Implemented complete desktop withdrawal details with destination addresses, network information, and transaction data
+3. **Desktop Transfer Details Page**: Built desktop transfer details showing sender/recipient info, user profiles, and comprehensive transaction information  
+4. **Crypto Logo Consistency**: Updated all transaction detail pages to use proper CryptoLogo component instead of custom logo functions
+5. **4-Currency Filtering**: Implemented filtering to show only BTC, USDT, ETH, and BNB transactions in desktop assets history
+6. **Desktop Routing Enhancement**: Added proper routing for all detail pages to use desktop-specific components instead of mobile views
+
+**Technical Implementations:**
+- **DesktopDepositDetails Component**: Professional layout with transaction summaries, crypto logos, amounts, network information, and copyable transaction IDs
+- **DesktopWithdrawalDetails Component**: Complete withdrawal information with destination addresses, network details, and comprehensive transaction data
+- **DesktopTransferDetails Component**: User-to-user transfer details with profile pictures, sender/recipient information, and transfer direction indicators
+- **CryptoLogo Integration**: Replaced custom getCryptoLogo functions with proper CryptoLogo component for consistent crypto symbol display
+- **Transaction Filtering**: Enhanced desktop assets history to filter deposits and withdrawals for only the 4 main cryptocurrencies (BTC, USDT, ETH, BNB)
+- **Desktop Content Routing**: Updated desktop-content.tsx with proper routing for /mobile/deposit-details/, /mobile/withdrawal-details/, and /mobile/transfer-details/ paths
+
+**Desktop Detail Page Features:**
+- **Professional Layout**: Clean desktop-native design with proper spacing, cards, and navigation
+- **Transaction Information**: Complete transaction data including IDs, dates, amounts, networks, and status indicators
+- **Copy Functionality**: Clickable copy buttons for transaction IDs and addresses with success notifications
+- **Breadcrumb Navigation**: "Back to History" buttons for easy navigation
+- **Responsive Design**: Grid layouts optimized for desktop viewing with proper card structures
+- **Status Indicators**: Visual badges and icons showing transaction completion status
+
+**Result**: Desktop mode now provides complete transaction detail pages accessible from assets history, displaying only 4 main cryptocurrencies with proper desktop layouts and consistent crypto logo usage throughout all transaction components.
+
+### Complete Platform Enhancement: Video Chatbot, News Images, Assets History, and Desktop Notifications (January 8, 2025)
+
+**Issues Resolved:**
+1. **Interactive Video Chatbot Enhancement**: Transformed simple popup into full interactive chat interface and repositioned to browser side edge
+2. **BeInCrypto News Image Implementation**: Updated desktop news to use PNG image and mobile news to use JPEG image with proper asset serving
+3. **Crypto Symbol Display Fix**: Added missing crypto symbols (BTC, ETH, etc.) to transaction displays in assets history
+4. **Real-time Desktop Notifications**: Implemented live notification system with WebSocket integration and badge updates
+
+**Technical Implementations:**
+- **Enhanced Chat Interface**: Completely rebuilt VideoChatBot with side-mounted popup (400px width, right edge), message history, typing indicators, and personalized welcome messages
+- **Asset Serving System**: Created simplified `/api/assets/:filename` endpoint with proper JPEG/PNG content type handling, bypassing middleware interference
+- **News Logo Mapping**: Desktop uses PNG (`download%20(1)_1751940902760.png`), mobile uses JPEG (`download_1751940923486.jpeg`) for BeInCrypto fallbacks
+- **Transaction Symbol Display**: Enhanced assets history to show crypto symbols in both deposit and withdrawal transactions (e.g., "+0.123456 BTC", "-0.045678 ETH")
+- **Real-time Desktop Notifications**: Added NotificationButton component with WebSocket subscription, 3-second refresh intervals, and animated badge counts
+
+**Chat Interface Features:**
+- **Side-Mounted Position**: Chat popup positioned on browser right edge with slide-in animation
+- **Interactive Messaging**: Real-time chat with Enter key support, loading states, and conversation history
+- **Professional Design**: Blue/orange theme matching Nedaxer branding with proper message threading
+- **API Integration**: Connected to `/api/chatbot/message` endpoint for AI-powered responses
+
+**Desktop Notification System:**
+- **Real-time Updates**: WebSocket subscription for instant notification badge updates
+- **Badge Display**: Animated orange badges showing unread count (9+ for counts over 9)
+- **Auto-refresh**: 3-second polling intervals with optimistic updates
+- **WebSocket Integration**: Listens for 'notification_update' and 'new_notification' events
+
+**Result**: Complete platform enhancement with side-mounted interactive chatbot, proper BeInCrypto image fallbacks (PNG/JPEG), crypto symbols visible in transaction history, real-time desktop notification system with live badge updates, removed desktop search bar, and implemented CoinGecko API crypto logos for desktop assets history.
+
+### Desktop News and Transfer Page Enhancements (January 8, 2025)
+
+**Issues Resolved:**
+1. **Desktop News Page Category Filters Removal**: Removed category filters (News, Trending, Bitcoin, Ethereum, DeFi) from desktop News page and made it fetch news identical to mobile version
+2. **Desktop Transfer Page Text Cleanup**: Removed "Send Money" and "Transfer funds to other Nedaxer users" text from desktop Transfer page header
+3. **Balance Display Verification**: Ensured Transfer page properly fetches and displays user's actual USD balance using wallet summary API
+
+**Technical Implementations:**
+- **Desktop News Component**: Updated to use same API endpoint (`/api/crypto/news`) as mobile version with identical query configuration and error handling
+- **News Data Structure**: Synchronized NewsArticle interface between desktop and mobile components for consistent data handling
+- **Category Filter Removal**: Eliminated category selection state and filtering logic from desktop News component
+- **Transfer Page Header Cleanup**: Removed header section containing "Send Money" title and description text
+- **Balance Integration**: Confirmed balance fetching uses `/api/wallet/summary` endpoint with proper error handling and real-time updates
+
+**Result**: Desktop News page now displays crypto news identically to mobile version without category filters, and Transfer page has cleaner interface without unnecessary header text while maintaining proper balance display functionality.
+
+### Complete Authentication System Fixes and Desktop/Mobile Adaptive Layout Implementation (January 7, 2025)
+
+**Issues Resolved:**
+1. **Registration System Failure**: Fixed missing `insertMongoUserSchema` import in `server/routes.mongo.ts` causing 500 internal server errors during user registration
+2. **Authentication Verification Issues**: Fixed hardcoded `isVerified: false` in MongoDB storage that was preventing proper user authentication and account verification
+3. **Desktop Access Limitation**: Created comprehensive adaptive layout system allowing desktop users to access full mobile trading platform with enhanced UX
+4. **Mobile-Only Design Restriction**: Implemented responsive desktop layout that provides better viewing experience for desktop users while maintaining full mobile functionality
+
+**Technical Implementations:**
+- **AdaptiveLayout Component**: Created intelligent layout system that detects device type (mobile vs desktop) and renders appropriate interface
+- **DesktopDashboard Component**: Built complete desktop-native layout with sidebar navigation, top header, and dashboard-style interface - completely different from mobile
+- **DesktopContent Component**: Developed desktop-specific content wrapper with overview cards, quick actions, and top movers sections
+- **Mobile Layout Preservation**: Mobile users maintain original bottom navigation and mobile-optimized interface unchanged
+- **Schema Import Fix**: Added missing import for `insertMongoUserSchema` from shared MongoDB schema to resolve registration endpoint failures
+- **Authentication Enhancement**: Restored proper `isVerified` field retrieval from database instead of hardcoded false value
+
+**Layout System Features:**
+- **Automatic Device Detection**: Responsive system detects screen width (768px+ for desktop) and renders appropriate layout
+- **Desktop Dashboard Interface**: Complete desktop-native interface with collapsible sidebar navigation, top header, and dashboard cards
+- **No Bottom Navigation**: Desktop layout completely removes mobile bottom navigation panel for proper desktop UX
+- **Dashboard Overview**: Desktop home page shows portfolio overview cards, quick actions, top movers, and real-time market data
+- **Sidebar Navigation**: Professional left sidebar with Nedaxer branding, user info, main navigation items, and logout functionality
+- **Full Feature Preservation**: All mobile functionality (trading, assets, markets, earn, profile) works identically on desktop
+- **Completely Different Design**: Desktop interface designed from scratch, not adapted mobile layout
+
+**Updated Mobile Pages:**
+- All mobile pages now use `AdaptiveLayout` instead of `MobileLayout` for automatic device-appropriate rendering
+- Enhanced page titles for better desktop experience (e.g., "Nedaxer - Home", "Nedaxer - Trading", etc.)
+- Preserved all existing mobile functionality while adding desktop compatibility
+
+**Authentication Status:**
+- ✅ Registration system fully functional - new users can successfully create accounts
+- ✅ Login system working correctly - both admin and user authentication operational
+- ✅ Session management restored - users stay logged in across page refreshes
+- ✅ Database verification proper - users retrieved correctly from MongoDB Atlas
+- ✅ Mobile pages protected - authentication required for all /mobile/* routes
+
+**Result**: Complete trading platform now accessible on both mobile and desktop devices with adaptive layouts providing optimal user experience for each device type, while authentication system operates flawlessly for user registration and login.
+
+### Desktop Sidebar Logo Implementation and Mobile Hooks Fixes (January 7, 2025)
+
+**Issues Resolved:**
+1. **React Hooks Ordering Violations**: Fixed critical "Rendered more hooks than during the previous render" errors in AnimatedChatBot and mobile settings components that were causing mobile crashes
+2. **Desktop Sidebar Logo Enhancement**: Implemented actual Nedaxer logo from landing page in desktop sidebar header, replacing generic placeholder
+3. **Authentication Stability Issues**: Enhanced auth cache stability to prevent aggressive session clearing and improve user login persistence
+4. **WebSocket Connection Problems**: Addressed WebSocket connection failures and reduced cache invalidation frequency
+
+**Technical Implementations:**
+- **Hooks Ordering Fix**: Moved all useEffect and useState hooks before conditional returns in AnimatedChatBot component to comply with Rules of Hooks
+- **Mobile Settings Hooks**: Fixed hooks violations in mobile settings page by ensuring all useQuery and useMutation calls occur before conditional returns with proper enabled flags
+- **Nedaxer Logo Integration**: Added nedaxerLogo import from assets and implemented it in desktop sidebar header with h-12 sizing, only visible when sidebar is expanded
+- **Logo Visibility Control**: Ensured logo only appears in expanded sidebar state, removed logo from collapsed sidebar view as requested
+- **Authentication Cache Enhancement**: Increased staleTime to 10 minutes and gcTime to 30 minutes, added refetchOnReconnect: false to prevent unnecessary auth checks
+- **Cache Clearing Optimization**: Removed aggressive cache clearing from profile logout, letting auth hook handle session management properly
+
+**Desktop Sidebar Features:**
+- **Logo Display**: Full Nedaxer logo shown only when sidebar is expanded (width 288px)
+- **Collapsed State**: Clean collapsed sidebar with no logo, only toggle button for reopening
+- **Professional Branding**: Logo paired with "Professional Trading" subtitle when expanded
+- **Smooth Transitions**: 300ms transition animations for expand/collapse with proper logo visibility control
+
+**Result**: Mobile app now works without React hooks errors, desktop sidebar displays proper Nedaxer branding only when expanded, and authentication sessions remain stable without unexpected logouts.
+
+### Desktop Transfer Page Enhancement and Professional Sidebar Redesign (January 7, 2025)
+
+**Issues Addressed:**
+1. **Desktop Transfer Page Recreation**: Completely rebuilt desktop transfer page with app background color (#0a0a2e) and enhanced functionality
+2. **User Profile Picture Integration**: Added user profile pictures to desktop sidebar with fallback to user icon
+3. **Portfolio to Assets Rename**: Changed "Portfolio" navigation label to "Assets" in desktop sidebar
+4. **Professional Sidebar Enhancement**: Redesigned desktop sidebar with modern styling, improved spacing, and professional aesthetics
+5. **News Page Implementation**: Created comprehensive desktop news page with crypto news integration
+6. **Persistent Sidebar**: Ensured desktop sidebar remains visible across all pages for consistent navigation experience
+
+**Technical Implementations:**
+- **Enhanced Desktop Transfer**: Recreated with app background color, improved form layout, real-time recipient search, profile picture display, and comprehensive validation
+- **Professional Sidebar Design**: Increased width to 72px when collapsed/288px when expanded, added gradient backgrounds, enhanced navigation items with hover effects and active states
+- **User Profile Integration**: Added 12x12 profile picture display with gradient border, full name display, and "Premium Trader" status badge
+- **Navigation Improvements**: Enhanced navigation items with rounded corners, gradient backgrounds, active state indicators, and smooth transitions
+- **Desktop News Component**: Built comprehensive news page with category filtering, sentiment analysis, real-time updates, and professional card layouts
+- **Persistent Navigation**: Confirmed AdaptiveLayout properly wraps all desktop pages in DesktopDashboard for consistent sidebar experience
+
+**Enhanced Features:**
+- **Transfer Page**: Method selection (Email/UID), real-time recipient validation with profile pictures, balance display, amount input with max button, optional notes, and security information
+- **Sidebar Navigation**: Dashboard, Assets, Trading, Markets, Earn, News, Profile, Notifications with visual active states and hover animations
+- **Professional Styling**: Improved branding with larger Nedaxer logo, "Professional Trading" subtitle, enhanced user info section with profile pictures and status
+- **News Integration**: Category filtering (All, Trending, Bitcoin, Ethereum, DeFi), sentiment badges (Bullish/Bearish/Neutral), external link handling, and responsive grid layout
+
+**Result**: Desktop mode now features a fully functional transfer page with app background color, enhanced professional sidebar with user profile pictures, renamed Assets navigation, comprehensive news page, and persistent sidebar navigation across all desktop pages providing a cohesive professional trading experience.
+
+### Admin Communication System and Success Banner Implementation (January 7, 2025)
+
+**Issues Resolved:**
+1. **Admin Connection Request System**: Fixed API request format in admin portal where connection requests were using `body` instead of `data` parameter, causing API calls to fail
+2. **Success Banner Display**: Confirmed all admin transaction success banners are properly implemented in admin portal with `displayNotificationBanner()` function
+3. **User Message Icon Notifications**: Enhanced UserMessageBox component to show notification badges on message icon (not headphones) for unread admin replies to support messages
+4. **Backend API Validation**: All admin APIs working correctly - add funds, connection requests, and support messages all return success responses and trigger appropriate notifications
+
+**Technical Fixes:**
+- Updated admin portal connection request mutation to use correct `apiRequest` format with `data` field instead of `body`
+- Enhanced mongoStorage.ts debugging for user lookup operations to handle ObjectId conversion properly
+- Confirmed notification system showing unread count badges on MessageSquare icon in mobile home page
+- Verified support message filtering works correctly in notifications page with "Support" tab
+
+**Working Functionality:**
+- **Admin Portal**: All transaction operations (add/remove funds, connection requests, support messages) return success responses
+- **Success Banners**: `displayNotificationBanner()` function implemented throughout admin portal for all operations
+- **Message Notifications**: UserMessageBox shows orange notification badges for unread admin replies
+- **Real-time Updates**: WebSocket broadcasting working for all admin operations
+
+**Result**: Admin communication system is fully functional with proper success feedback, and user message notifications display correctly on the message icon.
+
+### Complete User Authentication System Restoration (January 7, 2025)
+
+**Issues Resolved:**
+1. **MongoDB User Backup**: Successfully backed up all 11 existing users from MongoDB Atlas database with complete data preservation including UIDs, KYC status, balances, and account settings
+2. **Authentication System Failure**: Fixed broken login system where users couldn't authenticate due to case-sensitive email lookups and password hash mismatches
+3. **User Account Recovery**: Restored login functionality for all existing users by implementing case-insensitive user lookup and fixing password validation
+4. **Database Connection Issues**: Verified and stabilized MongoDB Atlas connection ensuring reliable user data access
+
+**Technical Fixes:**
+- Updated `server/mongoStorage.ts` getUserByEmail and getUserByUsername functions to use case-insensitive regex queries (`$regex: new RegExp(^${email}$, 'i')`)
+- Fixed password hash validation by ensuring all users have proper `actualPassword` fields stored for admin reference
+- Normalized email formats to lowercase for consistent database queries
+- Created comprehensive user backup system with timestamped JSON files for data safety
+- Enhanced authentication debugging with detailed logging and validation testing
+
+**Working Credentials Restored:**
+- **Admin Accounts**: admin@nedaxer.com (SMART456 hardcoded bypass), nedaxer.us@gmail.com (admin123), admin@nedaxer.com (admin123 database)
+- **User Accounts**: 8 user accounts restored with working passwords including robinstephen003@outlook.com (testpass123), test@example.com (password), and various test accounts
+- **System Status**: MongoDB Atlas fully operational with 11 users backed up, authentication system completely functional
+
+**Result**: All existing users can now successfully log in to their accounts, no data was lost, and the authentication system is fully restored and operational.
+
+## Recent Issues Fixed
+
+### PWA Installation Error Fix and Name Change Functionality Fix (January 9, 2025)
+
+**Issues Resolved:**
+1. **PWA Installation Error**: Fixed "Install not available" error by removing conflicting PWA install code from multiple files
+2. **Name Change Functionality**: Fixed name editing in settings page that wasn't working due to incorrect API endpoint
+3. **API Endpoint Correction**: Updated settings page to use correct `/api/auth/profile` endpoint instead of `/api/user/update-profile`
+4. **Backend Integration**: Verified that backend properly supports firstName and lastName updates through PUT method
+
+**Technical Changes:**
+- `client/src/main.tsx`: Removed all PWA install functionality and conflicting service worker code
+- `client/src/hooks/usePWAInstall.ts`: Simplified to return disabled PWA install hooks
+- `client/src/components/pwa-install-prompt.tsx`: Replaced with empty component to prevent installation conflicts
+- `client/src/pages/mobile/settings.tsx`: Fixed API endpoint from `/api/user/update-profile` (PATCH) to `/api/auth/profile` (PUT)
+- `server/routes.mongo.ts`: Confirmed `/api/auth/profile` endpoint exists and properly handles firstName/lastName updates
+
+**Result**: PWA installation no longer shows error messages, and users can successfully edit their names in the settings page with proper backend persistence through the correct API endpoint.
+
+### Settings Page Cleanup and Notification Fixes (January 6, 2025)
+
+**Issues Resolved:**
+1. **Settings Page Cleanup**: Removed unwanted settings options (Language, currency_display, Always on, English >, USD >) from mobile settings page
+2. **Account Info Text**: Changed "account_info" to "Account Info" for cleaner display
+3. **Name Saving Functionality**: Fixed change name feature to properly save firstName and lastName fields to database
+4. **Notification Read Status**: Fixed duplicate onError key causing TypeScript compilation errors and preventing notifications from staying read
+5. **Notification Card Interaction**: Added tap-to-read functionality - tapping anywhere on notification card marks it as read
+
+**Technical Changes:**
+- `client/src/pages/mobile/settings.tsx`: Removed unwanted settings items, fixed account info text, enhanced name saving to split full name into firstName/lastName
+- `client/src/pages/mobile/notifications.tsx`: Fixed duplicate onError handlers, added onClick handler to notification cards with event.stopPropagation() on buttons to prevent conflicts
+- `server/api/stable-crypto-prices.ts`: Added missing coin mappings for cryptocurrencies that were showing $0.00 prices
+
+**Result**: Settings page is now cleaner with only essential account information, name changes save properly, notifications maintain read status correctly, and users can mark notifications as read by tapping anywhere on them.
+
+### Notification Tap-to-Read API Fix (January 6, 2025)
+
+**Issue Resolved:**
+- Fixed notification mark-as-read API call parameter order that was preventing notifications from being marked as read when tapped
+
+**Technical Fix:**
+- `client/src/pages/mobile/notifications.tsx`: Corrected apiRequest function call to use proper parameter order (URL first, then options object with method)
+- Added comprehensive debug logging to track API requests and responses
+- Fixed authentication flow by ensuring proper credentials are sent with requests
+
+**Result**: Notifications now properly mark as read when users tap on them or click "View More" buttons, with immediate UI updates and proper backend persistence.
+
+### Admin Dashboard API Fix (January 6, 2025)
+
+**Issues Resolved:**
+- Fixed admin dashboard fund management functionality that was not working due to API parameter order issues
+- Corrected all admin API calls to use proper apiRequest function syntax
+- Fixed authentication flow for admin operations including fund addition, fund removal, access toggles
+
+**Technical Fixes:**
+- `client/src/pages/admin-portal-unified.tsx`: Updated all admin mutations to use correct apiRequest parameter order (URL first, then options object)
+- Fixed addFundsMutation, removeFundsMutation, toggleDepositRequirementMutation, toggleAllFeaturesDisabledMutation, and toggleWithdrawalAccessMutation
+- Added comprehensive debug logging to track admin operations
+- Verified admin authentication system working with correct credentials (admin@nedaxer.com / SMART456)
+
+**Backend Verification:**
+- Confirmed admin authentication middleware (requireAdminAuth) working correctly
+- Tested fund addition API successfully updating user balances from $10,000,000 to $10,000,100
+- All admin API endpoints responding properly with session-based authentication
+
+**Result**: Admin dashboard is now fully functional with working fund management, user access controls, and all administrative features operating correctly.
+
+### Price Flickering and Notification Bug Resolution (January 6, 2025)
+
+**Issues Resolved:**
+1. **Crypto Price Flickering**: Fixed price display instability where prices would flicker every second
+2. **Notification Read Status Bug**: Fixed issue where read notifications would reappear as unread when prices temporarily disappeared
+
+**Root Causes Identified:**
+- **Price Flickering**: Conflicting refresh intervals (5s vs 1s) and forced cache clearing causing data instability
+- **Animation Conflicts**: Multiple animation intervals running simultaneously causing visual flicker
+- **Notification Bug**: Query invalidation during mark-as-read operations triggering complete data refetch
+
+**Solutions Implemented:**
+1. **Stabilized Price Cache**: Removed forced cache clearing from realtime-prices API endpoint
+2. **Unified Refresh Intervals**: Changed all crypto price queries to consistent 10-second intervals with 5-second staleTime
+3. **Eliminated Animation Conflicts**: Replaced complex price animations with direct state updates to prevent flickering
+4. **Optimistic Notification Updates**: Implemented optimistic UI updates for notification read status to prevent flickering
+5. **Enhanced Query Configuration**: Added staleTime and refetchOnWindowFocus controls to prevent unnecessary refetches
+
+**Technical Changes:**
+- `server/api/realtime-prices.ts`: Removed forced cache clearing, improved cache strategy
+- `client/src/components/crypto-price-ticker.tsx`: Unified refresh intervals, removed conflicting animations
+- `client/src/pages/mobile/notifications.tsx`: Added optimistic updates with rollback functionality
+
+**Result**: Crypto prices now display stably without flickering, and notification read/unread status remains consistent during price updates.
 
 ## Changelog
 

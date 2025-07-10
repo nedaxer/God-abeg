@@ -1,0 +1,593 @@
+when i tried NODE_ENV=development npx tsx server/index.ts (   npm audit fix --force
+Run `npm audit` for details.
+==> Uploading build...
+==> Uploaded in 7.0s. Compression took 3.9s
+==> Build successful 🎉
+==> Deploying...
+==> Running 'npx tsx server/index.ts'
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'vite' imported from /opt/render/project/src/server/vite.ts
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:256:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:854:18)
+    at defaultResolve (node:internal/modules/esm/resolve:984:11)
+    at nextResolve (node:internal/modules/esm/hooks:748:28)
+    at resolveBase (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757221859:2:3811)
+    at resolveDirectory (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757221859:2:4310)
+    at resolveTsPaths (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757221859:2:5051)
+    at async resolve (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757221859:2:5422)
+    at async nextResolve (node:internal/modules/esm/hooks:748:22) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+Node.js v22.16.0
+==> Exited with status 1
+==> Common ways to troubleshoot your deploy: https://render.com/docs/troubleshooting-deploys
+==> Running 'npx tsx server/index.ts'
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'vite' imported from /opt/render/project/src/server/vite.ts
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:256:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:854:18)
+    at defaultResolve (node:internal/modules/esm/resolve:984:11)
+    at nextResolve (node:internal/modules/esm/hooks:748:28)
+    at resolveBase (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757250619:2:3811)
+    at resolveDirectory (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757250619:2:4310)
+    at resolveTsPaths (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757250619:2:5051)
+    at async resolve (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757250619:2:5422)
+    at async nextResolve (node:internal/modules/esm/hooks:748:22) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+Node.js v22.16.0)
+
+when i tried
+NODE_ENV=development npx tsx server/index.ts ( ==> Cloning from https://github.com/nedaxer/God-abeg
+==> Checking out commit fa7d9c1732bcb59bc1cb23514a35411ce6a4832a in branch main
+==> Downloading cache...
+==> Cloning from https://github.com/nedaxer/God-abeg
+==> Checking out commit fa7d9c1732bcb59bc1cb23514a35411ce6a4832a in branch main
+==> Downloading cache...
+==> Transferred 302MB in 9s. Extraction took 36s.
+==> Using Node.js version 22.16.0 (default)
+==> Docs on specifying a Node.js version: https://render.com/docs/node-version
+==> Using Bun version 1.1.0 (default)
+==> Docs on specifying a Bun version: https://render.com/docs/bun-version
+==> Running build command 'npm ci --ignore-scripts'...
+==> Cloning from https://github.com/nedaxer/God-abeg
+==> Checking out commit fa7d9c1732bcb59bc1cb23514a35411ce6a4832a in branch main
+==> Downloading cache...
+==> Transferred 302MB in 9s. Extraction took 36s.
+==> Using Node.js version 22.16.0 (default)
+==> Docs on specifying a Node.js version: https://render.com/docs/node-version
+==> Using Bun version 1.1.0 (default)
+==> Docs on specifying a Bun version: https://render.com/docs/bun-version
+==> Running build command 'npm ci --ignore-scripts'...
+added 940 packages, and audited 941 packages in 22s
+138 packages are looking for funding
+  run `npm fund` for details
+20 vulnerabilities (1 moderate, 19 high)
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+Run `npm audit` for details.
+==> Uploading build...
+==> Uploaded in 7.1s. Compression took 9.8s
+==> Build successful 🎉
+==> Deploying...
+==> Cloning from https://github.com/nedaxer/God-abeg
+==> Checking out commit fa7d9c1732bcb59bc1cb23514a35411ce6a4832a in branch main
+==> Downloading cache...
+==> Transferred 302MB in 9s. Extraction took 36s.
+==> Using Node.js version 22.16.0 (default)
+==> Docs on specifying a Node.js version: https://render.com/docs/node-version
+==> Using Bun version 1.1.0 (default)
+==> Docs on specifying a Bun version: https://render.com/docs/bun-version
+==> Running build command 'npm ci --ignore-scripts'...
+added 940 packages, and audited 941 packages in 22s
+138 packages are looking for funding
+  run `npm fund` for details
+20 vulnerabilities (1 moderate, 19 high)
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+Run `npm audit` for details.
+==> Uploading build...
+==> Uploaded in 7.1s. Compression took 9.8s
+==> Build successful 🎉
+==> Deploying...
+==> Running 'NODE_ENV=development npx tsx server/index.ts'
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'vite' imported from /opt/render/project/src/server/vite.ts
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:256:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:854:18)
+    at defaultResolve (node:internal/modules/esm/resolve:984:11)
+    at nextResolve (node:internal/modules/esm/hooks:748:28)
+    at resolveBase (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757507521:2:3811)
+    at resolveDirectory (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757507521:2:4310)
+    at resolveTsPaths (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757507521:2:5051)
+    at async resolve (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757507521:2:5422)
+    at async nextResolve (node:internal/modules/esm/hooks:748:22) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+Node.js v22.16.0
+==> Exited with status 1
+==> Common ways to troubleshoot your deploy: https://render.com/docs/troubleshooting-deploys
+==> Running 'NODE_ENV=development npx tsx server/index.ts'
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'vite' imported from /opt/render/project/src/server/vite.ts
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:256:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:854:18)
+    at defaultResolve (node:internal/modules/esm/resolve:984:11)
+    at nextResolve (node:internal/modules/esm/hooks:748:28)
+    at resolveBase (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757544565:2:3811)
+    at resolveDirectory (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757544565:2:4310)
+    at resolveTsPaths (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757544565:2:5051)
+    at async resolve (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757544565:2:5422)
+    at async nextResolve (node:internal/modules/esm/hooks:748:22) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+)
+ 
+when i run-
+NODE_ENV=production npx tsx server/index.ts ( ==> Checking out commit fa7d9c1732bcb59bc1cb23514a35411ce6a4832a in branch main
+==> Downloading cache...
+==> Transferred 302MB in 8s. Extraction took 6s.
+==> Using Node.js version 22.16.0 (default)
+==> Docs on specifying a Node.js version: https://render.com/docs/node-version
+==> Using Bun version 1.1.0 (default)
+==> Docs on specifying a Bun version: https://render.com/docs/bun-version
+==> Running build command 'npm ci --ignore-scripts'...
+==> Cloning from https://github.com/nedaxer/God-abeg
+==> Checking out commit fa7d9c1732bcb59bc1cb23514a35411ce6a4832a in branch main
+==> Downloading cache...
+==> Transferred 302MB in 8s. Extraction took 6s.
+==> Using Node.js version 22.16.0 (default)
+==> Docs on specifying a Node.js version: https://render.com/docs/node-version
+==> Using Bun version 1.1.0 (default)
+==> Docs on specifying a Bun version: https://render.com/docs/bun-version
+==> Running build command 'npm ci --ignore-scripts'...
+added 940 packages, and audited 941 packages in 9s
+138 packages are looking for funding
+  run `npm fund` for details
+20 vulnerabilities (1 moderate, 19 high)
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+Run `npm audit` for details.
+==> Uploading build...
+==> Uploaded in 6.9s. Compression took 5.0s
+==> Build successful 🎉
+==> Deploying...
+==> Running 'NODE_ENV=production npx tsx server/index.ts'
+==> Cloning from https://github.com/nedaxer/God-abeg
+==> Checking out commit fa7d9c1732bcb59bc1cb23514a35411ce6a4832a in branch main
+==> Downloading cache...
+==> Transferred 302MB in 8s. Extraction took 6s.
+==> Using Node.js version 22.16.0 (default)
+==> Docs on specifying a Node.js version: https://render.com/docs/node-version
+==> Using Bun version 1.1.0 (default)
+==> Docs on specifying a Bun version: https://render.com/docs/bun-version
+==> Running build command 'npm ci --ignore-scripts'...
+added 940 packages, and audited 941 packages in 9s
+138 packages are looking for funding
+  run `npm fund` for details
+20 vulnerabilities (1 moderate, 19 high)
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+Run `npm audit` for details.
+==> Uploading build...
+==> Uploaded in 6.9s. Compression took 5.0s
+==> Build successful 🎉
+==> Deploying...
+==> Running 'NODE_ENV=production npx tsx server/index.ts'
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'vite' imported from /opt/render/project/src/server/vite.ts
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:256:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:854:18)
+    at defaultResolve (node:internal/modules/esm/resolve:984:11)
+    at nextResolve (node:internal/modules/esm/hooks:748:28)
+    at resolveBase (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757708725:2:3811)
+    at resolveDirectory (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757708725:2:4310)
+    at resolveTsPaths (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757708725:2:5051)
+    at async resolve (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757708725:2:5422)
+    at async nextResolve (node:internal/modules/esm/hooks:748:22) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+Node.js v22.16.0
+==> Exited with status 1
+==> Common ways to troubleshoot your deploy: https://render.com/docs/troubleshooting-deploys
+==> Running 'NODE_ENV=production npx tsx server/index.ts'
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'vite' imported from /opt/render/project/src/server/vite.ts
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:256:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:854:18)
+    at defaultResolve (node:internal/modules/esm/resolve:984:11)
+    at nextResolve (node:internal/modules/esm/hooks:748:28)
+    at resolveBase (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757734856:2:3811)
+    at resolveDirectory (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757734856:2:4310)
+    at resolveTsPaths (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757734856:2:5051)
+    at async resolve (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757734856:2:5422)
+    at async nextResolve (node:internal/modules/esm/hooks:748:22) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+)
+
+and this says-
+NODE_ENV=production node dist/server.js (=> Checking out commit fa7d9c1732bcb59bc1cb23514a35411ce6a4832a in branch main
+==> Downloading cache...
+==> Transferred 302MB in 8s. Extraction took 5s.
+==> Using Node.js version 22.16.0 (default)
+==> Docs on specifying a Node.js version: https://render.com/docs/node-version
+==> Using Bun version 1.1.0 (default)
+==> Docs on specifying a Bun version: https://render.com/docs/bun-version
+==> Running build command 'npm ci --ignore-scripts'...
+added 940 packages, and audited 941 packages in 9s
+138 packages are looking for funding
+  run `npm fund` for details
+20 vulnerabilities (1 moderate, 19 high)
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+Run `npm audit` for details.
+==> Uploading build...
+==> Deploying...
+==> Uploaded in 6.8s. Compression took 4.9s
+==> Build successful 🎉
+==> Running 'NODE_ENV=production node dist/server.js'
+node:internal/modules/cjs/loader:1404
+  throw err;
+  ^
+Error: Cannot find module '/opt/render/project/src/dist/server.js'
+    at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49 {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: []
+}
+Node.js v22.16.0
+==> Exited with status 1
+==> Common ways to troubleshoot your deploy: https://render.com/docs/troubleshooting-deploys
+==> Running 'NODE_ENV=production node dist/server.js'
+node:internal/modules/cjs/loader:1404
+  throw err;
+  ^
+Error: Cannot find module '/opt/render/project/src/dist/server.js'
+    at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49 {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: []
+}
+Node.js v22.16.0
+==> Checking out commit fa7d9c1732bcb59bc1cb23514a35411ce6a4832a in branch main
+==> Downloading cache...
+==> Transferred 302MB in 8s. Extraction took 5s.
+==> Using Node.js version 22.16.0 (default)
+==> Docs on specifying a Node.js version: https://render.com/docs/node-version
+==> Using Bun version 1.1.0 (default)
+==> Docs on specifying a Bun version: https://render.com/docs/bun-version
+==> Running build command 'npm ci --ignore-scripts'...
+added 940 packages, and audited 941 packages in 9s
+138 packages are looking for funding
+  run `npm fund` for details
+20 vulnerabilities (1 moderate, 19 high)
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+Run `npm audit` for details.
+==> Uploading build...
+==> Uploaded in 6.8s. Compression took 4.9s
+==> Build successful 🎉
+==> Deploying...
+==> Running 'NODE_ENV=production node dist/server.js'
+node:internal/modules/cjs/loader:1404
+  throw err;
+  ^
+Error: Cannot find module '/opt/render/project/src/dist/server.js'
+    at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49 {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: []
+}
+Node.js v22.16.0
+==> Exited with status 1
+==> Common ways to troubleshoot your deploy: https://render.com/docs/troubleshooting-deploys
+==> Running 'NODE_ENV=production node dist/server.js'
+node:internal/modules/cjs/loader:1404
+  throw err;
+  ^
+Error: Cannot find module '/opt/render/project/src/dist/server.js'
+    at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49 {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: []
+}
+Node.js v22.16.0
+==> Checking out commit fa7d9c1732bcb59bc1cb23514a35411ce6a4832a in branch main
+==> Downloading cache...
+==> Transferred 302MB in 8s. Extraction took 5s.
+==> Using Node.js version 22.16.0 (default)
+==> Docs on specifying a Node.js version: https://render.com/docs/node-version
+==> Using Bun version 1.1.0 (default)
+==> Docs on specifying a Bun version: https://render.com/docs/bun-version
+==> Running build command 'npm ci --ignore-scripts'...
+added 940 packages, and audited 941 packages in 9s
+138 packages are looking for funding
+  run `npm fund` for details
+20 vulnerabilities (1 moderate, 19 high)
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+Run `npm audit` for details.
+==> Uploading build...
+==> Uploaded in 6.8s. Compression took 4.9s
+==> Build successful 🎉
+==> Deploying...
+==> Running 'NODE_ENV=production node dist/server.js'
+node:internal/modules/cjs/loader:1404
+  throw err;
+  ^
+Error: Cannot find module '/opt/render/project/src/dist/server.js'
+    at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49 {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: []
+}
+Node.js v22.16.0
+==> Exited with status 1
+==> Common ways to troubleshoot your deploy: https://render.com/docs/troubleshooting-deploys
+==> Running 'NODE_ENV=production node dist/server.js'
+node:internal/modules/cjs/loader:1404
+  throw err;
+  ^
+Error: Cannot find module '/opt/render/project/src/dist/server.js'
+    at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49 {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: []
+}
+Node.js v22.16.0
+==> Checking out commit fa7d9c1732bcb59bc1cb23514a35411ce6a4832a in branch main
+==> Downloading cache...
+==> Transferred 302MB in 8s. Extraction took 5s.
+==> Using Node.js version 22.16.0 (default)
+==> Docs on specifying a Node.js version: https://render.com/docs/node-version
+==> Using Bun version 1.1.0 (default)
+==> Docs on specifying a Bun version: https://render.com/docs/bun-version
+==> Running build command 'npm ci --ignore-scripts'...
+added 940 packages, and audited 941 packages in 9s
+138 packages are looking for funding
+  run `npm fund` for details
+20 vulnerabilities (1 moderate, 19 high)
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+Run `npm audit` for details.
+==> Uploading build...
+==> Uploaded in 6.8s. Compression took 4.9s
+==> Build successful 🎉
+==> Deploying...
+==> Running 'NODE_ENV=production node dist/server.js'
+node:internal/modules/cjs/loader:1404
+  throw err;
+  ^
+Error: Cannot find module '/opt/render/project/src/dist/server.js'
+    at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49 {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: []
+}
+Node.js v22.16.0
+==> Exited with status 1
+==> Common ways to troubleshoot your deploy: https://render.com/docs/troubleshooting-deploys
+==> Running 'NODE_ENV=production node dist/server.js'
+node:internal/modules/cjs/loader:1404
+  throw err;
+  ^
+Error: Cannot find module '/opt/render/project/src/dist/server.js'
+    at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49 {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: []
+}
+Node.js v22.16.0
+Need better ways to work with logs? Try the)
+ 
+
+this solution you gave - npm ci --ignore-scripts && npm install tsx --save
+
+says ( Node.js v22.16.0
+     ==> Exited with status 1
+     ==> Common ways to troubleshoot your deploy: https://render.com/docs/troubleshooting-deploys
+==> Running 'npx tsx server/index.ts'
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'vite' imported from /opt/render/project/src/server/vite.ts
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:256:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:854:18)
+    at defaultResolve (node:internal/modules/esm/resolve:984:11)
+    at nextResolve (node:internal/modules/esm/hooks:748:28)
+    at resolveBase (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757250619:2:3811)
+    at resolveDirectory (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757250619:2:4310)
+    at resolveTsPaths (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757250619:2:5051)
+    at async resolve (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757250619:2:5422)
+    at async nextResolve (node:internal/modules/esm/hooks:748:22) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+Node.js v22.16.0
+     ==> Deploying...
+==> Running 'NODE_ENV=development npx tsx server/index.ts'
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'vite' imported from /opt/render/project/src/server/vite.ts
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:256:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:854:18)
+    at defaultResolve (node:internal/modules/esm/resolve:984:11)
+    at nextResolve (node:internal/modules/esm/hooks:748:28)
+    at resolveBase (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757507521:2:3811)
+    at resolveDirectory (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757507521:2:4310)
+    at resolveTsPaths (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757507521:2:5051)
+    at async resolve (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757507521:2:5422)
+    at async nextResolve (node:internal/modules/esm/hooks:748:22) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+Node.js v22.16.0
+     ==> Exited with status 1
+     ==> Common ways to troubleshoot your deploy: https://render.com/docs/troubleshooting-deploys
+==> Running 'NODE_ENV=development npx tsx server/index.ts'
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'vite' imported from /opt/render/project/src/server/vite.ts
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:256:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:854:18)
+    at defaultResolve (node:internal/modules/esm/resolve:984:11)
+    at nextResolve (node:internal/modules/esm/hooks:748:28)
+    at resolveBase (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757544565:2:3811)
+    at resolveDirectory (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757544565:2:4310)
+    at resolveTsPaths (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757544565:2:5051)
+    at async resolve (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757544565:2:5422)
+    at async nextResolve (node:internal/modules/esm/hooks:748:22) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+Node.js v22.16.0
+     ==> Deploying...
+==> Running 'NODE_ENV=production npx tsx server/index.ts'
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'vite' imported from /opt/render/project/src/server/vite.ts
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:256:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:854:18)
+    at defaultResolve (node:internal/modules/esm/resolve:984:11)
+    at nextResolve (node:internal/modules/esm/hooks:748:28)
+    at resolveBase (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757708725:2:3811)
+    at resolveDirectory (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757708725:2:4310)
+    at resolveTsPaths (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757708725:2:5051)
+    at async resolve (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757708725:2:5422)
+    at async nextResolve (node:internal/modules/esm/hooks:748:22) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+Node.js v22.16.0
+     ==> Exited with status 1
+     ==> Common ways to troubleshoot your deploy: https://render.com/docs/troubleshooting-deploys
+==> Running 'NODE_ENV=production npx tsx server/index.ts'
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'vite' imported from /opt/render/project/src/server/vite.ts
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:256:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:854:18)
+    at defaultResolve (node:internal/modules/esm/resolve:984:11)
+    at nextResolve (node:internal/modules/esm/hooks:748:28)
+    at resolveBase (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757734856:2:3811)
+    at resolveDirectory (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757734856:2:4310)
+    at resolveTsPaths (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757734856:2:5051)
+    at async resolve (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1751757734856:2:5422)
+    at async nextResolve (node:internal/modules/esm/hooks:748:22) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+Node.js v22.16.0
+     ==> Deploying...
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49 {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: []
+}
+Node.js v22.16.0
+     ==> Exited with status 1
+     ==> Common ways to troubleshoot your deploy: https://render.com/docs/troubleshooting-deploys
+==> Running 'NODE_ENV=production node dist/server.js'
+node:internal/modules/cjs/loader:1404
+  throw err;
+  ^
+Error: Cannot find module '/opt/render/project/src/dist/server.js'
+    at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49 {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: []
+}
+Node.js v22.16.0
+     ==> Deploying...
+==> Running 'NODE_ENV=development tsx server/index.ts'
+bash: line 1: tsx: command not found
+     ==> Exited with status 127
+     ==> Common ways to troubleshoot your deploy: https://render.com/docs/troubleshooting-deploys)
+
+
+do you think this will help?
+
+switching from tsx to tsc , then whip up the commands and adjust the render.yaml
+

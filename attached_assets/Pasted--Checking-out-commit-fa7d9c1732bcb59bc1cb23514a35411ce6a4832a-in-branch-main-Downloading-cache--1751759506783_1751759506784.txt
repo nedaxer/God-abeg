@@ -1,0 +1,67 @@
+ Checking out commit fa7d9c1732bcb59bc1cb23514a35411ce6a4832a in branch main
+==> Downloading cache...
+==> Transferred 302MB in 8s. Extraction took 7s.
+==> Using Node.js version 22.16.0 (default)
+==> Docs on specifying a Node.js version: https://render.com/docs/node-version
+==> Using Bun version 1.1.0 (default)
+==> Docs on specifying a Bun version: https://render.com/docs/bun-version
+==> Running build command 'npm ci --ignore-scripts && npm install tsx vite typescript --save'...
+==> Cloning from https://github.com/nedaxer/God-abeg
+==> Checking out commit fa7d9c1732bcb59bc1cb23514a35411ce6a4832a in branch main
+==> Downloading cache...
+==> Transferred 302MB in 8s. Extraction took 7s.
+==> Using Node.js version 22.16.0 (default)
+==> Docs on specifying a Node.js version: https://render.com/docs/node-version
+==> Using Bun version 1.1.0 (default)
+==> Docs on specifying a Bun version: https://render.com/docs/bun-version
+==> Running build command 'npm ci --ignore-scripts && npm install tsx vite typescript --save'...
+added 940 packages, and audited 941 packages in 10s
+138 packages are looking for funding
+  run `npm fund` for details
+20 vulnerabilities (1 moderate, 19 high)
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+Run `npm audit` for details.
+up to date, audited 941 packages in 3s
+138 packages are looking for funding
+  run `npm fund` for details
+20 vulnerabilities (1 moderate, 19 high)
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+Run `npm audit` for details.
+==> Uploading build...
+==> Deploying...
+==> Uploaded in 6.7s. Compression took 4.5s
+==> Build successful 🎉
+==> Cloning from https://github.com/nedaxer/God-abeg
+==> Checking out commit fa7d9c1732bcb59bc1cb23514a35411ce6a4832a in branch main
+==> Downloading cache...
+==> Transferred 302MB in 8s. Extraction took 7s.
+==> Using Node.js version 22.16.0 (default)
+==> Docs on specifying a Node.js version: https://render.com/docs/node-version
+==> Using Bun version 1.1.0 (default)
+==> Docs on specifying a Bun version: https://render.com/docs/bun-version
+==> Running build command 'npm ci --ignore-scripts && npm install tsx vite typescript --save'...
+added 940 packages, and audited 941 packages in 10s
+138 packages are looking for funding
+  run `npm fund` for details
+20 vulnerabilities (1 moderate, 19 high)
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+Run `npm audit` for details.
+up to date, audited 941 packages in 3s
+138 packages are looking for funding
+  run `npm fund` for details
+20 vulnerabilities (1 moderate, 19 high)
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+Run `npm audit` for details.
+==> Uploading build...
+==> Uploaded in 6.7s. Compression took 4.5s
+==> Build successful 🎉
+==> Deploying...
+==> Running 'NODE_ENV=development tsx server/index.ts'
+bash: line 1: tsx: command not found
+==> Exited with status 127
+==> Common ways to troubleshoot your deploy: https://render.com/docs/troubleshooting-deploys
+==> Running 'NODE_ENV=development t

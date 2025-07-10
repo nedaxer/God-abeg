@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { HeroSlider } from "@/components/hero-slider";
@@ -10,6 +11,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { TrendingUp, Wallet, BarChart3, Zap } from "lucide-react";
+import { ArrowRight, Calendar, Coins } from "lucide-react";
 
 export default function Home() {
   const { user, isLoading } = useAuth();
@@ -102,12 +104,186 @@ export default function Home() {
   }
 
   // Content for non-logged-in users (original landing page)
+  // Check if we're on desktop for landing page
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const checkDesktop = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+
+    checkDesktop();
+    window.addEventListener('resize', checkDesktop);
+
+    return () => window.removeEventListener('resize', checkDesktop);
+  }, []);
+
+  // Desktop landing page layout
+  if (isDesktop) {
+    return (
+      <div className="w-screen min-h-screen" style={{ width: '100vw', minHeight: '100vh' }}>
+        <Header />
+        <main className="w-full">
+          <HeroSlider />
+          <TradeOptions />
+          <section className="py-12 bg-gray-50">
+      <div className="container mx-auto px-4">
+        <h2 className="text-3xl font-bold text-center mb-8 text-[#0033a0]">Explore Markets</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+        
+            <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+              <div className="flex items-center mb-4">
+                <img src="/logos/btc-logo.svg" alt="Bitcoin" className="w-8 h-8 mr-3" />
+                <h3 className="text-xl font-bold text-blue-600">Bitcoin</h3>
+              </div>
+              <p className="text-blue-600 mb-4">
+                Trade the original cryptocurrency and largest digital asset by market capitalization.
+              </p>
+              <Link 
+                href="/markets/bitcoin" 
+                className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
+              >
+                View Bitcoin Markets <ArrowRight className="ml-1 h-4 w-4" />
+              </Link>
+            </div>
+
+            <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+              <div className="flex items-center mb-4">
+                <img src="/logos/eth-logo.svg" alt="Ethereum" className="w-8 h-8 mr-3" />
+                <h3 className="text-xl font-bold text-blue-600">Ethereum</h3>
+              </div>
+              <p className="text-blue-600 mb-4">
+                Trade the second-largest cryptocurrency powering thousands of decentralized applications.
+              </p>
+              <Link 
+                href="/markets/ethereum" 
+                className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
+              >
+                View Ethereum Markets <ArrowRight className="ml-1 h-4 w-4" />
+              </Link>
+            </div>
+
+            <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+              <div className="flex items-center mb-4">
+                <Coins className="text-[#0033a0] h-8 w-8 mr-3" />
+                <h3 className="text-xl font-bold text-blue-600">Altcoins</h3>
+              </div>
+              <p className="text-blue-600 mb-4">
+                Trade alternative cryptocurrencies including Solana, Cardano, Ripple, and more.
+              </p>
+              <Link 
+                href="/markets/altcoins" 
+                className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
+              >
+                View Altcoin Markets <ArrowRight className="ml-1 h-4 w-4" />
+              </Link>
+            </div>
+
+            <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+              <div className="flex items-center mb-4">
+                <Calendar className="text-[#0033a0] h-8 w-8 mr-3" />
+                <h3 className="text-xl font-bold text-blue-600">Crypto Events</h3>
+              </div>
+              <p className="text-blue-600 mb-4">
+                Trade major crypto events including ETF decisions, protocol upgrades, and regulatory announcements.
+              </p>
+              <Link 
+                href="/markets/events" 
+                className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
+              >
+                View Event Markets <ArrowRight className="ml-1 h-4 w-4" />
+              </Link>
+            </div>
+        </div>
+      </div>
+    </section>
+          <PlatformFeatures />
+          <LearningResources />
+          <CTASection />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  // Mobile landing page layout
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-grow">
         <HeroSlider />
         <TradeOptions />
+        <section className="py-12 bg-gray-50">
+      <div className="container mx-auto px-4">
+        <h2 className="text-3xl font-bold text-center mb-8 text-[#0033a0]">Explore Markets</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+        
+            <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+              <div className="flex items-center mb-4">
+                <img src="/logos/btc-logo.svg" alt="Bitcoin" className="w-8 h-8 mr-3" />
+                <h3 className="text-xl font-bold text-blue-600">Bitcoin</h3>
+              </div>
+              <p className="text-blue-600 mb-4">
+                Trade the original cryptocurrency and largest digital asset by market capitalization.
+              </p>
+              <Link 
+                href="/markets/bitcoin" 
+                className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
+              >
+                View Bitcoin Markets <ArrowRight className="ml-1 h-4 w-4" />
+              </Link>
+            </div>
+
+            <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+              <div className="flex items-center mb-4">
+                <img src="/logos/eth-logo.svg" alt="Ethereum" className="w-8 h-8 mr-3" />
+                <h3 className="text-xl font-bold text-blue-600">Ethereum</h3>
+              </div>
+              <p className="text-blue-600 mb-4">
+                Trade the second-largest cryptocurrency powering thousands of decentralized applications.
+              </p>
+              <Link 
+                href="/markets/ethereum" 
+                className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
+              >
+                View Ethereum Markets <ArrowRight className="ml-1 h-4 w-4" />
+              </Link>
+            </div>
+
+            <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+              <div className="flex items-center mb-4">
+                <Coins className="text-[#0033a0] h-8 w-8 mr-3" />
+                <h3 className="text-xl font-bold text-blue-600">Altcoins</h3>
+              </div>
+              <p className="text-blue-600 mb-4">
+                Trade alternative cryptocurrencies including Solana, Cardano, Ripple, and more.
+              </p>
+              <Link 
+                href="/markets/altcoins" 
+                className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
+              >
+                View Altcoin Markets <ArrowRight className="ml-1 h-4 w-4" />
+              </Link>
+            </div>
+
+            <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+              <div className="flex items-center mb-4">
+                <Calendar className="text-[#0033a0] h-8 w-8 mr-3" />
+                <h3 className="text-xl font-bold text-blue-600">Crypto Events</h3>
+              </div>
+              <p className="text-blue-600 mb-4">
+                Trade major crypto events including ETF decisions, protocol upgrades, and regulatory announcements.
+              </p>
+              <Link 
+                href="/markets/events" 
+                className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
+              >
+                View Event Markets <ArrowRight className="ml-1 h-4 w-4" />
+              </Link>
+            </div>
+        </div>
+      </div>
+    </section>
         <MarketFeatures />
         <PlatformFeatures />
         <LearningResources />

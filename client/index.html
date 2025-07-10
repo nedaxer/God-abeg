@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, shrink-to-fit=no, viewport-fit=cover" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Nedaxer Trading Platform</title>
     <meta name="description" content="Trade with limited risk on the Nedaxer regulated exchange." />
     <meta name="theme-color" content="#0033a0" />
@@ -60,14 +60,34 @@
     <link rel="apple-touch-icon" sizes="60x60" href="/icons/icon-72x72.png" />
     <link rel="apple-touch-icon" sizes="57x57" href="/icons/icon-72x72.png" />
     
-    <!-- Prevent zoom on iOS Safari -->
+    <!-- reCAPTCHA removed -->
+    
+    <!-- Basic styling for all devices -->
     <style>
+      /* Basic layout styling */
+      body {
+        background: white !important;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+      
+      /* Prevent zoom on iOS Safari for mobile inputs */
       @media screen and (-webkit-min-device-pixel-ratio:0) {
         select:focus,
         textarea:focus,
         input:focus {
           font-size: 16px !important;
         }
+      }
+      
+      /* Prevent flash of black background */
+      html {
+        background: white !important;
+      }
+      
+      #root {
+        background: white !important;
+        min-height: 100vh;
       }
     </style>
   </head>

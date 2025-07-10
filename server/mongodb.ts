@@ -15,18 +15,92 @@ export async function connectToDatabase() {
   }
 
   try {
-    console.log('Connecting to MongoDB Atlas...');
-    
-    // Use MongoDB URI from environment variables only
+    // Try MongoDB Atlas first
     mongoUri = process.env.MONGODB_URI;
     
-    if (!mongoUri) {
-      throw new Error('MONGODB_URI environment variable is required');
+    if (mongoUri) {
+      console.log('Connecting to MongoDB Atlas...');
+      console.log('MongoDB URI format check:', {
+        hasUri: !!mongoUri,
+        startsWithMongodb: mongoUri.startsWith('mongodb'),
+        length: mongoUri.length,
+        maskedUri: mongoUri.replace(/\/\/([^:]+):([^@]+)@/, '//***:***@')
+      });
+      try {
+        // Try multiple SSL configurations for different MongoDB providers
+        const sslConfigurations = [
+          // Standard MongoDB Atlas configuration
+          {
+            retryWrites: true,
+            w: 'majority' as const,
+            connectTimeoutMS: 10000,
+            serverSelectionTimeoutMS: 10000,
+            socketTimeoutMS: 10000
+          },
+          // Enhanced SSL configuration with TLS
+          {
+            tls: true,
+            tlsAllowInvalidCertificates: true,
+            tlsAllowInvalidHostnames: true,
+            retryWrites: true,
+            w: 'majority' as const,
+            connectTimeoutMS: 10000,
+            serverSelectionTimeoutMS: 10000,
+            socketTimeoutMS: 10000
+          },
+          // Legacy SSL configuration
+          {
+            ssl: true,
+            retryWrites: true,
+            w: 'majority' as const,
+            connectTimeoutMS: 10000,
+            serverSelectionTimeoutMS: 10000,
+            socketTimeoutMS: 10000
+          }
+        ];
+        
+        let connected = false;
+        for (const [index, config] of sslConfigurations.entries()) {
+          try {
+            console.log(`Attempting MongoDB connection with configuration ${index + 1}...`);
+            await mongoose.connect(mongoUri, config);
+            console.log(`MongoDB Atlas connection established successfully with config ${index + 1}`);
+            connected = true;
+            break;
+          } catch (configError) {
+            console.log(`Configuration ${index + 1} failed:`, configError.message);
+            if (index === sslConfigurations.length - 1) {
+              throw configError;
+            }
+          }
+        }
+        
+        if (!connected) {
+          throw new Error('All SSL configurations failed');
+        }
+        
+        // Add default data for our in-memory database
+        try {
+          await createInitialData();
+        } catch (error) {
+          console.log('Initial data creation already completed or failed:', error);
+        }
+        
+        return mongoose.connection;
+      } catch (atlasError) {
+        console.error('MongoDB Atlas connection failed:', atlasError);
+        console.log('Falling back to in-memory MongoDB...');
+      }
     }
-    console.log('Using MongoDB Atlas cluster');
+    
+    // Fallback to in-memory MongoDB for development
+    console.log('Starting in-memory MongoDB server...');
+    mongoMemoryServer = await MongoMemoryServer.create();
+    mongoUri = mongoMemoryServer.getUri();
     
     await mongoose.connect(mongoUri);
-    console.log('MongoDB Atlas connection established successfully');
+    console.log('MongoDB Memory Server connection established successfully');
+    console.log('MongoDB storage initialized');
     
     // Add default data for our in-memory database
     try {

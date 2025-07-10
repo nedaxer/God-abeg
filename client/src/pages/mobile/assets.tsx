@@ -1,4 +1,4 @@
-import MobileLayout from '@/components/mobile-layout';
+import AdaptiveLayout from '@/components/adaptive-layout';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { DepositModal } from '@/components/deposit-modal';
@@ -10,6 +10,7 @@ import { ComingSoonModal } from '@/components/coming-soon-modal';
 import { WithdrawalRestrictionModal } from '@/components/withdrawal-restriction-modal';
 import { DepositActivationModal } from '@/components/deposit-activation-modal';
 import { PullToRefresh } from '@/components/pull-to-refresh';
+import DesktopDepositBanner from '@/components/desktop-pages/desktop-deposit-banner';
 import { 
   Eye, 
   EyeOff,
@@ -21,7 +22,6 @@ import {
   ChevronRight,
   ChevronDown,
   X,
-  QrCode
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'wouter';
@@ -31,8 +31,8 @@ import { useLanguage } from '@/contexts/language-context';
 import { useTheme } from '@/contexts/theme-context';
 import { useAuth } from '@/hooks/use-auth';
 import { useWithdrawal } from '@/contexts/withdrawal-context';
-// Using external Cloudinary video hosting
-const advancedChartsVideo = 'https://res.cloudinary.com/dajvsbemy/video/upload/v1751728951/crypto-webinars-demo_fyeix4.mp4';
+// Using attached video file from user
+import advancedChartsVideoPath from '@assets/advanced-charts-video.hvc1.f5b72466040ec3823b64_1750173777148.mp4';
 
 export default function MobileAssets() {
   const { t } = useLanguage();
@@ -100,6 +100,7 @@ export default function MobileAssets() {
   const [selectedCrypto, setSelectedCrypto] = useState('');
   const [selectedChain, setSelectedChain] = useState('');
   const [selectedCurrency, setSelectedCurrency] = useState('USD');
+  const [showDesktopDepositBanner, setShowDesktopDepositBanner] = useState(false);
 
   // Save balance visibility state to localStorage
   useEffect(() => {
@@ -248,7 +249,16 @@ export default function MobileAssets() {
   };
 
   const handleDepositClick = () => {
-    setDepositModalOpen(true);
+    // Check if desktop view (768px or wider)
+    const isDesktop = window.innerWidth >= 768;
+    
+    if (isDesktop) {
+      // Show desktop deposit banner for desktop users
+      setShowDesktopDepositBanner(true);
+    } else {
+      // Show mobile deposit modal for mobile users
+      setDepositModalOpen(true);
+    }
   };
 
   const handleWithdrawClick = () => {
@@ -341,57 +351,7 @@ export default function MobileAssets() {
     }
   };
 
-  const handleQRScan = () => {
-    // Check if device has camera access
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
-        .then((stream) => {
-          // Create a simple QR scanner modal
-          const scannerModal = document.createElement('div');
-          scannerModal.className = 'fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50';
-          scannerModal.innerHTML = `
-            <div class="relative w-full max-w-sm mx-4">
-              <video id="qr-video" class="w-full rounded-lg" autoplay></video>
-              <div class="absolute inset-0 border-2 border-orange-500 rounded-lg pointer-events-none">
-                <div class="absolute top-4 left-4 w-6 h-6 border-l-2 border-t-2 border-orange-500"></div>
-                <div class="absolute top-4 right-4 w-6 h-6 border-r-2 border-t-2 border-orange-500"></div>
-                <div class="absolute bottom-4 left-4 w-6 h-6 border-l-2 border-b-2 border-orange-500"></div>
-                <div class="absolute bottom-4 right-4 w-6 h-6 border-r-2 border-b-2 border-orange-500"></div>
-              </div>
-              <button id="close-scanner" class="absolute top-4 right-4 bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center">×</button>
-              <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white text-sm bg-black bg-opacity-50 px-3 py-1 rounded">
-                Point camera at QR code
-              </div>
-            </div>
-          `;
 
-          document.body.appendChild(scannerModal);
-          const video = document.getElementById('qr-video') as HTMLVideoElement;
-          const closeBtn = document.getElementById('close-scanner');
-
-          video.srcObject = stream;
-
-          closeBtn?.addEventListener('click', () => {
-            stream.getTracks().forEach(track => track.stop());
-            document.body.removeChild(scannerModal);
-          });
-
-          // Auto-close after 30 seconds
-          setTimeout(() => {
-            if (document.body.contains(scannerModal)) {
-              stream.getTracks().forEach(track => track.stop());
-              document.body.removeChild(scannerModal);
-            }
-          }, 30000);
-        })
-        .catch((error) => {
-          alert('Camera access denied or not available');
-          console.error('Camera error:', error);
-        });
-    } else {
-      alert('QR scanner not supported on this device');
-    }
-  };
 
   // Render full-page components instead of assets page
   if (currentView === 'crypto-selection') {
@@ -435,14 +395,11 @@ export default function MobileAssets() {
 
   // Default assets page view
   return (
-    <MobileLayout>
+    <AdaptiveLayout title="Nedaxer - Assets">
       <PullToRefresh onRefresh={handleRefresh}>
         {/* Header */}
         <div className="flex items-center justify-between p-4 bg-[#0a0a2e]">
         <h1 className="text-xl font-bold text-white">My Assets</h1>
-        <button onClick={handleQRScan} className="w-8 h-8 bg-[#0b0b30] rounded-lg flex items-center justify-center">
-          <QrCode className="w-4 h-4 text-gray-400" />
-        </button>
       </div>
 
 
@@ -493,7 +450,7 @@ export default function MobileAssets() {
             className="absolute inset-0 w-full h-full object-cover opacity-70"
             style={{ filter: 'brightness(0.8) contrast(1.2)' }}
           >
-            <source src={advancedChartsVideo} type="video/mp4" />
+            <source src={advancedChartsVideoPath} type="video/mp4" />
           </video>
           <div className="absolute inset-0 bg-gradient-to-r from-gray-900/80 via-transparent to-gray-900/60" />
           <div className="absolute inset-0 flex items-center justify-between px-4">
@@ -608,7 +565,17 @@ export default function MobileAssets() {
         onClose={() => setDepositActivationOpen(false)}
         onMakeDeposit={() => setDepositModalOpen(true)}
       />
+
+      {/* Desktop Deposit Banner - Only shows on desktop */}
+      <DesktopDepositBanner
+        isOpen={showDesktopDepositBanner}
+        onClose={() => setShowDesktopDepositBanner(false)}
+        selectedCrypto={selectedCrypto}
+        selectedChain={selectedChain}
+        onCryptoSelect={setSelectedCrypto}
+        onChainSelect={setSelectedChain}
+      />
       </PullToRefresh>
-    </MobileLayout>
+    </AdaptiveLayout>
   );
 }

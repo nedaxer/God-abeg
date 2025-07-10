@@ -4,11 +4,7 @@ import { useEffect, useState } from 'react';
 import QRCode from 'qrcode';
 import MobileLayout from '@/components/mobile-layout';
 import { useLanguage } from '@/contexts/language-context';
-
-const btcLogo = '/logos/btc-logo.svg';
-const ethLogo = '/logos/eth-logo.svg';
-const usdtLogo = '/logos/usdt-logo.svg';
-const bnbLogo = '/logos/bnb-logo.svg';
+import CryptoLogo from '@/components/crypto-logo';
 
 interface AddressDisplayProps {
   onBack: () => void;
@@ -62,20 +58,7 @@ export function AddressDisplay({ onBack, selectedCrypto, selectedChain }: Addres
     }
   }, [address]);
 
-  const getCryptoIcon = (crypto: string) => {
-    switch (crypto) {
-      case 'USDT':
-        return usdtLogo;
-      case 'BTC':
-        return btcLogo;
-      case 'ETH':
-        return ethLogo;
-      case 'BNB':
-        return bnbLogo;
-      default:
-        return btcLogo;
-    }
-  };
+
 
   const copyAddress = async () => {
     try {
@@ -97,9 +80,9 @@ export function AddressDisplay({ onBack, selectedCrypto, selectedChain }: Addres
   };
 
   return (
-    <MobileLayout>
+    <div className="min-h-screen bg-[#0a0a2e] text-white">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 bg-blue-950 border-b border-blue-700">
+      <div className="flex items-center justify-between p-4 bg-[#0a0a2e] border-b border-gray-700/30">
         <button onClick={onBack} className="text-gray-400 hover:text-white">
           <ArrowLeft className="w-6 h-6" />
         </button>
@@ -108,13 +91,15 @@ export function AddressDisplay({ onBack, selectedCrypto, selectedChain }: Addres
       </div>
 
       {/* Crypto Info */}
-      <div className="p-4 border-b border-blue-700 bg-blue-950">
+      <div className="p-4 border-b border-gray-700/30 bg-[#0a0a2e]">
         <div className="flex items-center space-x-3 mb-3">
-          <img
-            src={getCryptoIcon(selectedCrypto)}
-            alt={selectedCrypto}
-            className="w-10 h-10 rounded-full"
-          />
+          <div className="w-10 h-10 rounded-full bg-orange-500/20 flex items-center justify-center">
+            <CryptoLogo 
+              symbol={selectedCrypto}
+              size={32}
+              className="w-8 h-8"
+            />
+          </div>
           <div>
             <h3 className="text-white font-semibold text-base">{selectedCrypto}</h3>
             <p className="text-gray-400 text-sm">{selectedChain}</p>
@@ -123,7 +108,7 @@ export function AddressDisplay({ onBack, selectedCrypto, selectedChain }: Addres
       </div>
 
       {/* QR Code */}
-      <div className="p-4 bg-blue-950">
+      <div className="p-4 bg-[#0a0a2e]">
         <div className="bg-white rounded-xl p-4 mb-4 flex justify-center">
           {qrCodeUrl ? (
             <img 
@@ -139,7 +124,7 @@ export function AddressDisplay({ onBack, selectedCrypto, selectedChain }: Addres
         </div>
 
         {/* Address */}
-        <div className="bg-blue-900 rounded-lg p-3 mb-4">
+        <div className="bg-gray-800/50 rounded-lg p-3 mb-4 border border-gray-700/30">
           <div className="flex items-center justify-between mb-2">
             <span className="text-gray-400 text-xs">Deposit Address</span>
             <button
@@ -157,14 +142,14 @@ export function AddressDisplay({ onBack, selectedCrypto, selectedChain }: Addres
         <div className="grid grid-cols-2 gap-3 mb-4">
           <Button 
             onClick={copyAddress}
-            className="bg-blue-800 hover:bg-gray-600 text-white text-sm py-2"
+            className="bg-gray-800/50 hover:bg-gray-700/50 text-white text-sm py-2 border border-gray-700/30"
           >
             <Copy className="w-4 h-4 mr-2" />
             {t('copy_address')}
           </Button>
           <Button 
             onClick={saveQRCode}
-            className="bg-blue-800 hover:bg-gray-600 text-white text-sm py-2"
+            className="bg-gray-800/50 hover:bg-gray-700/50 text-white text-sm py-2 border border-gray-700/30"
           >
             <Save className="w-4 h-4 mr-2" />
             {t('save_image')}
@@ -188,7 +173,7 @@ export function AddressDisplay({ onBack, selectedCrypto, selectedChain }: Addres
         </div>
 
         {/* Network Details */}
-        <div className="bg-blue-900 rounded-lg p-3">
+        <div className="bg-gray-800/50 rounded-lg p-3 border border-gray-700/30">
           <h4 className="text-white text-sm font-medium mb-2">Network Information</h4>
           <div className="space-y-1">
             <div className="flex justify-between">
@@ -208,6 +193,6 @@ export function AddressDisplay({ onBack, selectedCrypto, selectedChain }: Addres
           </div>
         </div>
       </div>
-    </MobileLayout>
+    </div>
   );
 }

@@ -11,9 +11,9 @@ import { useLanguage } from '@/contexts/language-context';
 import { useHaptics } from '@/hooks/use-haptics';
 import { NotificationMessageModal } from '@/components/notification-message-modal';
 import { ConnectionRequestModal } from '@/components/connection-request-modal';
+import AdaptiveLayout from '@/components/adaptive-layout';
 
-export default function MobileNotifications() {
-  const [activeTab, setActiveTab] = useState('All');
+function MobileNotifications() {
   const [messageModalOpen, setMessageModalOpen] = useState(false);
   const [connectionRequestModalOpen, setConnectionRequestModalOpen] = useState(false);
   const [selectedNotification, setSelectedNotification] = useState<any>(null);
@@ -21,12 +21,19 @@ export default function MobileNotifications() {
   const { t } = useLanguage();
   const { medium } = useHaptics();
   const [location, navigate] = useLocation();
+  
+  // Check URL parameters to auto-filter to support messages
+  const urlParams = new URLSearchParams(location.split('?')[1] || '');
+  const filterParam = urlParams.get('filter');
+  const [activeTab, setActiveTab] = useState(filterParam === 'support' ? 'Support' : 'All');
 
   // Fetch notifications with automatic refetch every 10 seconds for real-time updates
   const { data: notificationsResponse, isLoading } = useQuery({
     queryKey: ['/api/notifications'],
     refetchInterval: 10000, // Refetch every 10 seconds for real-time updates
     refetchIntervalInBackground: true,
+    staleTime: 5000, // Consider data fresh for 5 seconds to prevent unnecessary refetches
+    refetchOnWindowFocus: false, // Prevent refetch when user returns to tab
   });
 
   const notificationData = Array.isArray((notificationsResponse as any)?.data) ? (notificationsResponse as any).data : [];
@@ -93,11 +100,64 @@ export default function MobileNotifications() {
     };
   }, [queryClient]);
 
-  // Mark notification as read mutation
+  // Mark notification as read mutation with optimistic updates
   const markAsReadMutation = useMutation({
-    mutationFn: (notificationId: string) => 
-      apiRequest('PUT', `/api/notifications/${notificationId}/read`),
-    onSuccess: () => {
+    mutationFn: async (notificationId: string) => {
+      console.log('🔄 API request: marking notification as read:', notificationId);
+      const result = await apiRequest(`/api/notifications/${notificationId}/read`, { method: 'PUT' });
+      console.log('✅ API response:', result);
+      return result;
+    },
+    onMutate: async (notificationId: string) => {
+      // Cancel outgoing refetches to prevent optimistic update conflicts
+      await queryClient.cancelQueries({ queryKey: ['/api/notifications'] });
+      await queryClient.cancelQueries({ queryKey: ['/api/notifications/unread-count'] });
+
+      // Snapshot the previous value
+      const previousNotifications = queryClient.getQueryData(['/api/notifications']);
+      const previousUnreadCount = queryClient.getQueryData(['/api/notifications/unread-count']);
+
+      // Optimistically update to the new value
+      queryClient.setQueryData(['/api/notifications'], (old: any) => {
+        if (old?.notifications) {
+          return {
+            ...old,
+            notifications: old.notifications.map((notif: any) => 
+              notif._id === notificationId ? { ...notif, isRead: true } : notif
+            )
+          };
+        }
+        return old;
+      });
+
+      // Update unread count optimistically
+      queryClient.setQueryData(['/api/notifications/unread-count'], (old: any) => {
+        if (old?.unreadCount > 0) {
+          return { ...old, unreadCount: old.unreadCount - 1 };
+        }
+        return old;
+      });
+
+      // Return a context object with the snapshotted value
+      return { previousNotifications, previousUnreadCount };
+    },
+    onSuccess: (data, notificationId) => {
+      // Only refetch on success and after a delay to prevent conflicts
+      setTimeout(() => {
+        queryClient.invalidateQueries({ queryKey: ['/api/notifications'] });
+        queryClient.invalidateQueries({ queryKey: ['/api/notifications/unread-count'] });
+      }, 500);
+    },
+    onError: (err, notificationId, context) => {
+      console.error('Failed to mark notification as read:', err);
+      // If the mutation fails, use the context to roll back
+      if (context?.previousNotifications) {
+        queryClient.setQueryData(['/api/notifications'], context.previousNotifications);
+      }
+      if (context?.previousUnreadCount) {
+        queryClient.setQueryData(['/api/notifications/unread-count'], context.previousUnreadCount);
+      }
+      // Immediate refetch on error to restore correct state
       queryClient.invalidateQueries({ queryKey: ['/api/notifications'] });
       queryClient.invalidateQueries({ queryKey: ['/api/notifications/unread-count'] });
     }
@@ -105,6 +165,7 @@ export default function MobileNotifications() {
 
   const notificationTabs = [
     'All',
+    'Support',
     t('system_notification'),
     t('latest_events'),
     t('announcement'),
@@ -154,22 +215,34 @@ export default function MobileNotifications() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a2e] text-white">
-      {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-[#1a1a40]">
-        <Link href="/mobile">
-          <ArrowLeft className="w-6 h-6 text-white" />
-        </Link>
-        <h1 className="text-lg font-semibold">{t('notifications')}</h1>
-        <div className="flex items-center space-x-3">
-          <button onClick={handleReadAll}>
-            <CheckCheck className="w-6 h-6 text-gray-400" />
-          </button>
-          <Link href="/mobile/notification-settings">
-            <Settings className="w-6 h-6 text-gray-400" />
+    <AdaptiveLayout title="Nedaxer - Notifications">
+      <div className="min-h-screen bg-[#0a0a2e] text-white">
+        {/* Mobile Header */}
+        <div className="flex items-center justify-between p-4 border-b border-[#1a1a40] md:hidden">
+          <Link href="/mobile">
+            <ArrowLeft className="w-6 h-6 text-white" />
           </Link>
+          <h1 className="text-lg font-semibold">{t('notifications')}</h1>
+          <div className="flex items-center space-x-3">
+            <button onClick={handleReadAll}>
+              <CheckCheck className="w-6 h-6 text-gray-400" />
+            </button>
+            <Link href="/mobile/notification-settings">
+              <Settings className="w-6 h-6 text-gray-400" />
+            </Link>
+          </div>
         </div>
-      </div>
+        
+        {/* Desktop Header */}
+        <div className="hidden md:flex items-center justify-between p-6 border-b border-gray-700/50">
+          <h1 className="text-2xl font-bold text-white">Notifications</h1>
+          <button 
+            onClick={handleReadAll}
+            className="text-orange-500 text-sm hover:text-orange-400 bg-orange-500/10 px-4 py-2 rounded-lg transition-colors"
+          >
+            Mark All as Read
+          </button>
+        </div>
 
       {/* Notification Tabs - Single Line with Small Fonts */}
       <div className="px-4 py-2">
@@ -218,6 +291,10 @@ export default function MobileNotifications() {
             {notificationData
               .filter((notification: any) => 
                 activeTab === 'All' ||
+                (activeTab === 'Support' && (
+                  notification.type === 'message' || 
+                  (notification.type === 'system' && notification.data?.notificationType === 'message' && notification.data?.from === 'support')
+                )) ||
                 notification.type === activeTab.toLowerCase() ||
                 (activeTab === t('system_notification') && notification.type === 'system') ||
                 (activeTab === t('latest_events') && (notification.type === 'deposit' || notification.type === 'transfer_sent' || notification.type === 'transfer_received' || notification.type === 'withdrawal')) ||
@@ -227,7 +304,13 @@ export default function MobileNotifications() {
               .map((notification: any) => (
                 <Card 
                   key={notification._id} 
-                  className={`border-[#2a2a50] p-3 ${notification.isRead ? 'bg-[#1a1a40]' : 'bg-[#1a1a40]'}`}
+                  className={`border-[#2a2a50] p-3 cursor-pointer hover:bg-[#1f1f45] transition-colors ${notification.isRead ? 'bg-[#1a1a40]' : 'bg-[#1a1a40]'}`}
+                  onClick={() => {
+                    // Mark as read when tapping anywhere on the notification
+                    if (!notification.isRead) {
+                      markAsReadMutation.mutate(notification._id);
+                    }
+                  }}
                 >
                   <div className="flex justify-between items-start mb-1">
                     <h3 className="text-white font-medium text-xs">{notification.title}</h3>
@@ -263,7 +346,8 @@ export default function MobileNotifications() {
                         variant="ghost" 
                         size="sm" 
                         className="text-orange-500 text-[10px] p-0 h-auto hover:text-orange-400"
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.stopPropagation(); // Prevent card click
                           if (!notification.isRead) {
                             markAsReadMutation.mutate(notification._id);
                           }
@@ -278,7 +362,8 @@ export default function MobileNotifications() {
                         variant="ghost" 
                         size="sm" 
                         className="text-orange-500 text-[10px] p-0 h-auto hover:text-orange-400"
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.stopPropagation(); // Prevent card click
                           if (!notification.isRead) {
                             markAsReadMutation.mutate(notification._id);
                           }
@@ -293,7 +378,8 @@ export default function MobileNotifications() {
                         variant="ghost" 
                         size="sm" 
                         className="text-orange-500 text-[10px] p-0 h-auto hover:text-orange-400"
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.stopPropagation(); // Prevent card click
                           if (!notification.isRead) {
                             markAsReadMutation.mutate(notification._id);
                           }
@@ -308,7 +394,8 @@ export default function MobileNotifications() {
                         variant="ghost" 
                         size="sm" 
                         className="text-orange-500 text-[10px] p-0 h-auto hover:text-orange-400"
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.stopPropagation(); // Prevent card click
                           if (!notification.isRead) {
                             markAsReadMutation.mutate(notification._id);
                           }
@@ -379,6 +466,9 @@ export default function MobileNotifications() {
           notification={selectedNotification}
         />
       )}
-    </div>
+      </div>
+    </AdaptiveLayout>
   );
 }
+
+export default MobileNotifications;

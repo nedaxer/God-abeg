@@ -1,6 +1,6 @@
 // @ts-nocheck
 // TypeScript error suppression for development productivity - 1 trade page type conflict
-import MobileLayout from '@/components/mobile-layout';
+import AdaptiveLayout from '@/components/adaptive-layout';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -391,6 +391,13 @@ export default function MobileTrade() {
   const createNewWidget = useCallback((symbol: string) => {
     if (typeof window === 'undefined' || !(window as any).TradingView) return;
 
+    // Ensure the chart container exists before creating widget
+    const chartContainer = document.getElementById('chart');
+    if (!chartContainer) {
+      console.error('Chart container not found');
+      return;
+    }
+
     const widget = new (window as any).TradingView.widget({
       container_id: "chart",
       autosize: true,
@@ -561,6 +568,25 @@ export default function MobileTrade() {
           console.log('Found ticker for symbol:', symbol, ticker);
           setCurrentTicker(ticker);
           setCurrentPrice(ticker.price.toFixed(2));
+          
+          // Update DOM elements directly for real-time display
+          const coinPriceElement = document.getElementById('coin-price');
+          const highElement = document.getElementById('high');
+          const lowElement = document.getElementById('low');
+          const volumeElement = document.getElementById('turnover');
+          
+          if (coinPriceElement) {
+            coinPriceElement.textContent = ticker.price.toFixed(2);
+          }
+          if (highElement) {
+            highElement.textContent = ticker.high_24h ? ticker.high_24h.toFixed(2) : '--';
+          }
+          if (lowElement) {
+            lowElement.textContent = ticker.low_24h ? ticker.low_24h.toFixed(2) : '--';
+          }
+          if (volumeElement) {
+            volumeElement.textContent = ticker.volume_24h ? (ticker.volume_24h / 1000000).toFixed(1) + 'M' : '--';
+          }
         } else {
           console.log('No ticker found for symbol:', symbol);
           // Fallback: try to find by removing 'USDT' suffix if it exists
@@ -570,6 +596,25 @@ export default function MobileTrade() {
             console.log('Found fallback ticker:', fallbackTicker);
             setCurrentTicker(fallbackTicker);
             setCurrentPrice(fallbackTicker.price.toFixed(2));
+            
+            // Update DOM elements for fallback ticker
+            const coinPriceElement = document.getElementById('coin-price');
+            const highElement = document.getElementById('high');
+            const lowElement = document.getElementById('low');
+            const volumeElement = document.getElementById('turnover');
+            
+            if (coinPriceElement) {
+              coinPriceElement.textContent = fallbackTicker.price.toFixed(2);
+            }
+            if (highElement) {
+              highElement.textContent = fallbackTicker.high_24h ? fallbackTicker.high_24h.toFixed(2) : '--';
+            }
+            if (lowElement) {
+              lowElement.textContent = fallbackTicker.low_24h ? fallbackTicker.low_24h.toFixed(2) : '--';
+            }
+            if (volumeElement) {
+              volumeElement.textContent = fallbackTicker.volume_24h ? (fallbackTicker.volume_24h / 1000000).toFixed(1) + 'M' : '--';
+            }
           }
         }
       }
@@ -753,12 +798,12 @@ export default function MobileTrade() {
     };
   }, [loadChart, getGlobalChartWidget, selectedTab]);
 
-  // Price update interval
+  // Price update interval - Real-time updates every 3 seconds
   useEffect(() => {
     updatePrice(currentSymbol);
     priceUpdateInterval.current = setInterval(() => {
       updatePrice(currentSymbol);
-    }, 1000);
+    }, 3000); // Update every 3 seconds for real-time data
 
     return () => {
       if (priceUpdateInterval.current) {
@@ -949,7 +994,7 @@ export default function MobileTrade() {
     };
 
   return (
-    <MobileLayout>
+    <AdaptiveLayout title="Nedaxer - Trading">
       {/* Trading Tabs - Smaller font and padding */}
       <div className="bg-blue-950 px-3 py-1">
         <div className="flex space-x-1 overflow-x-auto scrollbar-hide">
@@ -1018,9 +1063,9 @@ export default function MobileTrade() {
               </div>
             </div>
             <div className="text-right text-xs leading-tight text-gray-300">
-              <div>24h High: <span id="high" className="text-white">{currentTicker?.highPrice24h || '--'}</span></div>
-              <div>24h Low: <span id="low" className="text-white">{currentTicker?.lowPrice24h || '--'}</span></div>
-              <div>Vol: <span id="turnover" className="text-white">{currentTicker?.volume24h ? (parseFloat(currentTicker.volume24h) / 1000000).toFixed(1) : '--'}M</span></div>
+              <div>24h High: <span id="high" className="text-white">{currentTicker?.high_24h ? currentTicker.high_24h.toFixed(2) : '--'}</span></div>
+              <div>24h Low: <span id="low" className="text-white">{currentTicker?.low_24h ? currentTicker.low_24h.toFixed(2) : '--'}</span></div>
+              <div>Vol: <span id="turnover" className="text-white">{currentTicker?.volume_24h ? (currentTicker.volume_24h / 1000000).toFixed(1) + 'M' : '--'}</span></div>
             </div>
           </div>
 
@@ -1116,19 +1161,19 @@ export default function MobileTrade() {
         currentPair={selectedPair}
       />
 
-      {/* Fixed Buy/Sell Panel - Positioned directly above bottom navigation */}
+      {/* Fixed Buy/Sell Panel - Responsive positioning for desktop and mobile */}
       {selectedTab === 'Charts' && (
-        <div className="fixed left-0 right-0 bg-blue-900 border-t border-blue-700 p-2" style={{ bottom: '56px', zIndex: 10000 }}>
-          <div className="flex gap-2">
+        <div className="md:relative md:bottom-auto md:left-auto md:right-auto md:w-full fixed left-0 right-0 bg-blue-900 border-t border-blue-700 p-2 md:border-t-0 md:border md:rounded-lg md:mt-4" style={{ bottom: '56px', zIndex: 10000 }}>
+          <div className="flex gap-2 md:max-w-md md:mx-auto">
             <button 
               onClick={handleBuyClick}
-              className="flex-1 bg-green-600 hover:bg-green-700 text-white py-2 px-3 rounded text-xs font-medium transition-colors"
+              className="flex-1 bg-green-600 hover:bg-green-700 text-white py-2 px-3 rounded text-xs font-medium transition-colors md:py-3 md:text-sm"
             >
               {selectedTradingType === 'Futures' ? 'Long' : 'Buy'}
             </button>
             <button 
               onClick={handleSellClick}
-              className="flex-1 bg-red-600 hover:bg-red-700 text-white py-2 px-3 rounded text-xs font-medium transition-colors"
+              className="flex-1 bg-red-600 hover:bg-red-700 text-white py-2 px-3 rounded text-xs font-medium transition-colors md:py-3 md:text-sm"
             >
               {selectedTradingType === 'Futures' ? 'Short' : 'Sell'}
             </button>
@@ -1631,6 +1676,6 @@ export default function MobileTrade() {
         tradingType={selectedTradingType === 'Spot' ? 'spot' : 'futures'}
         action={depositModalAction}
       />
-    </MobileLayout>
+    </AdaptiveLayout>
   );
 }

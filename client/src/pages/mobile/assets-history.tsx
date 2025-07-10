@@ -5,6 +5,7 @@ import { Card } from '@/components/ui/card';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { apiRequest } from '@/lib/queryClient';
 import { useAuth } from '@/hooks/use-auth';
+import AdaptiveLayout from '@/components/adaptive-layout';
 
 // Removed crypto logos as per user request
 
@@ -15,13 +16,13 @@ export default function AssetsHistory() {
   const [location] = useLocation();
   const [highlightTransactionId, setHighlightTransactionId] = useState<string | null>(null);
   const transactionRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
-  
+
   // Determine back navigation path based on referrer
   const getBackPath = () => {
     // Check if we came from notifications (check URL parameters or localStorage)
     const urlParams = new URLSearchParams(window.location.search);
     const from = urlParams.get('from') || localStorage.getItem('assetsHistoryReferrer') || 'assets';
-    
+
     if (from === 'notifications') {
       return '/mobile/notifications';
     }
@@ -72,7 +73,7 @@ export default function AssetsHistory() {
     : [];
   const transfers = Array.isArray((transfersResponse as any)?.data) ? (transfersResponse as any).data : [];
   const withdrawals = Array.isArray((withdrawalsResponse as any)?.data) ? (withdrawalsResponse as any).data : [];
-  
+
   // Debug transaction data for troubleshooting
   console.log('Assets History Debug:', {
     user: user ? { id: (user as any)._id, email: (user as any).email } : null,
@@ -91,19 +92,22 @@ export default function AssetsHistory() {
       type: transfers[0].type
     } : null
   });
-  
+
   // Combine and sort all transactions
   const allTransactions = [...deposits, ...transfers, ...withdrawals].sort((a, b) => 
     new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   );
-  
+
   // Filter transactions based on active tab
   const getFilteredTransactions = () => {
     switch(activeTab) {
       case 'All Transactions':
         return allTransactions;
       case 'Deposit':
-        return deposits;
+        // Include both deposits and transfers in deposit mode
+        return [...deposits, ...transfers].sort((a, b) => 
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
       case 'Transfer':
         return transfers;
       case 'Withdraw':
@@ -112,10 +116,10 @@ export default function AssetsHistory() {
         return allTransactions;
     }
   };
-  
+
   const transactions = getFilteredTransactions();
   const isLoading = isLoadingDeposits || isLoadingTransfers || isLoadingWithdrawals;
-  
+
   // Force refresh when user changes
   useEffect(() => {
     if (user) {
@@ -128,14 +132,14 @@ export default function AssetsHistory() {
   // Handle transaction highlighting from sessionStorage
   useEffect(() => {
     const highlightId = sessionStorage.getItem('highlightTransactionId');
-    
+
     if (highlightId) {
       console.log('🎯 Highlighting transaction:', highlightId);
       setHighlightTransactionId(highlightId);
-      
+
       // Clear the sessionStorage immediately to prevent re-highlighting on future visits
       sessionStorage.removeItem('highlightTransactionId');
-      
+
       // Wait for transactions to load and then scroll to highlighted transaction
       const scrollTimer = setTimeout(() => {
         const element = transactionRefs.current[highlightId];
@@ -147,13 +151,13 @@ export default function AssetsHistory() {
           console.log('📍 Scrolled to highlighted transaction');
         }
       }, 500);
-      
+
       // Clear highlight after animation completes (6 seconds)
       const highlightTimer = setTimeout(() => {
         setHighlightTransactionId(null);
         console.log('✨ Transaction highlight animation completed');
       }, 6000);
-      
+
       return () => {
         clearTimeout(scrollTimer);
         clearTimeout(highlightTimer);
@@ -164,22 +168,22 @@ export default function AssetsHistory() {
   // WebSocket connection for real-time transaction updates
   useEffect(() => {
     let socket: WebSocket;
-    
+
     const connectWebSocket = () => {
       const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
       const wsUrl = `${protocol}//${window.location.host}/ws`;
       socket = new WebSocket(wsUrl);
-      
+
       socket.onopen = () => {
         console.log('WebSocket connected for real-time transaction updates');
         socket.send(JSON.stringify({ type: 'subscribe_notifications' }));
       };
-      
+
       socket.onmessage = (event) => {
         try {
           const data = JSON.parse(event.data);
           console.log('Real-time transaction update received:', data);
-          
+
           if (data.type === 'DEPOSIT_CREATED' || data.type === 'TRANSFER_CREATED' || data.type === 'WITHDRAWAL_CREATED') {
             // Refresh transaction history when new deposits, transfers, or withdrawals are created
             queryClient.invalidateQueries({ queryKey: ['/api/deposits/history'] });
@@ -191,21 +195,21 @@ export default function AssetsHistory() {
           console.error('WebSocket message error:', error);
         }
       };
-      
+
       socket.onclose = () => {
         console.log('WebSocket disconnected, attempting to reconnect...');
         setTimeout(connectWebSocket, 3000);
       };
-      
+
       socket.onerror = (error) => {
         console.error('WebSocket error:', error);
       };
     };
-    
+
     if (user) {
       connectWebSocket();
     }
-    
+
     return () => {
       if (socket) {
         socket.close();
@@ -217,10 +221,10 @@ export default function AssetsHistory() {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const highlightId = urlParams.get('highlight');
-    
+
     if (highlightId && !isLoading && transactions.length > 0) {
       setHighlightTransactionId(highlightId);
-      
+
       // Wait for DOM to render, then scroll to and highlight the transaction
       setTimeout(() => {
         const transactionElement = transactionRefs.current[highlightId];
@@ -231,7 +235,7 @@ export default function AssetsHistory() {
             block: 'center',
             inline: 'nearest'
           });
-          
+
           // Remove highlight after animation completes
           setTimeout(() => {
             setHighlightTransactionId(null);
@@ -247,15 +251,16 @@ export default function AssetsHistory() {
   const historyTabs = ['All Transactions', 'Deposit', 'Withdraw', 'Transfer'];
 
   return (
-    <div className="min-h-screen bg-[#0a0a2e] text-white">
-      {/* Header */}
-      <div className="flex items-center justify-between p-4 bg-[#0a0a2e]">
-        <Link href={getBackPath()}>
-          <ArrowLeft className="w-6 h-6 text-white" />
-        </Link>
-        <h1 className="text-base font-medium">Asset History</h1>
-        <div className="w-6 h-6" />
-      </div>
+    <AdaptiveLayout title="Nedaxer - Assets History" hideBottomNav={true}>
+      <div className="min-h-screen bg-[#0a0a2e] text-white">
+        {/* Header */}
+        <div className="flex items-center justify-between p-4 bg-[#0a0a2e]">
+          <Link href={getBackPath()}>
+            <ArrowLeft className="w-6 h-6 text-white" />
+          </Link>
+          <h1 className="text-base font-medium">Asset History</h1>
+          <div className="w-6 h-6" />
+        </div>
 
       {/* Transaction Tabs */}
       <div className="px-4 py-4 bg-[#0a0a2e]">
@@ -317,22 +322,23 @@ export default function AssetsHistory() {
             // Check if it's a transfer, deposit, or withdrawal
             const isTransfer = transaction.type === 'sent' || transaction.type === 'received';
             const isWithdrawal = transaction.cryptoSymbol && transaction.withdrawalAddress;
-            
+
             if (isTransfer) {
               const isSent = transaction.type === 'sent';
               const otherUser = isSent ? transaction.toUser : transaction.fromUser;
               const transactionId = transaction.transactionId || transaction._id;
-              const isHighlighted = highlightTransactionId === transactionId;
-              
+              const isHighlighted =highlightTransactionId === transactionId;
+
               return (
                 <div
                   key={transaction._id}
                   ref={(el) => transactionRefs.current[transactionId] = el}
                   className={`${isHighlighted ? 'transaction-highlight' : ''}`}
                 >
-                  <Link href={`/mobile/transfer-details/${transaction.transactionId}`}>
+                  <Link href={`/mobile/transfer-details/${transaction._id}`}>
                     <Card className="bg-[#1a1a40] border-[#2a2a50] p-3 hover:bg-[#2a2a50] transition-colors cursor-pointer">
                       <div className="flex justify-between items-center">
+                        
                         <div className="flex-1">
                           <p className="text-white font-medium text-xs">
                             {isSent ? 'Sent to' : 'Received from'} {otherUser.name}
@@ -365,7 +371,7 @@ export default function AssetsHistory() {
             } else if (isWithdrawal) {
               const transactionId = transaction._id;
               const isHighlighted = highlightTransactionId === transactionId;
-              
+
               return (
                 <div
                   key={transaction._id}
@@ -375,6 +381,7 @@ export default function AssetsHistory() {
                   <Link href={`/mobile/withdrawal-details/${transaction._id}`}>
                     <Card className="bg-[#1a1a40] border-[#2a2a50] p-3 hover:bg-[#2a2a50] transition-colors cursor-pointer">
                       <div className="flex justify-between items-center">
+                        
                         <div className="flex-1">
                           <p className="text-white font-medium text-xs">
                             {transaction.cryptoSymbol} Withdrawal
@@ -391,7 +398,7 @@ export default function AssetsHistory() {
                         <div className="text-right flex items-center space-x-2">
                           <div>
                             <p className="text-white font-medium text-xs">
-                              -{(transaction.cryptoAmount || 0).toFixed(6)}
+                              -{(transaction.cryptoAmount || 0).toFixed(6)} {transaction.cryptoSymbol || 'CRYPTO'}
                             </p>
                             <p className="text-gray-400 text-xs">
                               ${(transaction.usdAmount || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
@@ -407,7 +414,7 @@ export default function AssetsHistory() {
             } else {
               const transactionId = transaction._id;
               const isHighlighted = highlightTransactionId === transactionId;
-              
+
               return (
                 <div
                   key={transaction._id}
@@ -417,6 +424,7 @@ export default function AssetsHistory() {
                   <Link href={`/mobile/deposit-details/${transaction._id}`}>
                     <Card className="bg-[#1a1a40] border-[#2a2a50] p-3 hover:bg-[#2a2a50] transition-colors cursor-pointer">
                       <div className="flex justify-between items-center">
+                        
                         <div className="flex-1">
                           <p className="text-white font-medium text-xs">
                             {transaction.cryptoSymbol} Deposit
@@ -433,7 +441,7 @@ export default function AssetsHistory() {
                         <div className="text-right flex items-center space-x-2">
                           <div>
                             <p className="text-white font-medium text-xs">
-                              +{(transaction.cryptoAmount || 0).toFixed(6)}
+                              +{(transaction.cryptoAmount || 0).toFixed(6)} {transaction.cryptoSymbol || 'CRYPTO'}
                             </p>
                             <p className="text-gray-400 text-xs">
                               ${(transaction.usdAmount || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
@@ -450,6 +458,7 @@ export default function AssetsHistory() {
           })
         )}
       </div>
-    </div>
+      </div>
+    </AdaptiveLayout>
   );
 }

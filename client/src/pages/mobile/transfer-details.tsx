@@ -8,8 +8,11 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/use-auth';
+import AdaptiveLayout from '@/components/adaptive-layout';
+import DesktopTransferDetails from '@/components/desktop-pages/desktop-transfer-details';
 
-export default function TransferDetails() {
+// Mobile-specific component
+function MobileTransferDetails() {
   const { transactionId } = useParams();
   const [copied, setCopied] = useState(false);
   const { toast } = useToast();
@@ -241,5 +244,17 @@ export default function TransferDetails() {
       {/* Bottom spacing for mobile navigation */}
       <div className="h-24"></div>
     </div>
+  );
+}
+
+// Adaptive wrapper component
+export default function TransferDetails() {
+  return (
+    <AdaptiveLayout
+      title="Nedaxer - Transfer Details"
+      mobileComponent={<MobileTransferDetails />}
+      desktopComponent={<DesktopTransferDetails />}
+      hideBottomNav={true}
+    />
   );
 }

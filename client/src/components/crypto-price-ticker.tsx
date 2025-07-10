@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { TrendingUp, TrendingDown } from 'lucide-react';
-import { useQuery } from '@tanstack/react-query';
+import { useStableCoinPrice } from '@/hooks/use-stable-prices';
 
 interface CryptoPriceData {
   id: string;
@@ -22,49 +22,19 @@ export default function CryptoPriceTicker({ selectedSymbol = 'bitcoin', onSymbol
   const [displayPrice, setDisplayPrice] = useState<number>(0);
   const [displayChange, setDisplayChange] = useState<number>(0);
 
-  const { data: cryptoData, isLoading, error } = useQuery<CryptoPriceData[]>({
-    queryKey: ['/api/crypto/prices'],
-    refetchInterval: 5000, // Refresh every 5 seconds
-    retry: 3,
-    retryDelay: 1000
-  });
-
-  const { data: selectedCrypto } = useQuery<CryptoPriceData>({
-    queryKey: ['/api/crypto/detail', selectedSymbol],
-    refetchInterval: 1000, // Refresh every second for selected crypto
-    enabled: !!selectedSymbol,
-    retry: 3,
-    retryDelay: 500
-  });
+  // Use the unified stable pricing system
+  const { data: allPricesData, isLoading, error } = useStablePrices();
+  
+  // Extract BTC data from the unified response
+  const btcData = allPricesData?.data?.find((coin: any) => coin.symbol === 'BTC');
 
   useEffect(() => {
-    if (selectedCrypto && selectedCrypto.current_price !== undefined) {
-      // Animate price changes
-      const targetPrice = selectedCrypto.current_price;
-      const targetChange = selectedCrypto.price_change_percentage_24h;
-      
-      const animatePrice = () => {
-        setDisplayPrice(prev => {
-          const diff = targetPrice - prev;
-          return prev + diff * 0.1;
-        });
-      };
-
-      const animateChange = () => {
-        setDisplayChange(prev => {
-          const diff = targetChange - prev;
-          return prev + diff * 0.1;
-        });
-      };
-
-      const interval = setInterval(() => {
-        animatePrice();
-        animateChange();
-      }, 50);
-
-      return () => clearInterval(interval);
+    if (btcData && btcData.price !== undefined) {
+      // Direct update with stable data - no animations to prevent flickering
+      setDisplayPrice(btcData.price);
+      setDisplayChange(btcData.change || 0);
     }
-  }, [selectedCrypto]);
+  }, [btcData]);
 
   if (isLoading) {
     return (

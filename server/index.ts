@@ -182,13 +182,16 @@ app.use((req, res, next) => {
       }
     }
 
-    // Use PORT environment variable for deployment (Render) or find available port for development
-    let port = process.env.PORT ? parseInt(process.env.PORT) : 5000;
-    
-    // If no PORT env var is set, find an available port starting from 5000
-    if (!process.env.PORT) {
-      port = await findAvailablePort(5000);
+    // Start automatic backup system
+    try {
+      const { backupTask } = await import('../scripts/scheduleBackup.js');
+      console.log('✅ MongoDB auto-backup system started (every 5 minutes)');
+    } catch (error) {
+      console.warn('⚠️  Auto-backup system failed to start:', error.message);
     }
+
+    // Use PORT environment variable for deployment (Render) or default to 5000
+    const port = process.env.PORT ? parseInt(process.env.PORT) : 5000;
     server.listen({
       port,
       host: "0.0.0.0",
