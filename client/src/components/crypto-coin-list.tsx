@@ -168,6 +168,9 @@ export function CryptoCoinList() {
         if (data.type === 'crypto_prices') {
           setWsData(data);
           setLastUpdate(new Date());
+          // Cache WebSocket data as well
+          setCachedData(data);
+          setCachedDataState(data);
         }
       } catch (error) {
         console.error('Error parsing WebSocket message:', error);
@@ -188,28 +191,90 @@ export function CryptoCoinList() {
     };
   }, []);
 
+  // Cache management functions
+  const getCachedData = (): CoinGeckoResponse | null => {
+    try {
+      const cached = localStorage.getItem('crypto-coin-list-cache');
+      if (cached) {
+        const parsedCache = JSON.parse(cached);
+        const now = Date.now();
+        const cacheAge = now - parsedCache.timestamp;
+        const tenMinutes = 10 * 60 * 1000; // 10 minutes in milliseconds
+        
+        if (cacheAge < tenMinutes) {
+          console.log('Using cached crypto data, age:', Math.round(cacheAge / 1000), 'seconds');
+          return parsedCache.data;
+        } else {
+          console.log('Cache expired, age:', Math.round(cacheAge / 1000), 'seconds');
+          localStorage.removeItem('crypto-coin-list-cache');
+        }
+      }
+    } catch (error) {
+      console.error('Error reading cache:', error);
+      localStorage.removeItem('crypto-coin-list-cache');
+    }
+    return null;
+  };
+
+  const setCachedData = (data: CoinGeckoResponse) => {
+    try {
+      const cacheData = {
+        data,
+        timestamp: Date.now()
+      };
+      localStorage.setItem('crypto-coin-list-cache', JSON.stringify(cacheData));
+      console.log('Crypto data cached successfully');
+    } catch (error) {
+      console.error('Error caching data:', error);
+    }
+  };
+
+  // Check for cached data first
+  const [cachedData, setCachedDataState] = useState<CoinGeckoResponse | null>(() => getCachedData());
+
   // Fallback to polling if WebSocket is not available
   const { data: cryptoData, isLoading, error } = useQuery({
     queryKey: ["/api/crypto/realtime-prices"],
     queryFn: async (): Promise<CoinGeckoResponse> => {
+      // Check cache first
+      const cached = getCachedData();
+      if (cached) {
+        return cached;
+      }
+
+      // Fetch fresh data if no valid cache
+      console.log('Fetching fresh crypto data from API...');
       const response = await fetch("/api/crypto/realtime-prices");
       if (!response.ok) {
+        // If API fails, try to use expired cache as fallback
+        const expiredCache = localStorage.getItem('crypto-coin-list-cache');
+        if (expiredCache) {
+          const parsedCache = JSON.parse(expiredCache);
+          console.log('API failed, using expired cache as fallback');
+          return parsedCache.data;
+        }
         throw new Error(`Failed to fetch crypto data: ${response.statusText}`);
       }
+      
       const data = await response.json();
+      
+      // Cache the fresh data
+      setCachedData(data);
+      setCachedDataState(data);
+      
       if (!isConnected) {
         setLastUpdate(new Date());
       }
       return data;
     },
-    refetchInterval: isConnected ? false : 10000, // Only poll if WebSocket is not connected
+    refetchInterval: isConnected ? false : 600000, // Only refetch every 10 minutes if WebSocket is not connected
     retry: 3,
-    staleTime: 8000,
+    staleTime: 600000, // Consider data stale after 10 minutes
     enabled: !isConnected, // Only fetch if WebSocket is not connected
   });
 
-  // Get top 120 coins by market cap - prefer WebSocket data
-  const activeData = wsData || cryptoData;
+  // Get top 120 coins by market cap - prefer WebSocket data, then fetched data, then cached data
+  const activeData = wsData || cryptoData || cachedData;
   const topCoins = activeData?.data?.slice(0, 120) || [];
 
   if (isLoading) {

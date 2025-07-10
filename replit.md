@@ -283,6 +283,112 @@ Successfully removed the entire "Explore Markets" section from the landing page:
 
 ## Recent Issues Fixed
 
+### Favorites Synchronization and Chart Navigation Enhancement (January 10, 2025)
+
+**Features Implemented:**
+- **Favorites Synchronization**: Enhanced favorites system to synchronize between market page and home page with localStorage persistence - favorites marked on market page now show as star indicators on home page watchlist
+- **Chart Header Navigation Fix**: Removed modal popup from trade page chart header - tapping trading pairs now navigates directly to market page instead of showing modal selector
+- **Star Icon Enhancement**: Replaced small dot indicators with proper star icons on home page favorites display for better visual consistency with market page
+
+**Technical Implementation:**
+- **Synchronized Favorites Storage**: Both market and home pages use same `favoriteCoins` localStorage key ensuring cross-page favorites persistence
+- **Direct Navigation**: Updated trade page chart header onClick handler to use `navigate('/mobile/markets')` instead of `setShowPairSelectorModal(true)`
+- **Consistent Star Display**: Home page now uses `<Star className="w-4 h-4 fill-yellow-500 text-yellow-500" />` matching market page star indicators
+- **Cross-Page Compatibility**: Favorites logic uses `favoriteCoins.includes(ticker.symbol)` ensuring proper symbol matching between pages
+
+**User Experience Features:**
+- **Seamless Favorites**: Stars appear on home page immediately when favorites are marked on market page
+- **Direct Market Access**: Tapping trading pairs on chart header provides instant navigation to market page without modal interruption
+- **Visual Consistency**: Star indicators match between market page and home page for unified experience
+- **Persistent Selection**: Favorites remain synchronized across browser sessions and page refreshes
+
+**Result**: Complete favorites synchronization between market and home pages with star indicators, plus streamlined chart header navigation directly to market page without modal popups.
+
+### TradingView Chart Caching Optimization (January 10, 2025)
+
+**Feature Added:**
+- **10-Minute Chart Caching**: Implemented comprehensive TradingView chart caching system with 10-minute localStorage expiration to prevent unnecessary chart reloads
+- **Smart Cache Management**: Automatic cache validation with timestamp checking and expired cache removal for optimal performance
+- **Manual Refresh Button**: Added blue refresh button in chart header for force reload when users want fresh data
+- **Cache-Aware Chart Loading**: Modified all chart loading triggers to respect cache before creating new widgets
+
+**Technical Implementation:**
+- **Cache Functions**: Added `getTradingViewCache()` and `setTradingViewCache()` functions with 10-minute (600,000ms) expiration
+- **LocalStorage Management**: Uses `tradingview_cache_{symbol}` keys with structured timestamp data
+- **Enhanced loadChart Function**: Modified to check cache first before widget creation, only reloads when cache expired or force refresh
+- **useEffect Optimization**: Updated both chart-loading useEffects to respect cache and prevent unnecessary widget recreation
+- **Console Logging**: Clear cache status logging shows cache hits, misses, and expiration for debugging
+
+**User Experience Features:**
+- **Reduced Chart Reloads**: Charts only reload when cache expires (10+ minutes) or manual refresh button pressed
+- **Instant Chart Display**: Valid cached charts show immediately without loading delays
+- **Manual Control**: Blue refresh icon allows users to force reload when needed
+- **Seamless Integration**: No changes to existing chart functionality, styling, or trading features
+
+**Cache Logic Flow:**
+1. Check localStorage for valid cached data (< 10 minutes old)
+2. If valid cache exists and widget available, show chart immediately
+3. If cache expired or missing, create new widget and cache it
+4. Manual refresh button bypasses cache and forces fresh widget creation
+5. All symbol changes update cache timestamp for new symbols
+
+**Result**: TradingView charts now cache for 10 minutes, dramatically reducing unnecessary reloads while maintaining manual refresh capability and preserving all existing chart functionality.
+
+### CoinGecko API Caching Implementation for Landing Page (January 10, 2025)
+
+**Feature Added:**
+- **10-Minute localStorage Caching**: Implemented comprehensive caching system for CoinGecko API data with 10-minute expiration to reduce API calls and improve performance
+- **Smart Cache Management**: Automatic cache validation with timestamp checking and expired cache removal
+- **Fallback Error Handling**: If API fails, system falls back to expired cache data to maintain functionality
+- **Real-time Cache Updates**: WebSocket data is also cached to ensure consistent caching across all data sources
+
+**Technical Implementation:**
+- **Cache Functions**: Added `getCachedData()` and `setCachedData()` functions with timestamp-based validation
+- **LocalStorage Management**: Uses `crypto-coin-list-cache` key with structured data including timestamp
+- **API Integration**: Modified React Query to check cache first before making API calls
+- **WebSocket Caching**: WebSocket updates are automatically cached for offline/error scenarios
+- **Cache Expiration**: 10-minute (600,000ms) expiration with automatic cleanup of expired data
+
+**User Experience Features:**
+- **Reduced API Calls**: Only fetches fresh data when cache is older than 10 minutes
+- **Improved Performance**: Instant loading from cache when available
+- **Error Resilience**: Continues showing data even if API temporarily fails
+- **Console Logging**: Clear logging shows cache usage for debugging and monitoring
+- **Seamless Integration**: No changes to existing UI, styling, or display functionality
+
+**Cache Logic Flow:**
+1. Check localStorage for cached data with valid timestamp (< 10 minutes)
+2. If valid cache exists, use cached data immediately
+3. If cache expired or missing, fetch fresh data from API
+4. Cache fresh API responses and WebSocket updates with current timestamp
+5. If API fails, attempt to use expired cache as fallback
+
+**Result**: Landing page CoinGecko API calls reduced from every 30 seconds to maximum every 10 minutes, with intelligent caching and error handling maintaining data availability and improving overall performance.
+
+### Mobile Markets and Home Page Caching Implementation (January 10, 2025)
+
+**Feature Added:**
+- **Mobile Markets Page Caching**: Implemented same 10-minute localStorage caching for mobile markets page cryptocurrency pairs display
+- **Mobile Home Page Caching**: Added 10-minute caching system for mobile home page watchlist and coin list data
+- **Component-Specific Cache Keys**: Each page uses dedicated cache keys ('mobile-markets-cache', 'mobile-home-cache') to prevent data conflicts
+- **Unified Caching Strategy**: All three components (landing page, mobile markets, mobile home) now use identical caching logic with 10-minute expiration
+
+**Technical Implementation:**
+- **Mobile Markets Cache**: Updated markets page to cache CoinGecko API data with fallback to cached data when fresh data unavailable
+- **Mobile Home Cache**: Modified home page coin list to use localStorage caching instead of 3-second refresh intervals
+- **Cache Key Isolation**: Each component maintains separate cache to prevent interference between landing page, markets, and home data
+- **Error Resilience**: All mobile pages fall back to expired cache data if API requests fail
+- **Performance Optimization**: Reduced API calls from frequent intervals (3-30 seconds) to maximum every 10 minutes across all pages
+
+**User Experience Impact:**
+- **Dramatically Reduced API Usage**: Mobile markets and home pages now cache data for 10 minutes instead of refreshing every few seconds
+- **Improved Performance**: Instant loading from cache when available across all cryptocurrency display pages
+- **Consistent Data Display**: Cached data ensures cryptocurrency prices remain visible even during temporary API issues
+- **Battery Life Improvement**: Reduced network requests improve mobile device battery efficiency
+- **Seamless Experience**: No changes to existing UI or display functionality while significantly optimizing backend usage
+
+**Result**: Complete CoinGecko API optimization across landing page, mobile markets, and mobile home pages with unified 10-minute caching reducing total API calls by over 90% while maintaining real-time data availability and user experience quality.
+
 ### Dynamic Crypto Coin List Implementation (January 10, 2025)
 
 **Feature Added:**
@@ -343,6 +449,29 @@ Successfully removed the entire "Explore Markets" section from the landing page:
 - **Validation Functions**: Helper functions for credential validation and admin ID checking
 
 **Result**: Complete admin access system operational with 9 hardcoded credentials ensuring admin dashboard access regardless of MongoDB URL changes or database connectivity issues.
+
+### User-Controlled Layout Mode and Mobile Zoom Prevention (January 10, 2025)
+
+**Issues Resolved:**
+- **Automatic Desktop Mode Switching**: Fixed browser automatically switching from mobile to desktop mode upon login by replacing automatic screen width detection with user preference storage
+- **Mobile Zoom Prevention**: Completely disabled zoom in/out functionality on mobile devices as requested, preventing pinch-to-zoom and double-tap zoom gestures
+- **Layout Preference Persistence**: Implemented localStorage-based layout mode selection that respects user's browser mode choice instead of forcing desktop based on screen size
+
+**Technical Implementation:**
+- **AdaptiveLayout Enhancement**: Modified component to use `nedaxer_layout_mode` localStorage preference instead of automatic screen width detection (>=768px)
+- **User Choice Preservation**: Layout mode defaults to mobile unless user explicitly chooses desktop, only auto-detects desktop for very large screens (>=1200px)
+- **Complete Zoom Disable**: Updated MobileLayout viewport to `user-scalable=no, maximum-scale=1.0` with comprehensive CSS touch-action prevention
+- **Touch Gesture Prevention**: Added `touch-action: manipulation` and webkit touch prevention properties to prevent all zoom interactions
+- **Console Logging**: Added clear debugging messages showing layout mode selection and zoom prevention status
+
+**User Experience Features:**
+- **Preserved Browser Mode**: Users who login on mobile browsers stay in mobile mode unless they manually choose desktop
+- **No Automatic Switching**: Login process no longer forces desktop mode based on screen width detection
+- **Zoom-Free Mobile**: Complete prevention of pinch-to-zoom, double-tap zoom, and all touch zoom gestures on mobile devices
+- **Text Selection Control**: Maintained text selection for input fields while preventing zoom gestures
+- **Layout Memory**: User's layout preference persists across browser sessions and page refreshes
+
+**Result**: Users now have complete control over their browser mode choice - mobile users stay in mobile mode upon login, and zoom functionality is completely disabled on mobile devices as requested, providing a native app-like experience without unwanted zoom interactions.
 
 ### Complete MongoDB Backup & Restore System with Authentication Fix (July 9, 2025)
 

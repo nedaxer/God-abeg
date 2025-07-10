@@ -1040,6 +1040,7 @@ export default function UnifiedAdminPortal() {
       return;
     }
 
+    console.log('🏦 Admin removing funds - starting mutation with:', { userId: selectedUser._id, amount });
     removeFundsMutation.mutate({ userId: selectedUser._id, amount });
   };
 

@@ -1,0 +1,36 @@
+Real-time home update received: 
+Object {type: "crypto_prices", success: true, data: Array(106), timestamp: "2025-07-10T04:18:56.415Z"}
+Sending withdrawal request: 
+Object {cryptoSymbol: "BTC", cryptoName: "Bitcoin", chainType: "Bitcoin", networkName: "Bitcoin Network", withdrawalAddress: "ycfgvhbiy8t7cyf gujhiby", …}
+Real-time home update received: 
+Object {type: "crypto_prices", success: true, data: Array(106), timestamp: "2025-07-10T04:18:56.418Z"}
+Sending withdrawal request: 
+Object {cryptoSymbol: "BTC", cryptoName: "Bitcoin", chainType: "Bitcoin", networkName: "Bitcoin Network", withdrawalAddress: "ycfgvhbiy8t7cyf gujhiby", …}
+Withdrawal error: 
+Error {}
+
+at t.value (https://d634cbb5-9d45-4a9f-aef9-d37dbb06a80c-00-1iik3qb02dzxv.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:17465)
+at new t (https://d634cbb5-9d45-4a9f-aef9-d37dbb06a80c-00-1iik3qb02dzxv.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:12630)
+at t.value (https://d634cbb5-9d45-4a9f-aef9-d37dbb06a80c-00-1iik3qb02dzxv.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:32766)
+at https://d634cbb5-9d45-4a9f-aef9-d37dbb06a80c-00-1iik3qb02dzxv.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:34400
+ProtectedRoute check: 
+Object {user: true, isLoading: false, adminOnly: false, path: "/mobile/withdrawal"}
+User authenticated successfully, rendering component
+Failed to process withdrawal
+at Object.mutationFn (https://d634cbb5-9d45-4a9f-aef9-d37dbb06a80c-00-1iik3qb02dzxv.kirk.replit.dev/src/pages/mobile/withdrawal.tsx:159:15)
+[vite] 
+Error {}
+
+Unhandled promise rejection: 
+Error {}
+
+Real-time home update received: 
+Object {type: "crypto_prices", success: true, data: Array(106), timestamp: "2025-07-10T04:18:59.763Z"}
+Real-time home update received: 
+Object {type: "crypto_prices", success: true, data: Array(106), timestamp: "2025-07-10T04:19:06.442Z"}
+Real-time home update received: 
+Object {type: "crypto_prices", success: true, data: Array(106), timestamp: "2025-07-10T04:19:06.444Z"}
+Real-time home update received: 
+Object {type: "crypto_prices", success: true, data: Array(106), timestamp: "2025-07-10T04:19:16.546Z"}
+Real-time home update received: 
+Object {type: "crypto_prices", success: true, data: Array(106), timestamp: "2025-07-10T04:19:16.548Z"}

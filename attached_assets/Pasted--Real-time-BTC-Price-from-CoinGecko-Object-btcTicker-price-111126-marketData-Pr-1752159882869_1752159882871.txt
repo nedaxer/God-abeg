@@ -1,0 +1,39 @@
+🏠 Real-time BTC Price from CoinGecko: 
+Object {btcTicker: {…}, price: 111126, marketData: {…}}
+ProtectedRoute check: 
+Object {user: true, isLoading: false, adminOnly: false, path: "/mobile/trade"}
+User authenticated successfully, rendering component
+Cannot access 'getTradingViewCache' before initialization
+App error: 
+ErrorEvent {isTrusted: true}
+
+Warning: Cannot update a component (&#x60;App&#x60;) while rendering a different component (&#x60;MobileTrade&#x60;). To locate the bad setState() call inside &#x60;MobileTrade&#x60;, follow the stack trace as described in https://reactjs.org/link/setstate-in-render
+    at MobileTrade (https://6b629923-8d3c-418a-b707-2ce8cac65dff-00-32wt4ldedgebo.spock.replit.dev/src/pages/mobile/trade.tsx:37:17)
+    at Route (https://6b629923-8d3c-418a-b707-2ce8cac65dff-00-32wt4ldedgebo.spock.replit.dev/node_modules/.vite/deps/wouter.js?v=281f3a24:205:16)
+    at ProtectedRoute (https://6b629923-8d3c-418a-b707-2ce8cac65dff-00-32wt4ldedgebo.spock.replit.dev/src/components/protected-route.tsx:23:3)
+    at Switch (https://6b629923-8d3c-418a-b707-2ce8cac65dff-00-32wt4ldedgebo.spock.replit.dev/node_modules/.vite/deps/wouter.js?v=281f3a24:261:17)
+    at ErrorBoundary (https://6b629923-8d3c-418a-b707-2ce8cac65dff-00-32wt4ldedgebo.spock.replit.dev/src/components/error-boundary.tsx:7:5)
+    at Router (https://6b629923-8d3c-418a-b707-2ce8cac65dff-00-32wt4ldedgebo.spock.replit.dev/node_modules/.vite/deps/wouter.js?v=281f3a24:161:17)
+    at WithdrawalProvider (https://6b629923-8d3c-418a-b707-2ce8cac65dff-00-32wt4ldedgebo.spock.replit.dev/src/contexts/withdrawal-context.tsx:32:38)
+    at AuthProvider (https://6b629923-8d3c-418a-b707-2ce8cac65dff-00-32wt4ldedgebo.spock.replit.dev/src/hooks/use-auth.tsx:25:32)
+    at ThemeProvider (https://6b629923-8d3c-418a-b707-2ce8cac65dff-00-32wt4ldedgebo.spock.replit.dev/src/contexts/theme-context.tsx:29:33)
+    at LanguageProvider (https://6b629923-8d3c-418a-b707-2ce8cac65dff-00-32wt4ldedgebo.spock.replit.dev/src/contexts/language-context.tsx:905:36)
+    at QueryClientProvider (https://6b629923-8d3c-418a-b707-2ce8cac65dff-00-32wt4ldedgebo.spock.replit.dev/node_modules/.vite/deps/@tanstack_react-query.js?v=281f3a24:2873:3)
+    at ErrorBoundary (https://6b629923-8d3c-418a-b707-2ce8cac65dff-00-32wt4ldedgebo.spock.replit.dev/src/components/error-boundary.tsx:7:5)
+    at App (https://6b629923-8d3c-418a-b707-2ce8cac65dff-00-32wt4ldedgebo.spock.replit.dev/src/App.tsx?v=AMftW82ztXIUedE88p8OY:118:39)
+Cannot access 'getTradingViewCache' before initialization
+App error: 
+ErrorEvent {isTrusted: true}
+
+[vite] 
+Error {}
+
+[vite] 
+Error {}
+
+WebSocket disconnected, attempting to reconnect...
+WebSocket connected for real-time home page updates
+Real-time home update received: 
+Object {type: "crypto_prices", success: true, data: Array(106), timestamp: "2025-07-10T14:54:15.134Z"}
+Real-time home update received: 
+Object {type: "crypto_prices", success: true, data: Array(106), timestamp: "2025-07-10T14:54:15.135Z"}

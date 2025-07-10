@@ -74,6 +74,26 @@ export default function Contact() {
       return result;
     },
     onSuccess: (data) => {
+      // Show success banner
+      const successBanner = document.createElement('div');
+      successBanner.className = 'fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-in fade-in-0 slide-in-from-top-2';
+      successBanner.innerHTML = `
+        <div class="flex items-center space-x-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+          <span>Message sent successfully! We'll get back to you soon.</span>
+        </div>
+      `;
+      document.body.appendChild(successBanner);
+      
+      // Remove banner after 5 seconds
+      setTimeout(() => {
+        if (successBanner.parentNode) {
+          successBanner.parentNode.removeChild(successBanner);
+        }
+      }, 5000);
+      
       toast({
         title: "Message Sent Successfully!",
         description: "We've received your message and will get back to you soon.",

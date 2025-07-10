@@ -110,8 +110,83 @@ export default function MobileMarkets() {
     localStorage.setItem('favoriteCoins', JSON.stringify(newFavorites));
   };
 
-  // Use the centralized stable prices hook to prevent conflicts
-  const { data: marketData, isLoading, error } = useStablePrices();
+  // Cache management functions for mobile markets
+  const getCachedMarketData = (): CoinGeckoResponse | null => {
+    try {
+      const cached = localStorage.getItem('mobile-markets-cache');
+      if (cached) {
+        const parsedCache = JSON.parse(cached);
+        const now = Date.now();
+        const cacheAge = now - parsedCache.timestamp;
+        const tenMinutes = 10 * 60 * 1000; // 10 minutes in milliseconds
+        
+        if (cacheAge < tenMinutes) {
+          console.log('Using cached mobile markets data, age:', Math.round(cacheAge / 1000), 'seconds');
+          return parsedCache.data;
+        } else {
+          console.log('Mobile markets cache expired, age:', Math.round(cacheAge / 1000), 'seconds');
+          localStorage.removeItem('mobile-markets-cache');
+        }
+      }
+    } catch (error) {
+      console.error('Error reading mobile markets cache:', error);
+      localStorage.removeItem('mobile-markets-cache');
+    }
+    return null;
+  };
+
+  const setCachedMarketData = (data: CoinGeckoResponse) => {
+    try {
+      const cacheData = {
+        data,
+        timestamp: Date.now()
+      };
+      localStorage.setItem('mobile-markets-cache', JSON.stringify(cacheData));
+      console.log('Mobile markets data cached successfully');
+    } catch (error) {
+      console.error('Error caching mobile markets data:', error);
+    }
+  };
+
+  // Check for cached data first
+  const [cachedMarketData, setCachedMarketDataState] = useState<CoinGeckoResponse | null>(() => getCachedMarketData());
+
+  // Use cached data or fetch fresh data with 10-minute intervals
+  const { data: marketData, isLoading, error } = useQuery({
+    queryKey: ['/api/crypto/realtime-prices-markets'],
+    queryFn: async (): Promise<CoinGeckoResponse> => {
+      // Check cache first
+      const cached = getCachedMarketData();
+      if (cached) {
+        return cached;
+      }
+
+      // Fetch fresh data if no valid cache
+      console.log('Fetching fresh mobile markets data from API...');
+      const response = await fetch('/api/crypto/realtime-prices');
+      if (!response.ok) {
+        // If API fails, try to use expired cache as fallback
+        const expiredCache = localStorage.getItem('mobile-markets-cache');
+        if (expiredCache) {
+          const parsedCache = JSON.parse(expiredCache);
+          console.log('API failed, using expired mobile markets cache as fallback');
+          return parsedCache.data;
+        }
+        throw new Error(`Failed to fetch mobile markets data: ${response.statusText}`);
+      }
+      
+      const data = await response.json();
+      
+      // Cache the fresh data
+      setCachedMarketData(data);
+      setCachedMarketDataState(data);
+      
+      return data;
+    },
+    refetchInterval: 600000, // Only refetch every 10 minutes
+    retry: 3,
+    staleTime: 600000, // Consider data stale after 10 minutes
+  });
   
   // Update last update time when data changes
   useEffect(() => {
@@ -120,10 +195,13 @@ export default function MobileMarkets() {
     }
   }, [marketData]);
 
+  // Use cached data if available, fallback to fresh market data
+  const activeMarketData = marketData || cachedMarketData;
+
   // Process comprehensive crypto pairs with live price data
   const processedMarkets = CRYPTO_PAIRS.map((pair: CryptoPair) => {
     // Find matching ticker data from API by base asset (e.g., BTC for BTCUSDT)
-    const ticker = marketData?.data?.find((t: CryptoTicker) => t.symbol === pair.baseAsset);
+    const ticker = activeMarketData?.data?.find((t: CryptoTicker) => t.symbol === pair.baseAsset);
     
     if (ticker) {
       const price = ticker.price;

@@ -27,10 +27,12 @@ export default function MobileLayout({ children, className = '', hideBottomNav =
       document.head.appendChild(viewport);
     }
     
-    // Responsive viewport that works on both mobile and desktop
-    viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover');
+    // Mobile viewport with zoom disabled as requested
+    viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover');
     
-    // Enhanced responsive layout styling
+    console.log('📱 Mobile Layout Active - Zoom disabled, user choice preserved');
+    
+    // Enhanced responsive layout styling with zoom prevention
     const style = document.getElementById('responsive-mobile-view') || document.createElement('style');
     style.id = 'responsive-mobile-view';
     style.textContent = `
@@ -39,6 +41,24 @@ export default function MobileLayout({ children, className = '', hideBottomNav =
           overflow-x: hidden !important;
           margin: 0 !important;
           padding: 0 !important;
+          touch-action: manipulation !important;
+          -webkit-user-select: none !important;
+          -webkit-touch-callout: none !important;
+          -webkit-tap-highlight-color: transparent !important;
+        }
+        
+        /* Prevent zoom on all elements */
+        * {
+          touch-action: manipulation !important;
+          -webkit-user-select: none !important;
+          -webkit-touch-callout: none !important;
+          -webkit-tap-highlight-color: transparent !important;
+        }
+        
+        /* Allow text selection only for input fields */
+        input, textarea {
+          -webkit-user-select: text !important;
+          user-select: text !important;
         }
         
         /* Mobile layout styling - works on all screen sizes */
@@ -47,6 +67,7 @@ export default function MobileLayout({ children, className = '', hideBottomNav =
           min-height: 100vh !important;
           box-sizing: border-box !important;
           position: relative !important;
+          touch-action: manipulation !important;
         }
         
         /* Enhanced desktop behavior - mobile app works on desktop */

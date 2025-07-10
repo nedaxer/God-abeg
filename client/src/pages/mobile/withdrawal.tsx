@@ -189,10 +189,44 @@ function MobileWithdrawalContent() {
 
       return response.json();
     },
+    onSuccess: (result: any) => {
+      console.log('Withdrawal successful:', result);
+      
+      // Dismiss any existing banners
+      dismissBanner();
+      
+      // Hide processing animation
+      setShowProcessingAnimation(false);
+      
+      // Set success data and show success animation
+      setSuccessData({
+        usdAmount: usdAmount,
+        cryptoAmount: cryptoAmount,
+        cryptoSymbol: selectedCrypto.symbol
+      });
+      setShowSuccessAnimation(true);
+      
+      // Hide success animation after 4 seconds
+      setTimeout(() => {
+        setShowSuccessAnimation(false);
+        setSuccessData(null);
+        // Reset form
+        setUsdAmount('');
+        setCryptoAmount('');
+        setWithdrawalAddress('');
+      }, 4000);
+      
+      // Refresh balance data
+      queryClient.invalidateQueries({ queryKey: ['/api/wallet/summary'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/balances'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/notifications'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/notifications/unread-count'] });
+    },
     onError: (error: any) => {
       console.error('Withdrawal error:', error);
+      setShowProcessingAnimation(false);
       const errorMessage = error.message || 'Failed to process withdrawal. Please try again.';
-      showErrorBanner(errorMessage);
+      showErrorBanner("Withdrawal Failed", errorMessage);
     },
     onSettled: () => {
       setIsProcessing(false);
@@ -361,57 +395,16 @@ function MobileWithdrawalContent() {
     // Show processing animation first
     setShowProcessingAnimation(true);
     
-    try {
-      await withdrawalMutation.mutateAsync({
-        cryptoSymbol: selectedCrypto.symbol,
-        cryptoName: selectedCrypto.name,
-        chainType: selectedNetwork.chainType,
-        networkName: selectedNetwork.networkName,
-        withdrawalAddress,
-        usdAmount: parseFloat(usdAmountNum.toString()),
-        cryptoAmount: parseFloat(cryptoAmountNum.toString()),
-      });
-      
-      // Dismiss any existing banners
-      dismissBanner();
-      
-      // Hide processing animation and show success
-      setShowProcessingAnimation(false);
-      
-      // Store success data for animation
-      setSuccessData({
-        usdAmount: usdAmount,
-        cryptoAmount: cryptoAmount,
-        cryptoSymbol: selectedCrypto.symbol
-      });
-      
-      // Show success animation
-      setShowSuccessAnimation(true);
-      
-      // Hide success animation after 4 seconds
-      setTimeout(() => {
-        setShowSuccessAnimation(false);
-        setSuccessData(null);
-      }, 4000);
-      
-      // Clear form
-      setUsdAmount('');
-      setCryptoAmount('');
-      setWithdrawalAddress('');
-      
-      // Invalidate notifications and balance queries to refresh data
-      queryClient.invalidateQueries({ queryKey: ['/api/notifications'] });
-      queryClient.invalidateQueries({ queryKey: ['/api/notifications/unread-count'] });
-      queryClient.invalidateQueries({ queryKey: ['/api/wallet/summary'] });
-      queryClient.invalidateQueries({ queryKey: ['/api/balances'] });
-      
-    } catch (error) {
-      // Hide processing animation on error
-      setShowProcessingAnimation(false);
-      throw error;
-    } finally {
-      setIsProcessing(false);
-    }
+    // Use the mutation - it will handle success/error via onSuccess/onError
+    withdrawalMutation.mutate({
+      cryptoSymbol: selectedCrypto.symbol,
+      cryptoName: selectedCrypto.name,
+      chainType: selectedNetwork.chainType,
+      networkName: selectedNetwork.networkName,
+      withdrawalAddress,
+      usdAmount: parseFloat(usdAmountNum.toString()),
+      cryptoAmount: parseFloat(cryptoAmountNum.toString()),
+    });
   };
 
   return (

@@ -3789,19 +3789,21 @@ Timestamp: ${new Date().toISOString().replace('T', ' ').substring(0, 19)}(UTC)`;
       }
 
       // Get crypto price for validation
-      const cryptoPriceResponse = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,tether,binancecoin&vs_currencies=usd&x_cg_demo_api_key=${process.env.COINGECKO_API_KEY || ''}`);
+      const cryptoPriceResponse = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,tether,binancecoin,tron&vs_currencies=usd&x_cg_demo_api_key=${process.env.COINGECKO_API_KEY || ''}`);
       const cryptoPrices = await cryptoPriceResponse.json();
       
       const priceMap: { [key: string]: number } = {
         BTC: cryptoPrices.bitcoin?.usd || 0,
         ETH: cryptoPrices.ethereum?.usd || 0,
         USDT: cryptoPrices.tether?.usd || 1,
-        BNB: cryptoPrices.binancecoin?.usd || 0
+        BNB: cryptoPrices.binancecoin?.usd || 0,
+        TRX: cryptoPrices.tron?.usd || 0
       };
       
       const currentPrice = priceMap[cryptoSymbol];
       if (!currentPrice || currentPrice <= 0) {
-        return res.status(400).json({ success: false, message: "Unable to get current crypto price" });
+        console.error(`Price validation failed for ${cryptoSymbol}. Available prices:`, priceMap);
+        return res.status(400).json({ success: false, message: `Unable to get current crypto price for ${cryptoSymbol}` });
       }
 
       // Create withdrawal transaction
@@ -3850,7 +3852,7 @@ Timestamp: ${new Date().toISOString().replace('T', ' ').substring(0, 19)}(UTC)`,
             client.send(JSON.stringify({
               type: 'balance_update',
               userId: userId,
-              newBalance: userBalance.balance - parseFloat(usdAmount),
+              newBalance: userBalanceResult.balance - parseFloat(usdAmount),
               timestamp: new Date().toISOString()
             }));
             
@@ -3873,7 +3875,15 @@ Timestamp: ${new Date().toISOString().replace('T', ' ').substring(0, 19)}(UTC)`,
       });
     } catch (error) {
       console.error('User withdrawal creation error:', error);
-      res.status(500).json({ success: false, message: "Failed to process withdrawal" });
+      console.error('Error details:', {
+        message: error.message,
+        stack: error.stack,
+        userId,
+        cryptoSymbol,
+        usdAmount,
+        cryptoAmount
+      });
+      res.status(500).json({ success: false, message: `Failed to process withdrawal: ${error.message}` });
     }
   });
 
@@ -4937,6 +4947,9 @@ Timestamp: ${new Date().toISOString().replace('T', ' ').substring(0, 19)}(UTC)`,
       });
     }
   });
+
+  // Chatbot routes (mobile video chatbot)
+  app.use('/api/chatbot', chatbotRoutes);
 
   // Store WebSocket server for broadcasting updates
   app.set('wss', wss);

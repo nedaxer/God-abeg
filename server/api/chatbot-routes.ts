@@ -98,8 +98,9 @@ router.post('/message', async (req: Request, res: Response) => {
 
     // If no client available, return fallback response
     if (!client) {
+      console.log('⚠️ No chatbot client available, using fallback response');
       return res.json({ 
-        response: "I'm sorry, the chat service is temporarily unavailable. Please contact our support team directly for assistance with your account or trading questions."
+        response: "Hello! I'm here to help with Nedaxer platform questions. While our AI assistant is temporarily unavailable, I can provide basic information about deposits, trading, and account features. For detailed assistance, please contact our support team."
       });
     }
 
@@ -152,7 +153,11 @@ Respond as Nedaxer Bot helping a user with their question about the platform.`
     });
 
     if (isUnexpected(response)) {
-      throw response.body.error;
+      console.error('GitHub AI API response error:', response.body);
+      // Return fallback response instead of throwing error
+      return res.json({ 
+        response: "Hi! I'm here to help with Nedaxer platform questions about deposits, trading, withdrawals, and account features. For deposits, go to Assets page, select your crypto, choose network, and use the generated address. For trading, visit the Spot or Futures trading pages. Need specific help?"
+      });
     }
 
     const responseContent = response.body.choices[0]?.message?.content || 
@@ -162,9 +167,9 @@ Respond as Nedaxer Bot helping a user with their question about the platform.`
 
   } catch (error) {
     console.error('Chatbot API error:', error);
-    res.status(500).json({ 
-      error: 'Internal server error',
-      response: "I'm sorry, I'm experiencing technical difficulties. Please try again later or contact our support team directly."
+    // Always provide helpful fallback regardless of error
+    res.json({
+      response: "Hi! I'm here to help with Nedaxer platform questions. For deposits, go to Assets page, select your cryptocurrency, choose the network (Ethereum or BEP-20), and use the generated wallet address. For trading, visit Spot or Futures pages. For withdrawals, use the Assets page withdrawal feature. Need help with anything specific?"
     });
   }
 });

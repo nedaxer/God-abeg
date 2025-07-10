@@ -22,31 +22,43 @@ export default function AdaptiveLayout({
   mobileComponent,
   desktopComponent
 }: AdaptiveLayoutProps) {
-  const [isDesktop, setIsDesktop] = useState(false);
+  const [layoutMode, setLayoutMode] = useState<'mobile' | 'desktop'>('mobile');
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     try {
-      // Check if we're on desktop
-      const checkDesktop = () => {
-        setIsDesktop(window.innerWidth >= 768);
-      };
+      // Check user's preferred layout mode from localStorage
+      const savedLayoutMode = localStorage.getItem('nedaxer_layout_mode');
       
-      checkDesktop();
+      if (savedLayoutMode === 'desktop' || savedLayoutMode === 'mobile') {
+        setLayoutMode(savedLayoutMode as 'mobile' | 'desktop');
+        console.log('Using saved layout preference:', savedLayoutMode);
+      } else {
+        // Only auto-detect on first visit - default to mobile to preserve user's browser mode
+        const isLargeScreen = window.innerWidth >= 1200; // Only very large screens default to desktop
+        const autoMode = isLargeScreen ? 'desktop' : 'mobile';
+        setLayoutMode(autoMode);
+        console.log('Auto-detected layout mode:', autoMode, 'for screen width:', window.innerWidth);
+      }
+      
       setIsMounted(true);
-      
-      window.addEventListener('resize', checkDesktop);
-      
-      return () => window.removeEventListener('resize', checkDesktop);
     } catch (error) {
       console.error('Error in adaptive layout:', error);
-      // Fallback to mobile on error
-      setIsDesktop(false);
+      // Always fallback to mobile to preserve user choice
+      setLayoutMode('mobile');
       setIsMounted(true);
     }
   }, []);
 
-  // Don't render anything until we've determined the device type
+  // Add layout mode toggle function (can be used by components)
+  const toggleLayoutMode = () => {
+    const newMode = layoutMode === 'mobile' ? 'desktop' : 'mobile';
+    setLayoutMode(newMode);
+    localStorage.setItem('nedaxer_layout_mode', newMode);
+    console.log('Layout mode changed to:', newMode);
+  };
+
+  // Don't render anything until we've determined the layout mode
   if (!isMounted) {
     return (
       <div className="min-h-screen bg-[#0a0a2e] flex items-center justify-center">
@@ -55,8 +67,8 @@ export default function AdaptiveLayout({
     );
   }
 
-  // Desktop: Use proper desktop dashboard layout with full width wrapper
-  if (isDesktop) {
+  // Desktop mode: Use desktop dashboard layout (only when user chooses)
+  if (layoutMode === 'desktop') {
     return (
       <DesktopLayoutWrapper>
         <DesktopDashboard title={title}>
@@ -66,7 +78,7 @@ export default function AdaptiveLayout({
     );
   }
 
-  // Mobile: Use normal mobile layout
+  // Mobile mode: Use mobile layout (default and respects user choice)
   return (
     <MobileLayout 
       className={className}

@@ -456,30 +456,96 @@ export default function MobileHome() {
     }
   }, []);
 
-  // Fetch live market data from CoinGecko API with real-time updates
+  // Cache management functions for mobile home
+  const getCachedHomeData = (): any | null => {
+    try {
+      const cached = localStorage.getItem('mobile-home-cache');
+      if (cached) {
+        const parsedCache = JSON.parse(cached);
+        const now = Date.now();
+        const cacheAge = now - parsedCache.timestamp;
+        const tenMinutes = 10 * 60 * 1000; // 10 minutes in milliseconds
+        
+        if (cacheAge < tenMinutes) {
+          console.log('Using cached mobile home data, age:', Math.round(cacheAge / 1000), 'seconds');
+          return parsedCache.data;
+        } else {
+          console.log('Mobile home cache expired, age:', Math.round(cacheAge / 1000), 'seconds');
+          localStorage.removeItem('mobile-home-cache');
+        }
+      }
+    } catch (error) {
+      console.error('Error reading mobile home cache:', error);
+      localStorage.removeItem('mobile-home-cache');
+    }
+    return null;
+  };
+
+  const setCachedHomeData = (data: any) => {
+    try {
+      const cacheData = {
+        data,
+        timestamp: Date.now()
+      };
+      localStorage.setItem('mobile-home-cache', JSON.stringify(cacheData));
+      console.log('Mobile home data cached successfully');
+    } catch (error) {
+      console.error('Error caching mobile home data:', error);
+    }
+  };
+
+  // Check for cached data first
+  const [cachedHomeData, setCachedHomeDataState] = useState<any | null>(() => getCachedHomeData());
+
+  // Fetch live market data from CoinGecko API with 10-minute caching
   const { data: marketData } = useQuery({
-    queryKey: ['/api/crypto/realtime-prices'],
+    queryKey: ['/api/crypto/realtime-prices-home'],
     queryFn: async () => {
+      // Check cache first
+      const cached = getCachedHomeData();
+      if (cached) {
+        return cached;
+      }
+
+      // Fetch fresh data if no valid cache
+      console.log('Fetching fresh mobile home data from API...');
       const response = await fetch('/api/crypto/realtime-prices');
       if (!response.ok) {
-        throw new Error(`Failed to fetch market data: ${response.statusText}`);
+        // If API fails, try to use expired cache as fallback
+        const expiredCache = localStorage.getItem('mobile-home-cache');
+        if (expiredCache) {
+          const parsedCache = JSON.parse(expiredCache);
+          console.log('API failed, using expired mobile home cache as fallback');
+          return parsedCache.data;
+        }
+        throw new Error(`Failed to fetch mobile home data: ${response.statusText}`);
       }
-      return await response.json();
+      
+      const data = await response.json();
+      
+      // Cache the fresh data
+      setCachedHomeData(data);
+      setCachedHomeDataState(data);
+      
+      return data;
     },
-    refetchInterval: 3000, // Refresh every 3 seconds for real-time BTC price
+    refetchInterval: 600000, // Only refetch every 10 minutes
     retry: 3,
-    staleTime: 1000, // Consider data stale after 1 second for real-time feel
-    refetchOnWindowFocus: true,
-    refetchOnReconnect: true,
+    staleTime: 600000, // Consider data stale after 10 minutes
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
   });
+
+  // Use cached data if available, fallback to fresh market data
+  const activeHomeData = marketData || cachedHomeData;
 
   // Process market data from CoinGecko API
   const processedMarkets = React.useMemo(() => {
-    if (!marketData?.data || !Array.isArray(marketData.data)) {
+    if (!activeHomeData?.data || !Array.isArray(activeHomeData.data)) {
       return [];
     }
 
-    return marketData.data.map((ticker: any) => {
+    return activeHomeData.data.map((ticker: any) => {
       const baseSymbol = ticker.symbol.replace('USDT', '').replace('USDC', '').replace('USD', '');
       const price = ticker.price;
       const change = ticker.change;
@@ -500,7 +566,7 @@ export default function MobileHome() {
         favorite: favoriteCoins.includes(ticker.symbol)
       };
     });
-  }, [marketData, favoriteCoins]);
+  }, [activeHomeData, favoriteCoins]);
 
   // Get filtered markets based on active tab
   const getWatchlistMarkets = () => {
@@ -977,7 +1043,7 @@ export default function MobileHome() {
                 <div className="flex items-center space-x-3">
                   <div className="flex items-center space-x-2">
                     {market.favorite && (
-                      <div className="w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></div>
+                      <Star className="w-4 h-4 fill-yellow-500 text-yellow-500" />
                     )}
                     <div className="flex flex-col">
                       <span className="text-white font-medium">{market.displayPair}</span>

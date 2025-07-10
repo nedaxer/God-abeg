@@ -4,6 +4,21 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Mobile browser header/status bar color */
+meta[name="theme-color"] {
+  content: #0a0a2e;
+}
+
+/* For Android Chrome status bar */
+body {
+  --theme-color: #0a0a2e;
+}
+
+/* iOS Safari status bar style */
+meta[name="apple-mobile-web-app-status-bar-style"] {
+  content: "black-translucent";
+}
+
 /* Prevent keyboard from pushing up page on mobile (Facebook Messenger style) */
 .chat-container {
   height: 100vh;

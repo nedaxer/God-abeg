@@ -82,6 +82,153 @@ export default function MobileTrade() {
   const [isTradingViewReady, setIsTradingViewReady] = useState(false);
   const [chartError, setChartError] = useState<string | null>(null);
 
+  // Refs for chart and price updates
+  const chartWidget = useRef<any>(null);
+  const priceUpdateInterval = useRef<NodeJS.Timeout | null>(null);
+  const tradingViewScript = useRef<HTMLScriptElement | null>(null);
+  const localChartCache = useRef<Map<string, any>>(new Map());
+
+  // TradingView cache utilities with 10-minute expiry (defined before useEffect hooks)
+  const getTradingViewCache = useCallback((symbol: string) => {
+    try {
+      const cacheKey = `tradingview_cache_${symbol}`;
+      const cached = localStorage.getItem(cacheKey);
+      if (!cached) return null;
+      
+      const cacheData = JSON.parse(cached);
+      const now = Date.now();
+      const cacheAge = now - cacheData.timestamp;
+      const tenMinutes = 10 * 60 * 1000; // 10 minutes in milliseconds
+      
+      if (cacheAge > tenMinutes) {
+        // Cache expired, remove it
+        localStorage.removeItem(cacheKey);
+        console.log('TradingView cache expired for:', symbol, 'age:', Math.floor(cacheAge / 60000), 'minutes');
+        return null;
+      }
+      
+      console.log('TradingView cache hit for:', symbol, 'age:', Math.floor(cacheAge / 1000), 'seconds');
+      return cacheData;
+    } catch (error) {
+      console.error('Error reading TradingView cache:', error);
+      return null;
+    }
+  }, []);
+
+  const setTradingViewCache = useCallback((symbol: string) => {
+    try {
+      const cacheKey = `tradingview_cache_${symbol}`;
+      const cacheData = {
+        symbol,
+        timestamp: Date.now()
+      };
+      localStorage.setItem(cacheKey, JSON.stringify(cacheData));
+      console.log('TradingView cache set for:', symbol);
+    } catch (error) {
+      console.error('Error setting TradingView cache:', error);
+    }
+  }, []);
+
+  // Global chart widget cache functions (defined before useEffect hooks)
+  const getGlobalChartWidget = useCallback(() => {
+    if (!(window as any).nedaxerGlobalChartWidget) {
+      (window as any).nedaxerGlobalChartWidget = null;
+    }
+    if (!(window as any).nedaxerChartState) {
+      (window as any).nedaxerChartState = {
+        isReady: false,
+        currentSymbol: 'BTCUSDT',
+        isVisible: false
+      };
+    }
+    return (window as any).nedaxerGlobalChartWidget;
+  }, []);
+
+  const setGlobalChartWidget = useCallback((widget: any) => {
+    (window as any).nedaxerGlobalChartWidget = widget;
+    (window as any).nedaxerChartState.isReady = true;
+    chartWidget.current = widget;
+  }, []);
+
+  const getChartState = useCallback(() => {
+    return (window as any).nedaxerChartState || { isReady: false, currentSymbol: 'BTCUSDT', isVisible: false };
+  }, []);
+
+  const setChartState = useCallback((state: any) => {
+    if (!(window as any).nedaxerChartState) {
+      (window as any).nedaxerChartState = {};
+    }
+    Object.assign((window as any).nedaxerChartState, state);
+  }, []);
+
+  // Price update function (defined before useEffect hooks)
+  const updatePrice = useCallback(async (symbol: string) => {
+    try {
+      console.log('Updating price for symbol:', symbol);
+      const response = await fetch('/api/crypto/realtime-prices');
+      const data = await response.json();
+
+      if (data.success && data.data) {
+        const ticker = data.data.find((t: any) => t.symbol === symbol);
+        if (ticker) {
+          console.log('Found ticker for symbol:', symbol, ticker);
+          setCurrentTicker(ticker);
+          setCurrentPrice(ticker.price.toFixed(2));
+          
+          // Update DOM elements directly for real-time display
+          const coinPriceElement = document.getElementById('coin-price');
+          const highElement = document.getElementById('high');
+          const lowElement = document.getElementById('low');
+          const volumeElement = document.getElementById('turnover');
+          
+          if (coinPriceElement) {
+            coinPriceElement.textContent = ticker.price.toFixed(2);
+          }
+          if (highElement) {
+            highElement.textContent = ticker.high_24h ? ticker.high_24h.toFixed(2) : '--';
+          }
+          if (lowElement) {
+            lowElement.textContent = ticker.low_24h ? ticker.low_24h.toFixed(2) : '--';
+          }
+          if (volumeElement) {
+            volumeElement.textContent = ticker.volume_24h ? (ticker.volume_24h / 1000000).toFixed(1) + 'M' : '--';
+          }
+        } else {
+          console.log('No ticker found for symbol:', symbol);
+          // Fallback: try to find by removing 'USDT' suffix if it exists
+          const baseSymbol = symbol.replace('USDT', '');
+          const fallbackTicker = data.data.find((t: any) => t.symbol === baseSymbol);
+          if (fallbackTicker) {
+            console.log('Found fallback ticker:', fallbackTicker);
+            setCurrentTicker(fallbackTicker);
+            setCurrentPrice(fallbackTicker.price.toFixed(2));
+            
+            // Update DOM elements for fallback ticker
+            const coinPriceElement = document.getElementById('coin-price');
+            const highElement = document.getElementById('high');
+            const lowElement = document.getElementById('low');
+            const volumeElement = document.getElementById('turnover');
+            
+            if (coinPriceElement) {
+              coinPriceElement.textContent = fallbackTicker.price.toFixed(2);
+            }
+            if (highElement) {
+              highElement.textContent = fallbackTicker.high_24h ? fallbackTicker.high_24h.toFixed(2) : '--';
+            }
+            if (lowElement) {
+              lowElement.textContent = fallbackTicker.low_24h ? fallbackTicker.low_24h.toFixed(2) : '--';
+            }
+            if (volumeElement) {
+              volumeElement.textContent = fallbackTicker.volume_24h ? (fallbackTicker.volume_24h / 1000000).toFixed(1) + 'M' : '--';
+            }
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Price update error:', error);
+    }
+  }, []);
+
   // Initialize selected pair from persistent storage
   useEffect(() => {
     const loadInitialState = async () => {
@@ -159,29 +306,52 @@ export default function MobileTrade() {
           if (tabToUse === 'Charts') {
             setSelectedTab('Charts');
             
-            // Check if global chart exists and can be reused
+            // Check cache first before loading any chart
+            const cachedData = getTradingViewCache(pair.symbol);
             const globalWidget = (window as any).nedaxerGlobalChart;
-            if (globalWidget && globalWidget.widget && globalWidget.isReady) {
-              console.log('Reusing existing global chart, updating symbol');
+            
+            if (cachedData && globalWidget && globalWidget.widget && globalWidget.isReady) {
+              console.log('✅ Cache valid + global chart exists - reusing without reload');
+              try {
+                // Only update symbol if different
+                if (globalWidget.currentSymbol !== pair.symbol) {
+                  globalWidget.widget.setSymbol(pair.tradingViewSymbol, () => {
+                    console.log('Chart symbol updated to:', pair.symbol);
+                    globalWidget.currentSymbol = pair.symbol;
+                    setCurrentSymbol(pair.symbol);
+                    setSelectedPair(pair);
+                    updatePrice(pair.symbol);
+                  });
+                } else {
+                  console.log('Chart already showing correct symbol, no update needed');
+                  setCurrentSymbol(pair.symbol);
+                  setSelectedPair(pair);
+                  updatePrice(pair.symbol);
+                }
+              } catch (error) {
+                console.log('Failed to update cached chart, keeping current');
+              }
+            } else if (globalWidget && globalWidget.widget && globalWidget.isReady && !cachedData) {
+              console.log('Global chart exists but cache expired, updating symbol');
               try {
                 globalWidget.widget.setSymbol(pair.tradingViewSymbol, () => {
                   console.log('Chart symbol updated to:', pair.symbol);
                   globalWidget.currentSymbol = pair.symbol;
-                  
-                  // Force UI refresh after chart update
                   setCurrentSymbol(pair.symbol);
                   setSelectedPair(pair);
                   updatePrice(pair.symbol);
+                  // Set new cache after successful update
+                  setTradingViewCache(pair.symbol);
                 });
               } catch (error) {
                 console.log('Failed to update existing chart, will reload');
                 loadChart(pair.tradingViewSymbol, true);
               }
-            } else if (isTradingViewReady) {
-              console.log('TradingView ready, loading chart for:', pair.tradingViewSymbol);
+            } else if (isTradingViewReady && !cachedData) {
+              console.log('TradingView ready but no cache, loading chart for:', pair.tradingViewSymbol);
               loadChart(pair.tradingViewSymbol, false);
             } else {
-              console.log('TradingView not ready, will load chart when ready');
+              console.log('TradingView not ready or cache valid - will load when ready');
             }
           }
         } else {
@@ -197,10 +367,13 @@ export default function MobileTrade() {
     loadInitialState();
   }, [location]);
 
-  // Update chart when selected pair changes or when Charts tab is selected
+  // Update chart when selected pair changes - respects cache optimization
   useEffect(() => {
     if (isTradingViewReady && selectedTab === 'Charts') {
       console.log('Chart update triggered for:', selectedPair.symbol, selectedPair.tradingViewSymbol);
+      
+      // Check cache first to avoid unnecessary reloads
+      const cachedData = getTradingViewCache(selectedPair.symbol);
       
       // Try multiple widget references for maximum compatibility
       const globalWidget1 = (window as any).nedaxerGlobalChart;
@@ -231,6 +404,9 @@ export default function MobileTrade() {
               chartState.lastUpdated = Date.now();
               localStorage.setItem('nedaxer_chart_state', JSON.stringify(chartState));
               
+              // Update cache for new symbol
+              setTradingViewCache(selectedPair.symbol);
+              
               // Force UI update after successful chart change
               setCurrentSymbol(selectedPair.symbol);
               updatePrice(selectedPair.symbol);
@@ -256,66 +432,98 @@ export default function MobileTrade() {
         }
       }
       
-      // Fallback: Force reload chart if no widget or symbol update failed
-      console.log('No valid widget found or symbol update failed, reloading chart for:', selectedPair.tradingViewSymbol);
-      loadChart(selectedPair.tradingViewSymbol, true);
+      // Only reload if cache is expired or no cached data exists
+      if (!cachedData) {
+        console.log('No valid cached data, loading chart for:', selectedPair.tradingViewSymbol);
+        loadChart(selectedPair.tradingViewSymbol, false);
+      } else {
+        console.log('Cache valid but no widget found, skipping reload to respect cache');
+      }
     }
-  }, [selectedPair, isTradingViewReady, selectedTab, selectedTimeframe]);
+  }, [selectedPair, isTradingViewReady, selectedTab, selectedTimeframe, getTradingViewCache, setTradingViewCache]);
 
-  // Force chart load when switching to Charts tab
+  // Optimized chart load when switching to Charts tab - respects cache
   useEffect(() => {
     if (selectedTab === 'Charts' && isTradingViewReady) {
-      console.log('Charts tab selected, ensuring chart is loaded for:', selectedPair.tradingViewSymbol);
+      console.log('Charts tab selected, checking cache for:', selectedPair.tradingViewSymbol);
+      
+      // Check cache first before trying to load chart
+      const cachedData = getTradingViewCache(selectedPair.symbol);
       const existingWidget = getGlobalChartWidget();
       
+      if (cachedData && existingWidget && existingWidget.iframe && existingWidget.iframe.contentWindow) {
+        console.log('Using cached chart - no reload needed for Charts tab');
+        
+        // Just ensure chart is visible
+        const chartContainer = document.getElementById('chart');
+        if (chartContainer && existingWidget.iframe) {
+          if (!chartContainer.contains(existingWidget.iframe)) {
+            chartContainer.appendChild(existingWidget.iframe);
+          }
+          existingWidget.iframe.style.display = 'block';
+          existingWidget.iframe.style.visibility = 'visible';
+        }
+        return;
+      }
+      
       if (!existingWidget || !existingWidget.iframe) {
-        console.log('No existing chart found, creating new one');
+        console.log('No cached chart or existing widget found, creating new one');
         loadChart(selectedPair.tradingViewSymbol, false);
       }
     }
-  }, [selectedTab, isTradingViewReady, selectedPair.tradingViewSymbol]);
+  }, [selectedTab, isTradingViewReady, selectedPair.tradingViewSymbol, getTradingViewCache, getGlobalChartWidget]);
 
-  // Remove duplicate chartError declaration
-  const chartWidget = useRef<any>(null);
-  const priceUpdateInterval = useRef<NodeJS.Timeout | null>(null);
-  const tradingViewScript = useRef<HTMLScriptElement | null>(null);
-  const localChartCache = useRef<Map<string, any>>(new Map());
 
-  // Global chart widget cache to persist across ALL navigation
-  const getGlobalChartWidget = useCallback(() => {
-    if (!(window as any).nedaxerGlobalChartWidget) {
-      (window as any).nedaxerGlobalChartWidget = null;
-    }
-    if (!(window as any).nedaxerChartState) {
-      (window as any).nedaxerChartState = {
-        isReady: false,
-        currentSymbol: 'BTCUSDT',
-        isVisible: false
-      };
-    }
-    return (window as any).nedaxerGlobalChartWidget;
-  }, []);
 
-  const setGlobalChartWidget = useCallback((widget: any) => {
-    (window as any).nedaxerGlobalChartWidget = widget;
-    (window as any).nedaxerChartState.isReady = true;
-    chartWidget.current = widget;
-  }, []);
-
-  const getChartState = useCallback(() => {
-    return (window as any).nedaxerChartState || { isReady: false, currentSymbol: 'BTCUSDT', isVisible: false };
-  }, []);
-
-  const setChartState = useCallback((state: any) => {
-    if (!(window as any).nedaxerChartState) {
-      (window as any).nedaxerChartState = {};
-    }
-    Object.assign((window as any).nedaxerChartState, state);
-  }, []);
-
-  // Enhanced chart loading with global persistence across all pages
+  // Enhanced chart loading with 10-minute cache optimization
   const loadChart = useCallback((symbol: string, forceReload = false) => {
     if (typeof window === 'undefined' || !(window as any).TradingView) return;
+
+    // Check cache first (unless force reload or manual refresh)
+    if (!forceReload) {
+      const cachedData = getTradingViewCache(symbol);
+      const existingWidget = getGlobalChartWidget();
+      
+      // If cache is valid and widget exists, just show it without reloading
+      if (cachedData && existingWidget && existingWidget.iframe && existingWidget.iframe.contentWindow) {
+        console.log('Using cached TradingView chart - no reload needed for:', symbol);
+        
+        // Always ensure chart is visible when on Charts tab
+        const chartContainer = document.getElementById('chart');
+        if (chartContainer) {
+          // Make sure the chart iframe is in the current container
+          if (!chartContainer.querySelector('iframe') && existingWidget.iframe) {
+            // Move the existing chart to current container
+            if (existingWidget.iframe.parentNode) {
+              chartContainer.appendChild(existingWidget.iframe);
+            }
+          }
+          
+          // Make chart visible
+          if (existingWidget.iframe) {
+            existingWidget.iframe.style.display = 'block';
+            existingWidget.iframe.style.visibility = 'visible';
+          }
+        }
+        
+        // Update symbol if needed
+        const chartState = getChartState();
+        if (chartState.currentSymbol !== symbol) {
+          try {
+            existingWidget.setSymbol(symbol, "15", () => {
+              console.log('Cached chart symbol changed to', symbol);
+              setChartState({ currentSymbol: symbol, isVisible: true });
+            });
+          } catch (error) {
+            console.log('Failed to change symbol on cached chart, keeping current');
+          }
+        }
+        
+        chartWidget.current = existingWidget;
+        setChartState({ isVisible: true });
+        return;
+      }
+    }
 
     // Check if chart is already loaded and functional globally
     const existingWidget = getGlobalChartWidget();
@@ -348,6 +556,8 @@ export default function MobileTrade() {
           existingWidget.setSymbol(symbol, "15", () => {
             console.log('Symbol changed to', symbol);
             setChartState({ currentSymbol: symbol, isVisible: true });
+            // Cache the new symbol
+            setTradingViewCache(symbol);
           });
         } catch (error) {
           console.log('Failed to change symbol, keeping current chart');
@@ -361,7 +571,7 @@ export default function MobileTrade() {
 
     // Create new widget only if none exists or force reload
     if (forceReload || !existingWidget || !existingWidget.iframe || !existingWidget.iframe.contentWindow) {
-      console.log('Creating new global chart widget');
+      console.log('Creating new TradingView widget (cache expired or force reload)');
       
       // Remove existing widget if present
       if (existingWidget) {
@@ -385,7 +595,7 @@ export default function MobileTrade() {
         createNewWidget(symbol);
       }, 100);
     }
-  }, [getGlobalChartWidget, setGlobalChartWidget, getChartState, setChartState]);
+  }, [getGlobalChartWidget, setGlobalChartWidget, getChartState, setChartState, getTradingViewCache, setTradingViewCache]);
 
   // Helper function to create new widget with global persistence
   const createNewWidget = useCallback((symbol: string) => {
@@ -539,11 +749,14 @@ export default function MobileTrade() {
         };
         localStorage.setItem('nedaxer_chart_state', JSON.stringify(chartState));
         
+        // Set TradingView cache for 10-minute optimization
+        setTradingViewCache(cleanSymbol);
+        
         // Update UI state to match chart
         setCurrentSymbol(cleanSymbol);
         updatePrice(cleanSymbol);
         
-        console.log('Global chart initialized with enhanced setSymbol for:', cleanSymbol);
+        console.log('Global chart initialized with 10-minute cache for:', cleanSymbol);
       }
     });
 
@@ -556,72 +769,7 @@ export default function MobileTrade() {
     });
   }, [setGlobalChartWidget, setChartState]);
 
-  const updatePrice = async (symbol: string) => {
-    try {
-      console.log('Updating price for symbol:', symbol);
-      const response = await fetch('/api/crypto/realtime-prices');
-      const data = await response.json();
 
-      if (data.success && data.data) {
-        const ticker = data.data.find((t: any) => t.symbol === symbol);
-        if (ticker) {
-          console.log('Found ticker for symbol:', symbol, ticker);
-          setCurrentTicker(ticker);
-          setCurrentPrice(ticker.price.toFixed(2));
-          
-          // Update DOM elements directly for real-time display
-          const coinPriceElement = document.getElementById('coin-price');
-          const highElement = document.getElementById('high');
-          const lowElement = document.getElementById('low');
-          const volumeElement = document.getElementById('turnover');
-          
-          if (coinPriceElement) {
-            coinPriceElement.textContent = ticker.price.toFixed(2);
-          }
-          if (highElement) {
-            highElement.textContent = ticker.high_24h ? ticker.high_24h.toFixed(2) : '--';
-          }
-          if (lowElement) {
-            lowElement.textContent = ticker.low_24h ? ticker.low_24h.toFixed(2) : '--';
-          }
-          if (volumeElement) {
-            volumeElement.textContent = ticker.volume_24h ? (ticker.volume_24h / 1000000).toFixed(1) + 'M' : '--';
-          }
-        } else {
-          console.log('No ticker found for symbol:', symbol);
-          // Fallback: try to find by removing 'USDT' suffix if it exists
-          const baseSymbol = symbol.replace('USDT', '');
-          const fallbackTicker = data.data.find((t: any) => t.symbol === baseSymbol);
-          if (fallbackTicker) {
-            console.log('Found fallback ticker:', fallbackTicker);
-            setCurrentTicker(fallbackTicker);
-            setCurrentPrice(fallbackTicker.price.toFixed(2));
-            
-            // Update DOM elements for fallback ticker
-            const coinPriceElement = document.getElementById('coin-price');
-            const highElement = document.getElementById('high');
-            const lowElement = document.getElementById('low');
-            const volumeElement = document.getElementById('turnover');
-            
-            if (coinPriceElement) {
-              coinPriceElement.textContent = fallbackTicker.price.toFixed(2);
-            }
-            if (highElement) {
-              highElement.textContent = fallbackTicker.high_24h ? fallbackTicker.high_24h.toFixed(2) : '--';
-            }
-            if (lowElement) {
-              lowElement.textContent = fallbackTicker.low_24h ? fallbackTicker.low_24h.toFixed(2) : '--';
-            }
-            if (volumeElement) {
-              volumeElement.textContent = fallbackTicker.volume_24h ? (fallbackTicker.volume_24h / 1000000).toFixed(1) + 'M' : '--';
-            }
-          }
-        }
-      }
-    } catch (error) {
-      console.error('Price update error:', error);
-    }
-  };
 
   const handlePairSelectionModal = useCallback((pair: CryptoPair) => {
     console.log('Pair selected from modal:', pair);
@@ -733,23 +881,36 @@ export default function MobileTrade() {
       setIsTradingViewReady(true);
       setIsChartLoading(false);
 
-      // Always check for existing widget first
+      // Check cache first to prevent unnecessary reloads
+      const cachedData = getTradingViewCache(selectedPair.symbol);
       const existingWidget = getGlobalChartWidget();
-      if (existingWidget && existingWidget.iframe && existingWidget.iframe.contentWindow) {
-        console.log('Reusing existing chart widget - no reload needed');
+      
+      // If cache is valid and widget exists, don't create new chart
+      if (cachedData && existingWidget && existingWidget.iframe && existingWidget.iframe.contentWindow) {
+        console.log('✅ Cache valid + widget exists - no chart reload needed');
         chartWidget.current = existingWidget;
         
-        // Ensure chart is in the correct container
+        // Ensure chart is visible in current container
         const chartContainer = document.getElementById('chart');
-        if (chartContainer && !chartContainer.querySelector('iframe')) {
-          if (existingWidget.iframe && existingWidget.iframe.parentNode) {
+        if (chartContainer) {
+          if (!chartContainer.contains(existingWidget.iframe)) {
             chartContainer.appendChild(existingWidget.iframe);
           }
+          existingWidget.iframe.style.display = 'block';
+          existingWidget.iframe.style.visibility = 'visible';
         }
-      } else if (selectedTab === 'Charts') {
-        // Only create new widget if we're on Charts tab and no existing widget
-        console.log('Creating initial chart widget');
+        return; // Exit early to prevent chart reload
+      }
+
+      // Only create new widget if no cache/widget exists AND we're on Charts tab
+      if (selectedTab === 'Charts' && !cachedData) {
+        console.log('No cache found, creating initial chart widget');
         loadChart(selectedPair.tradingViewSymbol, false);
+      } else if (selectedTab === 'Charts' && cachedData && !existingWidget) {
+        console.log('Cache exists but no widget - this should not happen, creating widget');
+        loadChart(selectedPair.tradingViewSymbol, false);
+      } else {
+        console.log('Cache valid or not on Charts tab - skipping chart creation');
       }
       
       return;
@@ -1049,7 +1210,7 @@ export default function MobileTrade() {
               className="flex flex-col cursor-pointer hover:bg-blue-800 rounded px-2 py-1 transition-colors"
               onClick={() => {
                 hapticLight();
-                setShowPairSelectorModal(true);
+                navigate('/mobile/markets');
               }}
             >
               <div className="flex items-center gap-1">
@@ -1062,10 +1223,23 @@ export default function MobileTrade() {
                 $<span id="coin-price" key={`price-${forceUpdate}`}>{currentPrice || '--'}</span>
               </div>
             </div>
-            <div className="text-right text-xs leading-tight text-gray-300">
-              <div>24h High: <span id="high" className="text-white">{currentTicker?.high_24h ? currentTicker.high_24h.toFixed(2) : '--'}</span></div>
-              <div>24h Low: <span id="low" className="text-white">{currentTicker?.low_24h ? currentTicker.low_24h.toFixed(2) : '--'}</span></div>
-              <div>Vol: <span id="turnover" className="text-white">{currentTicker?.volume_24h ? (currentTicker.volume_24h / 1000000).toFixed(1) + 'M' : '--'}</span></div>
+            <div className="flex items-center gap-2">
+              <div className="text-right text-xs leading-tight text-gray-300">
+                <div>24h High: <span id="high" className="text-white">{currentTicker?.high_24h ? currentTicker.high_24h.toFixed(2) : '--'}</span></div>
+                <div>24h Low: <span id="low" className="text-white">{currentTicker?.low_24h ? currentTicker.low_24h.toFixed(2) : '--'}</span></div>
+                <div>Vol: <span id="turnover" className="text-white">{currentTicker?.volume_24h ? (currentTicker.volume_24h / 1000000).toFixed(1) + 'M' : '--'}</span></div>
+              </div>
+              <button 
+                onClick={() => {
+                  hapticLight();
+                  console.log('Manual chart refresh triggered');
+                  loadChart(selectedPair.tradingViewSymbol, true);
+                }}
+                className="p-1.5 bg-blue-600/20 hover:bg-blue-600/40 rounded-md border border-blue-600/30 transition-colors"
+                title="Refresh Chart"
+              >
+                <RefreshCw className="w-3.5 h-3.5 text-blue-400" />
+              </button>
             </div>
           </div>
 
