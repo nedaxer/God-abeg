@@ -165,7 +165,7 @@ export default function MobileTrade() {
   const updatePrice = useCallback(async (symbol: string) => {
     try {
       console.log('Updating price for symbol:', symbol);
-      const response = await fetch('/api/crypto/realtime-prices');
+      const response = await fetch('/api/coins');
       const data = await response.json();
 
       if (data.success && data.data) {

@@ -219,22 +219,22 @@ export default function CallSpreadsLearn() {
                 <div key={i} className="border-b border-gray-300 pb-6 last:border-0 last:pb-0">
                   <h4 className="font-bold text-lg mb-2">{example.market}</h4>
                   <p className="font-medium mb-1 text-[#0033a0]">{example.proposition}</p>
-                  <p className="text-sm mb-3">Current price: {example.currentPrice}</p>
+                  <p className="text-sm mb-3 text-gray-800">Current price: {example.currentPrice}</p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm mb-3">
                     <div>
-                      <span className="font-semibold text-red-600">Maximum Risk:</span> {example.risk}
+                      <span className="font-semibold text-red-600">Maximum Risk:</span> <span className="text-gray-800">{example.risk}</span>
                     </div>
                     <div>
-                      <span className="font-semibold text-green-600">Maximum Profit:</span> {example.maxProfit}
+                      <span className="font-semibold text-green-600">Maximum Profit:</span> <span className="text-gray-800">{example.maxProfit}</span>
                     </div>
                     <div>
-                      <span className="font-semibold">Cost:</span> {example.cost}
+                      <span className="font-semibold text-gray-900">Cost:</span> <span className="text-gray-800">{example.cost}</span>
                     </div>
                     <div>
-                      <span className="font-semibold">Expiration:</span> {example.expiry}
+                      <span className="font-semibold text-gray-900">Expiration:</span> <span className="text-gray-800">{example.expiry}</span>
                     </div>
                   </div>
-                  <p className="text-sm">{example.analysis}</p>
+                  <p className="text-sm text-gray-800">{example.analysis}</p>
                 </div>
               ))}
             </div>

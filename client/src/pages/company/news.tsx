@@ -1,59 +1,105 @@
 import { PageLayout } from "@/components/page-layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import { Calendar, ArrowRight, Newspaper, FileText, Award } from "lucide-react";
+import { Calendar, ArrowRight, Newspaper, FileText, Award, Clock, ExternalLink, RefreshCw, Globe, Zap, TrendingUp } from "lucide-react";
+import { useQuery } from '@tanstack/react-query';
+import { useState, useEffect } from 'react';
+
+interface NewsArticle {
+  title: string;
+  description: string;
+  url: string;
+  source: {
+    name: string;
+  };
+  publishedAt: string;
+  urlToImage?: string;
+  mediaType?: 'image' | 'video';
+  videoUrl?: string;
+}
 
 export default function News() {
-  const newsItems = [
-    {
-      id: 1,
-      title: "Nedaxer Introduces Cryptocurrency Trading Features",
-      date: "April 2, 2025",
-      excerpt: "Nedaxer has released a major update to its trading platform, introducing advanced crypto charting capabilities, real-time blockchain data, and enhanced trading tools for digital assets.",
-      category: "Product Update",
-      image: "https://images.unsplash.com/photo-1518546305927-5a555bb7020d?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=300&q=80",
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [liveNewsData, setLiveNewsData] = useState<NewsArticle[]>([]);
+  const [isConnected, setIsConnected] = useState(false);
+
+  // Fetch real crypto news from your mobile app API
+  const { data: newsData, isLoading, error, refetch } = useQuery<NewsArticle[]>({
+    queryKey: ['/api/crypto/news'],
+    queryFn: async () => {
+      const response = await fetch('/api/crypto/news');
+      if (!response.ok) {
+        throw new Error('Failed to fetch news');
+      }
+      return response.json();
     },
-    {
-      id: 2,
-      title: "Nedaxer Adds New Cryptocurrency Technical Indicators",
-      date: "March 15, 2025",
-      excerpt: "Traders now have access to specialized indicators for cryptocurrencies, including Realized Price, MVRV, Funding Rates, and other on-chain metrics to make informed trading decisions.",
-      category: "Platform Enhancement",
-      image: "https://images.unsplash.com/photo-1605792657660-596af9009e82?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=300&q=80",
-    },
-    {
-      id: 3,
-      title: "Nedaxer Reports Record Crypto Trading Volume in Q1 2025",
-      date: "March 10, 2025",
-      excerpt: "Nedaxer has reported record trading volumes for the first quarter of 2025, with significant growth in cryptocurrency products, particularly in Bitcoin and Ethereum markets.",
-      category: "Company News",
-      image: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=300&q=80",
-    },
-    {
-      id: 4,
-      title: "Nedaxer Launches Crypto Trading Academy",
-      date: "February 28, 2025",
-      excerpt: "Nedaxer has expanded its educational offerings with a dedicated Cryptocurrency Trading Academy covering blockchain fundamentals, technical analysis for digital assets, and risk management.",
-      category: "Education",
-      image: "https://images.unsplash.com/photo-1639322537133-5fcead339c5f?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=300&q=80",
-    },
-    {
-      id: 5,
-      title: "Nedaxer Enhances Crypto Security Features",
-      date: "February 15, 2025",
-      excerpt: "New security enhancements have been implemented for cryptocurrency trading on Nedaxer, including advanced verification systems and real-time monitoring for enhanced trader protection.",
-      category: "Security Update",
-      image: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=300&q=80",
-    },
-    {
-      id: 6,
-      title: "Nedaxer to Host Annual Crypto Trading Summit",
-      date: "January 25, 2025",
-      excerpt: "Nedaxer has announced dates for its annual Cryptocurrency Trading Summit, bringing together digital asset traders, blockchain experts, and industry leaders for educational sessions.",
-      category: "Event",
-      image: "https://images.unsplash.com/photo-1621761191319-c6fb62004040?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=300&q=80",
-    },
-  ];
+    retry: 2,
+    retryDelay: 3000,
+    refetchInterval: 5 * 60 * 1000, // Refetch every 5 minutes for fresh news
+    staleTime: 2 * 60 * 1000, // Consider data stale after 2 minutes
+    gcTime: 15 * 60 * 1000 // Keep in cache for 15 minutes
+  });
+
+  // Use live news data if available, otherwise fall back to regular API data
+  const displayNewsData = liveNewsData.length > 0 ? liveNewsData : newsData;
+
+  // Helper function to format date
+  const formatDate = (dateString: string) => {
+    try {
+      const date = new Date(dateString);
+      const now = new Date();
+      const diffInMinutes = Math.floor((now.getTime() - date.getTime()) / (1000 * 60));
+
+      if (diffInMinutes < 60) {
+        return `${diffInMinutes}m ago`;
+      } else if (diffInMinutes < 1440) {
+        return `${Math.floor(diffInMinutes / 60)}h ago`;
+      } else {
+        return `${Math.floor(diffInMinutes / 1440)}d ago`;
+      }
+    } catch {
+      return 'Recently';
+    }
+  };
+
+  // Get source logo
+  const getSourceLogo = (sourceName: string) => {
+    const logoMap: { [key: string]: string } = {
+      'CoinDesk': '/logos/coindesk.png',
+      'CryptoSlate': '/logos/cryptoslate.jpg',
+      'CryptoBriefing': '/logos/cryptobriefing.png',
+      'BeInCrypto': '/api/assets/download_1751940923486.jpeg',
+      'Google News - Crypto': '/logos/google-news.jpg',
+      'Google News - Bitcoin': '/logos/google-news.jpg',
+      'CoinTelegraph': 'https://cointelegraph.com/favicon.ico',
+      'Decrypt': 'https://decrypt.co/favicon.ico',
+      'CryptoNews': 'https://cryptonews.com/favicon.ico'
+    };
+    return logoMap[sourceName] || `/api/news/logo/${encodeURIComponent(sourceName)}`;
+  };
+
+  // Get category for news source
+  const getCategory = (sourceName: string) => {
+    const categoryMap: { [key: string]: string } = {
+      'CoinDesk': 'Market News',
+      'CoinTelegraph': 'Breaking News',
+      'Decrypt': 'Technology',
+      'CryptoSlate': 'Analysis',
+      'CryptoBriefing': 'Research',
+      'BeInCrypto': 'Market Update',
+      'CryptoNews': 'General News',
+      'Google News - Crypto': 'Trending',
+      'Google News - Bitcoin': 'Bitcoin News'
+    };
+    return categoryMap[sourceName] || 'Crypto News';
+  };
+
+  const categories = ['All', 'Market News', 'Breaking News', 'Technology', 'Analysis', 'Research'];
+
+  const filteredNews = displayNewsData?.filter(article => {
+    if (selectedCategory === 'All') return true;
+    return getCategory(article.source.name) === selectedCategory;
+  }) || [];
 
   const pressReleases = [
     {
@@ -77,100 +123,259 @@ export default function News() {
 
   return (
     <PageLayout 
-      title="Crypto News & Updates" 
-      subtitle="The latest cryptocurrency news, events, and announcements from Nedaxer"
+      title="Live Crypto News & Market Updates" 
+      subtitle="Real-time cryptocurrency news from CoinDesk, CoinTelegraph, Decrypt, and other leading sources"
       bgColor="#0033a0"
     >
-      <div className="max-w-4xl mx-auto">
-        <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Latest Crypto News</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+      <div className="max-w-6xl mx-auto">
+        {/* Header with refresh button */}
+        <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2">
+              <TrendingUp className="h-6 w-6 text-[#0033a0]" />
+              <h2 className="text-3xl font-bold text-[#0033a0]">Live Crypto News</h2>
+            </div>
+            {isConnected && (
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                <span className="text-sm text-green-600 font-medium">Live</span>
+              </div>
+            )}
+          </div>
+          <Button
+            onClick={() => refetch()}
+            variant="outline"
+            className="flex items-center space-x-2 border-[#0033a0] text-[#0033a0] hover:bg-[#0033a0] hover:text-white"
+          >
+            <RefreshCw className="h-4 w-4" />
+            <span>Refresh</span>
+          </Button>
+        </div>
+
+        {/* Category Filter */}
+        <div className="mb-8">
+          <div className="flex flex-wrap gap-2">
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                  selectedCategory === category
+                    ? 'bg-[#0033a0] text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Loading State */}
+        {isLoading && (
+          <div className="text-center py-12">
+            <div className="inline-flex items-center space-x-2">
+              <RefreshCw className="h-6 w-6 animate-spin text-[#0033a0]" />
+              <span className="text-lg text-gray-900">Loading latest crypto news...</span>
+            </div>
+          </div>
+        )}
+
+        {/* Error State */}
+        {error && (
+          <div className="text-center py-12">
+            <div className="bg-red-50 border border-red-200 rounded-lg p-6">
+              <p className="text-red-600 mb-4">Failed to load news. Please try again.</p>
+              <Button
+                onClick={() => refetch()}
+                className="bg-[#0033a0] hover:bg-opacity-90 text-white"
+              >
+                Try Again
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {/* News Grid */}
+        {filteredNews && filteredNews.length > 0 && (
+          <div className="mb-12">
             {/* Featured News Item */}
-            <div className="col-span-1 md:col-span-2">
-              <div className="bg-[#f5f5f5] rounded-lg overflow-hidden">
+            <div className="mb-8">
+              <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
                 <div className="md:flex">
                   <div className="md:w-1/2">
-                    <img 
-                      src={newsItems[0].image} 
-                      alt={newsItems[0].title} 
-                      className="w-full h-64 object-cover"
-                    />
+                    <div className="h-64 md:h-full relative">
+                      {filteredNews[0].urlToImage ? (
+                        <img 
+                          src={filteredNews[0].urlToImage} 
+                          alt={filteredNews[0].title}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.src = getSourceLogo(filteredNews[0].source.name);
+                          }}
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-[#0033a0] to-[#ff5900] flex items-center justify-center">
+                          <img 
+                            src={getSourceLogo(filteredNews[0].source.name)} 
+                            alt={filteredNews[0].source.name}
+                            className="w-16 h-16 object-contain"
+                          />
+                        </div>
+                      )}
+                    </div>
                   </div>
                   <div className="p-6 md:w-1/2">
-                    <div className="flex items-center mb-2">
-                      <span className="bg-[#0033a0] text-white text-xs px-2 py-1 rounded-full">{newsItems[0].category}</span>
+                    <div className="flex items-center mb-3">
+                      <span className="bg-[#0033a0] text-white text-xs px-3 py-1 rounded-full font-medium">
+                        {getCategory(filteredNews[0].source.name)}
+                      </span>
                       <div className="flex items-center ml-3 text-sm text-gray-500">
-                        <Calendar className="h-4 w-4 mr-1" />
-                        <span>{newsItems[0].date}</span>
+                        <Clock className="h-4 w-4 mr-1" />
+                        <span>{formatDate(filteredNews[0].publishedAt)}</span>
                       </div>
                     </div>
-                    <h3 className="text-2xl font-bold mb-3 text-[#0033a0]">{newsItems[0].title}</h3>
-                    <p className="text-gray-700 mb-4">{newsItems[0].excerpt}</p>
-                    <Link 
-                      href="#" 
-                      className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
-                    >
-                      Read More <ArrowRight className="ml-1 h-4 w-4" />
-                    </Link>
+                    <h3 className="text-2xl font-bold mb-3 text-gray-900 line-clamp-2">
+                      {filteredNews[0].title}
+                    </h3>
+                    <p className="text-gray-700 mb-4 line-clamp-3">
+                      {filteredNews[0].description}
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-2">
+                        <img 
+                          src={getSourceLogo(filteredNews[0].source.name)} 
+                          alt={filteredNews[0].source.name}
+                          className="w-6 h-6 object-contain"
+                        />
+                        <span className="text-sm font-medium text-gray-900">
+                          {filteredNews[0].source.name}
+                        </span>
+                      </div>
+                      <a 
+                        href={filteredNews[0].url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
+                      >
+                        Read Full Article <ExternalLink className="ml-1 h-4 w-4" />
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            
+
             {/* Other News Items */}
-            {newsItems.slice(1).map((news) => (
-              <div key={news.id} className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
-                <img 
-                  src={news.image} 
-                  alt={news.title} 
-                  className="w-full h-48 object-cover"
-                />
-                <div className="p-6">
-                  <div className="flex items-center mb-2">
-                    <span className="bg-[#0033a0] text-white text-xs px-2 py-1 rounded-full">{news.category}</span>
-                    <div className="flex items-center ml-3 text-sm text-gray-500">
-                      <Calendar className="h-4 w-4 mr-1" />
-                      <span>{news.date}</span>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredNews.slice(1, 13).map((article, index) => (
+                <article key={`${article.url}-${index}`} className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 hover:shadow-lg transition-shadow">
+                  <div className="relative h-48">
+                    {article.urlToImage ? (
+                      <img 
+                        src={article.urlToImage} 
+                        alt={article.title}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = getSourceLogo(article.source.name);
+                        }}
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center">
+                        <img 
+                          src={getSourceLogo(article.source.name)} 
+                          alt={article.source.name}
+                          className="w-12 h-12 object-contain"
+                        />
+                      </div>
+                    )}
+                  </div>
+                  <div className="p-4">
+                    <div className="flex items-center mb-2">
+                      <span className="bg-[#0033a0] text-white text-xs px-2 py-1 rounded-full font-medium">
+                        {getCategory(article.source.name)}
+                      </span>
+                      <div className="flex items-center ml-3 text-sm text-gray-500">
+                        <Clock className="h-3 w-3 mr-1" />
+                        <span>{formatDate(article.publishedAt)}</span>
+                      </div>
+                    </div>
+                    <h3 className="text-lg font-bold mb-2 text-gray-900 line-clamp-2">
+                      {article.title}
+                    </h3>
+                    <p className="text-gray-700 mb-3 line-clamp-2 text-sm">
+                      {article.description}
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-2">
+                        <img 
+                          src={getSourceLogo(article.source.name)} 
+                          alt={article.source.name}
+                          className="w-5 h-5 object-contain"
+                        />
+                        <span className="text-sm font-medium text-gray-900">
+                          {article.source.name}
+                        </span>
+                      </div>
+                      <a 
+                        href={article.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[#0033a0] hover:text-[#ff5900] font-semibold text-sm flex items-center"
+                      >
+                        Read <ExternalLink className="ml-1 h-3 w-3" />
+                      </a>
                     </div>
                   </div>
-                  <h3 className="text-xl font-bold mb-3 text-[#0033a0]">{news.title}</h3>
-                  <p className="text-gray-700 mb-4">{news.excerpt}</p>
-                  <Link 
-                    href="#" 
-                    className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
-                  >
-                    Read More <ArrowRight className="ml-1 h-4 w-4" />
-                  </Link>
-                </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        )}
+        
+        {/* News Sources Section */}
+        <div className="mb-12">
+          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Trusted Crypto News Sources</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            {[
+              { name: 'CoinDesk', logo: '/logos/coindesk.png' },
+              { name: 'CoinTelegraph', logo: 'https://cointelegraph.com/favicon.ico' },
+              { name: 'Decrypt', logo: 'https://decrypt.co/favicon.ico' },
+              { name: 'CryptoSlate', logo: '/logos/cryptoslate.jpg' },
+              { name: 'CryptoBriefing', logo: '/logos/cryptobriefing.png' },
+              { name: 'BeInCrypto', logo: '/api/assets/download_1751940923486.jpeg' },
+              { name: 'CryptoNews', logo: 'https://cryptonews.com/favicon.ico' },
+              { name: 'Google News', logo: '/logos/google-news.jpg' }
+            ].map((source, index) => (
+              <div key={index} className="bg-white rounded-lg p-4 border border-gray-200 hover:shadow-md transition-shadow text-center">
+                <img 
+                  src={source.logo} 
+                  alt={source.name}
+                  className="w-12 h-12 object-contain mx-auto mb-2"
+                />
+                <p className="text-sm font-medium text-gray-900">{source.name}</p>
               </div>
             ))}
           </div>
-          
-          <div className="text-center">
-            <Button
-              asChild
-              className="bg-[#0033a0] hover:bg-opacity-90 text-white font-semibold px-6 py-2"
-            >
-              <Link href="#">View All Crypto News</Link>
-            </Button>
-          </div>
         </div>
-        
+
+        {/* Nedaxer Press Releases */}
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Crypto Press Releases</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Nedaxer Press Releases</h2>
           
           <div className="space-y-4 mb-8">
             {pressReleases.map((release, i) => (
-              <div key={i} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+              <div key={i} className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
                 <div className="flex items-start">
                   <FileText className="text-[#0033a0] mt-1 mr-3 h-6 w-6 flex-shrink-0" />
-                  <div>
+                  <div className="flex-grow">
                     <div className="flex items-center mb-1 text-sm text-gray-500">
                       <Calendar className="h-4 w-4 mr-1" />
                       <span>{release.date}</span>
                     </div>
-                    <h3 className="text-lg font-bold mb-2 text-[#0033a0]">{release.title}</h3>
+                    <h3 className="text-lg font-bold mb-2 text-gray-900">{release.title}</h3>
                     <Link 
                       href={release.link} 
                       className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center text-sm"
@@ -188,82 +393,87 @@ export default function News() {
               href="#" 
               className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center justify-center"
             >
-              View All Crypto Press Releases <ArrowRight className="ml-1 h-4 w-4" />
+              View All Press Releases <ArrowRight className="ml-1 h-4 w-4" />
             </Link>
           </div>
         </div>
         
+        {/* Cryptocurrency Resources */}
         <div className="mb-12">
           <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Cryptocurrency Resources</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <div className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
               <div className="flex items-center mb-4">
                 <Newspaper className="text-[#0033a0] h-8 w-8 mr-3" />
-                <h3 className="text-xl font-bold text-[#0033a0]">Crypto Market Reports</h3>
+                <h3 className="text-xl font-bold text-[#0033a0]">Market Reports</h3>
               </div>
               <p className="text-gray-700 mb-4">
-                Download weekly and monthly cryptocurrency market reports, trend analysis, and blockchain data insights.
+                Weekly and monthly cryptocurrency market reports, trend analysis, and blockchain data insights.
               </p>
               <Link 
                 href="#" 
                 className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
               >
-                Download Market Reports <ArrowRight className="ml-1 h-4 w-4" />
+                Download Reports <ArrowRight className="ml-1 h-4 w-4" />
               </Link>
             </div>
             
-            <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <div className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
               <div className="flex items-center mb-4">
                 <Award className="text-[#0033a0] h-8 w-8 mr-3" />
-                <h3 className="text-xl font-bold text-[#0033a0]">Crypto Trading Guides</h3>
+                <h3 className="text-xl font-bold text-[#0033a0]">Trading Guides</h3>
               </div>
               <p className="text-gray-700 mb-4">
-                Comprehensive guides to trading cryptocurrencies with limited risk products, technical analysis, and strategy development.
+                Comprehensive guides to cryptocurrency trading, technical analysis, and strategy development.
               </p>
               <Link 
                 href="#" 
                 className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
               >
-                View Trading Guides <ArrowRight className="ml-1 h-4 w-4" />
+                View Guides <ArrowRight className="ml-1 h-4 w-4" />
               </Link>
             </div>
             
-            <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <div className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
               <div className="flex items-center mb-4">
                 <FileText className="text-[#0033a0] h-8 w-8 mr-3" />
-                <h3 className="text-xl font-bold text-[#0033a0]">Blockchain Research</h3>
+                <h3 className="text-xl font-bold text-[#0033a0]">Research Papers</h3>
               </div>
               <p className="text-gray-700 mb-4">
-                In-depth research and analysis on blockchain technology, cryptocurrency markets, and emerging digital asset trends.
+                In-depth research on blockchain technology, cryptocurrency markets, and emerging digital asset trends.
               </p>
               <Link 
                 href="#" 
                 className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
               >
-                Browse Research Papers <ArrowRight className="ml-1 h-4 w-4" />
+                Browse Research <ArrowRight className="ml-1 h-4 w-4" />
               </Link>
             </div>
           </div>
         </div>
-        
 
-
-        <div className="bg-[#0033a0] text-white rounded-lg p-8 text-center">
-          <h2 className="text-2xl font-bold mb-4">Stay Updated with Crypto Market Insights</h2>
-          <p className="mb-6">Subscribe to our newsletter to receive the latest cryptocurrency news, market analysis, and trading opportunities.</p>
-          <div className="max-w-md mx-auto">
-            <div className="flex flex-col sm:flex-row gap-3">
-              <input 
-                type="email" 
-                placeholder="Enter your email address" 
-                className="flex-grow px-4 py-3 rounded-md focus:outline-none"
-              />
-              <Button
-                className="bg-[#ff5900] hover:bg-opacity-90 text-white font-semibold px-6 py-3"
-              >
-                Subscribe
-              </Button>
+        {/* Newsletter Signup */}
+        <div className="bg-gradient-to-r from-[#0033a0] to-[#ff5900] text-white rounded-xl p-8 text-center">
+          <div className="max-w-2xl mx-auto">
+            <div className="mb-6">
+              <Zap className="h-12 w-12 mx-auto mb-4" />
+              <h2 className="text-3xl font-bold mb-2">Stay Ahead of the Markets</h2>
+              <p className="text-lg opacity-90">Get the latest crypto news, market analysis, and trading opportunities delivered to your inbox.</p>
+            </div>
+            <div className="max-w-md mx-auto">
+              <div className="flex flex-col sm:flex-row gap-3">
+                <input 
+                  type="email" 
+                  placeholder="Enter your email address" 
+                  className="flex-grow px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-white text-gray-900"
+                />
+                <Button
+                  className="bg-white text-[#0033a0] hover:bg-gray-100 font-semibold px-6 py-3 rounded-lg"
+                >
+                  Subscribe Now
+                </Button>
+              </div>
             </div>
           </div>
         </div>

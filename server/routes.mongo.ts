@@ -244,6 +244,56 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get('/api/crypto/stable-prices', getStableCryptoPrices);
   app.get('/api/crypto/realtime-prices', getRealtimePrices);
 
+  // New /api/coins endpoint that serves cached cryptocurrency data
+  app.get('/api/coins', async (req: Request, res: Response) => {
+    try {
+      // Import the cache access function from realtime-prices
+      const { getCachedPrices } = await import('./api/realtime-prices');
+      
+      // Get the cached data
+      const cacheInfo = getCachedPrices();
+      
+      // If we have valid cached data, return it
+      if (cacheInfo.isValid && cacheInfo.data) {
+        console.log(`📦 Serving cached crypto data via /api/coins (${Math.round(cacheInfo.age / 1000)}s old)`);
+        res.json({
+          success: true,
+          data: cacheInfo.data,
+          cached: true,
+          age: cacheInfo.age,
+          timestamp: new Date().toISOString()
+        });
+      } else if (cacheInfo.data) {
+        // Serve expired cache as fallback
+        console.log(`⚠️ Serving expired cache via /api/coins (${Math.round(cacheInfo.age / 1000)}s old)`);
+        res.json({
+          success: true,
+          data: cacheInfo.data,
+          cached: true,
+          expired: true,
+          age: cacheInfo.age,
+          timestamp: new Date().toISOString()
+        });
+      } else {
+        // No cached data available
+        console.log('⚠️ No cached data available, returning empty array');
+        res.json({
+          success: true,
+          data: [],
+          cached: false,
+          timestamp: new Date().toISOString()
+        });
+      }
+    } catch (error) {
+      console.error('❌ Error in /api/coins endpoint:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Failed to fetch cryptocurrency data',
+        error: error instanceof Error ? error.message : 'Unknown error'
+      });
+    }
+  });
+
   // Currency conversion rates endpoint with multi-source real-time data
   app.get('/api/market-data/conversion-rates', async (req: Request, res: Response) => {
     try {

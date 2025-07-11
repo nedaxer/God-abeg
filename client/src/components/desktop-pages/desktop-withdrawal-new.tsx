@@ -130,7 +130,7 @@ export default function DesktopWithdrawal() {
 
   // Fetch crypto prices for conversion with real-time updates
   const { data: cryptoPrices } = useQuery({
-    queryKey: ['/api/crypto/realtime-prices'],
+    queryKey: ['/api/coins'],
     refetchInterval: 5000,
     staleTime: 3000,
   });
@@ -408,63 +408,6 @@ export default function DesktopWithdrawal() {
                 )}
               </div>
 
-              {/* Amount Input Section */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-3">
-                  <Label className="text-white font-medium">Amount (USD)</Label>
-                  <div className="flex space-x-3">
-                    <div className="flex-1 relative">
-                      <div className="absolute left-4 top-1/2 transform -translate-y-1/2 flex items-center space-x-2">
-                        <DollarSign className="w-5 h-5 text-gray-400" />
-                      </div>
-                      <Input
-                        type="number"
-                        placeholder="0.00"
-                        value={withdrawalAmount}
-                        onChange={(e) => setWithdrawalAmount(e.target.value)}
-                        className="pl-12 h-12 bg-black/20 border-gray-700/50 text-white placeholder-gray-400 text-lg font-semibold focus:border-orange-500 focus:ring-orange-500/20"
-                      />
-                    </div>
-                    <Button
-                      variant="outline"
-                      onClick={setMaxAmount}
-                      className="h-12 px-6 border-gray-700/50 text-gray-400 hover:text-white hover:bg-orange-500/10 hover:border-orange-500"
-                    >
-                      Max
-                    </Button>
-                  </div>
-                  {errors.amount && (
-                    <p className="text-red-400 text-sm flex items-center">
-                      <AlertCircle className="w-4 h-4 mr-2" />
-                      {errors.amount}
-                    </p>
-                  )}
-                  <div className="text-sm text-gray-400">
-                    Available: ${getUserUSDBalance().toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                  </div>
-                </div>
-
-                {/* Crypto Amount Display */}
-                {selectedCrypto && cryptoAmount && (
-                  <div className="space-y-3">
-                    <Label className="text-white font-medium">You will receive</Label>
-                    <div className="bg-gradient-to-r from-green-900/30 to-emerald-900/30 p-4 rounded-xl border border-green-500/30">
-                      <div className="flex items-center space-x-3">
-                        <CryptoLogo symbol={selectedCrypto.symbol} size={32} />
-                        <div>
-                          <p className="text-green-400 text-lg font-bold">
-                            {cryptoAmount} {selectedCrypto.symbol}
-                          </p>
-                          <p className="text-gray-400 text-sm">
-                            ≈ ${parseFloat(withdrawalAmount || '0').toLocaleString()}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-
               {/* Network Selection */}
               {selectedCrypto && (
                 <div className="space-y-3">
@@ -525,6 +468,63 @@ export default function DesktopWithdrawal() {
                   <Info className="w-3 h-3 mr-1" />
                   Double-check your address. Withdrawals cannot be reversed.
                 </p>
+              </div>
+
+              {/* Amount Input Section */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-3">
+                  <Label className="text-white font-medium">Amount (USD)</Label>
+                  <div className="flex space-x-3">
+                    <div className="flex-1 relative">
+                      <div className="absolute left-4 top-1/2 transform -translate-y-1/2 flex items-center space-x-2">
+                        <DollarSign className="w-5 h-5 text-gray-400" />
+                      </div>
+                      <Input
+                        type="number"
+                        placeholder="0.00"
+                        value={withdrawalAmount}
+                        onChange={(e) => setWithdrawalAmount(e.target.value)}
+                        className="pl-12 h-12 bg-black/20 border-gray-700/50 text-white placeholder-gray-400 text-lg font-semibold focus:border-orange-500 focus:ring-orange-500/20"
+                      />
+                    </div>
+                    <Button
+                      variant="outline"
+                      onClick={setMaxAmount}
+                      className="h-12 px-6 border-gray-700/50 text-gray-400 hover:text-white hover:bg-orange-500/10 hover:border-orange-500"
+                    >
+                      Max
+                    </Button>
+                  </div>
+                  {errors.amount && (
+                    <p className="text-red-400 text-sm flex items-center">
+                      <AlertCircle className="w-4 h-4 mr-2" />
+                      {errors.amount}
+                    </p>
+                  )}
+                  <div className="text-sm text-gray-400">
+                    Available: ${getUserUSDBalance().toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                  </div>
+                </div>
+
+                {/* Crypto Amount Display */}
+                {selectedCrypto && cryptoAmount && (
+                  <div className="space-y-3">
+                    <Label className="text-white font-medium">You will receive</Label>
+                    <div className="bg-gradient-to-r from-green-900/30 to-emerald-900/30 p-4 rounded-xl border border-green-500/30">
+                      <div className="flex items-center space-x-3">
+                        <CryptoLogo symbol={selectedCrypto.symbol} size={32} />
+                        <div>
+                          <p className="text-green-400 text-lg font-bold">
+                            {cryptoAmount} {selectedCrypto.symbol}
+                          </p>
+                          <p className="text-gray-400 text-sm">
+                            ≈ ${parseFloat(withdrawalAmount || '0').toLocaleString()}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Security Notice */}

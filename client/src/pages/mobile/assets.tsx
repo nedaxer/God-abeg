@@ -124,9 +124,9 @@ export default function MobileAssets() {
     retry: 2,
   });
 
-  // Fetch real-time price data for BTC conversion
+  // Fetch real-time price data for BTC conversion from backend cached endpoint
   const { data: priceData, isLoading: priceLoading } = useQuery({
-    queryKey: ['/api/crypto/realtime-prices'],
+    queryKey: ['/api/coins'],
     refetchInterval: 30000, // Refetch every 30 seconds
     staleTime: 25000, // Consider data fresh for 25 seconds
     retry: 2,
@@ -337,7 +337,7 @@ export default function MobileAssets() {
     try {
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: ['/api/wallet/summary'] }),
-        queryClient.invalidateQueries({ queryKey: ['/api/crypto/realtime-prices'] }),
+        queryClient.invalidateQueries({ queryKey: ['/api/coins'] }),
         queryClient.invalidateQueries({ queryKey: ['/api/balances'] }),
         queryClient.invalidateQueries({ queryKey: ['/api/user/withdrawal-restriction'] })
       ]);

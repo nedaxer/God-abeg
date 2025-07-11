@@ -141,23 +141,23 @@ export default function BinaryOptionsLearn() {
               <ul className="space-y-3">
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                  <span>Binary options trade between 0 and 100</span>
+                  <span className="text-gray-800">Binary options trade between 0 and 100</span>
                 </li>
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                  <span>The price represents the probability of the event occurring</span>
+                  <span className="text-gray-800">The price represents the probability of the event occurring</span>
                 </li>
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                  <span>If you buy at 45, your maximum risk is $45 per contract</span>
+                  <span className="text-gray-800">If you buy at 45, your maximum risk is $45 per contract</span>
                 </li>
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                  <span>Your maximum profit would be $55 per contract (100 - 45)</span>
+                  <span className="text-gray-800">Your maximum profit would be $55 per contract (100 - 45)</span>
                 </li>
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                  <span>If the binary settles at 100, you receive the full $100 payout</span>
+                  <span className="text-gray-800">If the binary settles at 100, you receive the full $100 payout</span>
                 </li>
               </ul>
             </div>
@@ -170,11 +170,11 @@ export default function BinaryOptionsLearn() {
                   <ul className="space-y-1 text-green-800">
                     <li className="flex items-start">
                       <Check className="text-green-600 mt-1 mr-2 h-4 w-4 flex-shrink-0" />
-                      <span>You think Bitcoin, Ethereum or other crypto will rise above the strike price</span>
+                      <span className="text-green-800">You think Bitcoin, Ethereum or other crypto will rise above the strike price</span>
                     </li>
                     <li className="flex items-start">
                       <Check className="text-green-600 mt-1 mr-2 h-4 w-4 flex-shrink-0" />
-                      <span>You believe the statement will be TRUE at expiration</span>
+                      <span className="text-green-800">You believe the statement will be TRUE at expiration</span>
                     </li>
                   </ul>
                 </div>
@@ -184,11 +184,11 @@ export default function BinaryOptionsLearn() {
                   <ul className="space-y-1 text-red-800">
                     <li className="flex items-start">
                       <Check className="text-red-600 mt-1 mr-2 h-4 w-4 flex-shrink-0" />
-                      <span>You think Bitcoin, Ethereum or other crypto will fall below the strike price</span>
+                      <span className="text-red-800">You think Bitcoin, Ethereum or other crypto will fall below the strike price</span>
                     </li>
                     <li className="flex items-start">
                       <Check className="text-red-600 mt-1 mr-2 h-4 w-4 flex-shrink-0" />
-                      <span>You believe the statement will be FALSE at expiration</span>
+                      <span className="text-red-800">You believe the statement will be FALSE at expiration</span>
                     </li>
                   </ul>
                 </div>
@@ -239,7 +239,7 @@ export default function BinaryOptionsLearn() {
                     {strategy.examples.map((example, j) => (
                       <li key={j} className="flex items-start">
                         <Check className="text-[#ff5900] mt-1 mr-2 h-4 w-4 flex-shrink-0" />
-                        <span className="text-sm">{example}</span>
+                        <span className="text-sm text-gray-800">{example}</span>
                       </li>
                     ))}
                   </ul>

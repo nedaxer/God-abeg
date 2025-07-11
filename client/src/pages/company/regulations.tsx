@@ -64,83 +64,83 @@ export default function Regulations() {
       <div className="max-w-4xl mx-auto">
         <div className="mb-12">
           <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Regulatory Oversight</h2>
-          
+
           <div className="mb-8">
-            <p className="mb-4">
+            <p className="mb-4 text-gray-900">
               Nedaxer operates under the regulatory oversight of the U.S. Commodity Futures Trading Commission (CFTC), 
               which ensures our exchange maintains the highest standards of market integrity, transparency, and 
               customer protection.
             </p>
-            <p className="mb-4">
+            <p className="mb-4 text-gray-900">
               As a regulated exchange, Nedaxer must comply with strict financial requirements, reporting obligations, 
               and operating procedures designed to protect market participants and maintain a fair trading environment.
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             {regulatoryFramework.map((item, i) => (
               <div key={i} className="flex items-start p-6 bg-[#f5f5f5] rounded-lg">
                 <div className="mr-4">{item.icon}</div>
                 <div>
                   <h3 className="text-xl font-bold mb-2 text-[#0033a0]">{item.title}</h3>
-                  <p className="text-gray-700">{item.description}</p>
+                  <p className="text-gray-900">{item.description}</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
-        
+
         <div className="mb-12">
           <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Customer Protection</h2>
-          
+
           <div className="bg-[#f5f5f5] p-6 rounded-lg mb-8">
             <h3 className="text-xl font-bold mb-4 text-[#0033a0]">Segregated Funds</h3>
-            <p className="mb-4">
+            <p className="mb-4 text-gray-900">
               One of the most important customer protections at Nedaxer is the segregation of member funds. 
               This means your money is held in dedicated accounts at top-tier US banks, completely separate 
               from Nedaxer's operating funds.
             </p>
-            <p className="mb-4">
+            <p className="mb-4 text-gray-900">
               This segregation provides a critical layer of protection, ensuring your funds are used only 
               for your trading activities and are not exposed to the business risks of the exchange.
             </p>
-            <p>
+            <p className="text-gray-900">
               Nedaxer maintains detailed records of all member funds and undergoes regular audits to ensure 
               compliance with regulatory requirements for fund segregation.
             </p>
           </div>
-          
+
           <div className="bg-[#f5f5f5] p-6 rounded-lg">
             <h3 className="text-xl font-bold mb-4 text-[#0033a0]">Limited Risk Products</h3>
-            <p className="mb-4">
+            <p className="mb-4 text-gray-900">
               All products offered on Nedaxer are designed with limited risk characteristics. This means:
             </p>
-            <ul className="list-disc pl-6 space-y-2 mb-4">
+            <ul className="list-disc pl-6 space-y-2 mb-4 text-gray-900">
               <li>Your maximum possible loss is known before you enter a trade</li>
               <li>You can never lose more than the capital you commit to each trade</li>
               <li>There are no margin calls</li>
               <li>Your risk is limited to your initial cost or collateral</li>
             </ul>
-            <p>
+            <p className="text-gray-900">
               This built-in risk limitation is a fundamental customer protection that distinguishes 
               Nedaxer from many other trading venues.
             </p>
           </div>
         </div>
-        
+
         <div className="mb-12">
           <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Compliance Documents</h2>
-          
-          <p className="mb-6">
+
+          <p className="mb-6 text-gray-900">
             The following documents outline Nedaxer's regulatory framework, operating procedures, 
             and policies to ensure compliance with applicable laws and regulations:
           </p>
-          
+
           <div className="space-y-4">
             {complianceDocuments.map((doc, i) => (
               <div key={i} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
                 <h3 className="text-xl font-bold mb-2 text-[#0033a0]">{doc.title}</h3>
-                <p className="text-gray-700 mb-3">{doc.description}</p>
+                <p className="text-gray-900 mb-3">{doc.description}</p>
                 <Link 
                   href={doc.link} 
                   className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
@@ -151,10 +151,10 @@ export default function Regulations() {
             ))}
           </div>
         </div>
-        
+
         <div className="mb-12">
           <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Regulatory Notices</h2>
-          
+
           <div className="border border-yellow-400 bg-yellow-50 p-6 rounded-lg mb-6">
             <div className="flex items-start">
               <AlertCircle className="text-yellow-600 mt-1 mr-3 h-6 w-6 flex-shrink-0" />
@@ -169,7 +169,7 @@ export default function Regulations() {
               </div>
             </div>
           </div>
-          
+
           <div className="border border-gray-200 bg-gray-50 p-6 rounded-lg">
             <div className="flex items-start">
               <AlertCircle className="text-gray-600 mt-1 mr-3 h-6 w-6 flex-shrink-0" />

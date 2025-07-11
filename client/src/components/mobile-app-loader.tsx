@@ -79,7 +79,7 @@ export const MobileAppLoader: React.FC<MobileAppLoaderProps> = ({ children }) =>
 
   // Critical data queries with immediate execution and fast timeout for new users
   const { data: priceData, isSuccess: pricesLoaded, isError: pricesError } = useQuery({
-    queryKey: ['/api/crypto/realtime-prices'],
+    queryKey: ['/api/coins'],
     enabled: authCheckComplete && !!user && isPreloading,
     retry: 1,
     staleTime: 5000, // Reduced for real-time updates

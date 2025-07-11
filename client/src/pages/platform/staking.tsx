@@ -279,7 +279,7 @@ export default function StakingDashboard() {
                           </div>
                           <div>
                             <h3 className="font-semibold">{option.currency.name}</h3>
-                            <p className="text-sm text-gray-500">{option.currency.symbol}</p>
+                            <p className="text-sm text-gray-900">{option.currency.symbol}</p>
                           </div>
                         </div>
                         <Badge className="bg-green-100 text-green-800">
@@ -289,15 +289,15 @@ export default function StakingDashboard() {
                       
                       <div className="space-y-2 text-sm">
                         <div className="flex justify-between">
-                          <span className="text-gray-600">Min Stake:</span>
+                          <span className="text-gray-900">Min Stake:</span>
                           <span className="font-medium">{option.minAmount} {option.currency.symbol}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-gray-600">Lock Period:</span>
+                          <span className="text-gray-900">Lock Period:</span>
                           <span className="font-medium">{option.lockupPeriodDays} days</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-gray-600">Compound:</span>
+                          <span className="text-gray-900">Compound:</span>
                           <span className="font-medium text-green-600">Daily</span>
                         </div>
                       </div>
@@ -331,7 +331,7 @@ export default function StakingDashboard() {
                             </div>
                             <div>
                               <h4 className="font-semibold">{position.currency.name}</h4>
-                              <p className="text-sm text-gray-500">{position.annualRate}% APY</p>
+                              <p className="text-sm text-gray-900">{position.annualRate}% APY</p>
                             </div>
                           </div>
                           <Badge variant={canUnstake ? 'default' : 'secondary'}>
@@ -341,19 +341,19 @@ export default function StakingDashboard() {
                         
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
                           <div>
-                            <p className="text-xs text-gray-500">Staked Amount</p>
+                            <p className="text-xs text-gray-900">Staked Amount</p>
                             <p className="font-semibold">{position.stakedAmount} {position.currency.symbol}</p>
                           </div>
                           <div>
-                            <p className="text-xs text-gray-500">Rewards Earned</p>
+                            <p className="text-xs text-gray-900">Rewards Earned</p>
                             <p className="font-semibold text-green-600">{position.rewardsEarned} {position.currency.symbol}</p>
                           </div>
                           <div>
-                            <p className="text-xs text-gray-500">Days Staked</p>
+                            <p className="text-xs text-gray-900">Days Staked</p>
                             <p className="font-semibold">{daysStaked} / {position.lockupDays}</p>
                           </div>
                           <div>
-                            <p className="text-xs text-gray-500">Start Date</p>
+                            <p className="text-xs text-gray-900">Start Date</p>
                             <p className="font-semibold">{new Date(position.startDate).toLocaleDateString()}</p>
                           </div>
                         </div>

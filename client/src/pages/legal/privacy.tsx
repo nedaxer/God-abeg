@@ -273,7 +273,7 @@ Chicago, IL 60606`
             <div className="flex flex-col items-center text-center p-6 bg-[#f5f5f5] rounded-lg">
               <Shield className="h-12 w-12 text-[#0033a0] mb-4" />
               <h3 className="text-lg font-bold mb-2 text-[#0033a0]">Secure Infrastructure</h3>
-              <p className="text-gray-700">
+              <p className="text-gray-900">
                 Our systems are hosted in secure data centers with multiple layers of physical and network security.
               </p>
             </div>
@@ -281,7 +281,7 @@ Chicago, IL 60606`
             <div className="flex flex-col items-center text-center p-6 bg-[#f5f5f5] rounded-lg">
               <Lock className="h-12 w-12 text-[#0033a0] mb-4" />
               <h3 className="text-lg font-bold mb-2 text-[#0033a0]">Encryption</h3>
-              <p className="text-gray-700">
+              <p className="text-gray-900">
                 We use industry-standard encryption to protect data in transit and at rest across all our services.
               </p>
             </div>
@@ -289,7 +289,7 @@ Chicago, IL 60606`
             <div className="flex flex-col items-center text-center p-6 bg-[#f5f5f5] rounded-lg">
               <Eye className="h-12 w-12 text-[#0033a0] mb-4" />
               <h3 className="text-lg font-bold mb-2 text-[#0033a0]">Ongoing Monitoring</h3>
-              <p className="text-gray-700">
+              <p className="text-gray-900">
                 Our security team continuously monitors our systems to detect and respond to potential threats.
               </p>
             </div>

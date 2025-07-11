@@ -146,7 +146,7 @@ function MobileWithdrawalContent() {
 
   // Fetch crypto prices with real-time updates
   const { data: priceData } = useQuery({
-    queryKey: ['/api/crypto/realtime-prices'],
+    queryKey: ['/api/coins'],
     refetchInterval: 5000, // More frequent updates
     staleTime: 3000,
   });
@@ -206,7 +206,7 @@ function MobileWithdrawalContent() {
       });
       setShowSuccessAnimation(true);
       
-      // Hide success animation after 4 seconds
+      // Hide success animation after 10 seconds
       setTimeout(() => {
         setShowSuccessAnimation(false);
         setSuccessData(null);
@@ -214,7 +214,7 @@ function MobileWithdrawalContent() {
         setUsdAmount('');
         setCryptoAmount('');
         setWithdrawalAddress('');
-      }, 4000);
+      }, 10000);
       
       // Refresh balance data
       queryClient.invalidateQueries({ queryKey: ['/api/wallet/summary'] });
@@ -474,26 +474,6 @@ function MobileWithdrawalContent() {
             </div>
           </div>
 
-          {/* Address Input with QR Scanner */}
-          <div>
-            <label className="text-white font-medium mb-2 block text-xs">Address</label>
-            <div className="relative">
-              <Input
-                type="text"
-                value={withdrawalAddress}
-                onChange={(e) => setWithdrawalAddress(e.target.value)}
-                placeholder="Scan QR or enter withdrawal address"
-                className="bg-[#1a1a40] border border-[#2a2a50] text-white placeholder:text-gray-500 pr-10 h-10 text-sm"
-              />
-              <button 
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1 hover:bg-[#2a2a50] rounded"
-                onClick={startQrScanner}
-              >
-                <QrCode className="w-4 h-4 text-orange-500" />
-              </button>
-            </div>
-          </div>
-
           {/* Network Selection - Improved */}
           <div>
             <label className="text-white font-medium mb-2 block text-xs">Network</label>
@@ -541,6 +521,26 @@ function MobileWithdrawalContent() {
                   ))}
                 </div>
               )}
+            </div>
+          </div>
+
+          {/* Address Input with QR Scanner */}
+          <div>
+            <label className="text-white font-medium mb-2 block text-xs">Address</label>
+            <div className="relative">
+              <Input
+                type="text"
+                value={withdrawalAddress}
+                onChange={(e) => setWithdrawalAddress(e.target.value)}
+                placeholder="Scan QR or enter withdrawal address"
+                className="bg-[#1a1a40] border border-[#2a2a50] text-white placeholder:text-gray-500 pr-10 h-10 text-sm"
+              />
+              <button 
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1 hover:bg-[#2a2a50] rounded"
+                onClick={startQrScanner}
+              >
+                <QrCode className="w-4 h-4 text-orange-500" />
+              </button>
             </div>
           </div>
 

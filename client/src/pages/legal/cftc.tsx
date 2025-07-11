@@ -114,7 +114,7 @@ export default function CFTC() {
                 <div className="bg-[#0033a0] text-white rounded-full h-6 w-6 flex items-center justify-center font-bold flex-shrink-0 mr-3">1</div>
                 <div>
                   <h3 className="font-bold mb-1 text-[#0033a0]">Clear Disclaimers</h3>
-                  <p className="text-gray-700">
+                  <p className="text-gray-900">
                     We include appropriate disclaimers when presenting hypothetical performance information to ensure 
                     that users understand the limitations of such information.
                   </p>
@@ -125,7 +125,7 @@ export default function CFTC() {
                 <div className="bg-[#0033a0] text-white rounded-full h-6 w-6 flex items-center justify-center font-bold flex-shrink-0 mr-3">2</div>
                 <div>
                   <h3 className="font-bold mb-1 text-[#0033a0]">Balanced Presentation</h3>
-                  <p className="text-gray-700">
+                  <p className="text-gray-900">
                     We aim to present a balanced view of the potential risks and rewards of trading, avoiding 
                     exaggerated claims or guarantees of trading success.
                   </p>
@@ -136,7 +136,7 @@ export default function CFTC() {
                 <div className="bg-[#0033a0] text-white rounded-full h-6 w-6 flex items-center justify-center font-bold flex-shrink-0 mr-3">3</div>
                 <div>
                   <h3 className="font-bold mb-1 text-[#0033a0]">Educational Focus</h3>
-                  <p className="text-gray-700">
+                  <p className="text-gray-900">
                     Our content focuses on educating users about trading concepts, markets, and strategy principles 
                     rather than promoting specific trading approaches based solely on hypothetical results.
                   </p>
@@ -147,7 +147,7 @@ export default function CFTC() {
                 <div className="bg-[#0033a0] text-white rounded-full h-6 w-6 flex items-center justify-center font-bold flex-shrink-0 mr-3">4</div>
                 <div>
                   <h3 className="font-bold mb-1 text-[#0033a0]">Transparency</h3>
-                  <p className="text-gray-700">
+                  <p className="text-gray-900">
                     We strive to be transparent about the nature of any performance information presented, 
                     clearly indicating when information is based on hypothetical or backtested results.
                   </p>

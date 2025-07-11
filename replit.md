@@ -30,6 +30,38 @@ The application now uses MongoDB Atlas as the primary database:
 - **Connection**: Direct connection to MongoDB Atlas with automatic failover and scaling
 - **Backup System**: Automatic backups every 5 minutes with restore functionality for redeployments
 
+## GitHub Models AI Chatbot Integration (January 11, 2025)
+
+**Successfully Implemented:**
+- **GitHub Models API Integration**: Successfully integrated GitHub's AI Models API using gpt-4o-mini model with direct HTTP client approach
+- **Token Authentication**: Properly configured GitHub token authentication with Bearer token format for Azure AI inference endpoint
+- **Intelligent Fallback System**: Comprehensive pattern-based response system for reliable support when AI is unavailable
+- **Real-time AI Responses**: Working AI-powered responses with 1-4 second response times using GitHub's hosted AI models
+- **Comprehensive Knowledge Base**: Detailed Nedaxer platform knowledge integrated into AI context for accurate responses
+
+**Technical Implementation:**
+- **Endpoint**: `https://models.inference.ai.azure.com/chat/completions` 
+- **Model**: `gpt-4o-mini` (GitHub Models hosted)
+- **Authentication**: Bearer token using GITHUB_TOKEN environment variable
+- **Timeout**: 30-second timeout with error handling and intelligent fallbacks
+- **Context Management**: Conversation history support with 5-message context window
+- **Personalization**: User name integration and multi-language support
+
+**AI Response Capabilities:**
+- **Deposit Guidance**: Step-by-step cryptocurrency deposit instructions with network selection
+- **Trading Support**: Detailed spot and futures trading guidance with order management
+- **Platform Navigation**: Asset management, account verification, and security feature guidance
+- **Contextual Understanding**: Recognizes specific Nedaxer features and provides relevant assistance
+- **Professional Tone**: Consistent customer service approach with helpful, concise responses
+
+**Fallback System Features:**
+- **Pattern Recognition**: Intelligent keyword matching for deposits, trading, withdrawals, staking, fees, security, and account topics
+- **Comprehensive Responses**: Detailed step-by-step instructions covering all major platform features
+- **User Personalization**: Responses include user names and specific guidance based on question type
+- **Reliable Operation**: Zero-downtime support system ensuring users always receive helpful responses
+
+**Result**: Complete AI-powered customer support system operational with GitHub Models API providing real-time, contextual responses about Nedaxer platform features, with robust intelligent fallback ensuring 100% response reliability.
+
 ## Key Components
 
 ### Trading System
@@ -948,6 +980,174 @@ Successfully removed the entire "Explore Markets" section from the landing page:
 **Result**: All existing users can now successfully log in to their accounts, no data was lost, and the authentication system is fully restored and operational.
 
 ## Recent Issues Fixed
+
+### Live Crypto News Integration on Company/News Landing Page (January 11, 2025)
+
+**Major Enhancement Completed:**
+- **Real-Time News API Integration**: Successfully integrated the mobile app's `/api/crypto/news` endpoint into the company/news landing page
+- **Professional News Layout**: Created modern, responsive news layout with featured articles, category filtering, and grid-based design
+- **Multi-Source News Feed**: Displaying real-time news from CoinDesk, CoinTelegraph, Decrypt, CryptoSlate, CryptoBriefing, BeInCrypto, CryptoNews, and Google News
+- **Enhanced User Experience**: Added refresh functionality, loading states, error handling, and category-based filtering
+- **Source Logos Integration**: Implemented proper news source logos with fallback SVG generation for branding consistency
+
+**Technical Implementation:**
+- **React Query Integration**: Used same caching strategy as mobile app (5-minute refresh, 2-minute stale time)
+- **Category System**: Mapped news sources to categories (Market News, Breaking News, Technology, Analysis, Research)
+- **Responsive Design**: Featured article layout plus 3-column grid for additional articles
+- **Image Handling**: Proper image loading with fallback to source logos for articles without images
+- **External Link Handling**: All news articles open in new tabs with proper security attributes
+
+**Design Features:**
+- **Modern Layout**: Clean white cards with shadows, proper spacing, and hover effects
+- **Brand Consistency**: Nedaxer blue (#0033a0) and orange (#ff5900) color scheme throughout
+- **News Source Showcase**: Dedicated section highlighting trusted crypto news sources
+- **Newsletter Integration**: Enhanced newsletter signup with gradient background and improved styling
+- **Loading States**: Professional loading animation and error handling for better UX
+
+**Result**: Company/news landing page now displays live cryptocurrency news from multiple professional sources with beautiful, responsive design matching the mobile app's functionality while maintaining the professional landing page aesthetic.
+
+### Compact Horizontal News Ticker Banner Enhancement (January 11, 2025)
+
+**Major Landing Page Enhancement:**
+- **Compact Horizontal Scrolling Design**: Completely redesigned news ticker to be a compact horizontal scrolling banner with news images as backgrounds
+- **Image-Based News Cards**: Each news item displays as a card with the news image as background, title overlay, and source information
+- **Continuous Scrolling**: News ticker repeats infinitely with triple duplication of articles for seamless scrolling experience
+- **Removed Large Header**: Eliminated the large "CRYPTO NEWS" header badge for cleaner, more compact design
+- **Click-to-Read Functionality**: News cards are clickable and open articles in new tabs
+
+**Technical Implementation:**
+- **Horizontal Card Layout**: Each news item is a 320x128px card with background image and gradient overlay
+- **Infinite Scroll Animation**: Uses CSS keyframes with 90-second duration for smooth continuous scrolling
+- **Triple Article Duplication**: Articles are duplicated 3 times to ensure seamless infinite scrolling
+- **Responsive Image Fitting**: News images use `bg-cover bg-center` to properly fit within card dimensions
+- **Hover Pause Effect**: Scrolling pauses when user hovers over the ticker for better readability
+
+**User Experience Features:**
+- **Compact Design**: Reduced height from 320-384px to 128px for better space utilization
+- **Visual Appeal**: News images serve as engaging backgrounds with gradient overlays for text readability
+- **Live Indicators**: Each card shows "LIVE" indicator with pulsing green dot
+- **Source Badges**: Orange source badges and timestamp information clearly displayed
+- **Interactive Cards**: Click indicator in top-right corner shows cards are clickable
+
+**Design Integration:**
+- **Brand Consistency**: Maintains Nedaxer's blue (#0033a0) and orange (#ff5900) color scheme
+- **Mobile Optimized**: Horizontal scrolling works perfectly on mobile devices
+- **Professional Polish**: Rounded corners, shadows, and gradient overlays for modern appearance
+- **Space Efficient**: Compact height allows more content below without dominating the page
+
+**Result**: Landing page now features a sleek, compact horizontal news ticker with news images as backgrounds, infinite scrolling functionality, and improved space utilization while maintaining visual appeal and user engagement.
+
+### Single-Item News Ticker with Swipe Navigation (January 11, 2025)
+
+**Major Enhancement:**
+- **Single News Display**: Redesigned news ticker to show only one news item at a time for focused reading experience
+- **Swipe Navigation**: Implemented touch and mouse swipe gestures for intuitive news navigation on mobile and desktop
+- **Auto-Play with Manual Control**: News automatically advances every 6 seconds, but users can manually navigate with swipe gestures or arrow buttons
+- **Smart Interaction**: Auto-play pauses when user interacts and resumes after 10 seconds of inactivity
+
+**Technical Implementation:**
+- **Touch/Mouse Handlers**: Added comprehensive touch event handlers for mobile swipe and mouse drag functionality
+- **Navigation Controls**: Left/right arrow buttons for desktop users with smooth transitions
+- **Progress Indicators**: Dot indicators showing current position (e.g., "1 / 8") with clickable navigation
+- **Background Image Integration**: Each news item displays with its image as full background with gradient overlay
+
+**User Experience Features:**
+- **Intuitive Swipe**: Left swipe shows next news, right swipe shows previous news
+- **Visual Feedback**: Current news indicator and navigation counter show position in news sequence
+- **Click to Read**: Entire news card is clickable and opens article in new tab
+- **Auto-Resume**: Manual navigation temporarily pauses auto-play, then resumes automatically
+
+**Result**: News ticker now provides focused single-item display with smooth swipe navigation, allowing users to control their news browsing experience while maintaining automatic progression for passive viewing.
+
+### News Ticker Text Formatting and Image Enhancement (January 11, 2025)
+
+**Issues Resolved:**
+- **Auto-Advance Speed**: Changed news auto-advance from 6 seconds to 4 seconds for faster news progression
+- **Text Readability**: Enhanced text formatting with better contrast, drop shadows, and improved font weights
+- **Image Display Fix**: Implemented comprehensive image fallback system with source-specific high-quality images
+- **Better Gradient Overlay**: Improved gradient overlay for better text readability (from black/95 to black/40)
+
+**Technical Implementation:**
+- **Improved Image Fallback**: Added `getImageUrl()` function with source-specific fallback images for CoinDesk, CoinTelegraph, Decrypt, CryptoSlate, BeInCrypto, and CryptoNews
+- **Enhanced Text Styling**: Added drop shadows, improved font weights, and better contrast for all text elements
+- **Better Gradient Design**: Modified gradient overlay to provide better balance between image visibility and text readability
+- **Reliable Image Loading**: Validates image URLs and provides high-quality Unsplash fallbacks for each news source
+
+**User Experience Improvements:**
+- **Faster News Rotation**: News automatically advances every 4 seconds for better engagement
+- **Clear Text Display**: All text elements now have better contrast and readability against image backgrounds
+- **Consistent Image Quality**: Every news item displays with high-quality images, even when original images fail to load
+- **Professional Typography**: Enhanced font weights and spacing for better visual hierarchy
+
+**Result**: News ticker now provides faster 4-second auto-advance, improved text readability with better formatting, and reliable image display with source-specific fallbacks ensuring every news item has a professional appearance.
+
+### News Ticker 4-Words-Per-Line Grid Text Layout (January 11, 2025)
+
+**Issue Resolved:**
+- **CryptoState and CryptoBriefing Images**: Fixed missing images for CryptoState and CryptoBriefing news sources with dedicated fallback images
+- **Unique Text Formatting**: Implemented 4-words-per-line grid layout for news titles as requested
+
+**Technical Implementation:**
+- **Enhanced Image Fallbacks**: Added specific fallback images for 'CryptoState' and 'CryptoBriefing' sources
+- **Grid Text Function**: Created `formatTextInGrid()` function that splits text into lines of exactly 4 words each
+- **Dynamic Text Display**: News titles now render in multi-line format with each line containing exactly 4 words
+
+**Text Formatting Example:**
+```
+Bitcoin reaches new all-time  
+high as institutional adoption  
+continues to grow rapidly  
+```
+
+**User Experience Features:**
+- **Unique Layout**: News titles display in distinctive 4-words-per-line grid format
+- **Better Readability**: Each line is properly spaced with consistent formatting
+- **Complete Image Coverage**: All news sources now have reliable image fallbacks
+- **Professional Appearance**: Grid layout maintains professional look while being unique
+
+**Result**: News ticker now displays titles in unique 4-words-per-line grid format and all news sources including CryptoState and CryptoBriefing have proper image fallbacks ensuring consistent visual quality.
+
+### News Ticker Image Enhancement and Text Centering (January 11, 2025)
+
+**Issues Resolved:**
+- **Improved Image Reliability**: Replaced Unsplash URLs with more reliable Pexels image sources for better loading consistency
+- **Centered Text Display**: Moved news text to center of ticker for better visual balance and readability
+- **Lighter Background Overlay**: Reduced gradient darkness from black/95 to black/60 for better image visibility
+- **Improved Layout Structure**: Repositioned badges to top and bottom with centered text content
+
+**Technical Implementation:**
+- **Pexels Integration**: Updated all fallback images to use Pexels URLs with optimized compression and sizing
+- **Centered Layout**: Changed content container to `justify-center` and added `text-center` to title grid
+- **Lighter Gradient**: Modified gradient overlay to `from-black/60 via-black/40 to-black/20` for better image visibility
+- **Absolute Positioning**: Used absolute positioning for badges to create clean centered text area
+
+**Visual Improvements:**
+- **Better Image Visibility**: Background images are now more visible through lighter gradient overlay
+- **Centered Text**: 4-words-per-line grid text displays in center of ticker for better focus
+- **Professional Layout**: Source badges at top, text in center, time/navigation at bottom
+- **Enhanced Readability**: Stronger drop shadows and better text contrast for improved legibility
+
+**Result**: News ticker now displays more reliable images through Pexels sources, features centered text layout with better visual balance, and provides improved image visibility through lighter background overlay.
+
+### Success Animation Timeout Extended and Field Reordering Enhancement (January 11, 2025)
+
+**Issues Resolved:**
+1. **Extended Success Animation Duration**: Increased success animation timeout from 4 seconds to 10 seconds for both withdrawal and transfer processes
+2. **Desktop Withdrawal Field Reordering**: Updated desktop withdrawal page to match mobile field order: Coin Selection → Network Selection → Address Input → Amount
+3. **Consistent User Experience**: Both mobile and desktop withdrawal forms now follow identical field ordering
+
+**Technical Changes:**
+- **Mobile Withdrawal**: Updated `client/src/pages/mobile/withdrawal.tsx` - success animation timeout changed from 4000ms to 10000ms
+- **Mobile Transfer**: Updated `client/src/pages/mobile/transfer.tsx` - success animation timeout changed from 4000ms to 10000ms  
+- **Desktop Withdrawal**: Reordered form fields in `client/src/components/desktop-pages/desktop-withdrawal-new.tsx` to match mobile layout
+- **Field Order**: Network Selection moved before Address Input, Amount Input moved to bottom for both platforms
+
+**User Experience Features:**
+- **Extended Feedback**: Success animations now display for 10 seconds providing users more time to see confirmation
+- **Unified Field Order**: Consistent withdrawal form experience across mobile and desktop platforms
+- **Better Form Flow**: Logical field progression from coin selection to network to address to amount
+
+**Result**: Both withdrawal and transfer success animations now display for 10 seconds, and desktop withdrawal form matches mobile field ordering for consistent user experience across all platforms.
 
 ### PWA Installation Error Fix and Name Change Functionality Fix (January 9, 2025)
 

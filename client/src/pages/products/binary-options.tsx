@@ -91,23 +91,23 @@ export default function BinaryOptions() {
                 <ul className="space-y-3">
                   <li className="flex items-start">
                     <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                    <span>Binary options trade between 0 and 100</span>
+                    <span className="text-gray-800">Binary options trade between 0 and 100</span>
                   </li>
                   <li className="flex items-start">
                     <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                    <span>The price represents the probability of the event occurring</span>
+                    <span className="text-gray-800">The price represents the probability of the event occurring</span>
                   </li>
                   <li className="flex items-start">
                     <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                    <span>If you buy at 42.50, your maximum risk is $42.50 per contract</span>
+                    <span className="text-gray-800">If you buy at 42.50, your maximum risk is $42.50 per contract</span>
                   </li>
                   <li className="flex items-start">
                     <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                    <span>Your maximum potential profit is $57.50 per contract (100 - 42.50)</span>
+                    <span className="text-gray-800">Your maximum potential profit is $57.50 per contract (100 - 42.50)</span>
                   </li>
                   <li className="flex items-start">
                     <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                    <span>If your binary settles at 100, you receive the full $100 payout</span>
+                    <span className="text-gray-800">If your binary settles at 100, you receive the full $100 payout</span>
                   </li>
                 </ul>
               </div>
@@ -116,23 +116,23 @@ export default function BinaryOptions() {
                 <ul className="space-y-3">
                   <li className="flex items-start">
                     <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                    <span>Buy if you think the statement will be true at expiration</span>
+                    <span className="text-gray-800">Buy if you think the statement will be true at expiration</span>
                   </li>
                   <li className="flex items-start">
                     <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                    <span>Sell if you think the statement will be false at expiration</span>
+                    <span className="text-gray-800">Sell if you think the statement will be false at expiration</span>
                   </li>
                   <li className="flex items-start">
                     <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                    <span>Close positions early to secure profits or limit losses</span>
+                    <span className="text-gray-800">Close positions early to secure profits or limit losses</span>
                   </li>
                   <li className="flex items-start">
                     <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                    <span>Trade on desktop or mobile devices</span>
+                    <span className="text-gray-800">Trade on desktop or mobile devices</span>
                   </li>
                   <li className="flex items-start">
                     <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                    <span>No commissions - all costs are built into the price</span>
+                    <span className="text-gray-800">No commissions - all costs are built into the price</span>
                   </li>
                 </ul>
               </div>

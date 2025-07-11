@@ -60,57 +60,57 @@ export default function Events() {
       <div className="max-w-4xl mx-auto">
         <div className="mb-10">
           <h2 className="text-2xl font-bold mb-4 text-[#0033a0]">Trade Crypto Events on Nedaxer</h2>
-          <p className="mb-4">
+          <p className="mb-4 text-gray-900">
             Crypto event markets let you trade on the outcomes of important protocol upgrades, regulatory decisions, and network milestones. 
             On Nedaxer, you can position yourself before high-impact crypto events with binary options, 
             providing a unique way to trade digital asset developments with strictly limited risk.
           </p>
-          <p className="mb-6">
+          <p className="mb-6 text-gray-900">
             Cryptocurrency event trading offers specific opportunities to capitalize on scheduled protocol changes, 
             token distribution events, and regulatory developments that often cause significant price movements across the crypto ecosystem.
           </p>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div className="bg-[#f5f5f5] p-6 rounded-lg">
               <h3 className="text-xl font-bold mb-3 text-[#0033a0]">Benefits of Trading Crypto Events</h3>
               <ul className="space-y-2">
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                  <span>Trade crypto milestones directly</span>
+                  <span className="text-gray-900">Trade crypto milestones directly</span>
                 </li>
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                  <span>Limited risk with predefined maximum loss</span>
+                  <span className="text-gray-900">Limited risk with predefined maximum loss</span>
                 </li>
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                  <span>Binary options based on event outcomes</span>
+                  <span className="text-gray-900">Binary options based on event outcomes</span>
                 </li>
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                  <span>No need for crypto wallets or exchanges</span>
+                  <span className="text-gray-900">No need for crypto wallets or exchanges</span>
                 </li>
               </ul>
             </div>
-            
+
             <div className="bg-[#f5f5f5] p-6 rounded-lg">
               <h3 className="text-xl font-bold mb-3 text-[#0033a0]">How Crypto Event Markets Work</h3>
               <ul className="space-y-2">
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                  <span>Contracts based on price thresholds following events</span>
+                  <span className="text-gray-900">Contracts based on price thresholds following events</span>
                 </li>
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                  <span>Trade before, during and after crypto milestones</span>
+                  <span className="text-gray-900">Trade before, during and after crypto milestones</span>
                 </li>
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                  <span>Settlement based on official price feeds</span>
+                  <span className="text-gray-900">Settlement based on official price feeds</span>
                 </li>
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                  <span>Trade market expectations vs actual impact</span>
+                  <span className="text-gray-900">Trade market expectations vs actual impact</span>
                 </li>
               </ul>
             </div>
@@ -119,12 +119,12 @@ export default function Events() {
 
         <div className="mb-10">
           <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Available Crypto Event Markets</h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {cryptoEvents.map((event, i) => (
               <div key={i} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
                 <h3 className="text-xl font-bold mb-2 text-[#0033a0]">{event.name}</h3>
-                <p className="text-gray-500 mb-2">{event.description}</p>
+                <p className="text-gray-900 mb-2">{event.description}</p>
                 <div className="flex items-center mb-4 text-sm text-[#0033a0]">
                   <Calendar className="h-4 w-4 mr-1" />
                   <span>Next event: {event.nextDate}</span>
@@ -133,7 +133,7 @@ export default function Events() {
                   {event.features.map((feature, featIndex) => (
                     <li key={featIndex} className="flex items-start">
                       <Check className="text-[#ff5900] mt-1 mr-2 h-4 w-4 flex-shrink-0" />
-                      <span className="text-sm">{feature}</span>
+                      <span className="text-sm text-gray-900">{feature}</span>
                     </li>
                   ))}
                 </ul>

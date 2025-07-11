@@ -102,7 +102,7 @@ export default function TradingStrategies() {
       <div className="max-w-4xl mx-auto">
         <div className="mb-12">
           <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Strategy Approaches</h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
             {strategies.map((strategy, i) => (
               <div key={i} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
@@ -110,16 +110,16 @@ export default function TradingStrategies() {
                   <div className="mr-4">{strategy.icon}</div>
                   <div>
                     <h3 className="text-xl font-bold mb-2 text-[#0033a0]">{strategy.title}</h3>
-                    <p className="text-gray-700">{strategy.description}</p>
+                    <p className="text-gray-900">{strategy.description}</p>
                   </div>
                 </div>
-                
+
                 <h4 className="font-bold text-[#0033a0] mb-2">Example Strategies:</h4>
                 <ul className="space-y-1 mb-4">
                   {strategy.examples.map((example, eIndex) => (
                     <li key={eIndex} className="flex items-start">
                       <span className="text-[#ff5900] mr-2">•</span>
-                      <span>{example}</span>
+                      <span className="text-gray-900">{example}</span>
                     </li>
                   ))}
                 </ul>
@@ -127,13 +127,13 @@ export default function TradingStrategies() {
             ))}
           </div>
         </div>
-        
+
         <div className="mb-12">
           <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Applying Strategies to Nadex Products</h2>
-          
+
           <div className="bg-[#f5f5f5] p-6 rounded-lg mb-8">
             <h3 className="text-xl font-bold mb-4 text-[#0033a0]">Matching Products to Strategies</h3>
-            
+
             <div className="overflow-x-auto">
               <table className="w-full border-collapse">
                 <thead>
@@ -200,10 +200,10 @@ export default function TradingStrategies() {
             </div>
           </div>
         </div>
-        
+
         <div className="mb-12">
           <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Technical Analysis Guides</h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             {technicalGuides.map((guide, i) => (
               <div key={i} className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
@@ -228,7 +228,7 @@ export default function TradingStrategies() {
               </div>
             ))}
           </div>
-          
+
           <div className="text-center mb-8">
             <Button
               asChild
@@ -238,10 +238,10 @@ export default function TradingStrategies() {
             </Button>
           </div>
         </div>
-        
+
         <div className="mb-12">
           <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">News Trading Guides</h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             {newsGuides.map((guide, i) => (
               <div key={i} className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
@@ -266,7 +266,7 @@ export default function TradingStrategies() {
               </div>
             ))}
           </div>
-          
+
           <div className="text-center">
             <Button
               asChild
@@ -276,13 +276,13 @@ export default function TradingStrategies() {
             </Button>
           </div>
         </div>
-        
+
         <div className="mb-12">
           <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Risk Management Essentials</h2>
-          
+
           <div className="bg-[#f5f5f5] p-6 rounded-lg">
             <h3 className="text-xl font-bold mb-4 text-[#0033a0]">Core Risk Management Principles</h3>
-            
+
             <div className="space-y-4">
               <div className="flex items-start">
                 <Activity className="text-[#ff5900] mt-1 mr-3 h-6 w-6 flex-shrink-0" />
@@ -293,7 +293,7 @@ export default function TradingStrategies() {
                   </p>
                 </div>
               </div>
-              
+
               <div className="flex items-start">
                 <Activity className="text-[#ff5900] mt-1 mr-3 h-6 w-6 flex-shrink-0" />
                 <div>
@@ -303,7 +303,7 @@ export default function TradingStrategies() {
                   </p>
                 </div>
               </div>
-              
+
               <div className="flex items-start">
                 <Activity className="text-[#ff5900] mt-1 mr-3 h-6 w-6 flex-shrink-0" />
                 <div>
@@ -313,7 +313,7 @@ export default function TradingStrategies() {
                   </p>
                 </div>
               </div>
-              
+
               <div className="flex items-start">
                 <Activity className="text-[#ff5900] mt-1 mr-3 h-6 w-6 flex-shrink-0" />
                 <div>
@@ -324,7 +324,7 @@ export default function TradingStrategies() {
                 </div>
               </div>
             </div>
-            
+
             <div className="mt-6 text-center">
               <Link 
                 href="#" 

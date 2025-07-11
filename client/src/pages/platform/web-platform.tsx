@@ -71,30 +71,30 @@ export default function WebPlatform() {
       <div className="max-w-4xl mx-auto">
         <div className="mb-12">
           <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Platform Overview</h2>
-          
+
           <div className="mb-8">
-            <p className="mb-4">
+            <p className="mb-4 text-gray-900">
               The Web Trading Platform gives you everything you need to trade our unique limited-risk products. 
               Built with advanced technology, it provides professional-grade charting, intuitive order management, 
               and comprehensive market data—all accessible from your browser with no downloads required.
             </p>
-            <p className="mb-4">
+            <p className="mb-4 text-gray-900">
               Our web platform is designed for both beginners and experienced traders, with an intuitive interface 
               that makes it easy to analyze markets, place trades, and manage your positions.
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             {platformFeatures.map((feature, i) => (
               <div key={i} className="flex flex-col items-center text-center p-6 bg-[#f5f5f5] rounded-lg">
                 <div className="mb-4">{feature.icon}</div>
                 <h3 className="text-xl font-bold mb-2 text-[#0033a0]">{feature.title}</h3>
-                <p className="text-gray-700">{feature.description}</p>
+                <p className="text-gray-900">{feature.description}</p>
               </div>
             ))}
           </div>
         </div>
-        
+
         {/* Platform Trading Chart */}
         <div className="mb-12">
           <CryptoChart 
@@ -104,10 +104,10 @@ export default function WebPlatform() {
           />
           <p className="text-sm text-gray-500 mt-2 text-center">Web Trading Platform with advanced charting and order management</p>
         </div>
-        
+
         <div className="mb-12">
           <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Platform Features</h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {tradingTools.map((tool, i) => (
               <div key={i} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
@@ -116,7 +116,7 @@ export default function WebPlatform() {
                   {tool.features.map((feature, fIndex) => (
                     <li key={fIndex} className="flex items-start">
                       <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                      <span>{feature}</span>
+                      <span className="text-gray-900">{feature}</span>
                     </li>
                   ))}
                 </ul>
@@ -124,10 +124,10 @@ export default function WebPlatform() {
             ))}
           </div>
         </div>
-        
+
         <div className="mb-12">
           <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Getting Started</h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow text-center">
               <div className="text-3xl font-bold text-[#0033a0] mb-4">1</div>
@@ -140,7 +140,7 @@ export default function WebPlatform() {
                 Open Account <ArrowRight className="ml-1 h-4 w-4" />
               </Link>
             </div>
-            
+
             <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow text-center">
               <div className="text-3xl font-bold text-[#0033a0] mb-4">2</div>
               <h3 className="text-lg font-bold mb-2">Fund Your Account</h3>
@@ -152,7 +152,7 @@ export default function WebPlatform() {
                 View Funding Options <ArrowRight className="ml-1 h-4 w-4" />
               </Link>
             </div>
-            
+
             <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow text-center">
               <div className="text-3xl font-bold text-[#0033a0] mb-4">3</div>
               <h3 className="text-lg font-bold mb-2">Start Trading</h3>
@@ -166,44 +166,44 @@ export default function WebPlatform() {
             </div>
           </div>
         </div>
-        
+
         <div className="mb-12">
           <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">System Requirements</h2>
-          
+
           <div className="bg-[#f5f5f5] p-6 rounded-lg">
             <h3 className="text-lg font-bold mb-4">Supported Browsers</h3>
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <li className="flex items-start">
                 <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                <span>Google Chrome (recommended) - Latest version</span>
+                <span className="text-gray-800">Google Chrome (recommended) - Latest version</span>
               </li>
               <li className="flex items-start">
                 <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                <span>Mozilla Firefox - Latest version</span>
+                <span className="text-gray-800">Mozilla Firefox - Latest version</span>
               </li>
               <li className="flex items-start">
                 <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                <span>Microsoft Edge - Latest version</span>
+                <span className="text-gray-800">Microsoft Edge - Latest version</span>
               </li>
               <li className="flex items-start">
                 <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                <span>Safari - Latest version</span>
+                <span className="text-gray-800">Safari - Latest version</span>
               </li>
             </ul>
-            
+
             <h3 className="text-lg font-bold mt-6 mb-4">Recommended Hardware</h3>
             <ul className="space-y-3">
               <li className="flex items-start">
                 <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                <span>High-speed internet connection (minimum 5 Mbps)</span>
+                <span className="text-gray-800">High-speed internet connection (minimum 5 Mbps)</span>
               </li>
               <li className="flex items-start">
                 <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                <span>Minimum screen resolution of 1280 x 768</span>
+                <span className="text-gray-800">Minimum screen resolution of 1280 x 768</span>
               </li>
               <li className="flex items-start">
                 <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                <span>Modern processor and at least 4GB RAM</span>
+                <span className="text-gray-800">Modern processor and at least 4GB RAM</span>
               </li>
             </ul>
           </div>

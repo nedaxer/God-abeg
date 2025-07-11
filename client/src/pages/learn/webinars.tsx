@@ -131,7 +131,7 @@ export default function Webinars() {
       <div className="max-w-4xl mx-auto">
         <div className="mb-12">
           <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Upcoming Live Webinars</h2>
-          
+
           <div className="space-y-6 mb-8">
             {upcomingWebinars.map((webinar) => (
               <div key={webinar.id} className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
@@ -153,17 +153,17 @@ export default function Webinars() {
                       ))}
                     </div>
                     <h3 className="text-xl font-bold mb-2 text-[#0033a0]">{webinar.title}</h3>
-                    <p className="text-gray-700 mb-4">{webinar.description}</p>
+                    <p className="text-gray-900 mb-4">{webinar.description}</p>
                     <div className="space-y-2 mb-4">
-                      <div className="flex items-center text-sm text-gray-500">
+                      <div className="flex items-center text-sm text-gray-900">
                         <User className="h-4 w-4 mr-2" />
                         <span>{webinar.presenter}</span>
                       </div>
-                      <div className="flex items-center text-sm text-gray-500">
+                      <div className="flex items-center text-sm text-gray-900">
                         <Calendar className="h-4 w-4 mr-2" />
                         <span>{webinar.date}</span>
                       </div>
-                      <div className="flex items-center text-sm text-gray-500">
+                      <div className="flex items-center text-sm text-gray-900">
                         <Clock className="h-4 w-4 mr-2" />
                         <span>{webinar.time}</span>
                       </div>
@@ -179,7 +179,7 @@ export default function Webinars() {
               </div>
             ))}
           </div>
-          
+
           <div className="text-center">
             <Link 
               href="#" 
@@ -189,10 +189,10 @@ export default function Webinars() {
             </Link>
           </div>
         </div>
-        
+
         <div className="mb-12">
           <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Recorded Webinars</h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             {recordedWebinars.map((webinar) => (
               <div key={webinar.id} className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
@@ -220,13 +220,13 @@ export default function Webinars() {
                     ))}
                   </div>
                   <h3 className="text-lg font-bold mb-2 text-[#0033a0]">{webinar.title}</h3>
-                  <p className="text-gray-700 text-sm mb-3">{webinar.description}</p>
+                  <p className="text-gray-900 text-sm mb-3">{webinar.description}</p>
                   <div className="space-y-1 mb-3">
-                    <div className="flex items-center text-xs text-gray-500">
+                    <div className="flex items-center text-xs text-gray-900">
                       <User className="h-3 w-3 mr-1" />
                       <span>{webinar.presenter}</span>
                     </div>
-                    <div className="flex items-center text-xs text-gray-500">
+                    <div className="flex items-center text-xs text-gray-900">
                       <Calendar className="h-3 w-3 mr-1" />
                       <span>{webinar.date}</span>
                     </div>
@@ -241,7 +241,7 @@ export default function Webinars() {
               </div>
             ))}
           </div>
-          
+
           <div className="text-center">
             <Button
               asChild
@@ -252,21 +252,21 @@ export default function Webinars() {
             </Button>
           </div>
         </div>
-        
+
         <div className="mb-12">
           <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Webinar Series</h2>
-          
+
           <div className="space-y-6">
             {webinarSeries.map((series, i) => (
               <div key={i} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
                 <h3 className="text-xl font-bold mb-2 text-[#0033a0]">{series.title}</h3>
-                <p className="text-gray-700 mb-3">{series.description}</p>
+                <p className="text-gray-900 mb-3">{series.description}</p>
                 <div className="flex flex-wrap gap-x-6 gap-y-2 mb-4">
-                  <div className="flex items-center text-sm text-gray-500">
+                  <div className="flex items-center text-sm text-gray-900">
                     <Play className="h-4 w-4 mr-1" />
                     <span>{series.episodes} Episodes</span>
                   </div>
-                  <div className="flex items-center text-sm text-gray-500">
+                  <div className="flex items-center text-sm text-gray-900">
                     <User className="h-4 w-4 mr-1" />
                     <span>{series.level}</span>
                   </div>
@@ -281,24 +281,24 @@ export default function Webinars() {
             ))}
           </div>
         </div>
-        
+
         <div className="mb-12">
           <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Webinar Resources</h2>
-          
+
           <div className="bg-[#f5f5f5] p-6 rounded-lg">
             <h3 className="text-xl font-bold mb-4 text-[#0033a0]">Downloadable Materials</h3>
-            <p className="mb-4">
+            <p className="mb-4 text-gray-900">
               Many of our webinars include downloadable resources such as presentation slides, 
               trading checklists, strategy guides, and more. These materials are available 
               to registered users who attend or watch our webinars.
             </p>
-            
+
             <div className="space-y-4 mb-6">
               <div className="flex items-start p-4 bg-white rounded-lg border border-gray-200">
                 <Download className="text-[#0033a0] mt-1 mr-3 h-6 w-6 flex-shrink-0" />
                 <div>
                   <h4 className="font-bold mb-1 text-[#0033a0]">Binary Options Trading Checklist</h4>
-                  <p className="text-gray-700 text-sm mb-2">
+                  <p className="text-gray-900 text-sm mb-2">
                     A comprehensive checklist to help you evaluate potential binary options trades.
                   </p>
                   <Link 
@@ -309,12 +309,12 @@ export default function Webinars() {
                   </Link>
                 </div>
               </div>
-              
+
               <div className="flex items-start p-4 bg-white rounded-lg border border-gray-200">
                 <Download className="text-[#0033a0] mt-1 mr-3 h-6 w-6 flex-shrink-0" />
                 <div>
                   <h4 className="font-bold mb-1 text-[#0033a0]">Technical Analysis Indicator Guide</h4>
-                  <p className="text-gray-700 text-sm mb-2">
+                  <p className="text-gray-900 text-sm mb-2">
                     Quick reference guide for commonly used technical indicators and how to interpret them.
                   </p>
                   <Link 
@@ -326,41 +326,41 @@ export default function Webinars() {
                 </div>
               </div>
             </div>
-            
-            <p className="text-sm text-gray-500">
+
+            <p className="text-sm text-gray-900">
               Additional resources are available to registered users. Please log in to access all downloadable materials.
             </p>
           </div>
         </div>
-        
+
         <div className="mb-12">
           <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Webinar FAQs</h2>
-          
+
           <div className="space-y-4">
             <div className="border border-gray-200 rounded-lg p-5 hover:shadow-md transition-shadow">
               <h3 className="text-lg font-bold mb-2 text-[#0033a0]">How do I register for a webinar?</h3>
-              <p className="text-gray-700">
+              <p className="text-gray-900">
                 Simply click the "Register Now" button next to the webinar you're interested in. You'll need to provide your name and email address. After registering, you'll receive a confirmation email with the webinar link and calendar invitation.
               </p>
             </div>
-            
+
             <div className="border border-gray-200 rounded-lg p-5 hover:shadow-md transition-shadow">
               <h3 className="text-lg font-bold mb-2 text-[#0033a0]">Are the webinars free?</h3>
-              <p className="text-gray-700">
+              <p className="text-gray-900">
                 Yes, all Nedaxer webinars are free to attend for both members and non-members. However, some advanced webinar series may be exclusive to Nedaxer account holders.
               </p>
             </div>
-            
+
             <div className="border border-gray-200 rounded-lg p-5 hover:shadow-md transition-shadow">
               <h3 className="text-lg font-bold mb-2 text-[#0033a0]">What if I miss a live webinar?</h3>
-              <p className="text-gray-700">
+              <p className="text-gray-900">
                 Most of our webinars are recorded and made available in our webinar archive within 24-48 hours after the live event. You can watch these recordings at your convenience.
               </p>
             </div>
-            
+
             <div className="border border-gray-200 rounded-lg p-5 hover:shadow-md transition-shadow">
               <h3 className="text-lg font-bold mb-2 text-[#0033a0]">Can I ask questions during the webinar?</h3>
-              <p className="text-gray-700">
+              <p className="text-gray-900">
                 Yes, our live webinars include a Q&A session where you can submit questions for the presenter. We encourage participation and try to answer as many questions as time allows.
               </p>
             </div>
@@ -377,7 +377,7 @@ export default function Webinars() {
               <input 
                 type="email" 
                 placeholder="Enter your email address" 
-                className="px-4 py-3 rounded-md focus:outline-none text-gray-800"
+                className="px-4 py-3 rounded-md focus:outline-none text-gray-900"
               />
               <Button
                 className="bg-[#ff5900] hover:bg-opacity-90 text-white font-semibold px-6 py-3"

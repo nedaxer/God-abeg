@@ -32,7 +32,7 @@ export default function DesktopAssets() {
 
   // Get real-time crypto prices
   const { data: cryptoPrices } = useQuery({
-    queryKey: ['/api/crypto/realtime-prices'],
+    queryKey: ['/api/coins'],
     refetchInterval: 10000,
     staleTime: 5000,
   });

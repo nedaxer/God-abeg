@@ -64,32 +64,32 @@ export default function Security() {
       <div className="max-w-4xl mx-auto">
         <div className="mb-12">
           <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Our Security Commitment</h2>
-          
-          <p className="mb-6">
+
+          <p className="mb-6 text-gray-900">
             At Nedaxer, we take the security of your account and personal information seriously. 
             As a regulated US exchange, we implement rigorous security measures to protect your 
             data and funds while providing a safe trading environment.
           </p>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             {securityFeatures.map((feature, i) => (
               <div key={i} className="flex items-start p-6 bg-[#f5f5f5] rounded-lg">
                 <div className="mr-4">{feature.icon}</div>
                 <div>
                   <h3 className="text-xl font-bold mb-2 text-[#0033a0]">{feature.title}</h3>
-                  <p className="text-gray-700">{feature.description}</p>
+                  <p className="text-gray-900">{feature.description}</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
-        
+
         <div className="mb-12">
           <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Regulatory Protection</h2>
-          
+
           <div className="bg-[#f5f5f5] p-6 rounded-lg mb-8">
             <h3 className="text-xl font-bold mb-4 text-[#0033a0]">CFTC Regulation</h3>
-            <p className="mb-4">
+            <p className="mb-4 text-gray-900">
               Nedaxer is regulated by the US Commodity Futures Trading Commission (CFTC), which 
               oversees the US derivatives markets, including futures, options, and swaps. 
               This regulation requires us to:
@@ -97,27 +97,27 @@ export default function Security() {
             <ul className="space-y-3">
               <li className="flex items-start">
                 <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                <span>Maintain adequate capital reserves</span>
+                <span className="text-gray-900">Maintain adequate capital reserves</span>
               </li>
               <li className="flex items-start">
                 <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                <span>Keep member funds in segregated accounts</span>
+                <span className="text-gray-900">Keep member funds in segregated accounts</span>
               </li>
               <li className="flex items-start">
                 <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                <span>Submit to regular financial audits</span>
+                <span className="text-gray-900">Submit to regular financial audits</span>
               </li>
               <li className="flex items-start">
                 <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                <span>Implement anti-money laundering procedures</span>
+                <span className="text-gray-900">Implement anti-money laundering procedures</span>
               </li>
               <li className="flex items-start">
                 <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                <span>Provide fair and transparent pricing</span>
+                <span className="text-gray-900">Provide fair and transparent pricing</span>
               </li>
             </ul>
           </div>
-          
+
           <div className="bg-[#f5f5f5] p-6 rounded-lg">
             <h3 className="text-xl font-bold mb-4 text-[#0033a0]">Segregated Funds</h3>
             <p className="mb-4">
@@ -131,10 +131,10 @@ export default function Security() {
             </p>
           </div>
         </div>
-        
+
         <div className="mb-12">
           <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Technical Security Measures</h2>
-          
+
           <div className="space-y-6">
             <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
               <h3 className="text-xl font-bold mb-3 text-[#0033a0]">Data Encryption</h3>
@@ -148,7 +148,7 @@ export default function Security() {
                 financial institutions and banks.
               </p>
             </div>
-            
+
             <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
               <h3 className="text-xl font-bold mb-3 text-[#0033a0]">Two-Factor Authentication (2FA)</h3>
               <p className="mb-3">
@@ -160,7 +160,7 @@ export default function Security() {
                 We recommend all traders enable 2FA for maximum account security.
               </p>
             </div>
-            
+
             <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
               <h3 className="text-xl font-bold mb-3 text-[#0033a0]">Secure Infrastructure</h3>
               <p className="mb-3">
@@ -174,15 +174,15 @@ export default function Security() {
             </div>
           </div>
         </div>
-        
+
         <div className="mb-12">
           <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Security Best Practices</h2>
-          
+
           <p className="mb-6">
             While we implement robust security measures, keeping your account secure is a shared responsibility. 
             Follow these best practices to help protect your account:
           </p>
-          
+
           <div className="space-y-4">
             {securityBestPractices.map((practice, i) => (
               <div key={i} className="bg-[#f5f5f5] p-4 rounded-lg">

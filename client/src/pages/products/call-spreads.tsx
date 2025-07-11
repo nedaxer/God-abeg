@@ -17,11 +17,11 @@ export default function CallSpreads() {
           <div className="md:flex items-center gap-8 mb-6">
             <div className="md:w-1/2 mb-6 md:mb-0">
               <h2 className="text-2xl font-bold mb-4 text-[#0033a0]">What Are Crypto Call Spreads?</h2>
-              <p className="mb-4">
+              <p className="mb-4 text-gray-900">
                 Call spreads on Nedaxer are limited-risk alternatives to traditional cryptocurrency options, with built-in floor and ceiling levels. 
                 They provide a way to participate in crypto market movements with predefined risk and potential profit.
               </p>
-              <p>
+              <p className="text-gray-900">
                 Unlike traditional crypto options, Nedaxer call spreads are fully collateralized, which means you always know your maximum potential loss and profit before placing your trade.
               </p>
             </div>
@@ -33,48 +33,48 @@ export default function CallSpreads() {
               />
             </div>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div className="bg-[#f5f5f5] p-6 rounded-lg">
               <h3 className="text-xl font-bold mb-3 text-[#0033a0]">Benefits of Crypto Call Spreads</h3>
               <ul className="space-y-2">
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                  <span>Limited risk with predefined maximum loss - perfect for volatile crypto markets</span>
+                  <span className="text-gray-900">Limited risk with predefined maximum loss - perfect for volatile crypto markets</span>
                 </li>
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                  <span>Defined profit potential with built-in ceiling for target-based trading</span>
+                  <span className="text-gray-900">Defined profit potential with built-in ceiling for target-based trading</span>
                 </li>
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                  <span>Lower cost compared to binary options in some cryptocurrency scenarios</span>
+                  <span className="text-gray-900">Lower cost compared to binary options in some cryptocurrency scenarios</span>
                 </li>
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                  <span>Partial outcomes based on where crypto price settles in the range</span>
+                  <span className="text-gray-900">Partial outcomes based on where crypto price settles in the range</span>
                 </li>
               </ul>
             </div>
-            
+
             <div className="bg-[#f5f5f5] p-6 rounded-lg">
               <h3 className="text-xl font-bold mb-3 text-[#0033a0]">How Crypto Call Spreads Work</h3>
               <ul className="space-y-2">
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                  <span>Choose a cryptocurrency market and expiration time</span>
+                  <span className="text-gray-900">Choose a cryptocurrency market and expiration time</span>
                 </li>
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                  <span>Select a call spread with floor and ceiling price levels</span>
+                  <span className="text-gray-900">Select a call spread with floor and ceiling price levels</span>
                 </li>
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                  <span>Buy if you think the crypto will rise, sell if you think it will fall</span>
+                  <span className="text-gray-900">Buy if you think the crypto will rise, sell if you think it will fall</span>
                 </li>
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                  <span>Ability to close early to secure profits or limit losses during market swings</span>
+                  <span className="text-gray-900">Ability to close early to secure profits or limit losses during market swings</span>
                 </li>
               </ul>
             </div>
@@ -88,26 +88,26 @@ export default function CallSpreads() {
             <div className="md:flex gap-8">
               <div className="md:w-2/3 mb-6 md:mb-0">
                 <h3 className="text-xl font-bold mb-3 text-[#0033a0]">Bitcoin (BTC/USD) Example</h3>
-                <p className="mb-3">In this example, you believe Bitcoin will rise from its current price of $65,500 but want protection against price drops.</p>
+                <p className="mb-3 text-gray-900">In this example, you believe Bitcoin will rise from its current price of $65,500 but want protection against price drops.</p>
                 <ul className="space-y-2 mb-4">
                   <li className="flex items-start">
                     <TrendingUp className="text-[#0033a0] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                    <span><strong>Call Spread Range:</strong> $65,000 (floor) to $68,000 (ceiling)</span>
+                    <span className="text-gray-900"><strong>Call Spread Range:</strong> $65,000 (floor) to $68,000 (ceiling)</span>
                   </li>
                   <li className="flex items-start">
                     <TrendingUp className="text-[#0033a0] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                    <span><strong>Your Position:</strong> Buy at $1,500 per contract</span>
+                    <span className="text-gray-900"><strong>Your Position:</strong> Buy at $1,500 per contract</span>
                   </li>
                   <li className="flex items-start">
                     <TrendingUp className="text-[#0033a0] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                    <span><strong>Maximum Risk:</strong> $1,500 (your purchase price)</span>
+                    <span className="text-gray-900"><strong>Maximum Risk:</strong> $1,500 (your purchase price)</span>
                   </li>
                   <li className="flex items-start">
                     <TrendingUp className="text-[#0033a0] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                    <span><strong>Maximum Reward:</strong> $1,500 (if BTC price is at or above $68,000 at expiration)</span>
+                    <span className="text-gray-900"><strong>Maximum Reward:</strong> $1,500 (if BTC price is at or above $68,000 at expiration)</span>
                   </li>
                 </ul>
-                <p><strong>Outcome:</strong> If BTC reaches $67,000 at expiration, you earn $1,000 profit, even though it didn't reach the ceiling price.</p>
+                <p className="text-gray-900"><strong>Outcome:</strong> If BTC reaches $67,000 at expiration, you earn $1,000 profit, even though it didn't reach the ceiling price.</p>
               </div>
               <div className="md:w-1/3">
                 <img 
@@ -122,7 +122,7 @@ export default function CallSpreads() {
 
         <div className="mb-10">
           <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Available Crypto Call Spread Markets</h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
               <div className="h-48 overflow-hidden">
@@ -134,7 +134,7 @@ export default function CallSpreads() {
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-bold mb-2 text-[#0033a0]">Bitcoin</h3>
-                <p className="mb-4">Trade call spreads on Bitcoin with defined floor and ceiling levels for the world's largest cryptocurrency.</p>
+                <p className="mb-4 text-gray-900">Trade call spreads on Bitcoin with defined floor and ceiling levels for the world's largest cryptocurrency.</p>
                 <Button 
                   asChild
                   variant="outline" 
@@ -144,7 +144,7 @@ export default function CallSpreads() {
                 </Button>
               </div>
             </div>
-            
+
             <div className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
               <div className="h-48 overflow-hidden">
                 <img 
@@ -155,7 +155,7 @@ export default function CallSpreads() {
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-bold mb-2 text-[#0033a0]">Ethereum</h3>
-                <p className="mb-4">Trade call spreads on Ethereum with price-dependent outcomes for smart contract exposure.</p>
+                <p className="mb-4 text-gray-900">Trade call spreads on Ethereum with price-dependent outcomes for smart contract exposure.</p>
                 <Button 
                   asChild
                   variant="outline" 
@@ -165,7 +165,7 @@ export default function CallSpreads() {
                 </Button>
               </div>
             </div>
-            
+
             <div className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
               <div className="h-48 overflow-hidden">
                 <img 
@@ -176,7 +176,7 @@ export default function CallSpreads() {
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-bold mb-2 text-[#0033a0]">Altcoins</h3>
-                <p className="mb-4">Trade call spreads on Solana, Cardano, Ripple, and other leading cryptocurrencies.</p>
+                <p className="mb-4 text-gray-900">Trade call spreads on Solana, Cardano, Ripple, and other leading cryptocurrencies.</p>
                 <Button 
                   asChild
                   variant="outline" 

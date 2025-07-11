@@ -201,7 +201,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       // Aggressively preload all critical mobile app data
       await Promise.allSettled([
         queryClient.prefetchQuery({
-          queryKey: ["/api/crypto/realtime-prices"],
+          queryKey: ["/api/coins"],
           staleTime: 30000,
         }),
         queryClient.prefetchQuery({
@@ -390,7 +390,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       // Aggressively preload all critical mobile app data for new users
       await Promise.allSettled([
         queryClient.prefetchQuery({
-          queryKey: ["/api/crypto/realtime-prices"],
+          queryKey: ["/api/coins"],
           staleTime: 30000,
         }),
         queryClient.prefetchQuery({

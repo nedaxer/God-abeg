@@ -1,23 +1,53 @@
 // @ts-nocheck
-// TypeScript error suppression for development productivity - 1 Express/AI inference type conflict
+// TypeScript error suppression for development productivity
 import { Router, Request, Response } from 'express';
-import ModelClient, { isUnexpected } from "@azure-rest/ai-inference";
-import { AzureKeyCredential } from "@azure/core-auth";
+import axios from 'axios';
 
 const router = Router();
 
-// GitHub AI inference configuration
+// GitHub Models API configuration with direct HTTP client
 const token = process.env.GITHUB_TOKEN || '';
-const endpoint = "https://models.github.ai/inference";
-const model = "openai/gpt-4.1-mini";
+const endpoint = "https://models.inference.ai.azure.com";
+const model = "gpt-4o-mini";
 
-// Only initialize client if token is available
-let client: any = null;
+// GitHub AI API client using direct HTTP calls
+const githubAI = {
+  available: !!token,
+  async chatCompletion(messages: any[], options: any = {}) {
+    if (!token) {
+      throw new Error('GitHub token not available');
+    }
+
+    const response = await axios.post(
+      `${endpoint}/chat/completions`,
+      {
+        model: model,
+        messages: messages,
+        temperature: options.temperature || 0.7,
+        max_tokens: options.max_tokens || 500,
+        top_p: options.top_p || 1.0
+      },
+      {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          'User-Agent': 'Nedaxer-Chatbot/1.0'
+        },
+        timeout: 30000 // 30 second timeout
+      }
+    );
+
+    return response.data;
+  }
+};
+
 if (token) {
-  client = ModelClient(
-    endpoint,
-    new AzureKeyCredential(token),
-  );
+  console.log('✅ GitHub Models API configured successfully');
+  console.log('🔑 Token status:', `Available (${token.substring(0, 20)}...)`);
+  console.log('🌐 Endpoint:', endpoint);
+  console.log('🤖 Model:', model);
+} else {
+  console.log('⚠️ No GitHub token available - chatbot will use intelligent fallback responses');
 }
 
 // Company knowledge base for Nedaxer
@@ -87,6 +117,54 @@ interface ChatRequest {
   userName: string;
 }
 
+// Advanced chatbot response generator using pattern matching
+function generateIntelligentResponse(message: string, userName: string, language: string): string {
+  const lowerMessage = message.toLowerCase();
+  
+  // Deposit-related questions
+  if (lowerMessage.includes('deposit') || lowerMessage.includes('fund') || lowerMessage.includes('add money')) {
+    return `Hi ${userName}! To deposit cryptocurrency to your Nedaxer account:\n\n1. Go to the Assets page\n2. Select the cryptocurrency you want to deposit (BTC, ETH, USDT, BNB, etc.)\n3. Choose your network (Ethereum or BEP-20 for most coins)\n4. Copy the generated wallet address or scan the QR code\n5. Send funds from your external wallet to this address\n6. Wait for network confirmation (usually 1-3 confirmations)\n\nYour balance will update automatically once confirmed. Need help with a specific cryptocurrency?`;
+  }
+  
+  // Trading-related questions
+  if (lowerMessage.includes('trade') || lowerMessage.includes('buy') || lowerMessage.includes('sell') || lowerMessage.includes('trading')) {
+    return `Hi ${userName}! Nedaxer offers comprehensive trading options:\n\n**Spot Trading:**\n- Buy and sell cryptocurrencies at current market prices\n- Available pairs: BTC/USD, ETH/USD, BNB/USD, and 100+ more\n- Market and limit orders supported\n\n**Futures Trading:**\n- Leveraged trading with position management\n- Higher potential returns with managed risk\n\n**How to start:**\n1. Ensure you have funds in your account\n2. Go to Spot or Futures trading page\n3. Select your trading pair\n4. Choose order type and amount\n5. Execute your trade\n\nWould you like guidance on a specific trading feature?`;
+  }
+  
+  // Withdrawal questions
+  if (lowerMessage.includes('withdraw') || lowerMessage.includes('withdrawal') || lowerMessage.includes('send money')) {
+    return `Hi ${userName}! To withdraw cryptocurrency from Nedaxer:\n\n1. Go to your Assets page\n2. Select the cryptocurrency you want to withdraw\n3. Click "Withdraw"\n4. Enter the destination wallet address\n5. Choose the network (must match your destination wallet)\n6. Enter the amount to withdraw\n7. Review and confirm the transaction\n\n**Important notes:**\n- Double-check the wallet address and network\n- Consider network fees in your withdrawal amount\n- Withdrawals are processed within 1-24 hours\n\nNeed help with a specific withdrawal?`;
+  }
+  
+  // Staking questions
+  if (lowerMessage.includes('stak') || lowerMessage.includes('earn') || lowerMessage.includes('rewards') || lowerMessage.includes('apy')) {
+    return `Hi ${userName}! Nedaxer offers staking to earn passive rewards:\n\n**Available Staking:**\n- Various cryptocurrencies with different APY rates\n- Flexible and fixed staking periods\n- Automatic reward distribution\n\n**How to stake:**\n1. Go to the Earn section\n2. Choose your cryptocurrency\n3. Select staking period (flexible or fixed)\n4. Enter amount to stake\n5. Confirm and start earning\n\n**Benefits:**\n- Earn passive income on your holdings\n- Compound your crypto assets\n- Support network security\n\nWhich cryptocurrency are you interested in staking?`;
+  }
+  
+  // Account/KYC questions
+  if (lowerMessage.includes('verify') || lowerMessage.includes('kyc') || lowerMessage.includes('account') || lowerMessage.includes('profile')) {
+    return `Hi ${userName}! For account verification and management:\n\n**Account Verification (KYC):**\n- Required for higher withdrawal limits\n- Upload government-issued ID\n- Provide proof of address\n- Complete identity verification\n\n**Account Features:**\n- Portfolio tracking and analytics\n- Transaction history\n- Security settings (2FA recommended)\n- Referral program (earn 20% spot, 25% futures, 15% staking commissions)\n\n**To manage your account:**\n1. Go to Profile/Settings\n2. Complete KYC verification\n3. Enable security features\n4. Customize your preferences\n\nNeed help with a specific account feature?`;
+  }
+  
+  // Fees and limits
+  if (lowerMessage.includes('fee') || lowerMessage.includes('cost') || lowerMessage.includes('limit') || lowerMessage.includes('minimum')) {
+    return `Hi ${userName}! Here's information about fees and limits:\n\n**Trading Fees:**\n- Competitive rates for spot and futures trading\n- Lower fees for higher volume traders\n- No hidden charges\n\n**Deposit Fees:**\n- No fees for cryptocurrency deposits\n- Network fees apply (paid to blockchain)\n\n**Withdrawal Fees:**\n- Minimal withdrawal fees\n- Varies by cryptocurrency and network\n\n**Limits:**\n- Higher limits with KYC verification\n- Daily and monthly withdrawal limits\n- Increase limits by completing verification\n\nWould you like specific fee information for a particular cryptocurrency?`;
+  }
+  
+  // Security questions
+  if (lowerMessage.includes('secur') || lowerMessage.includes('safe') || lowerMessage.includes('protect') || lowerMessage.includes('2fa')) {
+    return `Hi ${userName}! Nedaxer prioritizes your security:\n\n**Security Features:**\n- Regulated exchange with customer protections\n- Two-factor authentication (2FA)\n- Email verification for all transactions\n- Secure wallet address generation\n- Regular security audits\n\n**Best Practices:**\n- Enable 2FA on your account\n- Use strong, unique passwords\n- Never share your login credentials\n- Verify all withdrawal addresses\n- Check for official Nedaxer communications\n\n**Platform Security:**\n- Bank-level encryption\n- Cold storage for user funds\n- 24/7 monitoring\n- Regulatory compliance\n\nNeed help setting up specific security features?`;
+  }
+  
+  // General help or greeting
+  if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('help') || lowerMessage.includes('start') || lowerMessage.includes('how')) {
+    return `Hello ${userName}! I'm your Nedaxer assistant, ready to help with all your cryptocurrency trading needs.\n\n**I can help you with:**\n• Deposits and funding your account\n• Spot and futures trading guidance\n• Withdrawal and transfer processes\n• Staking and earning rewards\n• Account verification and security\n• Platform features and navigation\n\n**Popular topics:**\n• "How do I deposit Bitcoin?"\n• "How to start trading?"\n• "What are the withdrawal fees?"\n• "How does staking work?"\n\nWhat would you like to know about Nedaxer?`;
+  }
+  
+  // Fallback response with helpful guidance
+  return `Hi ${userName}! I'm here to help with your Nedaxer questions. I can assist with:\n\n• **Deposits:** Adding cryptocurrency to your account\n• **Trading:** Spot and futures trading guidance  \n• **Withdrawals:** Sending crypto to external wallets\n• **Staking:** Earning rewards on your holdings\n• **Account:** Verification, security, and settings\n\nCould you tell me more specifically what you'd like help with? For example:\n- "How do I deposit [cryptocurrency]?"\n- "How to trade [specific pair]?"\n- "What are the withdrawal fees?"\n\nI'm ready to provide detailed guidance for any Nedaxer feature!`;
+}
+
 // Chat endpoint
 router.post('/message', async (req: Request, res: Response) => {
   try {
@@ -96,19 +174,16 @@ router.post('/message', async (req: Request, res: Response) => {
       return res.status(400).json({ error: 'Message is required' });
     }
 
-    // If no client available, return fallback response
-    if (!client) {
-      console.log('⚠️ No chatbot client available, using fallback response');
-      return res.json({ 
-        response: "Hello! I'm here to help with Nedaxer platform questions. While our AI assistant is temporarily unavailable, I can provide basic information about deposits, trading, and account features. For detailed assistance, please contact our support team."
-      });
-    }
-
-    // Build conversation context
-    const contextMessages: any[] = [
-      {
-        role: 'system',
-        content: `You are Nedaxer Bot, a helpful customer support assistant for Nedaxer cryptocurrency trading platform. You are currently helping ${userName || 'a user'}.
+    // Try GitHub AI first, fallback to intelligent responses
+    if (githubAI.available) {
+      try {
+        console.log('🤖 Attempting GitHub Models API call...');
+        
+        // Build conversation context for AI
+        const contextMessages = [
+          {
+            role: 'system',
+            content: `You are Nedaxer Bot, a helpful customer support assistant for Nedaxer cryptocurrency trading platform. You are currently helping ${userName || 'a user'}.
 
 IMPORTANT INSTRUCTIONS:
 - Always respond in ${getLanguageName(language)} language
@@ -123,54 +198,59 @@ NEDAXER PLATFORM KNOWLEDGE:
 ${NEDAXER_KNOWLEDGE}
 
 Respond as Nedaxer Bot helping a user with their question about the platform.`
-      }
-    ];
+          }
+        ];
 
-    // Add conversation history for context (last 5 messages)
-    if (conversationHistory && Array.isArray(conversationHistory)) {
-      conversationHistory.slice(-5).forEach(msg => {
+        // Add conversation history for context (last 5 messages)
+        if (conversationHistory && Array.isArray(conversationHistory)) {
+          conversationHistory.slice(-5).forEach(msg => {
+            contextMessages.push({
+              role: msg.isUser ? 'user' : 'assistant',
+              content: msg.text
+            });
+          });
+        }
+
+        // Add current message
         contextMessages.push({
-          role: msg.isUser ? 'user' : 'assistant',
-          content: msg.text
+          role: 'user',
+          content: message
         });
-      });
-    }
 
-    // Add current message
-    contextMessages.push({
-      role: 'user',
-      content: message
-    });
+        // Call GitHub Models API
+        const aiResponse = await githubAI.chatCompletion(contextMessages, {
+          temperature: 0.7,
+          max_tokens: 500,
+          top_p: 1.0
+        });
 
-    const response = await client.path("/chat/completions").post({
-      body: {
-        messages: contextMessages,
-        temperature: 0.7,
-        top_p: 1,
-        model: model,
-        max_tokens: 500
+        if (aiResponse && aiResponse.choices && aiResponse.choices[0]) {
+          const responseContent = aiResponse.choices[0].message?.content || 
+            generateIntelligentResponse(message, userName || 'there', language || 'en');
+          
+          console.log('✅ GitHub AI response received successfully');
+          return res.json({ response: responseContent });
+        } else {
+          console.log('⚠️ Invalid AI response format, using fallback');
+          throw new Error('Invalid response format');
+        }
+
+      } catch (error) {
+        console.error('❌ GitHub Models API error:', error.message);
+        console.log('🔄 Falling back to intelligent pattern-based response');
       }
-    });
-
-    if (isUnexpected(response)) {
-      console.error('GitHub AI API response error:', response.body);
-      // Return fallback response instead of throwing error
-      return res.json({ 
-        response: "Hi! I'm here to help with Nedaxer platform questions about deposits, trading, withdrawals, and account features. For deposits, go to Assets page, select your crypto, choose network, and use the generated address. For trading, visit the Spot or Futures trading pages. Need specific help?"
-      });
     }
 
-    const responseContent = response.body.choices[0]?.message?.content || 
-      "I apologize, but I'm having trouble processing your request right now. Please try again or contact our human support team.";
-
-    res.json({ response: responseContent });
+    // Fallback to intelligent pattern-based responses
+    console.log('💡 Using intelligent pattern-based responses');
+    const intelligentResponse = generateIntelligentResponse(message, userName || 'there', language || 'en');
+    return res.json({ response: intelligentResponse });
 
   } catch (error) {
     console.error('Chatbot API error:', error);
-    // Always provide helpful fallback regardless of error
-    res.json({
-      response: "Hi! I'm here to help with Nedaxer platform questions. For deposits, go to Assets page, select your cryptocurrency, choose the network (Ethereum or BEP-20), and use the generated wallet address. For trading, visit Spot or Futures pages. For withdrawals, use the Assets page withdrawal feature. Need help with anything specific?"
-    });
+    // Provide intelligent fallback response
+    const fallbackResponse = generateIntelligentResponse(message, userName || 'there', language || 'en');
+    res.json({ response: fallbackResponse });
   }
 });
 

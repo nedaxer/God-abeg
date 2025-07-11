@@ -71,6 +71,32 @@ input[type="text"], textarea {
   }
 }
 
+/* News Ticker Animations */
+@keyframes news-scroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.news-ticker-scroll {
+  animation: news-scroll 90s linear infinite;
+}
+
+.news-ticker-scroll:hover {
+  animation-play-state: paused;
+}
+
+/* Text clamp utility */
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
 /* Visual feedback for keyboard state */
 .keyboard-active {
   padding-bottom: env(keyboard-inset-height, 0px) !important;

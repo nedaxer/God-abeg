@@ -232,9 +232,9 @@ export function CryptoCoinList() {
   // Check for cached data first
   const [cachedData, setCachedDataState] = useState<CoinGeckoResponse | null>(() => getCachedData());
 
-  // Fallback to polling if WebSocket is not available
+  // Fallback to polling if WebSocket is not available - now using cached backend endpoint
   const { data: cryptoData, isLoading, error } = useQuery({
-    queryKey: ["/api/crypto/realtime-prices"],
+    queryKey: ["/api/coins"],
     queryFn: async (): Promise<CoinGeckoResponse> => {
       // Check cache first
       const cached = getCachedData();
@@ -242,9 +242,9 @@ export function CryptoCoinList() {
         return cached;
       }
 
-      // Fetch fresh data if no valid cache
-      console.log('Fetching fresh crypto data from API...');
-      const response = await fetch("/api/crypto/realtime-prices");
+      // Fetch fresh data from backend cached endpoint
+      console.log('Fetching crypto data from backend cached endpoint...');
+      const response = await fetch("/api/coins");
       if (!response.ok) {
         // If API fails, try to use expired cache as fallback
         const expiredCache = localStorage.getItem('crypto-coin-list-cache');
@@ -325,7 +325,7 @@ export function CryptoCoinList() {
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-[#0033a0] mb-4">TOP Cryptocurrencies by Nedaxer</h2>
+          <h2 className="text-5xl font-bold text-[#0033a0] mb-4">Market rates</h2>
         </div>
 
         <div className="bg-white rounded-lg shadow-md overflow-hidden max-w-6xl mx-auto">
@@ -336,7 +336,7 @@ export function CryptoCoinList() {
             >
               {/* Rank and Coin Info */}
               <div className="flex items-center space-x-1 md:space-x-3 flex-1 min-w-0">
-                <div className="text-gray-500 font-medium text-xs md:text-sm w-4 md:w-6 text-left">
+                <div className="text-gray-500 font-medium text-base md:text-lg w-4 md:w-6 text-left">
                   {index + 1}
                 </div>
                 <div className="flex items-center space-x-1 md:space-x-2">
@@ -359,10 +359,10 @@ export function CryptoCoinList() {
                     }}
                   />
                   <div className="min-w-0 flex-1">
-                    <div className="text-gray-900 font-semibold text-xs md:text-sm truncate">
+                    <div className="text-gray-900 font-semibold text-base md:text-lg truncate">
                       {coin.name}
                     </div>
-                    <div className="text-gray-500 text-xs font-medium">
+                    <div className="text-gray-500 text-base font-medium">
                       {coin.symbol}
                     </div>
                   </div>
@@ -370,7 +370,7 @@ export function CryptoCoinList() {
               </div>
 
               {/* Price */}
-              <div className="text-gray-900 font-semibold text-right min-w-[60px] md:min-w-[80px] text-xs md:text-sm">
+              <div className="text-gray-900 font-semibold text-right min-w-[60px] md:min-w-[80px] text-base md:text-lg">
                 ${coin.price.toLocaleString(undefined, { 
                   minimumFractionDigits: 2, 
                   maximumFractionDigits: coin.price < 1 ? 4 : 2 
@@ -379,7 +379,7 @@ export function CryptoCoinList() {
 
               {/* 24h Change */}
               <div className="text-right min-w-[50px] md:min-w-[60px]">
-                <span className={`text-xs font-medium ${
+                <span className={`text-base font-medium ${
                   coin.change >= 0 ? 'text-green-600' : 'text-red-600'
                 }`}>
                   {coin.change >= 0 ? '▲' : '▼'} {Math.abs(coin.change).toFixed(1)}%

@@ -13,56 +13,56 @@ export default function KnockOuts() {
       <div className="max-w-4xl mx-auto">
         <div className="mb-10">
           <h2 className="text-2xl font-bold mb-4 text-[#0033a0]">What Are Knock-Outs?</h2>
-          <p className="mb-4">
+          <p className="mb-4 text-gray-900">
             Knock-Outs are leveraged trading products with built-in risk management features. 
             They allow you to trade market movements with predetermined floor and ceiling levels that, 
             once breached, automatically close your position.
           </p>
-          <p className="mb-6">
+          <p className="mb-6 text-gray-900">
             With Knock-Outs, you can access leverage while maintaining strict control over your maximum potential loss.
           </p>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div className="bg-[#f5f5f5] p-6 rounded-lg">
               <h3 className="text-xl font-bold mb-3 text-[#0033a0]">Benefits of Knock-Outs</h3>
               <ul className="space-y-2">
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                  <span>Trade with leverage on popular markets</span>
+                  <span className="text-gray-900">Trade with leverage on popular markets</span>
                 </li>
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                  <span>Built-in risk management with knockout levels</span>
+                  <span className="text-gray-900">Built-in risk management with knockout levels</span>
                 </li>
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                  <span>Trade 23 hours a day, 5 days a week</span>
+                  <span className="text-gray-900">Trade 23 hours a day, 5 days a week</span>
                 </li>
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                  <span>No overnight financing charges</span>
+                  <span className="text-gray-900">No overnight financing charges</span>
                 </li>
               </ul>
             </div>
-            
+
             <div className="bg-[#f5f5f5] p-6 rounded-lg">
               <h3 className="text-xl font-bold mb-3 text-[#0033a0]">How Knock-Outs Work</h3>
               <ul className="space-y-2">
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                  <span>Select a market and Knock-Out contract</span>
+                  <span className="text-gray-900">Select a market and Knock-Out contract</span>
                 </li>
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                  <span>Buy if you think the market will rise, sell if you think it will fall</span>
+                  <span className="text-gray-900">Buy if you think the market will rise, sell if you think it will fall</span>
                 </li>
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                  <span>Position closes automatically if market touches floor or ceiling</span>
+                  <span className="text-gray-900">Position closes automatically if market touches floor or ceiling</span>
                 </li>
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                  <span>Close early to secure profits or limit losses</span>
+                  <span className="text-gray-900">Close early to secure profits or limit losses</span>
                 </li>
               </ul>
             </div>
@@ -71,11 +71,11 @@ export default function KnockOuts() {
 
         <div className="mb-10">
           <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Available Knock-Out Markets</h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
               <h3 className="text-xl font-bold mb-2 text-[#0033a0]">Bitcoin</h3>
-              <p className="mb-4">Trade Knock-Outs on Bitcoin with controlled risk and leverage.</p>
+              <p className="mb-4 text-gray-900">Trade Knock-Outs on Bitcoin with controlled risk and leverage.</p>
               <Button 
                 asChild
                 variant="outline" 
@@ -84,10 +84,10 @@ export default function KnockOuts() {
                 <Link href="/markets/commodities">View Bitcoin Markets</Link>
               </Button>
             </div>
-            
+
             <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
               <h3 className="text-xl font-bold mb-2 text-[#0033a0]">Ethereum</h3>
-              <p className="mb-4">Trade Knock-Outs on Ethereum with smart contract exposure.</p>
+              <p className="mb-4 text-gray-900">Trade Knock-Outs on Ethereum with smart contract exposure.</p>
               <Button 
                 asChild
                 variant="outline" 
@@ -96,10 +96,10 @@ export default function KnockOuts() {
                 <Link href="/markets/commodities">View Ethereum Markets</Link>
               </Button>
             </div>
-            
+
             <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
               <h3 className="text-xl font-bold mb-2 text-[#0033a0]">Altcoins</h3>
-              <p className="mb-4">Trade Knock-Outs on Solana, Cardano, and other altcoins with defined risk parameters.</p>
+              <p className="mb-4 text-gray-900">Trade Knock-Outs on Solana, Cardano, and other altcoins with defined risk parameters.</p>
               <Button 
                 asChild
                 variant="outline" 
@@ -110,10 +110,10 @@ export default function KnockOuts() {
             </div>
           </div>
         </div>
-        
+
         <div className="mb-10">
           <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Comparing Our Products</h2>
-          
+
           <div className="overflow-x-auto">
             <table className="w-full border-collapse">
               <thead>
@@ -152,7 +152,7 @@ export default function KnockOuts() {
               </tbody>
             </table>
           </div>
-          
+
           <div className="mt-6 text-center">
             <Link 
               href="/products/pricing" 

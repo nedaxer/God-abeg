@@ -210,10 +210,10 @@ export default function WalletDashboard() {
               <Wallet className="h-8 w-8 text-[#0033a0]" />
               <span>Wallet</span>
             </h1>
-            <p className="text-gray-600">Manage your cryptocurrency deposits and withdrawals</p>
+            <p className="text-gray-900">Manage your cryptocurrency deposits and withdrawals</p>
           </div>
           <div className="text-right">
-            <p className="text-sm text-gray-600">Total Portfolio Value</p>
+            <p className="text-sm text-gray-900">Total Portfolio Value</p>
             <p className="text-2xl font-bold">${totalPortfolioValue.toLocaleString()}</p>
           </div>
         </div>
@@ -237,7 +237,7 @@ export default function WalletDashboard() {
                     </div>
                     <div>
                       <h3 className="font-semibold">{balance.currency.symbol}</h3>
-                      <p className="text-xs text-gray-500">{balance.currency.name}</p>
+                      <p className="text-xs text-gray-900">{balance.currency.name}</p>
                     </div>
                   </div>
                   
@@ -254,7 +254,7 @@ export default function WalletDashboard() {
                       <span>Total:</span>
                       <span className="font-mono">{balance.totalBalance}</span>
                     </div>
-                    <div className="text-xs text-gray-500 text-right">
+                    <div className="text-xs text-gray-900 text-right">
                       ≈ ${(balance.totalBalance * balance.currency.currentPrice).toLocaleString()}
                     </div>
                   </div>

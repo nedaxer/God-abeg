@@ -163,23 +163,23 @@ export default function MobileApp() {
               <ul className="space-y-3">
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                  <span>Trade all Nedaxer crypto products: Binary Options, Call Spreads, Touch Brackets, and Knock-Outs</span>
+                  <span className="text-gray-800">Trade all Nedaxer crypto products: Binary Options, Call Spreads, Touch Brackets, and Knock-Outs</span>
                 </li>
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                  <span>Access to all available cryptocurrency markets including Bitcoin, Ethereum, altcoins, and blockchain events</span>
+                  <span className="text-gray-800">Access to all available cryptocurrency markets including Bitcoin, Ethereum, altcoins, and blockchain events</span>
                 </li>
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                  <span>One-tap order entry with built-in risk assessment</span>
+                  <span className="text-gray-800">One-tap order entry with built-in risk assessment</span>
                 </li>
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                  <span>Real-time position management and tracking</span>
+                  <span className="text-gray-800">Real-time position management and tracking</span>
                 </li>
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                  <span>Close trades early to secure profits or limit losses</span>
+                  <span className="text-gray-800">Close trades early to secure profits or limit losses</span>
                 </li>
               </ul>
             </div>
@@ -189,23 +189,23 @@ export default function MobileApp() {
               <ul className="space-y-3">
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                  <span>Professional charting with multiple timeframes</span>
+                  <span className="text-gray-800">Professional charting with multiple timeframes</span>
                 </li>
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                  <span>Technical indicators and drawing tools</span>
+                  <span className="text-gray-800">Technical indicators and drawing tools</span>
                 </li>
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                  <span>Economic calendar and market news</span>
+                  <span className="text-gray-800">Economic calendar and market news</span>
                 </li>
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                  <span>Customizable watchlists for easy market monitoring</span>
+                  <span className="text-gray-800">Customizable watchlists for easy market monitoring</span>
                 </li>
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                  <span>Price alerts and custom notifications</span>
+                  <span className="text-gray-800">Price alerts and custom notifications</span>
                 </li>
               </ul>
             </div>
@@ -223,7 +223,7 @@ export default function MobileApp() {
                   {device.requirements.map((req, reqIndex) => (
                     <li key={reqIndex} className="flex items-start">
                       <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
-                      <span>{req}</span>
+                      <span className="text-gray-800">{req}</span>
                     </li>
                   ))}
                 </ul>

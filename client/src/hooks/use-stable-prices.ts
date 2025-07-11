@@ -21,9 +21,9 @@ interface PriceResponse {
 // UNIFIED stable query for all crypto price data - no more conflicts
 export function useStablePrices() {
   return useQuery<PriceResponse>({
-    queryKey: ['/api/crypto/realtime-prices'],
+    queryKey: ['/api/coins'],
     queryFn: async () => {
-      const response = await fetch('/api/crypto/realtime-prices');
+      const response = await fetch('/api/coins');
       if (!response.ok) {
         throw new Error(`Failed to fetch crypto prices: ${response.statusText}`);
       }

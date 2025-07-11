@@ -76,13 +76,13 @@ export default function AdminDepositCreator({ userId, username, onSuccess }: Adm
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
-  // Fetch real-time crypto prices
+  // Fetch real-time crypto prices from backend cached endpoint
   const { data: priceData, refetch: refetchPrices } = useQuery({
-    queryKey: ['/api/crypto/realtime-prices'],
+    queryKey: ['/api/coins'],
     refetchInterval: 30000, // Refresh every 30 seconds
     staleTime: 0, // Always consider data stale to ensure fresh prices
     queryFn: async () => {
-      const response = await fetch('/api/crypto/realtime-prices');
+      const response = await fetch('/api/coins');
       if (!response.ok) {
         throw new Error('Failed to fetch crypto prices');
       }

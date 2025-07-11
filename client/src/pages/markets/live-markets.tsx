@@ -30,11 +30,11 @@ export default function LiveMarkets() {
   const [searchTerm, setSearchTerm] = useState("");
   const [lastUpdate, setLastUpdate] = useState<Date>(new Date());
 
-  // Fetch CoinGecko market data with auto-refresh every 10 seconds
+  // Fetch market data from backend cached endpoint with auto-refresh every 10 seconds
   const { data: marketData, isLoading, refetch, error } = useQuery({
-    queryKey: ["/api/crypto/realtime-prices"],
+    queryKey: ["/api/coins"],
     queryFn: async (): Promise<CoinGeckoResponse> => {
-      const response = await fetch("/api/crypto/realtime-prices");
+      const response = await fetch("/api/coins");
       if (!response.ok) {
         throw new Error(`Failed to fetch market data: ${response.statusText}`);
       }

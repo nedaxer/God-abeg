@@ -151,9 +151,9 @@ export default function MobileMarkets() {
   // Check for cached data first
   const [cachedMarketData, setCachedMarketDataState] = useState<CoinGeckoResponse | null>(() => getCachedMarketData());
 
-  // Use cached data or fetch fresh data with 10-minute intervals
+  // Use cached data or fetch fresh data with 10-minute intervals - now using backend cached endpoint
   const { data: marketData, isLoading, error } = useQuery({
-    queryKey: ['/api/crypto/realtime-prices-markets'],
+    queryKey: ['/api/coins'],
     queryFn: async (): Promise<CoinGeckoResponse> => {
       // Check cache first
       const cached = getCachedMarketData();
@@ -161,9 +161,9 @@ export default function MobileMarkets() {
         return cached;
       }
 
-      // Fetch fresh data if no valid cache
-      console.log('Fetching fresh mobile markets data from API...');
-      const response = await fetch('/api/crypto/realtime-prices');
+      // Fetch fresh data from backend cached endpoint
+      console.log('Fetching mobile markets data from backend cached endpoint...');
+      const response = await fetch('/api/coins');
       if (!response.ok) {
         // If API fails, try to use expired cache as fallback
         const expiredCache = localStorage.getItem('mobile-markets-cache');

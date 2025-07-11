@@ -196,7 +196,7 @@ export default function MobileHome() {
 
   // Fetch real-time prices with enhanced 3-second updates for BTC price accuracy
   const { data: priceData, isLoading: priceLoading } = useQuery({
-    queryKey: ['/api/crypto/realtime-prices'],
+    queryKey: ['/api/coins'],
     refetchInterval: 3000, // 3-second real-time updates for BTC price accuracy
     staleTime: 2500, // Keep data fresh for 2.5 seconds
     retry: 1,
@@ -497,9 +497,9 @@ export default function MobileHome() {
   // Check for cached data first
   const [cachedHomeData, setCachedHomeDataState] = useState<any | null>(() => getCachedHomeData());
 
-  // Fetch live market data from CoinGecko API with 10-minute caching
+  // Fetch live market data from backend cached endpoint with 10-minute caching
   const { data: marketData } = useQuery({
-    queryKey: ['/api/crypto/realtime-prices-home'],
+    queryKey: ['/api/coins'],
     queryFn: async () => {
       // Check cache first
       const cached = getCachedHomeData();
@@ -507,9 +507,9 @@ export default function MobileHome() {
         return cached;
       }
 
-      // Fetch fresh data if no valid cache
-      console.log('Fetching fresh mobile home data from API...');
-      const response = await fetch('/api/crypto/realtime-prices');
+      // Fetch fresh data from backend cached endpoint
+      console.log('Fetching mobile home data from backend cached endpoint...');
+      const response = await fetch('/api/coins');
       if (!response.ok) {
         // If API fails, try to use expired cache as fallback
         const expiredCache = localStorage.getItem('mobile-home-cache');
@@ -678,7 +678,7 @@ export default function MobileHome() {
             console.log('Home page data refreshed due to real-time update:', data.type);
           } else if (data.type === 'PRICE_UPDATE') {
             // Real-time price updates for BTC and other currencies
-            queryClient.setQueryData(['/api/crypto/realtime-prices'], data.data);
+            queryClient.setQueryData(['/api/coins'], data.data);
             console.log('🏠 Real-time price update received:', data.data);
           }
         } catch (error) {
@@ -712,7 +712,7 @@ export default function MobileHome() {
     try {
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: ['/api/wallet/summary'] }),
-        queryClient.invalidateQueries({ queryKey: ['/api/crypto/realtime-prices'] }),
+        queryClient.invalidateQueries({ queryKey: ['/api/coins'] }),
         queryClient.invalidateQueries({ queryKey: ['/api/balances'] }),
         queryClient.invalidateQueries({ queryKey: ['/api/favorites'] }),
         queryClient.invalidateQueries({ queryKey: ['/api/notifications/unread-count'] })

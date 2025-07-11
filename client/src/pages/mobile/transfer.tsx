@@ -278,11 +278,11 @@ function MobileTransferContent() {
       // Show success animation
       setShowSuccessAnimation(true);
       
-      // Hide animation after 4 seconds
+      // Hide animation after 10 seconds
       setTimeout(() => {
         setShowSuccessAnimation(false);
         setSuccessData(null);
-      }, 4000);
+      }, 10000);
       
       // Invalidate queries to refresh balances
       queryClient.invalidateQueries({ queryKey: ['/api/wallet/summary'] });

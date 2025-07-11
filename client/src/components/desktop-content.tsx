@@ -59,7 +59,7 @@ export default function DesktopContent({ children, page = 'home' }: DesktopConte
 
   // Get real-time prices
   const { data: pricesData } = useQuery({
-    queryKey: ['/api/crypto/realtime-prices'],
+    queryKey: ['/api/coins'],
     refetchInterval: 10000,
   });
 

@@ -3,7 +3,20 @@ import axios from "axios";
 
 let priceCache: any = null;
 let lastCacheTime = 0;
-const CACHE_DURATION = 30000; // 30 seconds
+const CACHE_DURATION = 120000; // 2 minutes (120 seconds)
+
+// Export cache access functions for other endpoints
+export function getCachedPrices() {
+  const now = Date.now();
+  const isCacheValid = priceCache && (now - lastCacheTime) < CACHE_DURATION;
+  
+  return {
+    data: priceCache,
+    isValid: isCacheValid,
+    age: now - lastCacheTime,
+    lastUpdated: lastCacheTime
+  };
+}
 
 // Clear cache to force fresh fetch with new data structure
 priceCache = null;
@@ -26,9 +39,13 @@ export async function getRealtimePrices(req: Request, res: Response) {
   try {
     const now = Date.now();
     
-    // Force fresh API call to see new data structure
-    priceCache = null;
-    lastCacheTime = 0;
+    // Check if we have valid cached data (less than 2 minutes old)
+    if (priceCache && (now - lastCacheTime) < CACHE_DURATION) {
+      console.log(`📦 Returning cached data (${Math.round((now - lastCacheTime) / 1000)}s old)`);
+      return res.json({ success: true, data: priceCache, cached: true });
+    }
+    
+    console.log('⏰ Cache expired or missing, fetching fresh data...');
 
     // Direct API call to CoinGecko for essential coins
     const API_KEY = process.env.COINGECKO_API_KEY || '';

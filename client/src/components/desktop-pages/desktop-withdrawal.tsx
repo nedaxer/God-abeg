@@ -136,7 +136,7 @@ export default function DesktopWithdrawal() {
             
             // Handle price updates
             if (data.type === 'price_update') {
-              queryClient.invalidateQueries({ queryKey: ['/api/crypto/realtime-prices'] });
+              queryClient.invalidateQueries({ queryKey: ['/api/coins'] });
             }
           } catch (error) {
             console.error('WebSocket message parsing error:', error);
@@ -180,7 +180,7 @@ export default function DesktopWithdrawal() {
 
   // Fetch crypto prices for conversion with real-time updates
   const { data: cryptoPrices } = useQuery({
-    queryKey: ['/api/crypto/realtime-prices'],
+    queryKey: ['/api/coins'],
     refetchInterval: 5000, // More frequent updates for real-time feel
     staleTime: 3000,
   });
@@ -325,7 +325,7 @@ export default function DesktopWithdrawal() {
               size="sm"
               onClick={() => {
                 queryClient.invalidateQueries({ queryKey: ['/api/wallet/summary'] });
-                queryClient.invalidateQueries({ queryKey: ['/api/crypto/realtime-prices'] });
+                queryClient.invalidateQueries({ queryKey: ['/api/coins'] });
               }}
               className="border-gray-700/50 text-gray-400 hover:text-white hover:bg-white/10"
             >
