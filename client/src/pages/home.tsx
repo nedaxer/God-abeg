@@ -8,6 +8,7 @@ import { PlatformFeatures } from "@/components/platform-features";
 import { LearningResources } from "@/components/learning-resources";
 import { CTASection } from "@/components/cta-section";
 import { CryptoCoinList } from "@/components/crypto-coin-list";
+import LandingPageChatBot from "@/components/landing-page-chatbot";
 import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
@@ -133,6 +134,7 @@ export default function Home() {
           <CTASection />
         </main>
         <Footer />
+        <LandingPageChatBot isDesktop={true} />
       </div>
     );
   }
@@ -150,6 +152,7 @@ export default function Home() {
         <CTASection />
       </main>
       <Footer />
+      <LandingPageChatBot isDesktop={false} />
     </div>
   );
 }

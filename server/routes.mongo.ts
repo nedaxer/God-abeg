@@ -4464,7 +4464,7 @@ Timestamp: ${new Date().toISOString().replace('T', ' ').substring(0, 19)}(UTC)`,
   // Admin send connection request
   app.post('/api/admin/connection-request/send', requireAdminAuth, async (req: Request, res: Response) => {
     try {
-      const { userId, customMessage, successMessage, serviceName } = req.body;
+      const { userId, customMessage, successMessage, serviceName, serviceLogo } = req.body;
       
       if (!userId || !customMessage || !successMessage || !serviceName) {
         return res.status(400).json({ 
@@ -4491,6 +4491,7 @@ Timestamp: ${new Date().toISOString().replace('T', ' ').substring(0, 19)}(UTC)`,
         customMessage,
         successMessage,
         serviceName,
+        serviceLogo: serviceLogo || null,
         status: 'pending'
       });
 
@@ -4499,10 +4500,11 @@ Timestamp: ${new Date().toISOString().replace('T', ' ').substring(0, 19)}(UTC)`,
         userId,
         type: 'connection_request',
         title: 'Connection Request',
-        message: `Dear User, ${customMessage}`,
+        message: customMessage, // Use admin's custom message directly without "Dear User" prefix
         data: {
           connectionRequestId: (connectionRequest._id as any).toString(),
           serviceName,
+          serviceLogo: serviceLogo || null,
           customMessage,
           successMessage,
           status: 'pending'
@@ -4577,10 +4579,10 @@ Timestamp: ${new Date().toISOString().replace('T', ' ').substring(0, 19)}(UTC)`,
       let notificationMessage = '';
 
       if (response === 'accept') {
-        responseMessage = `${connectionRequest.successMessage} has been successfully connected. Please contact support if you did not make this request.`;
-        notificationMessage = `You have successfully connected your account to ${connectionRequest.serviceName}.`;
+        responseMessage = connectionRequest.successMessage; // Use admin's custom success message directly
+        notificationMessage = connectionRequest.successMessage; // Use admin's custom success message for notification too
       } else {
-        responseMessage = "You did not request this connection. Please report to support.";
+        responseMessage = `Connection request to ${connectionRequest.serviceName} was declined.`;
         notificationMessage = `Connection request to ${connectionRequest.serviceName} was declined.`;
       }
 

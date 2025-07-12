@@ -12,6 +12,7 @@ import { useHaptics } from '@/hooks/use-haptics';
 import { NotificationMessageModal } from '@/components/notification-message-modal';
 import { ConnectionRequestModal } from '@/components/connection-request-modal';
 import AdaptiveLayout from '@/components/adaptive-layout';
+import { showSuccessBanner, useBottomBanner } from '@/hooks/use-bottom-banner';
 
 function MobileNotifications() {
   const [messageModalOpen, setMessageModalOpen] = useState(false);
@@ -20,6 +21,7 @@ function MobileNotifications() {
   const queryClient = useQueryClient();
   const { t } = useLanguage();
   const { medium } = useHaptics();
+  const { dismissBanner } = useBottomBanner();
   const [location, navigate] = useLocation();
   
   // Check URL parameters to auto-filter to support messages
@@ -336,6 +338,7 @@ function MobileNotifications() {
                       {notification.type === 'deposit' ? 'System Notification' : 
                        notification.type === 'message' ? 'Support Message' : 
                        notification.type === 'connection_request' ? 'Connection Request' :
+                       notification.type === 'connection_successful' ? 'Connection Successful' :
                        notification.type === 'kyc_approved' ? 'KYC Approved' :
                        notification.type === 'kyc_rejected' ? 'KYC Review' :
                        notification.type === 'system' && notification.data?.notificationType === 'message' ? 'Support Message' :
@@ -372,6 +375,37 @@ function MobileNotifications() {
                         }}
                       >
                         Respond →
+                      </Button>
+                    ) : notification.type === 'connection_successful' ? (
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="text-green-500 text-[10px] p-0 h-auto hover:text-green-400"
+                        onClick={(e) => {
+                          e.stopPropagation(); // Prevent card click
+                          if (!notification.isRead) {
+                            markAsReadMutation.mutate(notification._id);
+                          }
+                          // Clear any existing banners first and add timestamp check
+                          dismissBanner();
+                          
+                          // Use timestamp to ensure only latest connection shows banner
+                          const notificationTimestamp = new Date(notification.createdAt).getTime();
+                          const currentTimestamp = Date.now();
+                          
+                          // Only show banner if connection is recent (within last 24 hours)
+                          if (currentTimestamp - notificationTimestamp < 24 * 60 * 60 * 1000) {
+                            const successMessage = notification.data?.successMessage || 'Successfully connected to the service';
+                            const serviceName = notification.data?.serviceName || 'Service';
+                            showSuccessBanner(
+                              'Connection Successful!',
+                              `${successMessage} - ${serviceName}`,
+                              4000
+                            );
+                          }
+                        }}
+                      >
+                        View Success →
                       </Button>
                     ) : notification.type === 'kyc_approved' || notification.type === 'kyc_rejected' ? (
                       <Button 

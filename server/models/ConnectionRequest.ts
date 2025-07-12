@@ -6,6 +6,7 @@ export interface IConnectionRequest extends Document {
   customMessage: string;
   successMessage: string;
   serviceName: string;
+  serviceLogo?: string; // Base64 encoded image or URL
   status: 'pending' | 'accepted' | 'declined';
   createdAt: Date;
   updatedAt: Date;
@@ -18,6 +19,7 @@ const ConnectionRequestSchema = new Schema<IConnectionRequest>({
   customMessage: { type: String, required: true },
   successMessage: { type: String, required: true },
   serviceName: { type: String, required: true },
+  serviceLogo: { type: String }, // Base64 encoded image or URL
   status: { type: String, enum: ['pending', 'accepted', 'declined'], default: 'pending' },
   respondedAt: { type: Date }
 }, {

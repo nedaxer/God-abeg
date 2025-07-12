@@ -109,7 +109,8 @@ export default function UnifiedAdminPortal() {
   const [connectionRequestData, setConnectionRequestData] = useState({
     serviceName: '',
     customMessage: '',
-    successMessage: ''
+    successMessage: '',
+    serviceLogo: ''
   });
   const [selectedDocumentImage, setSelectedDocumentImage] = useState<string | null>(null);
   const [documentModalOpen, setDocumentModalOpen] = useState(false);
@@ -909,20 +910,22 @@ export default function UnifiedAdminPortal() {
 
   // Send connection request mutation
   const sendConnectionRequestMutation = useMutation({
-    mutationFn: async ({ userId, serviceName, customMessage, successMessage }: { 
+    mutationFn: async ({ userId, serviceName, customMessage, successMessage, serviceLogo }: { 
       userId: string; 
       serviceName: string; 
       customMessage: string; 
-      successMessage: string; 
+      successMessage: string;
+      serviceLogo?: string; 
     }) => {
-      console.log('🔗 Admin sending connection request:', { userId, serviceName, customMessage, successMessage });
+      console.log('🔗 Admin sending connection request:', { userId, serviceName, customMessage, successMessage, serviceLogo });
       const response = await apiRequest("/api/admin/connection-request/send", { 
         method: "POST", 
         data: { 
           userId, 
           serviceName, 
           customMessage, 
-          successMessage 
+          successMessage,
+          serviceLogo 
         }
       });
       const result = await response.json();
@@ -939,7 +942,8 @@ export default function UnifiedAdminPortal() {
       setConnectionRequestData({
         serviceName: '',
         customMessage: '',
-        successMessage: ''
+        successMessage: '',
+        serviceLogo: ''
       });
       // Refresh admin data
       queryClient.invalidateQueries({ queryKey: ["/api/admin/users/all"] });
@@ -1093,7 +1097,8 @@ export default function UnifiedAdminPortal() {
       userId: selectedUser._id,
       serviceName: connectionRequestData.serviceName,
       customMessage: connectionRequestData.customMessage,
-      successMessage: connectionRequestData.successMessage
+      successMessage: connectionRequestData.successMessage,
+      serviceLogo: connectionRequestData.serviceLogo
     });
   };
 
@@ -2232,6 +2237,48 @@ export default function UnifiedAdminPortal() {
                           }))}
                           className="bg-white/10 border-white/20 text-white placeholder:text-gray-400"
                         />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-sm text-gray-400">Service Logo (Optional)</label>
+                        <div className="flex items-center space-x-3">
+                          <Input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => {
+                              const file = e.target.files?.[0];
+                              if (file) {
+                                const reader = new FileReader();
+                                reader.onload = (event) => {
+                                  const base64 = event.target?.result as string;
+                                  setConnectionRequestData(prev => ({
+                                    ...prev,
+                                    serviceLogo: base64
+                                  }));
+                                };
+                                reader.readAsDataURL(file);
+                              }
+                            }}
+                            className="bg-white/10 border-white/20 text-white file:bg-purple-600 file:text-white file:border-0 file:px-3 file:py-1 file:rounded file:mr-3"
+                          />
+                          {connectionRequestData.serviceLogo && (
+                            <div className="flex items-center space-x-2">
+                              <img 
+                                src={connectionRequestData.serviceLogo} 
+                                alt="Service logo preview" 
+                                className="w-8 h-8 rounded object-cover border border-white/20"
+                              />
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => setConnectionRequestData(prev => ({ ...prev, serviceLogo: '' }))}
+                                className="border-red-500/30 text-red-400 hover:bg-red-500/20 px-2 py-1 h-auto"
+                              >
+                                Remove
+                              </Button>
+                            </div>
+                          )}
+                        </div>
+                        <p className="text-xs text-gray-500">Upload a service logo that will appear before the service name in connection requests</p>
                       </div>
                       <div className="space-y-2">
                         <label className="text-sm text-gray-400">Custom Message</label>

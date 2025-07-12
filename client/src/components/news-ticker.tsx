@@ -67,15 +67,17 @@ export const NewsTicker = () => {
 
   const displayArticles = newsData && newsData.length > 0 ? newsData.slice(0, 8) : fallbackNews;
 
-  // Auto-scroll through headlines with smooth transitions
+  // Auto-scroll through headlines with smooth slide transitions
   useEffect(() => {
     if (displayArticles.length > 0 && isAutoPlaying) {
       const interval = setInterval(() => {
         setIsTransitioning(true);
         setTimeout(() => {
           setCurrentIndex((prev) => (prev + 1) % displayArticles.length);
-          setIsTransitioning(false);
-        }, 150);
+          setTimeout(() => {
+            setIsTransitioning(false);
+          }, 300); // Slower transition back to normal
+        }, 100); // Quick slide out
       }, 4000); // Change headline every 4 seconds
 
       return () => clearInterval(interval);
@@ -234,26 +236,45 @@ export const NewsTicker = () => {
 
   const currentArticle = displayArticles[currentIndex];
 
-  // Better image fallback with multiple options
+  // Get news source logo as fallback
+  const getSourceLogo = (sourceName: string) => {
+    const logoMap: { [key: string]: string } = {
+      'CoinDesk': 'https://logo.clearbit.com/coindesk.com',
+      'CryptoSlate': 'https://logo.clearbit.com/cryptoslate.com',
+      'CryptoBriefing': 'https://logo.clearbit.com/cryptobriefing.com',
+      'BeInCrypto': 'https://logo.clearbit.com/beincrypto.com',
+      'Google News - Crypto': 'https://logo.clearbit.com/google.com',
+      'Google News - Bitcoin': 'https://logo.clearbit.com/google.com',
+      'CoinTelegraph': 'https://logo.clearbit.com/cointelegraph.com',
+      'Decrypt': 'https://logo.clearbit.com/decrypt.co',
+      'CryptoNews': 'https://logo.clearbit.com/cryptonews.com'
+    };
+    return logoMap[sourceName] || `https://logo.clearbit.com/${sourceName.toLowerCase().replace(/\s+/g, '')}.com`;
+  };
+
+  // Better image fallback with news source logos
   const getImageUrl = (article: NewsArticle) => {
+    // First try to use the original article image
     if (article.urlToImage && article.urlToImage.startsWith('http')) {
       return article.urlToImage;
     }
     
-    // Use source-specific fallback images with unique URLs for each source
-    const sourceImages = {
-      'CoinDesk': 'https://images.pexels.com/photos/7567565/pexels-photo-7567565.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-      'CoinTelegraph': 'https://images.pexels.com/photos/844124/pexels-photo-844124.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-      'Decrypt': 'https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-      'CryptoSlate': 'https://images.pexels.com/photos/6802042/pexels-photo-6802042.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-      'CryptoState': 'https://images.pexels.com/photos/5980576/pexels-photo-5980576.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-      'BeInCrypto': 'https://images.pexels.com/photos/6802042/pexels-photo-6802042.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-      'CryptoBriefing': 'https://images.pexels.com/photos/7788009/pexels-photo-7788009.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-      'CryptoNews': 'https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-    };
+    // Use news source logos as fallback when no image is available
+    return getSourceLogo(article.source.name);
+  };
+
+  // Create a background style with proper fallback
+  const getBackgroundStyle = (article: NewsArticle) => {
+    const hasNewsImage = article.urlToImage && article.urlToImage.startsWith('http');
+    const primaryImage = hasNewsImage ? article.urlToImage : getSourceLogo(article.source.name);
     
-    return sourceImages[article.source.name as keyof typeof sourceImages] || 
-           'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80';
+    return {
+      backgroundImage: `url(${primaryImage})`,
+      backgroundSize: 'cover', // Always use cover to fill the entire banner
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'center',
+      backgroundColor: hasNewsImage ? 'transparent' : '#1a1a40' // Dark background for logos
+    };
   };
 
   return (
@@ -262,8 +283,8 @@ export const NewsTicker = () => {
         {/* Single News Item with Swipe */}
         <div className="relative">
           <div
-            className={`relative w-full h-40 sm:h-44 rounded-xl overflow-hidden shadow-lg cursor-pointer select-none transform transition-all duration-700 ease-in-out ${
-              isTransitioning ? 'scale-95 opacity-75' : 'scale-100 opacity-100'
+            className={`relative w-full h-40 sm:h-44 rounded-xl overflow-hidden shadow-lg cursor-pointer select-none transform transition-all duration-500 ease-in-out ${
+              isTransitioning ? 'translate-x-full opacity-0' : 'translate-x-0 opacity-100'
             }`}
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
@@ -274,13 +295,29 @@ export const NewsTicker = () => {
             onMouseLeave={handleMouseUp}
             onClick={() => window.open(currentArticle.url, '_blank')}
           >
-            {/* Background Image */}
+            {/* Background Image with fallback */}
             <div 
-              className="absolute inset-0 bg-cover bg-center transition-all duration-1000 ease-in-out"
-              style={{
-                backgroundImage: `url(${getImageUrl(currentArticle)})`
-              }}
-            />
+              className="absolute inset-0 transition-all duration-500 ease-in-out"
+              style={getBackgroundStyle(currentArticle)}
+            >
+              {/* Hidden image for error detection and fallback */}
+              <img 
+                src={getImageUrl(currentArticle)} 
+                alt=""
+                className="hidden"
+                onError={(e) => {
+                  const backgroundDiv = e.currentTarget.parentElement;
+                  if (backgroundDiv && currentArticle.urlToImage) {
+                    // If original image fails, use the news source logo
+                    const fallbackUrl = getSourceLogo(currentArticle.source.name);
+                    backgroundDiv.style.backgroundImage = `url(${fallbackUrl})`;
+                    backgroundDiv.style.backgroundSize = 'cover'; // Keep cover for consistency
+                    backgroundDiv.style.backgroundRepeat = 'no-repeat';
+                    backgroundDiv.style.backgroundPosition = 'center';
+                  }
+                }}
+              />
+            </div>
             
             {/* Gradient overlay for better text readability */}
             <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30 transition-opacity duration-500" />
