@@ -21,6 +21,7 @@ import { useLanguage } from '@/contexts/language-context';
 import { useTheme } from '@/contexts/theme-context';
 import { CRYPTO_PAIRS, CryptoPair, getPairDisplayName } from '@/lib/crypto-pairs';
 import { useStablePrices } from '@/hooks/use-stable-prices';
+import { useOfflineCryptoCache } from '@/hooks/use-offline-crypto-cache';
 
 interface CryptoTicker {
   symbol: string;
@@ -110,93 +111,33 @@ export default function MobileMarkets() {
     localStorage.setItem('favoriteCoins', JSON.stringify(newFavorites));
   };
 
-  // Cache management functions for mobile markets
-  const getCachedMarketData = (): CoinGeckoResponse | null => {
-    try {
-      const cached = localStorage.getItem('mobile-markets-cache');
-      if (cached) {
-        const parsedCache = JSON.parse(cached);
-        const now = Date.now();
-        const cacheAge = now - parsedCache.timestamp;
-        const tenMinutes = 10 * 60 * 1000; // 10 minutes in milliseconds
-        
-        if (cacheAge < tenMinutes) {
-          console.log('Using cached mobile markets data, age:', Math.round(cacheAge / 1000), 'seconds');
-          return parsedCache.data;
-        } else {
-          console.log('Mobile markets cache expired, age:', Math.round(cacheAge / 1000), 'seconds');
-          localStorage.removeItem('mobile-markets-cache');
-        }
-      }
-    } catch (error) {
-      console.error('Error reading mobile markets cache:', error);
-      localStorage.removeItem('mobile-markets-cache');
-    }
-    return null;
-  };
+  // Use comprehensive offline-capable caching system
+  const { 
+    cryptoData, 
+    isLoading: isCacheLoading, 
+    isOffline, 
+    cacheStatus, 
+    fetchFreshData, 
+    forceRefresh 
+  } = useOfflineCryptoCache();
 
-  const setCachedMarketData = (data: CoinGeckoResponse) => {
-    try {
-      const cacheData = {
-        data,
-        timestamp: Date.now()
-      };
-      localStorage.setItem('mobile-markets-cache', JSON.stringify(cacheData));
-      console.log('Mobile markets data cached successfully');
-    } catch (error) {
-      console.error('Error caching mobile markets data:', error);
-    }
-  };
+  // Transform crypto data to match expected format
+  const marketData: CoinGeckoResponse | undefined = cryptoData.length > 0 ? {
+    success: true,
+    data: cryptoData,
+    timestamp: Date.now()
+  } : undefined;
 
-  // Check for cached data first
-  const [cachedMarketData, setCachedMarketDataState] = useState<CoinGeckoResponse | null>(() => getCachedMarketData());
-
-  // Use cached data or fetch fresh data with 10-minute intervals - now using backend cached endpoint
-  const { data: marketData, isLoading, error } = useQuery({
-    queryKey: ['/api/coins'],
-    queryFn: async (): Promise<CoinGeckoResponse> => {
-      // Check cache first
-      const cached = getCachedMarketData();
-      if (cached) {
-        return cached;
-      }
-
-      // Fetch fresh data from backend cached endpoint
-      console.log('Fetching mobile markets data from backend cached endpoint...');
-      const response = await fetch('/api/coins');
-      if (!response.ok) {
-        // If API fails, try to use expired cache as fallback
-        const expiredCache = localStorage.getItem('mobile-markets-cache');
-        if (expiredCache) {
-          const parsedCache = JSON.parse(expiredCache);
-          console.log('API failed, using expired mobile markets cache as fallback');
-          return parsedCache.data;
-        }
-        throw new Error(`Failed to fetch mobile markets data: ${response.statusText}`);
-      }
-      
-      const data = await response.json();
-      
-      // Cache the fresh data
-      setCachedMarketData(data);
-      setCachedMarketDataState(data);
-      
-      return data;
-    },
-    refetchInterval: 600000, // Only refetch every 10 minutes
-    retry: 3,
-    staleTime: 600000, // Consider data stale after 10 minutes
-  });
-  
   // Update last update time when data changes
   useEffect(() => {
-    if (marketData?.data) {
+    if (cryptoData.length > 0) {
       setLastUpdate(new Date());
     }
-  }, [marketData]);
+  }, [cryptoData]);
 
-  // Use cached data if available, fallback to fresh market data
-  const activeMarketData = marketData || cachedMarketData;
+  // Use the offline cache data directly
+  const activeMarketData = marketData;
+  const isLoading = isCacheLoading;
 
   // Process comprehensive crypto pairs with live price data
   const processedMarkets = CRYPTO_PAIRS.map((pair: CryptoPair) => {
@@ -352,12 +293,57 @@ export default function MobileMarkets() {
 
 
 
+      {/* Cache Status Indicator */}
+      <div className="px-4 pb-2">
+        <div className="flex items-center justify-between text-xs">
+          <div className="flex items-center space-x-2">
+            <div className={`w-2 h-2 rounded-full ${
+              cacheStatus === 'fresh' ? 'bg-green-500' :
+              cacheStatus === 'expired' ? 'bg-yellow-500' :
+              cacheStatus === 'offline' ? 'bg-orange-500' : 'bg-gray-500'
+            }`} />
+            <span className="text-gray-400">
+              {cacheStatus === 'fresh' ? 'Live Data' :
+               cacheStatus === 'expired' ? 'Cached Data' :
+               cacheStatus === 'offline' ? 'Offline Mode' : 'Loading...'}
+            </span>
+            {isOffline && <span className="text-orange-500">📱 Offline</span>}
+          </div>
+          <div className="flex items-center space-x-2">
+            <button 
+              onClick={() => {
+                hapticLight();
+                fetchFreshData();
+              }}
+              className="text-blue-400 hover:text-blue-300"
+            >
+              <RefreshCw className="w-3 h-3" />
+            </button>
+            <button 
+              onClick={() => {
+                hapticLight();
+                forceRefresh();
+              }}
+              className="text-yellow-400 hover:text-yellow-300"
+              title="Force refresh (keeps trying until successful)"
+            >
+              <Clock className="w-3 h-3" />
+            </button>
+          </div>
+        </div>
+      </div>
+
       {/* Market List */}
       <div className="px-4 space-y-0 pb-20">
         {isLoading && !marketData ? (
           <div className="text-center py-8">
             <RefreshCw className="w-8 h-8 animate-spin mx-auto mb-2 text-gray-400" />
-            <p className="text-gray-400">Loading live market data...</p>
+            <p className="text-gray-400">Loading comprehensive cached data...</p>
+            <p className="text-xs text-gray-500 mt-1">
+              {cacheStatus === 'fresh' ? 'Fetching live prices' :
+               cacheStatus === 'expired' ? 'Using cached prices while fetching fresh data' :
+               cacheStatus === 'offline' ? 'Offline mode - using stored data' : 'Initializing cache system'}
+            </p>
           </div>
         ) : sortedMarkets.length === 0 ? (
           <div className="text-center py-8">

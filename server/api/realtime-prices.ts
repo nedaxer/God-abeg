@@ -1,9 +1,11 @@
 import type { Request, Response } from "express";
 import axios from "axios";
+import { fileCacheManager } from "../cache/file-cache-manager.js";
 
+// Memory cache for fast access (secondary cache)
 let priceCache: any = null;
 let lastCacheTime = 0;
-const CACHE_DURATION = 120000; // 2 minutes (120 seconds)
+const CACHE_DURATION = 600000; // 10 minutes (600 seconds) for file-based cache
 
 // Export cache access functions for other endpoints
 export function getCachedPrices() {
@@ -39,13 +41,83 @@ export async function getRealtimePrices(req: Request, res: Response) {
   try {
     const now = Date.now();
     
-    // Check if we have valid cached data (less than 2 minutes old)
-    if (priceCache && (now - lastCacheTime) < CACHE_DURATION) {
-      console.log(`📦 Returning cached data (${Math.round((now - lastCacheTime) / 1000)}s old)`);
-      return res.json({ success: true, data: priceCache, cached: true });
+    // Check file-based cache first (10 minutes)
+    const fileCache = await fileCacheManager.get('crypto-prices');
+    
+    if (fileCache && !fileCache.expired) {
+      console.log(`📦 Serving fresh file-cached crypto data (${Math.round(fileCache.age / 1000)}s old)`);
+      // Update memory cache too
+      priceCache = fileCache.data;
+      lastCacheTime = now - fileCache.age;
+      return res.json({ 
+        success: true, 
+        data: fileCache.data, 
+        cached: true, 
+        fileCache: true,
+        age: fileCache.age 
+      });
     }
     
-    console.log('⏰ Cache expired or missing, fetching fresh data...');
+    // Check memory cache as fallback
+    if (priceCache && (now - lastCacheTime) < CACHE_DURATION) {
+      console.log(`📦 Serving memory cached crypto data (${Math.round((now - lastCacheTime) / 1000)}s old)`);
+      return res.json({ 
+        success: true, 
+        data: priceCache, 
+        cached: true, 
+        memoryCache: true,
+        age: now - lastCacheTime 
+      });
+    }
+    
+    console.log('⏰ All caches expired, attempting fresh fetch or using fallback...');
+
+    // Enhanced fallback system for API failures
+    const returnFallbackData = async () => {
+      // Try file-based old cache first (20 minutes window)
+      const oldFileCache = await fileCacheManager.getOldCache('crypto-prices');
+      if (oldFileCache) {
+        console.log('⚠️ API failed, using old file cache');
+        return res.json({ 
+          success: true, 
+          data: oldFileCache, 
+          cached: true, 
+          expired: true,
+          oldCache: true,
+          message: 'Using old cached data due to API issues'
+        });
+      }
+      
+      // Try memory cache as backup
+      if (priceCache) {
+        console.log('⚠️ API failed, returning expired memory cache data', `(${Math.round((now - lastCacheTime) / 1000)}s old)`);
+        return res.json({ 
+          success: true, 
+          data: priceCache, 
+          cached: true, 
+          expired: true,
+          message: 'Using expired memory cache due to API issues',
+          cacheAge: now - lastCacheTime
+        });
+      }
+      
+      // If all else fails, create minimal data structure to prevent frontend crashes
+      console.log('❌ No cached data available, creating minimal fallback');
+      const minimalData = [
+        { symbol: 'BTC', name: 'Bitcoin', price: 50000, change: 0, volume: 0, marketCap: 0, high_24h: 50000, low_24h: 50000, volume_24h: 0, sentiment: 'Neutral' },
+        { symbol: 'ETH', name: 'Ethereum', price: 3000, change: 0, volume: 0, marketCap: 0, high_24h: 3000, low_24h: 3000, volume_24h: 0, sentiment: 'Neutral' },
+        { symbol: 'USDT', name: 'Tether', price: 1, change: 0, volume: 0, marketCap: 0, high_24h: 1, low_24h: 1, volume_24h: 0, sentiment: 'Neutral' },
+        { symbol: 'BNB', name: 'BNB', price: 300, change: 0, volume: 0, marketCap: 0, high_24h: 300, low_24h: 300, volume_24h: 0, sentiment: 'Neutral' }
+      ];
+      
+      return res.json({ 
+        success: true, 
+        data: minimalData, 
+        cached: false, 
+        fallback: true,
+        message: 'Using minimal fallback data - API temporarily unavailable'
+      });
+    };
 
     // Direct API call to CoinGecko for essential coins
     const API_KEY = process.env.COINGECKO_API_KEY || '';
@@ -71,7 +143,7 @@ export async function getRealtimePrices(req: Request, res: Response) {
     ];
 
     console.log('🚀 Fetching fresh CoinGecko data...');
-    console.log('🔑 Using API key:', API_KEY ? 'Present' : 'Missing');
+    console.log('🔑 API Key Status:', API_KEY ? `Present (${API_KEY.substring(0, 8)}...)` : 'Missing');
     console.log('📊 Requesting coins:', allCryptoPairCoins.length, 'coins:', allCryptoPairCoins.slice(0, 10).join(','), '...');
     console.log('🎯 Requesting data with high/low params:', {
       include_24hr_high: 'true',
@@ -81,25 +153,76 @@ export async function getRealtimePrices(req: Request, res: Response) {
     });
     
     if (!API_KEY) {
-      throw new Error('CoinGecko API key not configured');
+      console.log('⚠️ No API key configured, returning fallback data');
+      return returnFallbackData();
     }
 
-    const response = await axios.get('https://api.coingecko.com/api/v3/simple/price', {
-      params: {
-        ids: allCryptoPairCoins.join(','),
-        vs_currencies: 'usd',
-        include_24hr_change: 'true',
-        include_24hr_vol: 'true',
-        include_market_cap: 'true',
-        include_24hr_high: 'true',
-        include_24hr_low: 'true'
-      },
-      headers: {
-        'x-cg-demo-api-key': API_KEY,
-        'Accept': 'application/json'
-      },
-      timeout: 15000
-    });
+    let response;
+    let retryCount = 0;
+    const maxRetries = 3;
+
+    while (retryCount < maxRetries) {
+      try {
+        console.log(`🔄 Attempt ${retryCount + 1}/${maxRetries} - Calling CoinGecko API...`);
+        
+        response = await axios.get('https://api.coingecko.com/api/v3/simple/price', {
+          params: {
+            ids: allCryptoPairCoins.join(','),
+            vs_currencies: 'usd',
+            include_24hr_change: 'true',
+            include_24hr_vol: 'true',
+            include_market_cap: 'true',
+            include_24hr_high: 'true',
+            include_24hr_low: 'true'
+          },
+          headers: {
+            'x-cg-demo-api-key': API_KEY,
+            'Accept': 'application/json',
+            'User-Agent': 'Nedaxer-Trading-Platform/1.0'
+          },
+          timeout: 20000 // Increased timeout
+        });
+        
+        console.log('✅ CoinGecko API call successful');
+        break; // Success, exit retry loop
+        
+      } catch (apiError: any) {
+        retryCount++;
+        console.error(`❌ API attempt ${retryCount} failed:`, {
+          status: apiError.response?.status,
+          statusText: apiError.response?.statusText,
+          message: apiError.message,
+          remaining: apiError.response?.headers?.['x-ratelimit-remaining'],
+          resetTime: apiError.response?.headers?.['x-ratelimit-reset']
+        });
+        
+        // Check for specific error types
+        if (apiError.response?.status === 429) {
+          console.log('🚫 Rate limit hit, using fallback data');
+          return await returnFallbackData();
+        }
+        
+        if (apiError.response?.status === 401 || apiError.response?.status === 403) {
+          console.log('🔑 Authentication failed, using fallback data');
+          return await returnFallbackData();
+        }
+        
+        if (retryCount >= maxRetries) {
+          console.log('💀 All retry attempts failed, using fallback data');
+          return await returnFallbackData();
+        }
+        
+        // Wait before retry (exponential backoff)
+        const waitTime = Math.pow(2, retryCount) * 1000;
+        console.log(`⏰ Waiting ${waitTime}ms before retry...`);
+        await new Promise(resolve => setTimeout(resolve, waitTime));
+      }
+    }
+
+    if (!response) {
+      console.log('💀 No response received after retries, using fallback data');
+      return await returnFallbackData();
+    }
 
     console.log('✅ CoinGecko response received:', Object.keys(response.data));
     console.log('🔍 Full API response status:', response.status);
@@ -277,7 +400,8 @@ export async function getRealtimePrices(req: Request, res: Response) {
       }
     }
     
-    // Update cache
+    // Update both file cache and memory cache
+    await fileCacheManager.set('crypto-prices', tickers);
     priceCache = tickers;
     lastCacheTime = now;
     

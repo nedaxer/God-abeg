@@ -57,6 +57,16 @@ const app = express();
 app.use(express.json({ limit: '10mb' })); // Increased limit for profile picture uploads
 app.use(express.urlencoded({ extended: false, limit: '10mb' }));
 
+// Initialize proactive crypto price fetcher for file-based caching
+(async () => {
+  try {
+    const { proactiveFetcher } = await import('./services/proactive-price-fetcher.js');
+    console.log('🚀 Proactive crypto price fetcher initialized');
+  } catch (error) {
+    console.error('❌ Failed to initialize proactive fetcher:', error);
+  }
+})();
+
 app.use((req, res, next) => {
   const start = Date.now();
   const path = req.path;
