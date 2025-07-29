@@ -77,7 +77,7 @@ export default function BitcoinMarkets() {
     >
       <div className="max-w-4xl mx-auto">
         <div className="mb-10">
-          <h2 className="text-2xl font-bold mb-4 text-[#0033a0]">Bitcoin Trading on Nedaxer</h2>
+          <h2 className="text-2xl font-bold mb-4 text-[#000d2e]">Bitcoin Trading on Nedaxer</h2>
           <p className="mb-4">
             Bitcoin (BTC) is the world's first and largest cryptocurrency by market capitalization. 
             On Nedaxer, you can trade Bitcoin price movements with our unique limited-risk products 
@@ -91,7 +91,7 @@ export default function BitcoinMarkets() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
             <div className="bg-[#f5f5f5] p-6 rounded-lg">
-              <h3 className="text-xl font-bold mb-4 text-[#0033a0]">Bitcoin Trading Benefits</h3>
+              <h3 className="text-xl font-bold mb-4 text-[#000d2e]">Bitcoin Trading Benefits</h3>
               <ul className="space-y-3">
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
@@ -117,7 +117,7 @@ export default function BitcoinMarkets() {
             </div>
             
             <div className="bg-[#f5f5f5] p-6 rounded-lg">
-              <h3 className="text-xl font-bold mb-4 text-[#0033a0]">Bitcoin Market Opportunities</h3>
+              <h3 className="text-xl font-bold mb-4 text-[#000d2e]">Bitcoin Market Opportunities</h3>
               <ul className="space-y-3">
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
@@ -145,12 +145,12 @@ export default function BitcoinMarkets() {
         </div>
         
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Bitcoin Trading Products</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Bitcoin Trading Products</h2>
           
           <div className="space-y-6">
             {tradingProducts.map((product, i) => (
               <div key={i} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-                <h3 className="text-xl font-bold mb-2 text-[#0033a0]">{product.name}</h3>
+                <h3 className="text-xl font-bold mb-2 text-[#000d2e]">{product.name}</h3>
                 <p className="text-gray-700 mb-4">{product.description}</p>
                 <h4 className="font-semibold text-gray-800 mb-2">Key Features:</h4>
                 <ul className="space-y-1 mb-4">
@@ -163,7 +163,7 @@ export default function BitcoinMarkets() {
                 </ul>
                 <Link 
                   href="#" 
-                  className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
+                  className="text-[#000d2e] hover:text-[#ff5900] font-semibold flex items-center"
                 >
                   Learn More <ArrowRight className="ml-1 h-4 w-4" />
                 </Link>
@@ -173,7 +173,7 @@ export default function BitcoinMarkets() {
         </div>
         
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Key Bitcoin Market Events</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Key Bitcoin Market Events</h2>
           
           <div className="mb-6">
             <p className="mb-4">
@@ -183,7 +183,7 @@ export default function BitcoinMarkets() {
             </p>
             
             <div className="bg-[#f5f5f5] p-6 rounded-lg">
-              <h3 className="text-lg font-bold mb-3 text-[#0033a0]">Events to Watch</h3>
+              <h3 className="text-lg font-bold mb-3 text-[#000d2e]">Events to Watch</h3>
               <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {marketEvents.map((event, i) => (
                   <li key={i} className="flex items-center">
@@ -205,7 +205,7 @@ export default function BitcoinMarkets() {
                 <Button
                   asChild
                   variant="outline"
-                  className="border-[#0033a0] text-[#0033a0] hover:bg-[#0033a0] hover:text-white"
+                  className="border-[#000d2e] text-[#000d2e] hover:bg-[#000d2e] hover:text-white"
                 >
                   <Link href="/markets/market-data">View Detailed Charts</Link>
                 </Button>
@@ -215,7 +215,7 @@ export default function BitcoinMarkets() {
         </div>
         
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Why Trade Bitcoin on Nedaxer</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Why Trade Bitcoin on Nedaxer</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {features.map((feature, i) => (
@@ -223,7 +223,7 @@ export default function BitcoinMarkets() {
                 <div className="mb-4">
                   {feature.icon}
                 </div>
-                <h3 className="text-xl font-bold mb-2 text-[#0033a0]">{feature.title}</h3>
+                <h3 className="text-xl font-bold mb-2 text-[#000d2e]">{feature.title}</h3>
                 <p className="text-gray-700 mb-4">{feature.description}</p>
               </div>
             ))}
@@ -231,7 +231,7 @@ export default function BitcoinMarkets() {
         </div>
         
         <div className="mb-12">
-          <div className="bg-[#0033a0] text-white rounded-lg p-8 text-center">
+          <div className="bg-[#000d2e] text-white rounded-lg p-8 text-center">
             <h2 className="text-2xl font-bold mb-4">Start Trading Bitcoin Today</h2>
             <p className="mb-6">Open an account and access our Bitcoin trading products with limited risk.</p>
             <Button

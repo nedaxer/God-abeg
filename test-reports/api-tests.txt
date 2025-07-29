@@ -1,0 +1,5 @@
+🔍 Testing API endpoints...
+✅ PASS GET /api/crypto/prices - Expected: 200, Got: 200
+✅ PASS GET /api/crypto/news - Expected: 200, Got: 200
+✅ PASS GET /api/auth/user - Expected: 401, Got: 401
+❌ FAIL GET /api/admin/login - Expected: 405, Got: 200

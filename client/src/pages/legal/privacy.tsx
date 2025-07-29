@@ -159,7 +159,7 @@ Chicago, IL 60606`
     <PageLayout 
       title="Privacy Policy" 
       subtitle="How we collect, use, and protect your personal information"
-      bgColor="#0033a0"
+      bgColor="#000d2e"
     >
       <div className="max-w-4xl mx-auto">
         <div className="mb-8">
@@ -170,9 +170,9 @@ Chicago, IL 60606`
           
           <div className="bg-[#f5f5f5] p-6 rounded-lg mb-8">
             <div className="flex items-start">
-              <Lock className="text-[#0033a0] mt-1 mr-3 h-6 w-6 flex-shrink-0" />
+              <Lock className="text-[#000d2e] mt-1 mr-3 h-6 w-6 flex-shrink-0" />
               <div>
-                <h3 className="font-bold mb-2 text-[#0033a0]">Your Privacy is Important to Us</h3>
+                <h3 className="font-bold mb-2 text-[#000d2e]">Your Privacy is Important to Us</h3>
                 <p className="mb-0">
                   This Privacy Policy explains how we collect, use, and protect your personal information. 
                   We are committed to ensuring the confidentiality and security of your data in compliance 
@@ -185,13 +185,13 @@ Chicago, IL 60606`
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="md:col-span-1">
               <div className="sticky top-8">
-                <h3 className="text-lg font-bold mb-4 text-[#0033a0]">Contents</h3>
+                <h3 className="text-lg font-bold mb-4 text-[#000d2e]">Contents</h3>
                 <ul className="space-y-2">
                   {sections.map((section) => (
                     <li key={section.id}>
                       <a 
                         href={`#${section.id}`} 
-                        className="text-[#0033a0] hover:text-[#ff5900] flex items-center"
+                        className="text-[#000d2e] hover:text-[#ff5900] flex items-center"
                       >
                         <ArrowRight className="h-3 w-3 mr-1" />
                         <span>{section.title}</span>
@@ -204,7 +204,7 @@ Chicago, IL 60606`
                   <Button
                     asChild
                     variant="outline"
-                    className="w-full border-[#0033a0] text-[#0033a0] hover:bg-[#0033a0] hover:text-white"
+                    className="w-full border-[#000d2e] text-[#000d2e] hover:bg-[#000d2e] hover:text-white"
                   >
                     <Link href="#" className="flex items-center justify-center">
                       <FileText className="h-4 w-4 mr-2" />
@@ -215,7 +215,7 @@ Chicago, IL 60606`
                   <Button
                     asChild
                     variant="outline"
-                    className="w-full border-[#0033a0] text-[#0033a0] hover:bg-[#0033a0] hover:text-white"
+                    className="w-full border-[#000d2e] text-[#000d2e] hover:bg-[#000d2e] hover:text-white"
                   >
                     <Link href="/legal/terms">
                       Terms & Conditions
@@ -225,7 +225,7 @@ Chicago, IL 60606`
                   <Button
                     asChild
                     variant="outline"
-                    className="w-full border-[#0033a0] text-[#0033a0] hover:bg-[#0033a0] hover:text-white"
+                    className="w-full border-[#000d2e] text-[#000d2e] hover:bg-[#000d2e] hover:text-white"
                   >
                     <Link href="/legal/risk">
                       Risk Disclosure
@@ -239,7 +239,7 @@ Chicago, IL 60606`
               <div className="space-y-8">
                 {sections.map((section) => (
                   <section key={section.id} id={section.id} className="scroll-mt-8">
-                    <h2 className="text-xl font-bold mb-4 text-[#0033a0]">{section.title}</h2>
+                    <h2 className="text-xl font-bold mb-4 text-[#000d2e]">{section.title}</h2>
                     <div className="prose prose-blue max-w-none">
                       {section.content.split('\n\n').map((paragraph, i) => {
                         if (paragraph.includes(':\n')) {
@@ -267,28 +267,28 @@ Chicago, IL 60606`
         </div>
 
         <div className="mb-8">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Our Commitment to Data Security</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Our Commitment to Data Security</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div className="flex flex-col items-center text-center p-6 bg-[#f5f5f5] rounded-lg">
-              <Shield className="h-12 w-12 text-[#0033a0] mb-4" />
-              <h3 className="text-lg font-bold mb-2 text-[#0033a0]">Secure Infrastructure</h3>
+              <Shield className="h-12 w-12 text-[#000d2e] mb-4" />
+              <h3 className="text-lg font-bold mb-2 text-[#000d2e]">Secure Infrastructure</h3>
               <p className="text-gray-900">
                 Our systems are hosted in secure data centers with multiple layers of physical and network security.
               </p>
             </div>
             
             <div className="flex flex-col items-center text-center p-6 bg-[#f5f5f5] rounded-lg">
-              <Lock className="h-12 w-12 text-[#0033a0] mb-4" />
-              <h3 className="text-lg font-bold mb-2 text-[#0033a0]">Encryption</h3>
+              <Lock className="h-12 w-12 text-[#000d2e] mb-4" />
+              <h3 className="text-lg font-bold mb-2 text-[#000d2e]">Encryption</h3>
               <p className="text-gray-900">
                 We use industry-standard encryption to protect data in transit and at rest across all our services.
               </p>
             </div>
             
             <div className="flex flex-col items-center text-center p-6 bg-[#f5f5f5] rounded-lg">
-              <Eye className="h-12 w-12 text-[#0033a0] mb-4" />
-              <h3 className="text-lg font-bold mb-2 text-[#0033a0]">Ongoing Monitoring</h3>
+              <Eye className="h-12 w-12 text-[#000d2e] mb-4" />
+              <h3 className="text-lg font-bold mb-2 text-[#000d2e]">Ongoing Monitoring</h3>
               <p className="text-gray-900">
                 Our security team continuously monitors our systems to detect and respond to potential threats.
               </p>
@@ -296,7 +296,7 @@ Chicago, IL 60606`
           </div>
         </div>
 
-        <div className="bg-[#0033a0] text-white rounded-lg p-8 text-center">
+        <div className="bg-[#000d2e] text-white rounded-lg p-8 text-center">
           <h2 className="text-2xl font-bold mb-4">Questions about our Privacy Policy?</h2>
           <p className="mb-6">Our privacy team is available to address any questions or concerns you may have.</p>
           <Button

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Deposit Submission - Nedaxer Admin</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f4f4f5;">
+
+<div style="background: linear-gradient(to bottom right, #f0f4f9, #ffffff); padding: 40px 0; font-family: 'Segoe UI', Roboto, sans-serif;">
+  <div style="max-width: 700px; margin: auto; background-color: #ffffff; padding: 40px; border-radius: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); color: #374151;">
+
+    <div style="text-align: center; margin-bottom: 30px;">
+      <img src="https://i.imgur.com/MP7EciA.png" alt="Nedaxer Logo" style="height: 60px;" />
+    </div>
+
+    <h2 style="color: #dc2626; text-align: center; margin-bottom: 20px; font-size: 24px; font-weight: 600;">🚨 New Deposit Submission</h2>
+
+    <p style="font-size: 16px; line-height: 1.7; color: #374151; text-align: center; margin-bottom: 30px; font-weight: 500;">
+      A user has submitted a new deposit receipt for review and approval.
+    </p>
+
+    <div style="background-color: #fef3c7; padding: 24px; border-radius: 12px; margin: 30px 0; border-left: 4px solid #f59e0b;">
+      <h3 style="color: #92400e; margin: 0 0 16px 0; font-size: 18px; font-weight: 600;">Deposit Details:</h3>
+      
+      <div style="margin-bottom: 12px;">
+        <span style="color: #92400e; font-size: 14px; font-weight: 600;">Amount:</span><br>
+        <span style="color: #374151; font-size: 16px; font-weight: 700;">${{usd_amount}} USD ({{deposit_amount}} {{crypto_symbol}})</span>
+      </div>
+      
+      <div style="margin-bottom: 12px;">
+        <span style="color: #92400e; font-size: 14px; font-weight: 600;">Network:</span><br>
+        <span style="color: #374151; font-size: 16px; font-weight: 600;">{{network_type}}</span>
+      </div>
+      
+      <div style="margin-bottom: 12px;">
+        <span style="color: #92400e; font-size: 14px; font-weight: 600;">Deposit Address:</span><br>
+        <span style="color: #374151; font-size: 12px; font-family: monospace; word-break: break-all; background-color: #ffffff; padding: 8px; border-radius: 4px; display: block; margin-top: 4px;">{{deposit_address}}</span>
+      </div>
+      
+      <div style="margin-bottom: 12px;">
+        <span style="color: #92400e; font-size: 14px; font-weight: 600;">Submission Time:</span><br>
+        <span style="color: #374151; font-size: 16px; font-weight: 600;">{{submission_timestamp}}</span>
+      </div>
+    </div>
+
+    <div style="background-color: #eff6ff; padding: 24px; border-radius: 12px; margin: 30px 0; border-left: 4px solid #3b82f6;">
+      <h3 style="color: #1e40af; margin: 0 0 16px 0; font-size: 18px; font-weight: 600;">User Information:</h3>
+      
+      <div style="margin-bottom: 12px;">
+        <span style="color: #1e40af; font-size: 14px; font-weight: 600;">User ID (UID):</span><br>
+        <span style="color: #374151; font-size: 16px; font-weight: 700; font-family: monospace;">{{user_uid}}</span>
+      </div>
+      
+      <div style="margin-bottom: 12px;">
+        <span style="color: #1e40af; font-size: 14px; font-weight: 600;">Full Name:</span><br>
+        <span style="color: #374151; font-size: 16px; font-weight: 600;">{{user_full_name}}</span>
+      </div>
+      
+      <div style="margin-bottom: 12px;">
+        <span style="color: #1e40af; font-size: 14px; font-weight: 600;">Email Address:</span><br>
+        <span style="color: #374151; font-size: 16px; font-weight: 600;">{{user_email}}</span>
+      </div>
+      
+      <div style="margin-bottom: 12px;">
+        <span style="color: #1e40af; font-size: 14px; font-weight: 600;">Phone Number:</span><br>
+        <span style="color: #374151; font-size: 16px; font-weight: 600;">{{user_phone}}</span>
+      </div>
+      
+      <div style="margin-bottom: 12px;">
+        <span style="color: #1e40af; font-size: 14px; font-weight: 600;">Account Status:</span><br>
+        <span style="color: #374151; font-size: 16px; font-weight: 600;">{{user_verification_status}}</span>
+      </div>
+      
+      <div style="margin-bottom: 0;">
+        <span style="color: #1e40af; font-size: 14px; font-weight: 600;">Registration Date:</span><br>
+        <span style="color: #374151; font-size: 16px; font-weight: 600;">{{user_registration_date}}</span>
+      </div>
+    </div>
+
+    <div style="background-color: #f0fdf4; padding: 20px; border-radius: 8px; margin: 30px 0; text-align: center;">
+      <p style="color: #166534; font-weight: 600; margin: 0; font-size: 16px;">
+        📎 Payment receipt has been attached to this email for verification.
+      </p>
+    </div>
+
+    <div style="text-align: center; margin: 30px 0;">
+      <a href="{{admin_dashboard_url}}"
+         style="background-color: #dc2626; color: #ffffff; text-decoration: none; padding: 16px 32px; border-radius: 10px; font-size: 18px; font-weight: 600; display: inline-block; transition: background-color 0.2s ease-in-out; margin-right: 10px;">
+         Review in Admin Dashboard
+      </a>
+    </div>
+
+    <p style="font-size: 14px; color: #6b7280; text-align: center; margin-bottom: 30px;">
+      Please review the attached receipt and approve or decline the deposit in the admin dashboard.
+    </p>
+
+    <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 40px 0;" />
+
+    <footer style="text-align: center; font-size: 13px; color: #9ca3af;">
+      This is an automated admin notification from Nedaxer.<br>
+      &copy; Nedaxer Inc. All rights reserved.<br>
+      Admin Dashboard Access Required
+    </footer>
+
+  </div>
+</div>
+</body>
+</html>

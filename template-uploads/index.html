@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment Mobile UI/UX - AdminUIUX</title>
+    <meta http-equiv="refresh" content="0; url=investment-login.html">
+    <style>
+        body { 
+            font-family: 'Roboto', sans-serif; 
+            text-align: center; 
+            padding: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .container { 
+            max-width: 600px; 
+            margin: 0 auto; 
+        }
+        h1 { 
+            margin-bottom: 20px; 
+        }
+        p { 
+            margin-bottom: 30px; 
+        }
+        .btn { 
+            display: inline-block; 
+            padding: 12px 30px; 
+            background: white; 
+            color: #667eea; 
+            text-decoration: none; 
+            border-radius: 25px; 
+            font-weight: 500;
+            transition: transform 0.3s;
+        }
+        .btn:hover { 
+            transform: translateY(-2px); 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Investment Mobile UI/UX</h1>
+        <p>Professional Investment Management Platform</p>
+        <p>Redirecting to login page...</p>
+        <a href="investment-login.html" class="btn">Enter Application</a>
+    </div>
+    <script>
+        // Automatic redirect after 2 seconds if meta refresh doesn't work
+        setTimeout(function() {
+            window.location.href = 'investment-login.html';
+        }, 2000);
+    </script>
+</body>
+</html>

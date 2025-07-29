@@ -13,7 +13,18 @@ import {
   Copy,
   Headphones,
   Camera,
-  User
+  User,
+  Heart,
+  Download,
+  Globe,
+  MapPin,
+  Monitor,
+  Trash2,
+  Clock,
+  LogOut,
+  CheckCircle,
+  Play,
+  Check
 } from 'lucide-react';
 import { Link } from 'wouter';
 import { useAuth } from '@/hooks/use-auth';
@@ -31,6 +42,7 @@ export default function MobileProfile() {
   const { getBackgroundClass, getTextClass, getCardClass, getBorderClass } = useTheme();
   const queryClient = useQueryClient();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [copiedUID, setCopiedUID] = useState(false);
 
   // Fetch KYC status from API
   const { data: kycStatus } = useQuery({
@@ -41,13 +53,11 @@ export default function MobileProfile() {
   // Use the actual UID from the database
   const userUID = user?.uid || 'N/A';
 
-
-
   // Profile picture upload mutation
   const updateProfileMutation = useMutation({
     mutationFn: async (data: { profilePicture?: string }) => {
       console.log('Updating profile with data:', { hasProfilePicture: !!data.profilePicture });
-      
+
       const response = await fetch('/api/auth/profile', {
         method: 'PUT',
         headers: {
@@ -56,19 +66,19 @@ export default function MobileProfile() {
         credentials: 'include',
         body: JSON.stringify(data)
       });
-      
+
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({ message: 'Network error' }));
         throw new Error(errorData.message || 'Failed to update profile');
       }
-      
+
       const result = await response.json();
       console.log('Profile update response:', result);
       return result;
     },
     onSuccess: (data) => {
       console.log('Profile update successful:', data);
-      
+
       // Update the user data in React Query cache immediately
       queryClient.setQueryData(['/api/auth/user'], (oldData: any) => {
         if (oldData?.user) {
@@ -82,10 +92,10 @@ export default function MobileProfile() {
         }
         return oldData;
       });
-      
+
       // Trigger global profile update event for synchronization
       window.dispatchEvent(new CustomEvent('profileUpdated'));
-      
+
       toast({
         title: t('profile_updated') || 'Profile Updated',
         description: t('picture_updated_success') || 'Profile picture updated successfully'
@@ -158,223 +168,257 @@ export default function MobileProfile() {
     };
   }, [queryClient]);
 
-  const menuItems = [
-    {
-      icon: Users,
-      label: t('inviteFriends'),
-      href: '/mobile/invite-friends',
-      rightElement: <ChevronRight className="w-3 h-3 text-gray-400" />
-    },
-    {
-      icon: Shield,
-      label: t('identityVerification'),
-      href: '/mobile/kyc-status',
-      rightElement: (
-        <div className="flex items-center space-x-1">
-          <span className={`text-xs ${
-            (kycStatus as any)?.data?.kycStatus === 'verified' 
-              ? 'text-green-500' 
-              : (kycStatus as any)?.data?.kycStatus === 'pending'
-                ? 'text-yellow-500'
-                : 'text-red-500'
-          }`}>
-            {(kycStatus as any)?.data?.kycStatus === 'verified' 
-              ? t('lv1_verified')
-              : (kycStatus as any)?.data?.kycStatus === 'pending'
-                ? t('processing')
-                : t('not_verified')
-            }
-          </span>
-          <ChevronRight className="w-3 h-3 text-gray-400" />
-        </div>
-      )
-    },
-    {
-      icon: Settings,
-      label: t('security'),
-      href: '/mobile/security',
-      rightElement: <ChevronRight className="w-3 h-3 text-gray-400" />
-    },
-    {
-      icon: Bell,
-      label: t('notificationCenter'),
-      href: '/mobile/notifications',
-      rightElement: <ChevronRight className="w-3 h-3 text-gray-400" />
-    },
-    {
-      icon: Headphones,
-      label: t('helpContact'),
-      href: '/company/contact',
-      rightElement: <ChevronRight className="w-3 h-3 text-gray-400" />
-    },
-    {
-      icon: Info,
-      label: t('aboutUs'),
-      href: '/company/about',
-      rightElement: <ChevronRight className="w-3 h-3 text-gray-400" />
+    const copyUID = async () => {
+    if (user?.uid) {
+      try {
+        await navigator.clipboard.writeText(user.uid);
+        setCopiedUID(true);
+        toast({
+          title: "UID Copied",
+          description: "Your UID has been copied to clipboard"
+        });
+
+        // Reset the copied state after 2 seconds
+        setTimeout(() => {
+          setCopiedUID(false);
+        }, 2000);
+      } catch (error) {
+        console.error('Failed to copy UID:', error);
+        toast({
+          title: "Copy Failed",
+          description: "Failed to copy UID to clipboard",
+          variant: "destructive"
+        });
+      }
     }
-  ];
+  };
+
+  // Clean up any duplicate verified badges that might exist from old code
+  useEffect(() => {
+    const cleanupDuplicateBadges = () => {
+      // Remove any old-style verified badges
+      const oldBadges = document.querySelectorAll('.verified-badge, img[src="/verified-badge.svg"]');
+      oldBadges.forEach(badge => badge.remove());
+    };
+
+    cleanupDuplicateBadges();
+  }, [user, kycStatus]);
+
+
+
+  const handleLogout = async () => {
+    // Show confirmation dialog
+    const confirmed = window.confirm('Are you sure you want to log out?');
+    
+    if (!confirmed) {
+      return; // User cancelled, don't proceed with logout
+    }
+
+    try {
+      console.log('🔴 Profile logout button clicked');
+
+      // Auto-backup user data before logout
+      if (user?.id) {
+        await fetch('/api/user/backup', {
+          method: 'GET',
+          credentials: 'include'
+        }).catch(err => console.log('Backup failed:', err));
+      }
+
+      // Perform logout (auth hook will handle all cleanup and redirect)
+      await logoutMutation.mutateAsync();
+
+    } catch (error) {
+      console.error('🔴 Profile logout error:', error);
+
+      // Force manual cleanup if mutation fails
+      localStorage.clear();
+      sessionStorage.clear();
+
+      // Clear cookies manually with all variations
+      const cookies = document.cookie.split(";");
+      cookies.forEach((cookie) => {
+        const eqPos = cookie.indexOf("=");
+        const name = eqPos > -1 ? cookie.substr(0, eqPos).trim() : cookie.trim();
+        document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
+        document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;domain=${window.location.hostname}`;
+        document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;domain=.${window.location.hostname}`;
+        document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;secure`;
+        document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;secure;samesite=strict`;
+      });
+
+      // Force redirect even on complete failure
+      window.location.href = '/account/login';
+    }
+  };
 
   return (
     <AdaptiveLayout title="Nedaxer - Profile">
-      <div className="flex flex-col h-full">
+      <div className="h-screen bg-[#0a0a2e] text-white overflow-hidden flex flex-col">
         {/* Header */}
         <div className="flex items-center justify-between p-3 bg-[#0a0a2e]">
           <Link href="/mobile">
             <ArrowLeft className="w-5 h-5 text-white" />
           </Link>
-          <div className="flex items-center space-x-2">
-            <Link href="/mobile/chatbot">
-              <Headphones className="w-5 h-5 text-gray-400 hover:text-white transition-colors cursor-pointer" />
-            </Link>
-            <Link href="/mobile/settings">
-              <Settings className="w-5 h-5 text-gray-400 hover:text-white transition-colors cursor-pointer" />
-            </Link>
-          </div>
+          <h1 className="text-base font-medium text-white">My Profile</h1>
+          <div className="w-5 h-5"></div> {/* Spacer to maintain center alignment */}
         </div>
 
-      {/* Profile Header */}
-      <div className="px-4 pb-4">
-        <div className="flex items-start space-x-3 mb-3">
-          <div 
-            className="relative w-14 h-14 bg-gray-600 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-500 transition-colors"
-            onClick={() => fileInputRef.current?.click()}
-          >
-            {user?.profilePicture ? (
-              <img 
-                src={user.profilePicture} 
-                alt="Profile" 
-                className="w-full h-full rounded-full object-cover"
-              />
-            ) : (
-              <User className="w-7 h-7 text-gray-300" />
-            )}
-            <div className="absolute -bottom-0.5 -right-0.5 bg-orange-500 rounded-full p-0.5">
-              <Camera className="w-2.5 h-2.5 text-white" />
-            </div>
-          </div>
-          <input
-            type="file"
-            ref={fileInputRef}
-            accept="image/*"
-            onChange={handleProfilePictureUpload}
-            className="hidden"
-          />
-          <div className="flex-1 pt-0.5">
-            <div className="flex items-center space-x-1 mb-1">
-              <h2 className="text-white text-base font-medium">
-                {user?.firstName && user?.lastName 
-                  ? `${user.firstName} ${user.lastName}` 
-                  : user?.username || 'User'}
-              </h2>
-              {(kycStatus as any)?.data?.kycStatus === 'verified' && <VerificationBadge />}
-            </div>
-            <div className="flex items-center space-x-2">
-              <span className="text-gray-400 text-xs">
-                UID: {userUID}
-              </span>
-              <Copy 
-                className="w-3 h-3 text-gray-400 cursor-pointer hover:text-white"
-                onClick={() => {
-                  navigator.clipboard.writeText(userUID);
-                  toast({
-                    title: t('common.copied') || 'Copied',
-                    description: t('profile.uidCopied') || 'UID copied to clipboard',
-                  });
-                }}
-              />
-            </div>
-          </div>
-        </div>
-        
-        {/* Status Cards */}
-        <div className="grid grid-cols-2 gap-2 mt-3">
-          <div className="bg-gray-800 rounded-lg p-2.5 flex items-center space-x-2">
-            <div className="w-6 h-6 bg-gray-700 rounded-full flex items-center justify-center">
-              <span className="text-white text-xs font-bold">0</span>
-            </div>
-            <span className="text-white text-xs font-medium">Non-VIP</span>
-          </div>
-          <div className="bg-gray-800 rounded-lg p-2.5 flex items-center space-x-2">
-            <Shield className={`w-4 h-4 ${(kycStatus as any)?.data?.kycStatus === 'verified' ? 'text-green-500' : 'text-gray-400'}`} />
-            <span className="text-white text-xs font-medium">
-              {(kycStatus as any)?.data?.kycStatus === 'verified' ? 'Verified ID' : 'Not Verified'}
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* Menu Items */}
-      <div className="px-4 space-y-1 flex-1">
-        {menuItems.map((item, index) => (
-          <Link key={index} href={item.href}>
-            <Card className="bg-gray-800 border-gray-700 p-2 hover:bg-gray-700 transition-colors">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <item.icon className="w-4 h-4 text-orange-500" />
-                  <span className="text-white text-xs font-medium">{item.label}</span>
-                </div>
-                {item.rightElement}
+        {/* Profile Header */}
+        <div className="flex flex-col items-start px-4 py-4 bg-[#0a0a2e]">
+          <div className="flex items-start space-x-3 mb-4 w-full">
+            <div 
+              className="relative w-16 h-16 bg-gray-600 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-500 transition-colors"
+              onClick={() => fileInputRef.current?.click()}
+            >
+              {user?.profilePicture ? (
+                <img 
+                  src={user.profilePicture} 
+                  alt="Profile" 
+                  className="w-full h-full rounded-full object-cover"
+                />
+              ) : (
+                <User className="w-8 h-8 text-gray-300" />
+              )}
+              <div className="absolute -bottom-0 -right-0 bg-gray-600 rounded-full p-0.5">
+                <Camera className="w-2 h-2 text-white" />
               </div>
-            </Card>
-          </Link>
-        ))}
-      </div>
+            </div>
+            <input
+              type="file"
+              ref={fileInputRef}
+              accept="image/*"
+              onChange={handleProfilePictureUpload}
+              className="hidden"
+            />
 
-      {/* Account Actions - Fixed at bottom */}
-      <div className="px-4 py-3 space-y-2 mt-auto">
+            <div className="flex-1">
+              <div className="flex items-center space-x-1 mb-1">
+                <h2 className="text-base font-medium text-white user-name">
+                  {user?.firstName && user?.lastName 
+                    ? `${user.firstName} ${user.lastName}` 
+                    : user?.username || 'User'}
+                </h2>
+                {(kycStatus as any)?.data?.kycStatus === 'verified' && (
+                  <img 
+                    src="/attached_assets/ce6bcd1643c04a4e8a6ba3984945a67d_1753543618125.png" 
+                    alt="Verified" 
+                    className="w-4 h-4 ml-2 inline-block"
+                    loading="eager"
+                    decoding="async"
+                  />
+                )}
+              </div>
 
-        <Button 
-          variant="destructive" 
-          className="w-full bg-red-900 hover:bg-red-800 text-white text-xs py-1.5"
-          onClick={async () => {
-            try {
-              console.log('🔴 Profile logout button clicked');
-              
-              // Auto-backup user data before logout
-              if (user?.id) {
-                await fetch('/api/user/backup', {
-                  method: 'GET',
-                  credentials: 'include'
-                }).catch(err => console.log('Backup failed:', err));
-              }
-              
-              // Perform logout (auth hook will handle all cleanup and redirect)
-              await logoutMutation.mutateAsync();
-              
-            } catch (error) {
-              console.error('🔴 Profile logout error:', error);
-              
-              // Force manual cleanup if mutation fails
-              localStorage.clear();
-              sessionStorage.clear();
-              
-              // Clear cookies manually with all variations
-              const cookies = document.cookie.split(";");
-              cookies.forEach((cookie) => {
-                const eqPos = cookie.indexOf("=");
-                const name = eqPos > -1 ? cookie.substr(0, eqPos).trim() : cookie.trim();
-                document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
-                document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;domain=${window.location.hostname}`;
-                document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;domain=.${window.location.hostname}`;
-                document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;secure`;
-                document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;secure;samesite=strict`;
-              });
-              
-              // Force redirect even on complete failure
-              window.location.href = '/account/login';
-            }
-          }}
-          disabled={logoutMutation.isPending}
-        >
-          {logoutMutation.isPending ? 'Logging out...' : (t('logout') || 'Logout')}
-        </Button>
-      </div>
+              <div className="flex items-center space-x-2 mb-3">
+                <p className="text-gray-400 text-xs">
+                  UID: {userUID}
+                </p>
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(userUID);
+                    setCopiedUID(true);
+                    setTimeout(() => setCopiedUID(false), 2000);
+                    toast({
+                      title: "✅ UID Copied!",
+                      description: `Your UID ${userUID} has been copied to clipboard`,
+                      duration: 2000,
+                    });
+                  }}
+                  className="text-gray-400 hover:text-blue-400 transition-colors"
+                >
+                  {copiedUID ? (
+                    <Check className="w-3 h-3 text-green-500" />
+                  ) : (
+                    <Copy className="w-3 h-3" />
+                  )}
+                </button>
+              </div>
 
-        {/* App Version */}
-        <div className="px-4 pb-4">
-          <div className="text-center text-gray-500 text-xs">
-            Version 1.0.0
+              <Link href="/mobile/profile-settings">
+                <Button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1 rounded-md text-xs">
+                  Edit Profile
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* Menu Content - Fill remaining space and stretch to bottom */}
+        <div className="bg-[#0a0a2e] px-4 pt-2 flex-1 flex flex-col">
+
+          {/* Profile Menu Items - Expanding to fill available space */}
+          <div className="flex-1 flex flex-col">
+            {/* Invite Friends */}
+            <div className="cursor-pointer flex-1">
+              <Link href="/mobile/invite-friends">
+                <div className="flex items-center justify-between py-6 px-1 border-b border-gray-600 h-full">
+                  <div className="flex items-center space-x-4">
+                    <Users className="w-5 h-5 text-white" />
+                    <span className="text-white text-base">Invite Friends</span>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-gray-400" />
+                </div>
+              </Link>
+            </div>
+
+            {/* Notification Settings */}
+            <div className="cursor-pointer flex-1">
+              <Link href="/mobile/notification-settings">
+                <div className="flex items-center justify-between py-6 px-1 border-b border-gray-600 h-full">
+                  <div className="flex items-center space-x-4">
+                    <Bell className="w-5 h-5 text-white" />
+                    <span className="text-white text-base">Notification Settings</span>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-gray-400" />
+                </div>
+              </Link>
+            </div>
+
+            {/* About Us */}
+            <div className="cursor-pointer flex-1">
+              <Link href="/company/about">
+                <div className="flex items-center justify-between py-6 px-1 border-b border-gray-600 h-full">
+                  <div className="flex items-center space-x-4">
+                    <Info className="w-5 h-5 text-white" />
+                    <span className="text-white text-base">About Us</span>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-gray-400" />
+                </div>
+              </Link>
+            </div>
+
+            {/* Contact Support */}
+            <div className="cursor-pointer flex-1">
+              <Link href="/mobile/messages">
+                <div className="flex items-center justify-between py-6 px-1 border-b border-gray-600 h-full">
+                  <div className="flex items-center space-x-4">
+                    <Headphones className="w-5 h-5 text-white" />
+                    <span className="text-white text-base">Contact Support</span>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-gray-400" />
+                </div>
+              </Link>
+            </div>
+
+            {/* Log Out */}
+            <div 
+              className="cursor-pointer flex-1"
+              onClick={handleLogout}
+            >
+              <div className="flex items-center justify-between py-6 px-1 h-full">
+                <div className="flex items-center space-x-4">
+                  <LogOut className="w-5 h-5 text-white" />
+                  <span className="text-white text-base">Log Out</span>
+                </div>
+                <ChevronRight className="w-4 h-4 text-gray-400" />
+              </div>
+            </div>
+          </div>
+
+          {/* App Version - At bottom */}
+          <div className="py-4 text-center text-gray-400 text-xs">
+            App Version 2.3
           </div>
         </div>
       </div>

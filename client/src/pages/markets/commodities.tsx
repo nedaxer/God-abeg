@@ -55,7 +55,7 @@ export default function Commodities() {
     >
       <div className="max-w-4xl mx-auto">
         <div className="mb-10">
-          <h2 className="text-2xl font-bold mb-4 text-[#0033a0]">Trade Cryptocurrencies on Web Trading Platform</h2>
+          <h2 className="text-2xl font-bold mb-4 text-[#000d2e]">Trade Cryptocurrencies on Web Trading Platform</h2>
           <p className="mb-4">
             Cryptocurrency trading gives you access to the world's most exciting digital asset markets. 
             On Web Trading Platform, you can trade major cryptocurrencies with binary options, call spreads, and knock-outs - all with limited risk.
@@ -67,7 +67,7 @@ export default function Commodities() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div className="bg-[#f5f5f5] p-6 rounded-lg">
-              <h3 className="text-xl font-bold mb-3 text-[#0033a0]">Benefits of Trading Crypto on Web Trading Platform</h3>
+              <h3 className="text-xl font-bold mb-3 text-[#000d2e]">Benefits of Trading Crypto on Web Trading Platform</h3>
               <ul className="space-y-2">
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
@@ -89,7 +89,7 @@ export default function Commodities() {
             </div>
             
             <div className="bg-[#f5f5f5] p-6 rounded-lg">
-              <h3 className="text-xl font-bold mb-3 text-[#0033a0]">Trading Opportunities</h3>
+              <h3 className="text-xl font-bold mb-3 text-[#000d2e]">Trading Opportunities</h3>
               <ul className="space-y-2">
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
@@ -113,12 +113,12 @@ export default function Commodities() {
         </div>
 
         <div className="mb-10">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Available Cryptocurrencies</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Available Cryptocurrencies</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {cryptocurrencies.map((crypto, i) => (
               <div key={i} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-                <h3 className="text-xl font-bold mb-2 text-[#0033a0]">{crypto.name}</h3>
+                <h3 className="text-xl font-bold mb-2 text-[#000d2e]">{crypto.name}</h3>
                 <p className="text-gray-500 mb-4">{crypto.description}</p>
                 <ul className="space-y-2 mb-4">
                   {crypto.features.map((feature, featIndex) => (
@@ -130,7 +130,7 @@ export default function Commodities() {
                 </ul>
                 <Link 
                   href="/markets/market-data" 
-                  className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center text-sm"
+                  className="text-[#000d2e] hover:text-[#ff5900] font-semibold flex items-center text-sm"
                 >
                   View {crypto.name} charts <ArrowRight className="ml-1 h-4 w-4" />
                 </Link>
@@ -139,7 +139,7 @@ export default function Commodities() {
           </div>
         </div>
 
-        <div className="bg-[#0033a0] text-white rounded-lg p-8 text-center">
+        <div className="bg-[#000d2e] text-white rounded-lg p-8 text-center">
           <h2 className="text-2xl font-bold mb-4">Ready to trade Cryptocurrencies?</h2>
           <p className="mb-6">Open an account today and start trading with limited risk.</p>
           <Button

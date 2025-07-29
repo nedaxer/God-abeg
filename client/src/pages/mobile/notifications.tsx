@@ -336,6 +336,9 @@ function MobileNotifications() {
                   <div className="flex justify-between items-center">
                     <span className="text-gray-500 text-[9px] capitalize">
                       {notification.type === 'deposit' ? 'System Notification' : 
+                       notification.type === 'transfer_sent' ? 'System Notification' :
+                       notification.type === 'transfer_received' ? 'System Notification' :
+                       notification.type === 'withdrawal' ? 'System Notification' :
                        notification.type === 'message' ? 'Support Message' : 
                        notification.type === 'connection_request' ? 'Connection Request' :
                        notification.type === 'connection_successful' ? 'Connection Successful' :

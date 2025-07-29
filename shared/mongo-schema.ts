@@ -8,6 +8,13 @@ export const mongoUserSchema = z.object({
   password: z.string().min(6),
   firstName: z.string().min(1).max(255),
   lastName: z.string().min(1).max(255),
+  phone: z.string().optional(),
+  phoneNumber: z.string().optional(),
+  dateOfBirth: z.string().optional(),
+  monthOfBirth: z.string().optional(),
+  yearOfBirth: z.string().optional(),
+  gender: z.string().optional(),
+  countryCode: z.string().optional(),
   profilePicture: z.string().optional(),
   favorites: z.array(z.string()).default([]),
   preferences: z.object({
@@ -67,7 +74,7 @@ export const mongoUserSchema = z.object({
   createdAt: z.date().default(() => new Date()),
 });
 
-// Insert schema for user creation (omit auto-generated fields)
+// Insert schema for user creation (omit auto-generated fields and add phone and date fields)
 export const insertMongoUserSchema = mongoUserSchema.omit({
   uid: true,
   createdAt: true,

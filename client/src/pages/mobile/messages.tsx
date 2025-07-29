@@ -7,6 +7,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { UserAvatar } from '@/components/user-avatar';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { apiRequest } from '@/lib/queryClient';
 import { useToast } from '@/hooks/use-toast';
@@ -221,12 +222,15 @@ export default function MessagesPage() {
                     {/* Message Header */}
                     <div className="flex items-start justify-between mb-3">
                       <div className="flex items-center space-x-2">
-                        <Avatar className="w-8 h-8">
-                          <AvatarImage src={selectedMessage.user?.profilePicture} />
-                          <AvatarFallback className="bg-orange-500 text-white text-xs">
-                            {selectedMessage.firstName[0]}{selectedMessage.lastName[0]}
-                          </AvatarFallback>
-                        </Avatar>
+                        <UserAvatar 
+                          user={{
+                            profilePicture: selectedMessage.user?.profilePicture,
+                            firstName: selectedMessage.firstName,
+                            lastName: selectedMessage.lastName,
+                            username: selectedMessage.email?.split('@')[0]
+                          }}
+                          size="sm"
+                        />
                         <div>
                           <div className="text-white text-sm font-medium">
                             {selectedMessage.firstName} {selectedMessage.lastName}

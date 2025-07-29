@@ -8,22 +8,22 @@ export default function KnockOutsLearn() {
     {
       title: "Built-in Risk Management",
       description: "Auto-close positions when predefined price levels are reached to protect your cryptocurrency capital.",
-      icon: <Shield className="h-10 w-10 text-[#0033a0]" />,
+      icon: <Shield className="h-10 w-10 text-[#000d2e]" />,
     },
     {
       title: "Leveraged Trading",
       description: "Amplify your exposure to cryptocurrency market movements without the unlimited risk of traditional leverage.",
-      icon: <Zap className="h-10 w-10 text-[#0033a0]" />,
+      icon: <Zap className="h-10 w-10 text-[#000d2e]" />,
     },
     {
       title: "24/7 Trading",
       description: "Trade popular cryptocurrencies around the clock, matching the always-on nature of digital asset markets.",
-      icon: <Clock className="h-10 w-10 text-[#0033a0]" />,
+      icon: <Clock className="h-10 w-10 text-[#000d2e]" />,
     },
     {
       title: "Trend Trading Focus",
       description: "Ideal for trending crypto markets when you want to capitalize on momentum with defined risk parameters.",
-      icon: <TrendingUp className="h-10 w-10 text-[#0033a0]" />,
+      icon: <TrendingUp className="h-10 w-10 text-[#000d2e]" />,
     },
   ];
 
@@ -127,11 +127,11 @@ export default function KnockOutsLearn() {
     <PageLayout 
       title="Knock-Outs Trading Guide" 
       subtitle="Trade cryptocurrency with leverage while maintaining limited risk through built-in floor and ceiling levels"
-      bgColor="#0033a0"
+      bgColor="#000d2e"
     >
       <div className="max-w-4xl mx-auto">
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">What Are Knock-Outs?</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">What Are Knock-Outs?</h2>
           
           <div className="bg-white p-6 rounded-lg shadow-md mb-6">
             <p className="mb-4">
@@ -148,9 +148,9 @@ export default function KnockOutsLearn() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {features.map((feature, i) => (
               <div key={i} className="bg-[#f5f5f5] p-6 rounded-lg flex items-start">
-                <div className="mr-4 text-[#0033a0]">{feature.icon}</div>
+                <div className="mr-4 text-[#000d2e]">{feature.icon}</div>
                 <div>
-                  <h3 className="text-xl font-bold mb-2 text-[#0033a0]">{feature.title}</h3>
+                  <h3 className="text-xl font-bold mb-2 text-[#000d2e]">{feature.title}</h3>
                   <p className="text-gray-700">{feature.description}</p>
                 </div>
               </div>
@@ -159,11 +159,11 @@ export default function KnockOutsLearn() {
         </div>
         
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">How Crypto Knock-Outs Work</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">How Crypto Knock-Outs Work</h2>
           
           <div className="md:flex gap-8 mb-8">
             <div className="md:w-1/2 mb-6 md:mb-0">
-              <h3 className="text-xl font-bold mb-4 text-[#0033a0]">Core Mechanics</h3>
+              <h3 className="text-xl font-bold mb-4 text-[#000d2e]">Core Mechanics</h3>
               <ul className="space-y-3">
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
@@ -189,7 +189,7 @@ export default function KnockOutsLearn() {
             </div>
             
             <div className="md:w-1/2">
-              <h3 className="text-xl font-bold mb-4 text-[#0033a0]">Buy vs. Sell</h3>
+              <h3 className="text-xl font-bold mb-4 text-[#000d2e]">Buy vs. Sell</h3>
               <div className="bg-[#f5f5f5] p-4 rounded-lg mb-4">
                 <h4 className="font-bold mb-2">When You Buy (Long):</h4>
                 <ul className="space-y-2">
@@ -228,13 +228,13 @@ export default function KnockOutsLearn() {
           </div>
           
           <div className="bg-[#f8f9fa] border border-gray-200 p-6 rounded-lg mb-8">
-            <h3 className="text-xl font-bold mb-4 text-[#0033a0]">Knock-Out Examples</h3>
+            <h3 className="text-xl font-bold mb-4 text-[#000d2e]">Knock-Out Examples</h3>
             
             <div className="space-y-8">
               {examples.map((example, i) => (
                 <div key={i} className="border-b border-gray-300 pb-6 last:border-0 last:pb-0">
                   <h4 className="font-bold text-lg mb-2">{example.market}</h4>
-                  <p className="font-medium mb-1 text-[#0033a0]">{example.proposition}</p>
+                  <p className="font-medium mb-1 text-[#000d2e]">{example.proposition}</p>
                   <p className="text-sm mb-3">Current price: {example.currentPrice} | {example.leverage}</p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm mb-3">
                     <div>
@@ -255,12 +255,12 @@ export default function KnockOutsLearn() {
         </div>
         
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Advantages of Knock-Outs for Crypto Trading</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Advantages of Knock-Outs for Crypto Trading</h2>
           
           <div className="space-y-6">
             {comparisonPoints.map((point, i) => (
               <div key={i} className="bg-white shadow-md rounded-lg overflow-hidden">
-                <div className="bg-[#0033a0] p-4">
+                <div className="bg-[#000d2e] p-4">
                   <h3 className="text-lg font-bold text-white">{point.title}</h3>
                 </div>
                 <div className="p-5">
@@ -279,17 +279,17 @@ export default function KnockOutsLearn() {
         </div>
         
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Crypto Knock-Out Trading Strategies</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Crypto Knock-Out Trading Strategies</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             {tradingStrategies.map((strategy, i) => (
               <div key={i} className="bg-white shadow-md rounded-lg overflow-hidden">
                 <div className="bg-[#f5f5f5] p-4">
-                  <h3 className="text-lg font-bold text-[#0033a0]">{strategy.title}</h3>
+                  <h3 className="text-lg font-bold text-[#000d2e]">{strategy.title}</h3>
                 </div>
                 <div className="p-5">
                   <p className="mb-4 text-gray-700">{strategy.description}</p>
-                  <h4 className="font-bold text-[#0033a0] mb-2">Implementation:</h4>
+                  <h4 className="font-bold text-[#000d2e] mb-2">Implementation:</h4>
                   <ul className="space-y-2">
                     {strategy.steps.map((step, j) => (
                       <li key={j} className="flex items-start">
@@ -332,12 +332,12 @@ export default function KnockOutsLearn() {
         </div>
         
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Frequently Asked Questions</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Frequently Asked Questions</h2>
           
           <div className="space-y-4">
             {faqItems.map((faq, i) => (
               <div key={i} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-                <h3 className="text-lg font-bold mb-2 text-[#0033a0]">{faq.question}</h3>
+                <h3 className="text-lg font-bold mb-2 text-[#000d2e]">{faq.question}</h3>
                 <p className="text-gray-700">{faq.answer}</p>
               </div>
             ))}
@@ -346,18 +346,18 @@ export default function KnockOutsLearn() {
 
         <div className="flex justify-center mb-12">
           <div className="bg-[#f5f5f5] p-8 rounded-lg text-center max-w-md">
-            <h3 className="text-xl font-bold mb-4 text-[#0033a0]">Ready to Trade Knock-Outs?</h3>
+            <h3 className="text-xl font-bold mb-4 text-[#000d2e]">Ready to Trade Knock-Outs?</h3>
             <p className="mb-6">Open an account and start leveraged cryptocurrency trading with built-in risk management.</p>
             <Button
               asChild
-              className="w-full bg-[#0033a0] hover:bg-opacity-90 text-white font-semibold"
+              className="w-full bg-[#000d2e] hover:bg-opacity-90 text-white font-semibold"
             >
               <Link href="#">Open Trading Account</Link>
             </Button>
           </div>
         </div>
 
-        <div className="bg-[#0033a0] text-white rounded-lg p-8 text-center">
+        <div className="bg-[#000d2e] text-white rounded-lg p-8 text-center">
           <h2 className="text-2xl font-bold mb-4">Explore Other Trading Products</h2>
           <p className="mb-6">Discover the full range of cryptocurrency trading products with built-in risk management on Nedaxer.</p>
           <div className="flex flex-wrap justify-center gap-4">

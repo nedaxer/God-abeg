@@ -1,0 +1,43 @@
+Upload is not defined
+at DepositAddressPage (https://19fc324e-6aa7-46f7-8f16-14a3fca1669b-00-2vgtwyl3n757m.riker.replit.dev/src/pages/mobile/deposit-address-page.tsx:533:38)
+at renderWithHooks (https://19fc324e-6aa7-46f7-8f16-14a3fca1669b-00-2vgtwyl3n757m.riker.replit.dev/node_modules/.vite/deps/chunk-RISSLSD4.js?v=13197499:11596:26)
+at mountIndeterminateComponent (https://19fc324e-6aa7-46f7-8f16-14a3fca1669b-00-2vgtwyl3n757m.riker.replit.dev/node_modules/.vite/deps/chunk-RISSLSD4.js?v=13197499:14974:21)
+at beginWork (https://19fc324e-6aa7-46f7-8f16-14a3fca1669b-00-2vgtwyl3n757m.riker.replit.dev/node_modules/.vite/deps/chunk-RISSLSD4.js?v=13197499:15962:22)
+at beginWork$1 (https://19fc324e-6aa7-46f7-8f16-14a3fca1669b-00-2vgtwyl3n757m.riker.replit.dev/node_modules/.vite/deps/chunk-RISSLSD4.js?v=13197499:19806:22)
+at performUnitOfWork (https://19fc324e-6aa7-46f7-8f16-14a3fca1669b-00-2vgtwyl3n757m.riker.replit.dev/node_modules/.vite/deps/chunk-RISSLSD4.js?v=13197499:19251:20)
+at workLoopSync (https://19fc324e-6aa7-46f7-8f16-14a3fca1669b-00-2vgtwyl3n757m.riker.replit.dev/node_modules/.vite/deps/chunk-RISSLSD4.js?v=13197499:19190:13)
+at renderRootSync (https://19fc324e-6aa7-46f7-8f16-14a3fca1669b-00-2vgtwyl3n757m.riker.replit.dev/node_modules/.vite/deps/chunk-RISSLSD4.js?v=13197499:19169:15)
+at performConcurrentWorkOnRoot (https://19fc324e-6aa7-46f7-8f16-14a3fca1669b-00-2vgtwyl3n757m.riker.replit.dev/node_modules/.vite/deps/chunk-RISSLSD4.js?v=13197499:18728:83)
+at workLoop (https://19fc324e-6aa7-46f7-8f16-14a3fca1669b-00-2vgtwyl3n757m.riker.replit.dev/node_modules/.vite/deps/chunk-RISSLSD4.js?v=13197499:197:42)
+App error: 
+ErrorEvent {isTrusted: true}
+
+at t.value (https://19fc324e-6aa7-46f7-8f16-14a3fca1669b-00-2vgtwyl3n757m.riker.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:17465)
+at new t (https://19fc324e-6aa7-46f7-8f16-14a3fca1669b-00-2vgtwyl3n757m.riker.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:12630)
+at t.value (https://19fc324e-6aa7-46f7-8f16-14a3fca1669b-00-2vgtwyl3n757m.riker.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:32766)
+at https://19fc324e-6aa7-46f7-8f16-14a3fca1669b-00-2vgtwyl3n757m.riker.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:34400
+[vite] 
+Error {}
+message: "WebSocket closed without opened."
+stack: "Error: WebSocket closed without opened.↵ at WebSocket.<anonymous> (https://19fc324e-6aa7-46f7-8f16-14a3fca1669b-00-2vgtwyl3n757m.riker.replit.dev/@vite/client:424:30)"
+get stack: ƒ ()
+set stack: ƒ ()
+[[Prototype]]: Object
+
+[vite] 
+Error {}
+
+at t.value (https://19fc324e-6aa7-46f7-8f16-14a3fca1669b-00-2vgtwyl3n757m.riker.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:17465)
+at new t (https://19fc324e-6aa7-46f7-8f16-14a3fca1669b-00-2vgtwyl3n757m.riker.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:12630)
+at t.value (https://19fc324e-6aa7-46f7-8f16-14a3fca1669b-00-2vgtwyl3n757m.riker.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:32766)
+at https://19fc324e-6aa7-46f7-8f16-14a3fca1669b-00-2vgtwyl3n757m.riker.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:34400
+Real-time home update received: 
+Object {type: "crypto_prices", success: true, data: Array(106), cached: true, fileCache: true, …}
+Real-time home update received: 
+Object {type: "crypto_prices", success: true, data: Array(106), cached: true, fileCache: true, …}
+Real-time home update received: 
+Object {type: "crypto_prices", success: true, data: Array(106), cached: true, fileCache: true, …}
+Real-time home update received: 
+Object {type: "crypto_prices", success: true, data: Array(106), cached: true, fileCache: true, …}
+Real-time home update received: 
+Object {type: "crypto_prices", success: true, data: Array(106), cached: true, fileCache: true, …}

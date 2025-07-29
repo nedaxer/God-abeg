@@ -31,9 +31,9 @@ export const navItems = [
     title: "Learn",
     items: [
       { label: "Getting Started", href: "/learn/getting-started" },
-      { label: "Trading Strategies", href: "/learn/trading-strategies" },
+      { label: "Investment Strategies", href: "/learn/investment-strategies" },
       { label: "Webinars", href: "/learn/webinars" },
-      { label: "Trading Guides", href: "/learn/trading-guides" },
+      { label: "Investment Guides", href: "/learn/investment-guides" },
     ],
   },
   {
@@ -52,43 +52,34 @@ export const navItems = [
 export const heroSlides = [
   {
     id: 1,
-    title: "Trade Cryptocurrencies Your Way",
+    title: "Invest in Cryptocurrencies Your Way",
     description: "Bitcoin, Ethereum, and altcoins with limited risk on a regulated exchange",
     image: "https://images.unsplash.com/photo-1639322537228-f710d846310a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&h=500&q=80",
-    alt: "Cryptocurrency trading",
+    alt: "Cryptocurrency investing",
     primaryButton: { label: "Open Account", href: "/account/register" },
     secondaryButton: { label: "Login", href: "/account/login" },
   },
   {
-    id: 2,
-    title: "Advanced Crypto Trading Platform",
-    description: "Powerful blockchain analytics, technical indicators, and real-time order execution",
-    image: "https://images.unsplash.com/photo-1639762681057-408e52192e55?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&h=500&q=80",
-    alt: "Crypto trading platform",
-    primaryButton: { label: "Open Account", href: "/account/register" },
-    secondaryButton: { label: "Learn More", href: "/markets/commodities" },
-  },
-  {
     id: 3,
-    title: "Trade Crypto 24/7",
+    title: "Invest in Crypto 24/7",
     description: "Access digital asset markets from our mobile app with the same powerful features",
     image: "https://images.unsplash.com/photo-1642104704074-907c0698cbd9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&h=500&q=80",
-    alt: "Mobile crypto trading",
+    alt: "Mobile crypto investing",
     primaryButton: { label: "Install App", href: "/platform/mobile-app" },
     secondaryButton: { label: "Learn More", href: "/platform/mobile-app" },
   },
 ];
 
-// Trade options info
-export const tradeOptions = [
+// Investment options info
+export const investmentOptions = [
   {
     title: "Binary Options",
     image: "https://images.unsplash.com/photo-1639322537228-f710d846310a?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=200&q=80",
     description: "Limited risk contracts based on a simple yes/no market proposition.",
     features: [
-      "Know your maximum risk and reward before you trade",
+      "Know your maximum risk and reward before you invest",
       "Short-term expiries from 5 minutes to 1 day",
-      "Trade Bitcoin, Ethereum, and other cryptocurrencies",
+      "Invest in Bitcoin, Ethereum, and other cryptocurrencies",
     ],
     learnMoreLink: "/products/binary-options",
   },
@@ -106,11 +97,11 @@ export const tradeOptions = [
   {
     title: "Knock-Outs",
     image: "https://images.unsplash.com/photo-1642104704074-907c0698cbd9?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=200&q=80",
-    description: "Trade with leverage while maintaining limited risk with innovative floor and ceiling levels.",
+    description: "Invest with leverage while maintaining limited risk with innovative floor and ceiling levels.",
     features: [
       "Built-in risk management with knockout levels",
-      "Trade with leverage on popular cryptocurrencies",
-      "Trade crypto 24/7 in global digital asset markets",
+      "Invest with leverage on popular cryptocurrencies",
+      "Invest in crypto 24/7 in global digital asset markets",
     ],
     learnMoreLink: "/products/knock-outs",
   },
@@ -121,25 +112,25 @@ export const marketFeatures = [
   {
     title: "Bitcoin",
     icon: "currency-bitcoin",
-    description: "Trade the original cryptocurrency and largest digital asset by market capitalization.",
+    description: "Invest in the original cryptocurrency and largest digital asset by market capitalization.",
     link: { label: "View Bitcoin Markets", href: "/markets/commodities" },
   },
   {
     title: "Ethereum",
     icon: "currency-ethereum",
-    description: "Trade the second-largest cryptocurrency powering thousands of decentralized applications.",
+    description: "Invest in the second-largest cryptocurrency powering thousands of decentralized applications.",
     link: { label: "View Ethereum Markets", href: "/markets/commodities" },
   },
   {
     title: "Altcoins",
     icon: "coins",
-    description: "Trade alternative cryptocurrencies including Solana, Cardano, Ripple, and more.",
+    description: "Invest in alternative cryptocurrencies including Solana, Cardano, Ripple, and more.",
     link: { label: "View Altcoin Markets", href: "/markets/commodities" },
   },
   {
     title: "Crypto Events",
     icon: "calendar-event",
-    description: "Trade cryptocurrency events like protocol upgrades, halvings, and regulatory announcements.",
+    description: "Invest in cryptocurrency events like protocol upgrades, halvings, and regulatory announcements.",
     link: { label: "View Crypto Events", href: "/markets/events" },
   },
 ];
@@ -149,16 +140,16 @@ export const platformFeatures = [
   {
     icon: "shield-check",
     title: "Regulated US Exchange",
-    description: "Trade with confidence on a CFTC-regulated exchange with member funds held in segregated US bank accounts.",
+    description: "Invest with confidence on a CFTC-regulated exchange with member funds held in segregated US bank accounts.",
   },
   {
     icon: "secure-payment",
     title: "Limited Risk by Design",
-    description: "Know your maximum potential profit and loss before you enter a trade. Never lose more than you put in.",
+    description: "Know your maximum potential profit and loss before you enter an investment. Never lose more than you put in.",
   },
   {
     icon: "dashboard-3",
-    title: "Powerful Trading Platform",
+    title: "Powerful Investment Platform",
     description: "Advanced charting with technical indicators, custom watchlists, and fast reliable execution.",
   },
 ];
@@ -166,15 +157,15 @@ export const platformFeatures = [
 // Learning resources
 export const learningResources = [
   {
-    title: "Crypto Trading Guides",
+    title: "Crypto Investment Guides",
     image: "https://images.unsplash.com/photo-1639762681057-408e52192e55?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=300&q=80",
-    description: "Comprehensive guides on cryptocurrency trading strategies, blockchain analytics, and digital asset tutorials.",
+    description: "Comprehensive guides on cryptocurrency investment strategies, blockchain analytics, and digital asset tutorials.",
     link: { label: "View Guides", href: "https://youtu.be/MYnkNaBMjlg?si=k8U0SMQ4BEU0Q7lx" },
   },
   {
     title: "Crypto Webinars",
     image: "https://images.unsplash.com/photo-1639322537133-5fcead339c5f?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=300&q=80",
-    description: "Live and on-demand webinars hosted by cryptocurrency experts covering trading strategies and market analysis.",
+    description: "Live and on-demand webinars hosted by cryptocurrency experts covering investment strategies and market analysis.",
     link: { label: "Register Now", href: "#" },
   },
 ];

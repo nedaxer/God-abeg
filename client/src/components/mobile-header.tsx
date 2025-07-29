@@ -12,10 +12,10 @@ interface MobileHeaderProps {
 
 export default function MobileHeader({ title = 'Nedaxer', showBackButton = false, onBackClick }: MobileHeaderProps) {
   const { user } = useAuth();
-  
+
   // Only show on mobile devices (screens smaller than 768px)
   const [isMobile, setIsMobile] = useState(false);
-  
+
   // Get unread notification count - MUST be called before any conditional returns
   const { data: notificationData } = useQuery({
     queryKey: ['/api/notifications/unread-count'],
@@ -29,18 +29,18 @@ export default function MobileHeader({ title = 'Nedaxer', showBackButton = false
     refetchInterval: 30000,
     enabled: !!user, // Only run query if user exists
   });
-  
+
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
-    
+
     checkMobile();
     window.addEventListener('resize', checkMobile);
-    
+
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
-  
+
   // Don't render on desktop - conditional return AFTER all hooks
   if (!isMobile) {
     return null;
@@ -64,7 +64,7 @@ export default function MobileHeader({ title = 'Nedaxer', showBackButton = false
               </svg>
             </button>
           )}
-          
+
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg flex items-center justify-center">
               <img 

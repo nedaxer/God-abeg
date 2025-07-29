@@ -8,22 +8,22 @@ export default function CallSpreadsLearn() {
     {
       title: "Known Risk/Reward",
       description: "Trade with clearly defined maximum potential risk and profit on every cryptocurrency trade.",
-      icon: <Scale className="h-10 w-10 text-[#0033a0]" />,
+      icon: <Scale className="h-10 w-10 text-[#000d2e]" />,
     },
     {
       title: "Multiple Expirations",
       description: "Choose from intraday, daily, and weekly expirations to match your cryptocurrency trading strategy.",
-      icon: <TrendingUp className="h-10 w-10 text-[#0033a0]" />,
+      icon: <TrendingUp className="h-10 w-10 text-[#000d2e]" />,
     },
     {
       title: "Volatility Management",
       description: "Perfect for volatile crypto market conditions where protecting capital is essential.",
-      icon: <BarChart2 className="h-10 w-10 text-[#0033a0]" />,
+      icon: <BarChart2 className="h-10 w-10 text-[#000d2e]" />,
     },
     {
       title: "Partial Outcomes",
       description: "Unlike binary options, call spreads pay out based on where the cryptocurrency price lands within the range.",
-      icon: <LineChart className="h-10 w-10 text-[#0033a0]" />,
+      icon: <LineChart className="h-10 w-10 text-[#000d2e]" />,
     },
   ];
 
@@ -111,11 +111,11 @@ export default function CallSpreadsLearn() {
     <PageLayout 
       title="Call Spreads Trading Guide" 
       subtitle="Master limited-risk cryptocurrency trading with built-in floor and ceiling levels"
-      bgColor="#0033a0"
+      bgColor="#000d2e"
     >
       <div className="max-w-4xl mx-auto">
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">What Are Call Spreads?</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">What Are Call Spreads?</h2>
           
           <div className="bg-white p-6 rounded-lg shadow-md mb-6">
             <p className="mb-4">
@@ -132,9 +132,9 @@ export default function CallSpreadsLearn() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {features.map((feature, i) => (
               <div key={i} className="bg-[#f5f5f5] p-6 rounded-lg flex items-start">
-                <div className="mr-4 text-[#0033a0]">{feature.icon}</div>
+                <div className="mr-4 text-[#000d2e]">{feature.icon}</div>
                 <div>
-                  <h3 className="text-xl font-bold mb-2 text-[#0033a0]">{feature.title}</h3>
+                  <h3 className="text-xl font-bold mb-2 text-[#000d2e]">{feature.title}</h3>
                   <p className="text-gray-700">{feature.description}</p>
                 </div>
               </div>
@@ -143,11 +143,11 @@ export default function CallSpreadsLearn() {
         </div>
         
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">How Crypto Call Spreads Work</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">How Crypto Call Spreads Work</h2>
           
           <div className="md:flex gap-8 mb-8">
             <div className="md:w-1/2 mb-6 md:mb-0">
-              <h3 className="text-xl font-bold mb-4 text-[#0033a0]">The Basics</h3>
+              <h3 className="text-xl font-bold mb-4 text-[#000d2e]">The Basics</h3>
               <ul className="space-y-3">
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
@@ -173,7 +173,7 @@ export default function CallSpreadsLearn() {
             </div>
             
             <div className="md:w-1/2">
-              <h3 className="text-xl font-bold mb-4 text-[#0033a0]">Potential Outcomes</h3>
+              <h3 className="text-xl font-bold mb-4 text-[#000d2e]">Potential Outcomes</h3>
               <div className="bg-[#f5f5f5] p-4 rounded-lg mb-4">
                 <h4 className="font-bold mb-2">When You Buy a Call Spread:</h4>
                 <ul className="space-y-2">
@@ -212,13 +212,13 @@ export default function CallSpreadsLearn() {
           </div>
           
           <div className="bg-[#f8f9fa] border border-gray-200 p-6 rounded-lg mb-8">
-            <h3 className="text-xl font-bold mb-4 text-[#0033a0]">Call Spread Examples</h3>
+            <h3 className="text-xl font-bold mb-4 text-[#000d2e]">Call Spread Examples</h3>
             
             <div className="space-y-8">
               {examples.map((example, i) => (
                 <div key={i} className="border-b border-gray-300 pb-6 last:border-0 last:pb-0">
                   <h4 className="font-bold text-lg mb-2">{example.market}</h4>
-                  <p className="font-medium mb-1 text-[#0033a0]">{example.proposition}</p>
+                  <p className="font-medium mb-1 text-[#000d2e]">{example.proposition}</p>
                   <p className="text-sm mb-3 text-gray-800">Current price: {example.currentPrice}</p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm mb-3">
                     <div>
@@ -242,12 +242,12 @@ export default function CallSpreadsLearn() {
         </div>
         
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Comparing Crypto Trading Products</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Comparing Crypto Trading Products</h2>
           
           <div className="space-y-6">
             {keyDifferences.map((section, i) => (
               <div key={i} className="bg-white shadow-md rounded-lg overflow-hidden">
-                <div className="bg-[#0033a0] p-4">
+                <div className="bg-[#000d2e] p-4">
                   <h3 className="text-lg font-bold text-white">{section.title}</h3>
                 </div>
                 <div className="p-5">
@@ -266,17 +266,17 @@ export default function CallSpreadsLearn() {
         </div>
         
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Call Spread Trading Strategies</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Call Spread Trading Strategies</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             {strategyTypes.map((strategy, i) => (
               <div key={i} className="bg-white shadow-md rounded-lg overflow-hidden">
                 <div className="bg-[#f5f5f5] p-4">
-                  <h3 className="text-lg font-bold text-[#0033a0]">{strategy.title}</h3>
+                  <h3 className="text-lg font-bold text-[#000d2e]">{strategy.title}</h3>
                 </div>
                 <div className="p-5">
                   <p className="mb-4 text-gray-700">{strategy.description}</p>
-                  <h4 className="font-bold text-[#0033a0] mb-2">How to Implement:</h4>
+                  <h4 className="font-bold text-[#000d2e] mb-2">How to Implement:</h4>
                   <ul className="space-y-2">
                     {strategy.steps.map((step, j) => (
                       <li key={j} className="flex items-start">
@@ -320,18 +320,18 @@ export default function CallSpreadsLearn() {
 
         <div className="flex justify-center mb-12">
           <div className="bg-[#f5f5f5] p-8 rounded-lg text-center max-w-md">
-            <h3 className="text-xl font-bold mb-4 text-[#0033a0]">Ready to Trade Call Spreads?</h3>
+            <h3 className="text-xl font-bold mb-4 text-[#000d2e]">Ready to Trade Call Spreads?</h3>
             <p className="mb-6">Open an account and start trading cryptocurrency call spreads with defined risk parameters.</p>
             <Button
               asChild
-              className="w-full bg-[#0033a0] hover:bg-opacity-90 text-white font-semibold"
+              className="w-full bg-[#000d2e] hover:bg-opacity-90 text-white font-semibold"
             >
               <Link href="#">Open Trading Account</Link>
             </Button>
           </div>
         </div>
 
-        <div className="bg-[#0033a0] text-white rounded-lg p-8 text-center">
+        <div className="bg-[#000d2e] text-white rounded-lg p-8 text-center">
           <h2 className="text-2xl font-bold mb-4">Explore Other Trading Products</h2>
           <p className="mb-6">Discover different ways to trade cryptocurrency markets with limited risk on Nedaxer.</p>
           <div className="flex flex-wrap justify-center gap-4">

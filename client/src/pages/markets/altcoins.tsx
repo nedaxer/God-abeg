@@ -79,7 +79,7 @@ export default function AltcoinMarkets() {
     >
       <div className="max-w-4xl mx-auto">
         <div className="mb-10">
-          <h2 className="text-2xl font-bold mb-4 text-[#0033a0]">Altcoin Trading on Nedaxer</h2>
+          <h2 className="text-2xl font-bold mb-4 text-[#000d2e]">Altcoin Trading on Nedaxer</h2>
           <p className="mb-4">
             Altcoins (alternative cryptocurrencies) represent the diverse ecosystem of blockchain projects 
             beyond Bitcoin. On Nedaxer, you can trade price movements of leading altcoins with our unique 
@@ -92,7 +92,7 @@ export default function AltcoinMarkets() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
             <div className="bg-[#f5f5f5] p-6 rounded-lg">
-              <h3 className="text-xl font-bold mb-4 text-[#0033a0]">Altcoin Trading Benefits</h3>
+              <h3 className="text-xl font-bold mb-4 text-[#000d2e]">Altcoin Trading Benefits</h3>
               <ul className="space-y-3">
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
@@ -118,7 +118,7 @@ export default function AltcoinMarkets() {
             </div>
             
             <div className="bg-[#f5f5f5] p-6 rounded-lg">
-              <h3 className="text-xl font-bold mb-4 text-[#0033a0]">Altcoin Market Opportunities</h3>
+              <h3 className="text-xl font-bold mb-4 text-[#000d2e]">Altcoin Market Opportunities</h3>
               <ul className="space-y-3">
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
@@ -146,12 +146,12 @@ export default function AltcoinMarkets() {
         </div>
         
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Available Altcoin Markets</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Available Altcoin Markets</h2>
           
           <div className="space-y-6">
             {altcoins.map((coin, i) => (
               <div key={i} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-                <h3 className="text-xl font-bold mb-2 text-[#0033a0]">{coin.name}</h3>
+                <h3 className="text-xl font-bold mb-2 text-[#000d2e]">{coin.name}</h3>
                 <p className="text-gray-700 mb-4">{coin.description}</p>
                 <h4 className="font-semibold text-gray-800 mb-2">Key Characteristics:</h4>
                 <ul className="space-y-1 mb-4">
@@ -164,7 +164,7 @@ export default function AltcoinMarkets() {
                 </ul>
                 <Link 
                   href="#" 
-                  className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
+                  className="text-[#000d2e] hover:text-[#ff5900] font-semibold flex items-center"
                 >
                   View Trading Products <ArrowRight className="ml-1 h-4 w-4" />
                 </Link>
@@ -174,7 +174,7 @@ export default function AltcoinMarkets() {
         </div>
         
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Featured Altcoin Chart: Solana (SOL)</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Featured Altcoin Chart: Solana (SOL)</h2>
           
           <div className="mb-8">
             <div className="rounded-lg overflow-hidden">
@@ -187,7 +187,7 @@ export default function AltcoinMarkets() {
                   <Button
                     asChild
                     variant="outline"
-                    className="border-[#0033a0] text-[#0033a0] hover:bg-[#0033a0] hover:text-white"
+                    className="border-[#000d2e] text-[#000d2e] hover:bg-[#000d2e] hover:text-white"
                   >
                     <Link href="/markets/market-data">View Detailed Charts</Link>
                   </Button>
@@ -198,46 +198,46 @@ export default function AltcoinMarkets() {
         </div>
 
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Altcoin Trading Products</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Altcoin Trading Products</h2>
           
           <div className="space-y-4 mb-6">
-            <div className="bg-[#f5f5f5] p-6 rounded-lg border-l-4 border-[#0033a0]">
-              <h3 className="text-lg font-bold mb-2 text-[#0033a0]">Binary Options</h3>
+            <div className="bg-[#f5f5f5] p-6 rounded-lg border-l-4 border-[#000d2e]">
+              <h3 className="text-lg font-bold mb-2 text-[#000d2e]">Binary Options</h3>
               <p className="text-gray-700 mb-3">
                 Predict if an altcoin's price will be above or below a specific level at expiration. 
                 Limited risk to your initial premium with predefined profit potential.
               </p>
               <Link 
                 href="#" 
-                className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
+                className="text-[#000d2e] hover:text-[#ff5900] font-semibold flex items-center"
               >
                 Learn More <ArrowRight className="ml-1 h-4 w-4" />
               </Link>
             </div>
             
-            <div className="bg-[#f5f5f5] p-6 rounded-lg border-l-4 border-[#0033a0]">
-              <h3 className="text-lg font-bold mb-2 text-[#0033a0]">Call Spreads</h3>
+            <div className="bg-[#f5f5f5] p-6 rounded-lg border-l-4 border-[#000d2e]">
+              <h3 className="text-lg font-bold mb-2 text-[#000d2e]">Call Spreads</h3>
               <p className="text-gray-700 mb-3">
                 Trade altcoin price movements within a range with built-in floor and ceiling levels. 
                 Perfect for medium-term directional trading with capped risk and reward.
               </p>
               <Link 
                 href="#" 
-                className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
+                className="text-[#000d2e] hover:text-[#ff5900] font-semibold flex items-center"
               >
                 Learn More <ArrowRight className="ml-1 h-4 w-4" />
               </Link>
             </div>
             
-            <div className="bg-[#f5f5f5] p-6 rounded-lg border-l-4 border-[#0033a0]">
-              <h3 className="text-lg font-bold mb-2 text-[#0033a0]">Touch Brackets</h3>
+            <div className="bg-[#f5f5f5] p-6 rounded-lg border-l-4 border-[#000d2e]">
+              <h3 className="text-lg font-bold mb-2 text-[#000d2e]">Touch Brackets</h3>
               <p className="text-gray-700 mb-3">
                 Trade altcoins with automatic profit targets and stop-loss levels built in. 
                 Hold positions longer with limited risk in both trending and range-bound markets.
               </p>
               <Link 
                 href="#" 
-                className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
+                className="text-[#000d2e] hover:text-[#ff5900] font-semibold flex items-center"
               >
                 Learn More <ArrowRight className="ml-1 h-4 w-4" />
               </Link>
@@ -246,7 +246,7 @@ export default function AltcoinMarkets() {
         </div>
         
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Why Trade Altcoins on Nedaxer</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Why Trade Altcoins on Nedaxer</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {tradingBenefits.map((benefit, i) => (
@@ -254,7 +254,7 @@ export default function AltcoinMarkets() {
                 <div className="mb-4">
                   {benefit.icon}
                 </div>
-                <h3 className="text-xl font-bold mb-2 text-[#0033a0]">{benefit.title}</h3>
+                <h3 className="text-xl font-bold mb-2 text-[#000d2e]">{benefit.title}</h3>
                 <p className="text-gray-700 mb-4">{benefit.description}</p>
               </div>
             ))}
@@ -262,7 +262,7 @@ export default function AltcoinMarkets() {
         </div>
         
         <div className="mb-12">
-          <div className="bg-gradient-to-r from-[#0033a0] to-[#001a60] text-white rounded-lg p-8 text-center">
+          <div className="bg-gradient-to-r from-[#000d2e] to-[#001a60] text-white rounded-lg p-8 text-center">
             <h2 className="text-2xl font-bold mb-4">Start Trading Altcoins Today</h2>
             <p className="mb-6">Open an account and access our altcoin trading products with limited risk.</p>
             <Button

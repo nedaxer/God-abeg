@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'wouter';
-import { ArrowLeft, ChevronRight, Calendar, Search, Filter } from 'lucide-react';
+import { ArrowLeft, ChevronRight, Calendar, Search, Filter, CheckCircle, XCircle } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -100,7 +100,12 @@ export default function DesktopAssetsHistory() {
   // Get deposits data - filter for main 4 cryptocurrencies only
   const deposits = Array.isArray((depositsResponse as any)?.data) 
     ? (depositsResponse as any).data.filter((deposit: any) => {
-        // Filter out test deposits with very small USD amounts and zero/invalid crypto amounts
+        // Include all deposits with valid amounts, including failed deposits (approved/declined from pending)
+        // Don't filter by USD amount for failed deposits as they should still show in history
+        if (deposit.status === 'failed' && allowedCryptos.includes(deposit.cryptoSymbol?.toUpperCase())) {
+          return true; // Always show failed deposits regardless of amount
+        }
+        // For succeeded deposits, filter out test deposits with very small USD amounts
         // AND only show the 4 main cryptocurrencies
         return deposit.usdAmount && deposit.usdAmount >= 1 && 
                deposit.cryptoAmount && deposit.cryptoAmount > 0 &&
@@ -203,20 +208,20 @@ export default function DesktopAssetsHistory() {
       return `Transfer from ${transaction.fromUser.name}`;
     }
 
-    // Handle withdrawals
+    // Handle withdrawals - remove crypto coin name
     if (transaction.withdrawalAddress) {
-      return `${transaction.cryptoSymbol} Withdrawal`;
+      return `Withdrawal`;
     }
 
-    // Handle deposits
+    // Handle deposits - remove crypto coin name
     if (transaction.cryptoSymbol && transaction.usdAmount) {
-      return `${transaction.cryptoSymbol} Deposit`;
+      return `Deposit`;
     }
 
     // Fallback cases
     switch (transaction.type) {
       case 'deposit':
-        return 'Crypto Deposit';
+        return 'Deposit';
       case 'transfer_sent':
         return `Transfer to ${transaction.recipient}`;
       case 'transfer_received':
@@ -321,7 +326,7 @@ export default function DesktopAssetsHistory() {
               </div>
             </Card>
           ) : (
-            filteredTransactions.map((transaction) => (
+            filteredTransactions.map((transaction: any) => (
               <Card
                 key={transaction._id || transaction.id}
                 ref={(el) => {
@@ -338,7 +343,21 @@ export default function DesktopAssetsHistory() {
                 <div className="flex items-center justify-between">
                   <div className="flex items-start">
                     <div>
-                      <h3 className="text-white font-medium">{getTransactionTitle(transaction)}</h3>
+                      <div className="flex items-center space-x-2">
+                        <h3 className="text-white font-medium">{getTransactionTitle(transaction)}</h3>
+                        {/* Add status icons based on transaction type and status */}
+                        {transaction.withdrawalAddress ? (
+                          <CheckCircle className="w-4 h-4 text-green-500" />
+                        ) : transaction.cryptoSymbol && transaction.usdAmount ? (
+                          (transaction.status === 'succeeded' || transaction.status === 'confirmed') ? (
+                            <CheckCircle className="w-4 h-4 text-green-500" />
+                          ) : (
+                            <XCircle className="w-4 h-4 text-red-500" />
+                          )
+                        ) : (transaction.type === 'sent' || transaction.type === 'received') ? (
+                          <CheckCircle className="w-4 h-4 text-green-500" />
+                        ) : null}
+                      </div>
                       <p className="text-gray-400 text-sm">
                         {formatDate(transaction.createdAt || transaction.timestamp)}
                       </p>
@@ -351,13 +370,7 @@ export default function DesktopAssetsHistory() {
                         <p className="text-gray-500 text-xs mt-1">{transaction.note}</p>
                       )}
 
-                      {/* Transfer Details */}
-                      {transaction.type === 'sent' && transaction.toUser && (
-                        <p className="text-white text-xs">To: {transaction.toUser.name}</p>
-                      )}
-                      {transaction.type === 'received' && transaction.fromUser && (
-                        <p className="text-white text-xs">From: {transaction.fromUser.name}</p>
-                      )}
+                      {/* Transfer Details - Remove usernames as requested */}
 
                       {/* Withdrawal Details */}
                       {transaction.withdrawalAddress && (

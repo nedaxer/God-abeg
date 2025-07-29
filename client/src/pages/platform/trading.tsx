@@ -167,7 +167,7 @@ export default function SpotTrading() {
               <CardContent>
                 <div className="h-96 bg-gradient-to-br from-green-50 to-blue-50 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-300">
                   <div className="text-center">
-                    <BarChart3 className="h-16 w-16 text-[#0033a0] mx-auto mb-4" />
+                    <BarChart3 className="h-16 w-16 text-[#000d2e] mx-auto mb-4" />
                     <h3 className="text-xl font-semibold text-gray-700 mb-2">Advanced Trading Chart</h3>
                     <p className="text-gray-500 mb-4">Real-time candlestick chart with technical indicators</p>
                     <div className="flex justify-center space-x-4 text-sm text-gray-600">

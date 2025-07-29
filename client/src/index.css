@@ -4,6 +4,140 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom floating animation for banner */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* Slide down animation for success banner */
+@keyframes slide-down {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-down {
+  animation: slide-down 0.5s ease-out;
+}
+
+/* Fade in scale animation for centered modals */
+@keyframes fade-in-scale {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-in-scale {
+  animation: fade-in-scale 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Glass Slide Transition Animations */
+@keyframes glass-slide-enter {
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+    backdrop-filter: blur(0px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+    backdrop-filter: blur(10px);
+  }
+}
+
+@keyframes glass-slide-exit {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+    backdrop-filter: blur(10px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-100%);
+    backdrop-filter: blur(0px);
+  }
+}
+
+/* Glass Slide Transition Classes */
+.page-transition-enter {
+  opacity: 0;
+  transform: translateX(100%);
+  backdrop-filter: blur(0px);
+  background-color: rgba(255, 255, 255, 0.2);
+  transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.2);
+  transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.page-transition-exit {
+  opacity: 1;
+  transform: translateX(0);
+  backdrop-filter: blur(10px);
+  transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transform: translateX(-100%);
+  backdrop-filter: blur(0px);
+  transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Container for page transitions */
+.page-transition-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  will-change: transform, opacity, backdrop-filter;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Mobile optimizations - reduced blur for performance */
+@media (max-width: 768px) {
+  .page-transition-enter-active,
+  .page-transition-exit {
+    backdrop-filter: blur(5px);
+    transition-duration: 0.3s;
+  }
+  
+  .page-transition-enter,
+  .page-transition-exit-active {
+    backdrop-filter: blur(0px);
+    transition-duration: 0.3s;
+  }
+}
+
+
+
 /* Mobile browser header/status bar color */
 meta[name="theme-color"] {
   content: #0a0a2e;
@@ -17,6 +151,12 @@ body {
 /* iOS Safari status bar style */
 meta[name="apple-mobile-web-app-status-bar-style"] {
   content: "black-translucent";
+}
+
+/* Ensure single page display without layering */
+body, html, #root {
+  background-color: #0033a0 !important;
+  overflow-x: hidden;
 }
 
 /* Prevent keyboard from pushing up page on mobile (Facebook Messenger style) */
@@ -34,9 +174,67 @@ meta[name="apple-mobile-web-app-status-bar-style"] {
   z-index: 1000;
 }
 
+/* Verified badge styling */
+.verified-badge {
+  width: 24px;
+  height: 24px;
+  margin-left: 4px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* FadeIn animation for verified badge */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 /* Prevent iOS safari zoom on input focus */
 input[type="text"], textarea {
   font-size: 16px !important;
+}
+
+/* Prevent zoom and selection on mobile for better touch interaction */
+@media (max-width: 768px) {
+  * {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  /* Allow selection for text inputs and content areas */
+  input, textarea, [contenteditable="true"] {
+    -webkit-user-select: text;
+    -khtml-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+  }
+
+  /* Prevent double-tap zoom */
+  body {
+    touch-action: manipulation;
+  }
+
+  /* Particle network canvas specific touch handling */
+  canvas {
+    touch-action: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
 }
 
 /* Prevent viewport resize on keyboard open */
@@ -56,7 +254,7 @@ input[type="text"], textarea {
     right: 0 !important;
     z-index: 10000 !important;
   }
-  
+
   /* Prevent page scroll when keyboard opens */
   .chat-active {
     position: fixed !important;
@@ -64,7 +262,7 @@ input[type="text"], textarea {
     height: 100% !important;
     overflow: hidden !important;
   }
-  
+
   /* Ensure messages area doesn't get hidden behind keyboard */
   .chat-messages {
     padding-bottom: 100px !important;
@@ -256,7 +454,7 @@ input[type="text"], textarea {
       url('/src/assets/20250618_001938_1750207793727.png'),
       url('/src/assets/20250618_002006_1750207793730.png');
   }
-  
+
   /* Optimized image rendering for splash screen */
   .splash-optimized {
     will-change: transform;
@@ -359,27 +557,27 @@ input[type="text"], textarea {
   .letter-shine:nth-child(1) { animation-delay: 0s; }
   .letter-shine:nth-child(1)::before { animation-delay: 2s; }
   .letter-shine:nth-child(1)::after { animation-delay: 1.5s; }
-  
+
   .letter-shine:nth-child(2) { animation-delay: 0.2s; }
   .letter-shine:nth-child(2)::before { animation-delay: 2.2s; }
   .letter-shine:nth-child(2)::after { animation-delay: 1.7s; }
-  
+
   .letter-shine:nth-child(3) { animation-delay: 0.4s; }
   .letter-shine:nth-child(3)::before { animation-delay: 2.4s; }
   .letter-shine:nth-child(3)::after { animation-delay: 1.9s; }
-  
+
   .letter-shine:nth-child(4) { animation-delay: 0.6s; }
   .letter-shine:nth-child(4)::before { animation-delay: 2.6s; }
   .letter-shine:nth-child(4)::after { animation-delay: 2.1s; }
-  
+
   .letter-shine:nth-child(5) { animation-delay: 0.8s; }
   .letter-shine:nth-child(5)::before { animation-delay: 2.8s; }
   .letter-shine:nth-child(5)::after { animation-delay: 2.3s; }
-  
+
   .letter-shine:nth-child(6) { animation-delay: 1s; }
   .letter-shine:nth-child(6)::before { animation-delay: 3s; }
   .letter-shine:nth-child(6)::after { animation-delay: 2.5s; }
-  
+
   .letter-shine:nth-child(7) { animation-delay: 1.2s; }
   .letter-shine:nth-child(7)::before { animation-delay: 3.2s; }
   .letter-shine:nth-child(7)::after { animation-delay: 2.7s; }
@@ -433,18 +631,18 @@ input[type="text"], textarea {
   * {
     -webkit-tap-highlight-color: transparent;
   }
-  
+
   /* Ensure modals always appear above navigation with maximum priority */
   [data-modal="deposit"] {
     z-index: 999999999 !important;
     position: fixed !important;
   }
-  
+
   [data-modal="deposit"] > div:last-child {
     z-index: 999999999 !important;
     position: fixed !important;
   }
-  
+
   [data-navigation="bottom"] {
     z-index: 50 !important;
     background-color: #0a0a2e !important;
@@ -453,12 +651,12 @@ input[type="text"], textarea {
     left: 0 !important;
     right: 0 !important;
   }
-  
+
   /* Override any other z-index rules that might interfere */
   .fixed[data-modal="deposit"] {
     z-index: 999999999 !important;
   }
-  
+
   /* Ensure all deposit modal elements have maximum z-index */
   [data-modal="deposit"] * {
     position: relative !important;
@@ -630,4 +828,97 @@ input[type="text"], textarea {
   background: #0a0a2e;
   border-radius: 24px; /* Match rounded-3xl */
   z-index: -1;
+}
+/* Line Trace Navigation Animations */
+@keyframes traceLine {
+  0% {
+    stroke-dasharray: 0, 100;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dasharray: 100, 0;
+    opacity: 1;
+  }
+}
+
+@keyframes traceGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 2px rgba(249, 115, 22, 0.4));
+  }
+  50% {
+    filter: drop-shadow(0 0 8px rgba(249, 115, 22, 0.8));
+  }
+}
+
+@keyframes traceDot {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  10%, 90% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
+
+.line-trace-icon {
+  position: relative;
+  display: inline-block;
+}
+
+.line-trace-icon svg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.line-trace-icon .final-icon {
+  position: relative;
+  z-index: 2;
+}
+
+/* Enhanced glow effects for active navigation */
+.nav-icon-glow {
+  filter: drop-shadow(0 0 4px rgba(249, 115, 22, 0.6)) 
+          drop-shadow(0 0 8px rgba(249, 115, 22, 0.3));
+  transition: filter 0.3s ease;
+}
+
+.nav-icon-trace {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: traceLine 0.6s ease-in-out forwards;
+}
+
+.nav-trace-dot {
+  animation: traceDot 0.8s ease-in-out;
+}
+
+/* Enhanced visual design for bottom banners */
+.bottom-banner-enter {
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+/* Success banner slide-down animation */
+@keyframes slide-down {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-down {
+  animation: slide-down 0.5s ease-out;
 }

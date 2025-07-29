@@ -12,7 +12,7 @@ export interface IDepositTransaction extends Document {
   usdAmount: number;
   cryptoAmount: number;
   cryptoPrice: number;
-  status: 'pending' | 'confirmed' | 'failed';
+  status: 'pending' | 'confirmed' | 'succeeded' | 'failed';
   transactionHash?: string;
   createdAt: Date;
   updatedAt: Date;
@@ -29,7 +29,7 @@ const DepositTransactionSchema = new Schema<IDepositTransaction>({
   usdAmount: { type: Number, required: true },
   cryptoAmount: { type: Number, required: true },
   cryptoPrice: { type: Number, required: true },
-  status: { type: String, enum: ['pending', 'confirmed', 'failed'], default: 'confirmed' },
+  status: { type: String, enum: ['pending', 'confirmed', 'succeeded', 'failed'], default: 'confirmed' },
   transactionHash: { type: String },
 }, {
   timestamps: true

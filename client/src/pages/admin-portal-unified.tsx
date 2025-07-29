@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { UserAvatar } from "@/components/user-avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { ProfessionalAdminPullRefresh } from "@/components/professional-admin-pull-refresh";
@@ -80,6 +81,22 @@ interface UserAnalytics {
     lastActivity: string;
     isOnline: boolean;
   }>;
+}
+
+interface PendingDeposit {
+  _id: string;
+  userId: string;
+  cryptoSymbol: string;
+  chainType: string;
+  depositAddress: string;
+  usdAmount: number;
+  cryptoAmount?: number;
+  cryptoPrice?: number;
+  receiptImageUrl?: string;
+  status: 'pending_payment' | 'pending_approval' | 'approved' | 'declined';
+  adminNotes?: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export default function UnifiedAdminPortal() {
@@ -432,6 +449,23 @@ export default function UnifiedAdminPortal() {
     staleTime: 20000, // Data considered fresh for 20 seconds
     cacheTime: 180000, // Keep in cache for 3 minutes
     refetchInterval: 15000, // Reduced frequency for better performance
+  });
+
+  // Get pending deposits with optimized caching
+  const { data: pendingDeposits = [], refetch: refetchPendingDeposits, isLoading: isLoadingPendingDeposits } = useQuery({
+    queryKey: ["/api/admin/pending-deposits"],
+    queryFn: async () => {
+      const response = await fetch('/api/admin/pending-deposits', {
+        credentials: 'include'
+      });
+      if (!response.ok) throw new Error('Failed to fetch pending deposits');
+      const data = await response.json();
+      return data.data || [];
+    },
+    enabled: isAuthenticated,
+    staleTime: 10000, // Data considered fresh for 10 seconds
+    cacheTime: 120000, // Keep in cache for 2 minutes
+    refetchInterval: 10000, // Refresh every 10 seconds for real-time updates
   });
 
   // Add funds mutation
@@ -958,6 +992,70 @@ export default function UnifiedAdminPortal() {
     },
   });
 
+  // Approve pending deposit mutation
+  const approvePendingDepositMutation = useMutation({
+    mutationFn: async ({ depositId, adminNotes }: { depositId: string; adminNotes?: string }) => {
+      console.log('✅ Admin approving deposit:', { depositId, adminNotes });
+      const response = await apiRequest("/api/admin/pending-deposits/approve", { 
+        method: "POST", 
+        data: { depositId, adminNotes } 
+      });
+      const result = await response.json();
+      console.log('✅ Approve deposit response:', result);
+      return result;
+    },
+    onSuccess: (data) => {
+      displayNotificationBanner("Deposit approved and funds added to user account!");
+      toast({
+        title: "Deposit Approved",
+        description: "Deposit approved and funds credited to user account",
+        variant: "default",
+      });
+      // Refresh pending deposits
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/pending-deposits"] });
+      refetchPendingDeposits();
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Error Approving Deposit",
+        description: error.message || "Failed to approve deposit",
+        variant: "destructive",
+      });
+    },
+  });
+
+  // Decline pending deposit mutation
+  const declinePendingDepositMutation = useMutation({
+    mutationFn: async ({ depositId, adminNotes }: { depositId: string; adminNotes?: string }) => {
+      console.log('❌ Admin declining deposit:', { depositId, adminNotes });
+      const response = await apiRequest("/api/admin/pending-deposits/decline", { 
+        method: "POST", 
+        data: { depositId, adminNotes } 
+      });
+      const result = await response.json();
+      console.log('✅ Decline deposit response:', result);
+      return result;
+    },
+    onSuccess: (data) => {
+      displayNotificationBanner("Deposit declined successfully!");
+      toast({
+        title: "Deposit Declined",
+        description: "Deposit declined and user has been notified",
+        variant: "default",
+      });
+      // Refresh pending deposits
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/pending-deposits"] });
+      refetchPendingDeposits();
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Error Declining Deposit",
+        description: error.message || "Failed to decline deposit",
+        variant: "destructive",
+      });
+    },
+  });
+
   const handleAdminLogin = (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -1112,10 +1210,12 @@ export default function UnifiedAdminPortal() {
         queryClient.invalidateQueries({ queryKey: ["/api/admin/users/all"] }),
         queryClient.invalidateQueries({ queryKey: ["/api/admin/users/analytics"] }),
         queryClient.invalidateQueries({ queryKey: ["/api/admin/pending-kyc"] }),
+        queryClient.invalidateQueries({ queryKey: ["/api/admin/pending-deposits"] }),
         queryClient.invalidateQueries({ queryKey: ["/api/admin/users/search"] }),
         refetchUsers(),
         refetchAnalytics(),
         refetchKyc(),
+        refetchPendingDeposits(),
         refetchGeneralSearch()
       ]);
       
@@ -1335,15 +1435,16 @@ export default function UnifiedAdminPortal() {
                     >
                       <div className="flex items-start justify-between">
                         <div className="flex items-center space-x-2 flex-1 min-w-0">
-                          <Avatar className="w-6 h-6 flex-shrink-0">
-                            {user.profilePicture ? (
-                              <AvatarImage src={user.profilePicture} alt={user.username} />
-                            ) : (
-                              <AvatarFallback className="bg-gradient-to-r from-blue-500 to-purple-600 text-white text-xs">
-                                {user.firstName?.[0] || user.username[0]?.toUpperCase()}
-                              </AvatarFallback>
-                            )}
-                          </Avatar>
+                          <UserAvatar 
+                            user={{
+                              profilePicture: user.profilePicture,
+                              firstName: user.firstName,
+                              lastName: user.lastName,
+                              username: user.username
+                            }}
+                            size="sm"
+                            className="flex-shrink-0"
+                          />
                           <div className="min-w-0 flex-1">
                             <div className="flex items-center space-x-1">
                               <p className="text-xs font-medium text-white truncate">
@@ -1675,6 +1776,10 @@ export default function UnifiedAdminPortal() {
               <DollarSign className="w-3 h-3 mr-1" />
               Deposits
             </TabsTrigger>
+            <TabsTrigger value="pending-deposits" className="data-[state=active]:bg-white/20 text-xs">
+              <Clock className="w-3 h-3 mr-1" />
+              Pending
+            </TabsTrigger>
             <TabsTrigger value="withdrawals" className="data-[state=active]:bg-white/20 text-xs">
               <Minus className="w-3 h-3 mr-1" />
               Withdrawals
@@ -1822,15 +1927,15 @@ export default function UnifiedAdminPortal() {
                         >
                           <div className="flex items-center justify-between">
                             <div className="flex items-center space-x-3">
-                              <Avatar className="w-10 h-10">
-                                {user.profilePicture ? (
-                                  <AvatarImage src={user.profilePicture} alt={user.username} />
-                                ) : (
-                                  <AvatarFallback className="bg-gradient-to-r from-blue-500 to-purple-600 text-white">
-                                    {user.firstName?.[0] || user.username[0]?.toUpperCase()}
-                                  </AvatarFallback>
-                                )}
-                              </Avatar>
+                              <UserAvatar 
+                                user={{
+                                  profilePicture: user.profilePicture,
+                                  firstName: user.firstName,
+                                  lastName: user.lastName,
+                                  username: user.username
+                                }}
+                                size="md"
+                              />
                               <div className="flex-1">
                                 <div className="flex items-center space-x-2">
                                   <p className="font-medium text-white">
@@ -2350,6 +2455,153 @@ export default function UnifiedAdminPortal() {
                 </CardContent>
               </Card>
             )}
+          </TabsContent>
+
+          <TabsContent value="pending-deposits" className="space-y-6">
+            <Card className="bg-white/10 backdrop-blur border-white/20">
+              <CardHeader>
+                <CardTitle className="text-white flex items-center justify-between">
+                  <div className="flex items-center">
+                    <Clock className="w-5 h-5 mr-2 text-orange-400" />
+                    Pending Deposit Requests
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Badge variant="secondary" className="bg-orange-500/20 text-orange-200">
+                      {pendingDeposits?.length || 0} Pending
+                    </Badge>
+                    <div className="flex items-center space-x-1">
+                      <div className="w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
+                      <span className="text-xs text-orange-400">Live</span>
+                    </div>
+                  </div>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                {isLoadingPendingDeposits ? (
+                  <div className="text-center py-8">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-400 mx-auto mb-4"></div>
+                    <p className="text-gray-300">Loading pending deposits...</p>
+                  </div>
+                ) : pendingDeposits?.length === 0 ? (
+                  <div className="text-center py-8">
+                    <CheckCircle className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                    <p className="text-gray-300 text-lg font-medium">No Pending Deposits</p>
+                    <p className="text-gray-400 text-sm">All deposit requests have been processed</p>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {pendingDeposits?.map((deposit: any) => (
+                      <div key={deposit._id} className="p-4 bg-white/5 rounded-lg border border-orange-500/20">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                          {/* Deposit Information */}
+                          <div className="space-y-3">
+                            <div className="flex items-center justify-between">
+                              <h3 className="text-white font-medium">Deposit Request</h3>
+                              <Badge 
+                                variant="secondary" 
+                                className="bg-orange-500/20 text-orange-200 text-xs"
+                              >
+                                {deposit.status?.replace('_', ' ').toUpperCase()}
+                              </Badge>
+                            </div>
+                            
+                            <div className="grid grid-cols-2 gap-3 text-sm">
+                              <div>
+                                <span className="text-gray-400">User ID:</span>
+                                <p className="text-white">{deposit.userId}</p>
+                              </div>
+                              <div>
+                                <span className="text-gray-400">Amount:</span>
+                                <p className="text-green-400 font-medium">${deposit.usdAmount}</p>
+                              </div>
+                              <div>
+                                <span className="text-gray-400">Crypto:</span>
+                                <p className="text-white">{deposit.cryptoSymbol}</p>
+                              </div>
+                              <div>
+                                <span className="text-gray-400">Chain:</span>
+                                <p className="text-white">{deposit.chainType}</p>
+                              </div>
+                              <div className="col-span-2">
+                                <span className="text-gray-400">Address:</span>
+                                <p className="text-white text-xs font-mono break-all">{deposit.depositAddress}</p>
+                              </div>
+                              <div className="col-span-2">
+                                <span className="text-gray-400">Submitted:</span>
+                                <p className="text-white">{new Date(deposit.createdAt).toLocaleString()}</p>
+                              </div>
+                            </div>
+
+                            {/* Receipt Image */}
+                            {deposit.receiptImageUrl && (
+                              <div className="space-y-2">
+                                <span className="text-gray-400 text-sm">Payment Receipt:</span>
+                                <img 
+                                  src={deposit.receiptImageUrl} 
+                                  alt="Payment receipt"
+                                  className="w-full max-w-sm rounded-lg border border-white/20 cursor-pointer"
+                                  onClick={() => window.open(deposit.receiptImageUrl, '_blank')}
+                                />
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Admin Actions */}
+                          <div className="space-y-4">
+                            <div>
+                              <label className="text-sm text-gray-400 mb-2 block">Admin Notes (Optional)</label>
+                              <Textarea
+                                id={`notes-${deposit._id}`}
+                                placeholder="Enter approval/decline notes..."
+                                className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 min-h-[80px] resize-none"
+                                maxLength={500}
+                              />
+                            </div>
+                            
+                            <div className="flex space-x-3">
+                              <Button
+                                onClick={() => {
+                                  const notesElement = document.getElementById(`notes-${deposit._id}`) as HTMLTextAreaElement;
+                                  const adminNotes = notesElement?.value || '';
+                                  approvePendingDepositMutation.mutate({ 
+                                    depositId: deposit._id, 
+                                    adminNotes 
+                                  });
+                                }}
+                                disabled={approvePendingDepositMutation.isPending}
+                                className="bg-green-600 hover:bg-green-700 text-white flex-1"
+                              >
+                                <CheckCircle className="w-4 h-4 mr-1" />
+                                {approvePendingDepositMutation.isPending ? 'Processing...' : 'Approve & Credit'}
+                              </Button>
+                              
+                              <Button
+                                onClick={() => {
+                                  const notesElement = document.getElementById(`notes-${deposit._id}`) as HTMLTextAreaElement;
+                                  const adminNotes = notesElement?.value || '';
+                                  if (confirm('Are you sure you want to decline this deposit? The user will be notified.')) {
+                                    declinePendingDepositMutation.mutate({ 
+                                      depositId: deposit._id, 
+                                      adminNotes 
+                                    });
+                                  }
+                                }}
+                                disabled={declinePendingDepositMutation.isPending}
+                                variant="outline"
+                                className="border-red-500/30 text-red-300 hover:bg-red-500/20 flex-1"
+                              >
+                                <X className="w-4 h-4 mr-1" />
+                                {declinePendingDepositMutation.isPending ? 'Processing...' : 'Decline'}
+                              </Button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
           </TabsContent>
 
           <TabsContent value="withdrawals" className="space-y-6">

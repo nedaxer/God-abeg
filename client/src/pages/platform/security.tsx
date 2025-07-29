@@ -8,27 +8,27 @@ export default function Security() {
     {
       title: "Regulated US Exchange",
       description: "Nedaxer is regulated by the US Commodity Futures Trading Commission (CFTC), ensuring compliance with strict financial standards.",
-      icon: <Shield className="h-10 w-10 text-[#0033a0]" />,
+      icon: <Shield className="h-10 w-10 text-[#000d2e]" />,
     },
     {
       title: "Segregated Funds",
       description: "Your funds are held in segregated bank accounts, separate from Nedaxer's operating funds, for added protection.",
-      icon: <Database className="h-10 w-10 text-[#0033a0]" />,
+      icon: <Database className="h-10 w-10 text-[#000d2e]" />,
     },
     {
       title: "Two-Factor Authentication",
       description: "Add an extra layer of security to your account with optional two-factor authentication.",
-      icon: <Lock className="h-10 w-10 text-[#0033a0]" />,
+      icon: <Lock className="h-10 w-10 text-[#000d2e]" />,
     },
     {
       title: "ID Verification",
       description: "All accounts undergo thorough identity verification to prevent fraud and ensure compliance with regulations.",
-      icon: <UserCheck className="h-10 w-10 text-[#0033a0]" />,
+      icon: <UserCheck className="h-10 w-10 text-[#000d2e]" />,
     },
     {
       title: "Secure Infrastructure",
       description: "Advanced encryption and security protocols protect your personal information and trading activity.",
-      icon: <Server className="h-10 w-10 text-[#0033a0]" />,
+      icon: <Server className="h-10 w-10 text-[#000d2e]" />,
     },
   ];
 
@@ -59,11 +59,11 @@ export default function Security() {
     <PageLayout 
       title="Account Security" 
       subtitle="Protecting your information and funds with industry-leading security measures"
-      bgColor="#0033a0"
+      bgColor="#000d2e"
     >
       <div className="max-w-4xl mx-auto">
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Our Security Commitment</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Our Security Commitment</h2>
 
           <p className="mb-6 text-gray-900">
             At Nedaxer, we take the security of your account and personal information seriously. 
@@ -76,7 +76,7 @@ export default function Security() {
               <div key={i} className="flex items-start p-6 bg-[#f5f5f5] rounded-lg">
                 <div className="mr-4">{feature.icon}</div>
                 <div>
-                  <h3 className="text-xl font-bold mb-2 text-[#0033a0]">{feature.title}</h3>
+                  <h3 className="text-xl font-bold mb-2 text-[#000d2e]">{feature.title}</h3>
                   <p className="text-gray-900">{feature.description}</p>
                 </div>
               </div>
@@ -85,10 +85,10 @@ export default function Security() {
         </div>
 
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Regulatory Protection</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Regulatory Protection</h2>
 
           <div className="bg-[#f5f5f5] p-6 rounded-lg mb-8">
-            <h3 className="text-xl font-bold mb-4 text-[#0033a0]">CFTC Regulation</h3>
+            <h3 className="text-xl font-bold mb-4 text-[#000d2e]">CFTC Regulation</h3>
             <p className="mb-4 text-gray-900">
               Nedaxer is regulated by the US Commodity Futures Trading Commission (CFTC), which 
               oversees the US derivatives markets, including futures, options, and swaps. 
@@ -119,7 +119,7 @@ export default function Security() {
           </div>
 
           <div className="bg-[#f5f5f5] p-6 rounded-lg">
-            <h3 className="text-xl font-bold mb-4 text-[#0033a0]">Segregated Funds</h3>
+            <h3 className="text-xl font-bold mb-4 text-[#000d2e]">Segregated Funds</h3>
             <p className="mb-4">
               Your funds are held in segregated bank accounts with top-tier US banks, separate 
               from Nedaxer's operating funds. This ensures that your money is protected and used 
@@ -133,11 +133,11 @@ export default function Security() {
         </div>
 
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Technical Security Measures</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Technical Security Measures</h2>
 
           <div className="space-y-6">
             <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-              <h3 className="text-xl font-bold mb-3 text-[#0033a0]">Data Encryption</h3>
+              <h3 className="text-xl font-bold mb-3 text-[#000d2e]">Data Encryption</h3>
               <p className="mb-3">
                 We use industry-standard SSL/TLS encryption to protect all data transmitted between your 
                 device and our servers. This ensures that your personal information and trading activity 
@@ -150,7 +150,7 @@ export default function Security() {
             </div>
 
             <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-              <h3 className="text-xl font-bold mb-3 text-[#0033a0]">Two-Factor Authentication (2FA)</h3>
+              <h3 className="text-xl font-bold mb-3 text-[#000d2e]">Two-Factor Authentication (2FA)</h3>
               <p className="mb-3">
                 Add an extra layer of security to your account by enabling two-factor authentication. 
                 This requires a verification code from your mobile device in addition to your password 
@@ -162,7 +162,7 @@ export default function Security() {
             </div>
 
             <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-              <h3 className="text-xl font-bold mb-3 text-[#0033a0]">Secure Infrastructure</h3>
+              <h3 className="text-xl font-bold mb-3 text-[#000d2e]">Secure Infrastructure</h3>
               <p className="mb-3">
                 Our trading infrastructure is hosted in secure data centers with redundant systems, 
                 firewalls, and 24/7 monitoring to prevent unauthorized access and ensure platform stability.
@@ -176,7 +176,7 @@ export default function Security() {
         </div>
 
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Security Best Practices</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Security Best Practices</h2>
 
           <p className="mb-6">
             While we implement robust security measures, keeping your account secure is a shared responsibility. 
@@ -186,14 +186,14 @@ export default function Security() {
           <div className="space-y-4">
             {securityBestPractices.map((practice, i) => (
               <div key={i} className="bg-[#f5f5f5] p-4 rounded-lg">
-                <h3 className="font-bold mb-2 text-[#0033a0]">{practice.title}</h3>
+                <h3 className="font-bold mb-2 text-[#000d2e]">{practice.title}</h3>
                 <p className="text-gray-700">{practice.description}</p>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="bg-[#0033a0] text-white rounded-lg p-8 text-center">
+        <div className="bg-[#000d2e] text-white rounded-lg p-8 text-center">
           <h2 className="text-2xl font-bold mb-4">Trade with confidence on a secure platform</h2>
           <p className="mb-6">Open an account today with a CFTC-regulated US exchange.</p>
           <Button

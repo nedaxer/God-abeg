@@ -53,6 +53,9 @@
     <link rel="preload" as="image" href="/splash-assets/pull-letter-d.png" />
     <link rel="preload" as="image" href="/splash-assets/pull-letter-a.png" />
     <link rel="preload" as="image" href="/splash-assets/pull-letter-x.png" />
+    
+    <!-- Preload verification badge for instant profile display -->
+    <link rel="preload" as="image" href="/attached_assets/ce6bcd1643c04a4e8a6ba3984945a67d_1753543618125.png" />
     <link rel="preload" as="image" href="/splash-assets/pull-letter-e2.png" />
     <link rel="preload" as="image" href="/splash-assets/pull-letter-r.png" />
     <link rel="apple-touch-icon" sizes="76x76" href="/icons/icon-72x72.png" />
@@ -66,7 +69,11 @@
     <style>
       /* Basic layout styling */
       body {
-        background: white !important;
+        background-image: url('/attached_assets/Screenshot_20250718-030008_Phoenix_1752804174994.png') !important;
+        background-size: cover !important;
+        background-position: center !important;
+        background-repeat: no-repeat !important;
+        background-attachment: fixed !important;
         min-height: 100vh;
         overflow-x: hidden;
       }
@@ -82,12 +89,29 @@
       
       /* Prevent flash of black background */
       html {
-        background: white !important;
+        background-image: url('/attached_assets/Screenshot_20250718-030008_Phoenix_1752804174994.png') !important;
+        background-size: cover !important;
+        background-position: center !important;
+        background-repeat: no-repeat !important;
+        background-attachment: fixed !important;
       }
       
       #root {
-        background: white !important;
+        background-image: url('/attached_assets/Screenshot_20250718-030008_Phoenix_1752804174994.png') !important;
+        background-size: cover !important;
+        background-position: center !important;
+        background-repeat: no-repeat !important;
+        background-attachment: fixed !important;
         min-height: 100vh;
+      }
+
+      /* Hide scrollbar for crypto coin list */
+      .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
       }
     </style>
   </head>

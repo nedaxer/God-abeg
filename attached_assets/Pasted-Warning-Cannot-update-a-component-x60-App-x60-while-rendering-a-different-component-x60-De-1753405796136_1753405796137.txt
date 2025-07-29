@@ -1,0 +1,27 @@
+Warning: Cannot update a component (&#x60;App&#x60;) while rendering a different component (&#x60;DepositAddressPage&#x60;). To locate the bad setState() call inside &#x60;DepositAddressPage&#x60;, follow the stack trace as described in https://reactjs.org/link/setstate-in-render
+    at DepositAddressPage (https://803c8f80-e6af-451a-aded-3490b722c65d-00-24atcp3r9oiov.picard.replit.dev/src/pages/mobile/deposit-address-page.tsx:45:38)
+    at MobileDeposit (https://803c8f80-e6af-451a-aded-3490b722c65d-00-24atcp3r9oiov.picard.replit.dev/src/pages/mobile/deposit.tsx:27:17)
+    at Route (https://803c8f80-e6af-451a-aded-3490b722c65d-00-24atcp3r9oiov.picard.replit.dev/node_modules/.vite/deps/wouter.js?v=13197499:205:16)
+    at ProtectedRoute (https://803c8f80-e6af-451a-aded-3490b722c65d-00-24atcp3r9oiov.picard.replit.dev/src/components/protected-route.tsx:23:3)
+    at Switch (https://803c8f80-e6af-451a-aded-3490b722c65d-00-24atcp3r9oiov.picard.replit.dev/node_modules/.vite/deps/wouter.js?v=13197499:261:17)
+    at ErrorBoundary (https://803c8f80-e6af-451a-aded-3490b722c65d-00-24atcp3r9oiov.picard.replit.dev/src/components/error-boundary.tsx:7:5)
+    at Router (https://803c8f80-e6af-451a-aded-3490b722c65d-00-24atcp3r9oiov.picard.replit.dev/node_modules/.vite/deps/wouter.js?v=13197499:161:17)
+    at WithdrawalProvider (https://803c8f80-e6af-451a-aded-3490b722c65d-00-24atcp3r9oiov.picard.replit.dev/src/contexts/withdrawal-context.tsx:32:38)
+    at AuthProvider (https://803c8f80-e6af-451a-aded-3490b722c65d-00-24atcp3r9oiov.picard.replit.dev/src/hooks/use-auth.tsx:25:32)
+    at ThemeProvider (https://803c8f80-e6af-451a-aded-3490b722c65d-00-24atcp3r9oiov.picard.replit.dev/src/contexts/theme-context.tsx:29:33)
+    at LanguageProvider (https://803c8f80-e6af-451a-aded-3490b722c65d-00-24atcp3r9oiov.picard.replit.dev/src/contexts/language-context.tsx:905:36)
+    at QueryClientProvider (https://803c8f80-e6af-451a-aded-3490b722c65d-00-24atcp3r9oiov.picard.replit.dev/node_modules/.vite/deps/@tanstack_react-query.js?v=13197499:2873:3)
+    at ErrorBoundary (https://803c8f80-e6af-451a-aded-3490b722c65d-00-24atcp3r9oiov.picard.replit.dev/src/components/error-boundary.tsx:7:5)
+    at App (https://803c8f80-e6af-451a-aded-3490b722c65d-00-24atcp3r9oiov.picard.replit.dev/src/App.tsx?v=_1BrnlhdmTweW4omC1Hk9:121:39)
+Cannot read properties of undefined (reading 'toLocaleString')
+App error: 
+ErrorEvent {isTrusted: true}
+
+[vite] 
+Error {}
+
+[vite] 
+Error {}
+
+Real-time home update received: 
+Object {type: "crypto_prices", success: true, data: Array(10

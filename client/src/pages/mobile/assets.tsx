@@ -290,7 +290,8 @@ export default function MobileAssets() {
     setDepositModalOpen(false);
     
     if (method === 'crypto') {
-      setCurrentView('crypto-selection');
+      // Navigate to the new deposit flow
+      navigate('/mobile/deposit');
     } else if (method === 'buy-usd') {
       setComingSoonFeature('Buy with USD');
       setComingSoonOpen(true);
@@ -353,43 +354,104 @@ export default function MobileAssets() {
 
 
 
-  // Render full-page components instead of assets page
-  if (currentView === 'crypto-selection') {
-    return (
-      <CryptoSelection
-        onBack={handleBackFromCrypto}
-        onSelectCrypto={handleCryptoSelect}
-        onComingSoon={handleComingSoon}
-      />
-    );
-  }
-
-  if (currentView === 'network-selection') {
-    return (
-      <NetworkSelection
-        onBack={handleBackFromNetwork}
-        selectedCrypto={selectedCrypto}
-        onSelectChain={handleChainSelect}
-      />
-    );
-  }
-
-  if (currentView === 'address-display') {
-    return (
-      <AddressDisplay
-        onBack={handleBackFromAddress}
-        selectedCrypto={selectedCrypto}
-        selectedChain={selectedChain}
-      />
-    );
-  }
+  // All deposit flows now navigate to /mobile/deposit - these old views are no longer needed
 
   if (currentView === 'currency-selection') {
     return (
-      <CurrencySelection
-        onSelectCurrency={handleCurrencySelect}
-        currentCurrency={selectedCurrency}
-      />
+      <>
+        {/* Render the base assets page behind the overlay */}
+        <AdaptiveLayout title="Nedaxer - Assets">
+          <PullToRefresh onRefresh={handleRefresh}>
+            {/* Header */}
+            <div className="flex items-center justify-between p-4 bg-[#0a0a2e]">
+            <h1 className="text-xl font-bold text-white">My Assets</h1>
+          </div>
+
+          {/* Total Assets */}
+          <div className="px-4 pb-6">
+            <div className="flex items-center space-x-2 mb-2">
+              <span className="text-gray-400 text-sm">Total Assets</span>
+              <button onClick={() => setShowBalance(!showBalance)}>
+                {showBalance ? (
+                  <Eye className="w-4 h-4 text-gray-400" />
+                ) : (
+                  <EyeOff className="w-4 h-4 text-gray-400" />
+                )}
+              </button>
+            </div>
+            
+            <div className="mb-4">
+              <div className="flex items-baseline space-x-2">
+                <span className="text-3xl font-bold text-white">
+                  {showBalance ? (
+                    user ? `${getCurrencySymbol(selectedCurrency)}${parseFloat(convertToSelectedCurrency(getUserUSDBalance())).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : `${getCurrencySymbol(selectedCurrency)}0.00`
+                  ) : '****'}
+                </span>
+                <button 
+                  onClick={() => setCurrentView('currency-selection')}
+                  className="flex items-center space-x-1 text-gray-400 hover:text-white transition-colors"
+                >
+                  <span>{selectedCurrency}</span>
+                  <ChevronDown className="w-4 h-4" />
+                </button>
+              </div>
+              <div className="flex items-center space-x-1 text-sm text-gray-400">
+                <span>≈ {showBalance ? 
+                  (user ? convertUSDToBTC(getUserUSDBalance()).toFixed(8) : '0.00000000') : 
+                  '********'
+                } BTC</span>
+              </div>
+            </div>
+            
+            {/* Quick Actions and other content here */}
+            <div className="grid grid-cols-4 gap-4">
+              <button onClick={handleDepositClick}>
+                <div className="flex flex-col items-center space-y-2">
+                  <div className="w-14 h-14 bg-blue-900 rounded-lg flex items-center justify-center">
+                    <Wallet className="w-7 h-7 text-orange-500" />
+                  </div>
+                  <span className="text-xs text-gray-300 text-center">Deposit</span>
+                </div>
+              </button>
+              
+              <button onClick={handleWithdrawClick}>
+                <div className="flex flex-col items-center space-y-2">
+                  <div className="w-14 h-14 bg-blue-900 rounded-lg flex items-center justify-center">
+                    <ArrowUp className="w-7 h-7 text-orange-500" />
+                  </div>
+                  <span className="text-xs text-gray-300 text-center">Withdraw</span>
+                </div>
+              </button>
+              
+              <button onClick={() => navigate('/mobile/transfer')}>
+                <div className="flex flex-col items-center space-y-2">
+                  <div className="w-14 h-14 bg-blue-900 rounded-lg flex items-center justify-center">
+                    <ArrowDownUp className="w-7 h-7 text-orange-500" />
+                  </div>
+                  <span className="text-xs text-gray-300 text-center">Transfer</span>
+                </div>
+              </button>
+              
+              <button onClick={handleComingSoon}>
+                <div className="flex flex-col items-center space-y-2">
+                  <div className="w-14 h-14 bg-blue-900 rounded-lg flex items-center justify-center">
+                    <CreditCard className="w-7 h-7 text-orange-500" />
+                  </div>
+                  <span className="text-xs text-gray-300 text-center">Buy</span>
+                </div>
+              </button>
+            </div>
+          </div>
+          </PullToRefresh>
+        </AdaptiveLayout>
+        
+        {/* Currency selection overlay */}
+        <CurrencySelection
+          onSelectCurrency={handleCurrencySelect}
+          currentCurrency={selectedCurrency}
+          onClose={() => setCurrentView('assets')}
+        />
+      </>
     );
   }
 

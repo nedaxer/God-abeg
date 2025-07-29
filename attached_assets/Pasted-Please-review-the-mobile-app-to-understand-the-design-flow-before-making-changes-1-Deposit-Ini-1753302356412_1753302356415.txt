@@ -1,0 +1,82 @@
+Please review the mobile app to understand the design flow before making changes.”
+
+1. Deposit Initiation
+After selecting cryptocurrency and choosing the crypto chain, users should be directed to a new page.
+
+This page prompts users to input the deposit amount.
+
+Minimum deposit amount should be $500.
+
+After entering the amount, users tap “Proceed.”
+
+2. Address Generation
+A blurred overlay screen should appear with:
+
+A wheel spinning animation
+Message: “Generating deposit address...”
+
+Once complete:
+
+Show a success message: “Address generated.”
+
+Then navigate to the Deposit Address Page.
+
+3. Deposit Address Page Elements
+Display:
+
+The deposit amount the user input earlier
+
+The generated wallet address
+
+A warning message at the bottom:
+
+Include:
+
+A field to upload a screenshot of the payment receipt
+
+A Submit button
+
+4. Submission & Status Handling
+On submit:
+
+Show message: “Payment confirmation pending.”
+
+Navigate to the Assets Page
+
+User sees a notification: “Your account will be credited once payment is confirmed.”
+
+5. Persistent Deposit Page that will show each time user taps the deposit with crypto on the select payment method
+If the user hasn't submitted a receipt:
+
+The Deposit Address Page remains accessible
+
+Even if user closes or exits the browser
+
+Re-accessible via tapping “Deposit with Cryptocurrency” under the Select Payment Method banner
+
+Include a “Cancel Deposit” button on the deposit address page
+
+On cancel:
+
+Restart the deposit process from cryptocurrency selection, and also put a back navigator on the deposit address page which it  will page user to the assets main page,
+
+6. Admin Handling
+When user submits their payment receipt:
+
+It goes to the Admin Dashboard which it will show as how the kyc pending status is on the admin dashboard header
+
+Admin can either:
+
+Approve:
+
+User receives a notification: same as  “Deposit confirmed.”
+
+which it will show the crypto coin and chain and amount of the USD which the user submitted during the deposit recipt
+with this details, users account will be credited with the amount of USD and of the amount the submitted, and gather everything like the crypto coin and chain and amount of USD which the user submitted, and create the same deposit confirmed b that is usually created by admin, this will happen as soon as admin approves the deposit  receipt.
+
+Decline:
+
+User receives a same  notification of the deposit confirmed but it will show as : “Deposit failed.”
+this will also  create a transaction history like the deposit confrimed, but this will be shown as deposit failed even when usuer taps the deposit fails details, it will loook same as the deposit confrimed details but the status will be failed,
+
+make sure these actions create a deposit confimed as the deposit confrimed that is usally created by admin, and aslo the deposit failed

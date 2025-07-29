@@ -12,6 +12,7 @@ import CurrencySelection from '@/pages/mobile/currency-selection';
 import { ComingSoonModal } from '@/components/coming-soon-modal';
 import { PullToRefresh } from '@/components/pull-to-refresh';
 import EligibilityModal from '@/components/eligibility-modal';
+import { BalanceChart } from '@/components/balance-chart';
 import { 
   Search, 
   Bell, 
@@ -88,10 +89,10 @@ export default function MobileHome() {
     const checkDesktop = () => {
       setIsDesktop(window.innerWidth >= 768);
     };
-    
+
     checkDesktop();
     window.addEventListener('resize', checkDesktop);
-    
+
     return () => window.removeEventListener('resize', checkDesktop);
   }, []);
 
@@ -147,19 +148,19 @@ export default function MobileHome() {
 
     const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
     const wsUrl = `${protocol}//${window.location.host}`;
-    
+
     try {
       const ws = new WebSocket(wsUrl);
-      
+
       ws.onopen = () => {
         console.log('🔌 WebSocket connected for banner updates');
       };
-      
+
       ws.onmessage = (event) => {
         try {
           const data = JSON.parse(event.data);
           console.log('📡 WebSocket message received:', data);
-          
+
           if (data.type === 'KYC_STATUS_UPDATE' && data.userId === user.id) {
             console.log('🎯 KYC status update received, refreshing banner...');
             queryClient.invalidateQueries({ queryKey: ['/api/verification/status'] });
@@ -168,15 +169,15 @@ export default function MobileHome() {
           console.error('WebSocket message parsing error:', error);
         }
       };
-      
+
       ws.onclose = () => {
         console.log('🔌 WebSocket disconnected');
       };
-      
+
       ws.onerror = (error) => {
         console.error('WebSocket error:', error);
       };
-      
+
       return () => {
         ws.close();
       };
@@ -346,16 +347,16 @@ export default function MobileHome() {
   // Convert USD amounts to selected currency with real-time rates
   const convertToSelectedCurrency = React.useCallback((usdAmount: number): string => {
     if (!usdAmount || usdAmount === 0) return '0.00';
-    
+
     // Use real-time exchange rates from API
     const currentRates = conversionData?.data || conversionRates;
     const rate = currentRates[selectedCurrency];
-    
+
     if (!rate) {
       console.warn(`No conversion rate found for ${selectedCurrency}, using USD`);
       return usdAmount.toFixed(2);
     }
-    
+
     const convertedAmount = usdAmount * rate;
 
     // Format based on currency - currencies with no decimal places
@@ -392,7 +393,8 @@ export default function MobileHome() {
     setDepositModalOpen(false);
 
     if (method === 'crypto') {
-      setCurrentView('crypto-selection');
+      // Navigate to the new deposit flow
+      navigate('/mobile/deposit');
     } else if (method === 'buy-usd') {
       setComingSoonFeature('Buy with USD');
       setComingSoonOpen(true);
@@ -423,10 +425,10 @@ export default function MobileHome() {
     // Save to localStorage for persistence
     localStorage.setItem('selectedCurrency', currency);
     setCurrentView('home');
-    
+
     // Force refresh exchange rates to get latest data for new currency
     queryClient.invalidateQueries({ queryKey: ['/api/market-data/conversion-rates'] });
-    
+
     // Trigger force refresh of exchange rates from server
     fetch('/api/market-data/conversion-rates/refresh', { method: 'POST' })
       .then(response => response.json())
@@ -445,16 +447,31 @@ export default function MobileHome() {
     { name: t('invite_friends'), icon: Users, color: 'text-orange-500', href: '/mobile/invite-friends' }
   ];
 
-  // Load favorites from localStorage
+  // Load favorites from API and localStorage
   const [favoriteCoins, setFavoriteCoins] = useState<string[]>([]);
   const [activeWatchlistTab, setActiveWatchlistTab] = useState('Hot');
 
   useEffect(() => {
-    const savedFavorites = localStorage.getItem('favoriteCoins');
-    if (savedFavorites) {
-      setFavoriteCoins(JSON.parse(savedFavorites));
+    // Use API favorites if available, fallback to localStorage
+    if (userFavorites && Array.isArray(userFavorites)) {
+      setFavoriteCoins(userFavorites);
+    } else {
+      const savedFavorites = localStorage.getItem('favoriteCoins');
+      if (savedFavorites) {
+        setFavoriteCoins(JSON.parse(savedFavorites));
+      }
     }
-  }, []);
+  }, [userFavorites]);
+
+  // Toggle favorite function (similar to markets page)
+  const toggleFavorite = (symbol: string) => {
+    const newFavorites = favoriteCoins.includes(symbol)
+      ? favoriteCoins.filter(id => id !== symbol)
+      : [...favoriteCoins, symbol];
+    
+    setFavoriteCoins(newFavorites);
+    localStorage.setItem('favoriteCoins', JSON.stringify(newFavorites));
+  };
 
   // Cache management functions for mobile home
   const getCachedHomeData = (): any | null => {
@@ -465,7 +482,7 @@ export default function MobileHome() {
         const now = Date.now();
         const cacheAge = now - parsedCache.timestamp;
         const tenMinutes = 10 * 60 * 1000; // 10 minutes in milliseconds
-        
+
         if (cacheAge < tenMinutes) {
           console.log('Using cached mobile home data, age:', Math.round(cacheAge / 1000), 'seconds');
           return parsedCache.data;
@@ -520,13 +537,13 @@ export default function MobileHome() {
         }
         throw new Error(`Failed to fetch mobile home data: ${response.statusText}`);
       }
-      
+
       const data = await response.json();
-      
+
       // Cache the fresh data
       setCachedHomeData(data);
       setCachedHomeDataState(data);
-      
+
       return data;
     },
     refetchInterval: 600000, // Only refetch every 10 minutes
@@ -563,7 +580,7 @@ export default function MobileHome() {
         volume: volume >= 1e9 ? `$${(volume / 1e9).toFixed(2)}B` : volume >= 1e6 ? `$${(volume / 1e6).toFixed(2)}M` : volume >= 1e3 ? `$${(volume / 1e3).toFixed(2)}K` : `$${volume.toFixed(2)}`,
         volumeValue: volume,
         sentiment: change > 5 ? 'Bullish' : change < -5 ? 'Bearish' : 'Neutral',
-        favorite: favoriteCoins.includes(ticker.symbol)
+        favorite: favoriteCoins.includes(ticker.symbol) || favoriteCoins.includes(baseSymbol) || favoriteCoins.includes(`${baseSymbol}USDT`) || favoriteCoins.includes(`${baseSymbol}/USDT`)
       };
     });
   }, [activeHomeData, favoriteCoins]);
@@ -574,7 +591,9 @@ export default function MobileHome() {
 
     switch (activeWatchlistTab) {
       case 'Favorites':
-        return filtered.filter(market => market.favorite);
+        return filtered.filter(market => market.favorite).length > 0 
+          ? filtered.filter(market => market.favorite)
+          : [];
       case 'Gainers':
         return filtered
           .filter(market => market.changeValue > 0)
@@ -646,35 +665,35 @@ export default function MobileHome() {
   // WebSocket connection for real-time updates
   useEffect(() => {
     let socket: WebSocket;
-    
+
     const connectWebSocket = () => {
       const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
       const wsUrl = `${protocol}//${window.location.host}/ws`;
       socket = new WebSocket(wsUrl);
-      
+
       socket.onopen = () => {
         console.log('WebSocket connected for real-time home page updates');
         socket.send(JSON.stringify({ type: 'subscribe_notifications' }));
         socket.send(JSON.stringify({ type: 'subscribe_prices' }));
       };
-      
+
       socket.onmessage = (event) => {
         try {
           const data = JSON.parse(event.data);
           console.log('Real-time home update received:', data);
-          
+
           if (data.type === 'DEPOSIT_CREATED' || data.type === 'TRANSFER_CREATED' || data.type === 'notification_update' || data.type === 'kyc_status_update' || data.type === 'CONNECTION_REQUEST_CREATED' || data.type === 'CONNECTION_REQUEST_RESPONDED') {
             // Update notification badge and balance data instantly
             queryClient.invalidateQueries({ queryKey: ['/api/notifications/unread-count'] });
             queryClient.invalidateQueries({ queryKey: ['/api/notifications/support-unread-count'] });
             queryClient.invalidateQueries({ queryKey: ['/api/wallet/summary'] });
             queryClient.invalidateQueries({ queryKey: ['/api/balances'] });
-            
+
             if (data.type === 'kyc_status_update') {
               // Also refresh verification status for verification banner
               queryClient.invalidateQueries({ queryKey: ['/api/verification/status'] });
             }
-            
+
             console.log('Home page data refreshed due to real-time update:', data.type);
           } else if (data.type === 'PRICE_UPDATE') {
             // Real-time price updates for BTC and other currencies
@@ -685,21 +704,21 @@ export default function MobileHome() {
           console.error('WebSocket message error:', error);
         }
       };
-      
+
       socket.onclose = () => {
         console.log('WebSocket disconnected, attempting to reconnect...');
         setTimeout(connectWebSocket, 3000);
       };
-      
+
       socket.onerror = (error) => {
         console.error('WebSocket error:', error);
       };
     };
-    
+
     if (user) {
       connectWebSocket();
     }
-    
+
     return () => {
       if (socket) {
         socket.close();
@@ -760,10 +779,94 @@ export default function MobileHome() {
 
   if (currentView === 'currency-selection') {
     return (
-      <CurrencySelection
-        onSelectCurrency={handleCurrencySelect}
-        currentCurrency={selectedCurrency}
-      />
+      <>
+        {/* Render the base home page behind the overlay */}
+        <AdaptiveLayout title="Nedaxer - Crypto Trading">
+          <PullToRefresh onRefresh={handleRefresh}>
+            {/* Main content that would normally be rendered */}
+            <div className="px-4 py-4 bg-[#0a0a2e] min-h-screen">
+              {/* User profile section */}
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center space-x-3">
+                  <div className="relative">
+                    <button
+                      onClick={handleProfileDebugTap}
+                      className="w-12 h-12 rounded-full bg-blue-900 flex items-center justify-center relative overflow-hidden"
+                    >
+                      <User className="w-6 h-6 text-orange-500" />
+                    </button>
+
+                    {/* Helper tooltip */}
+                    {showHelperTooltip && (
+                      <div className="absolute -top-16 left-1/2 transform -translate-x-1/2 bg-orange-500 text-white text-xs px-3 py-2 rounded-lg whitespace-nowrap z-50 animate-pulse">
+                        Tap here for your profile!
+                        <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-orange-500"></div>
+                      </div>
+                    )}
+                  </div>
+                  <div>
+                    <p className="text-white text-sm font-medium">
+                      {user?.username ? `Hello, ${user.username}` : 'Welcome'}
+                    </p>
+                    <p className="text-gray-400 text-xs">Ready to trade?</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center space-x-4">
+                  <button
+                    onClick={() => navigate('/mobile/notifications')}
+                    className="relative p-2 rounded-lg bg-blue-900 hover:bg-blue-800"
+                  >
+                    <Bell className="w-5 h-5 text-gray-300" />
+                    {/* Notification badge */}
+                    {(notificationCount?.unreadCount || 0) > 0 && (
+                      <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                        {(notificationCount?.unreadCount || 0) > 99 ? '99+' : (notificationCount?.unreadCount || 0)}
+                      </span>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Balance display */}
+              <div className="mb-6">
+                <div className="flex items-center space-x-2 mb-2">
+                  <span className="text-gray-400 text-sm">Total Balance</span>
+                  <button onClick={() => setShowBalance(!showBalance)}>
+                    {showBalance ? (
+                      <Eye className="w-4 h-4 text-gray-400" />
+                    ) : (
+                      <EyeOff className="w-4 h-4 text-gray-400" />
+                    )}
+                  </button>
+                </div>
+
+                <div className="flex items-baseline space-x-2">
+                  <span className="text-3xl font-bold text-white">
+                    {showBalance ? (
+                      user ? `${getCurrencySymbol(selectedCurrency)}${parseFloat(convertToSelectedCurrency((walletData as any)?.data?.usdBalance || 0)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : `${getCurrencySymbol(selectedCurrency)}0.00`
+                    ) : '****'}
+                  </span>
+                  <button 
+                    onClick={() => setCurrentView('currency-selection')}
+                    className="flex items-center space-x-1 text-gray-400 hover:text-white transition-colors"
+                  >
+                    <span>{selectedCurrency}</span>
+                    <ChevronDown className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </PullToRefresh>
+        </AdaptiveLayout>
+
+        {/* Currency selection overlay */}
+        <CurrencySelection
+          onSelectCurrency={handleCurrencySelect}
+          currentCurrency={selectedCurrency}
+          onClose={() => setCurrentView('home')}
+        />
+      </>
     );
   }
 
@@ -847,7 +950,7 @@ export default function MobileHome() {
             kycStatus={kycStatus?.data?.kycStatus || 'none'}
           />
         )}
-        
+
         {/* Header */}
         <div className="flex items-center justify-between p-4 bg-[#0a0a2e]">
         <div className="flex items-center space-x-3">
@@ -953,21 +1056,12 @@ export default function MobileHome() {
 
 
 
-        {/* Promotional Banner */}
-        <Card 
-          className="bg-gradient-to-r from-gray-800 to-gray-700 border-gray-600 p-4 mb-4 cursor-pointer hover:opacity-80 transition-opacity"
-          onClick={() => setShowEligibilityModal(true)}
-        >
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <CreditCard className="w-6 h-6 text-orange-500" />
-              <span className="text-white">{t('apply_now')}</span>
-            </div>
-            <Button size="sm" className="bg-orange-500 hover:bg-orange-600">
-              <ArrowUp className="w-4 h-4" />
-            </Button>
-          </div>
-        </Card>
+        {/* Balance Chart */}
+        <BalanceChart 
+          usdBalance={getUserUSDBalance()}
+          btcPrice={getBTCPrice()}
+          showBalance={showBalance}
+        />
       </div>
 
 
@@ -992,14 +1086,7 @@ export default function MobileHome() {
           ))}
         </div>
 
-        <div className="flex space-x-4 mb-4">
-          <button className="text-orange-500 border-b-2 border-orange-500 pb-2 font-medium">
-            {t('spot')}
-          </button>
-          <button className="text-gray-400 pb-2">
-            {t('derivatives')}
-          </button>
-        </div>
+        
 
         {/* Live Market Data List */}
         <div className="space-y-4">
@@ -1013,42 +1100,50 @@ export default function MobileHome() {
             watchlistMarkets.map((market, index) => (
               <div
                 key={`${market.pair}-${index}`}
-                onClick={() => {
-                  // Store the trading pair symbol for trade page
-                  const tradingSymbol = market.pair; // This should be like BTCUSDT, ETHUSDT, etc.
-                  const tradingViewSymbol = `BINANCE:${tradingSymbol}`;
-                  
-                  // Update persistent chart state
-                  const chartState = {
-                    currentSymbol: tradingSymbol,
-                    tradingViewSymbol: tradingViewSymbol,
-                    timeframe: '15m',
-                    lastUpdated: Date.now(),
-                    isChartMounted: false
-                  };
-                  localStorage.setItem('nedaxer_chart_state', JSON.stringify(chartState));
-                  
-                  // Store in sessionStorage for immediate navigation
-                  sessionStorage.setItem('selectedSymbol', tradingSymbol);
-                  sessionStorage.setItem('selectedTab', 'Charts');
-                  sessionStorage.setItem('tradingViewSymbol', tradingViewSymbol);
-                  
-                  console.log('Home page: Saved chart state and navigating to trade with symbol:', tradingSymbol);
-                  
-                  // Navigate to trade page
-                  navigate('/mobile/trade');
-                }}
                 className="flex items-center justify-between py-3 px-2 hover:bg-blue-900/30 rounded transition-colors cursor-pointer"
               >
                 <div className="flex items-center space-x-3">
-                  <div className="flex items-center space-x-2">
-                    {market.favorite && (
-                      <Star className="w-4 h-4 fill-yellow-500 text-yellow-500" />
-                    )}
-                    <div className="flex flex-col">
-                      <span className="text-white font-medium">{market.displayPair}</span>
-                      <span className="text-gray-400 text-xs">{t('vol')}: {market.volume}</span>
-                    </div>
+                  <button 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleFavorite(market.pair);
+                    }}
+                    className="text-gray-400 hover:text-yellow-500"
+                  >
+                    <Star 
+                      className={`w-4 h-4 ${market.favorite ? 'fill-yellow-500 text-yellow-500' : ''}`} 
+                    />
+                  </button>
+                  <div 
+                    onClick={() => {
+                      // Store the trading pair symbol for trade page
+                      const tradingSymbol = market.pair; // This should be like BTCUSDT, ETHUSDT, etc.
+                      const tradingViewSymbol = `BINANCE:${tradingSymbol}`;
+
+                      // Update persistent chart state
+                      const chartState = {
+                        currentSymbol: tradingSymbol,
+                        tradingViewSymbol: tradingViewSymbol,
+                        timeframe: '15m',
+                        lastUpdated: Date.now(),
+                        isChartMounted: false
+                      };
+                      localStorage.setItem('nedaxer_chart_state', JSON.stringify(chartState));
+
+                      // Store in sessionStorage for immediate navigation
+                      sessionStorage.setItem('selectedSymbol', tradingSymbol);
+                      sessionStorage.setItem('selectedTab', 'Charts');
+                      sessionStorage.setItem('tradingViewSymbol', tradingViewSymbol);
+
+                      console.log('Home page: Saved chart state and navigating to trade with symbol:', tradingSymbol);
+
+                      // Navigate to trade page
+                      navigate('/mobile/trade');
+                    }}
+                    className="flex flex-col cursor-pointer"
+                  >
+                    <span className="text-white font-medium">{market.displayPair}</span>
+                    <span className="text-gray-400 text-xs">{t('vol')}: {market.volume}</span>
                   </div>
                 </div>
                 <div className="text-right">

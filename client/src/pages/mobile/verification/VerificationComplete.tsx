@@ -60,7 +60,7 @@ export const VerificationComplete: React.FC<VerificationCompleteProps> = ({ onCo
       </div>
 
       {/* Fixed Bottom Button like home navigation */}
-      <div className="fixed bottom-0 left-0 right-0 bg-slate-900 p-4 border-t border-gray-700 z-50">
+      <div className="fixed bottom-0 left-0 right-0 bg-[#0a0a2e] p-4 border-t border-gray-700 z-50">
         <Button 
           onClick={handleContinue}
           className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-4 text-base rounded-full"

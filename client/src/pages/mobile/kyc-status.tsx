@@ -89,9 +89,9 @@ export default function MobileKYCStatus() {
           icon: Clock,
           color: 'text-orange-500',
           bgColor: 'bg-orange-900 bg-opacity-20 border-orange-500',
-          title: 'KYC verification is pending for review',
+          title: 'Verification Under Review',
           subtitle: 'Your documents are being processed',
-          description: 'Our team is reviewing your submission. This typically takes 24-48 hours. We\'ll notify you once complete.'
+          description: 'Your submission is being reviewed. This typically takes 24-48 hours. You\'ll be notified once the review is complete.'
         };
       case 'rejected':
         return {

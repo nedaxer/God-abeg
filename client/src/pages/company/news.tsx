@@ -125,15 +125,15 @@ export default function News() {
     <PageLayout 
       title="Live Crypto News & Market Updates" 
       subtitle="Real-time cryptocurrency news from CoinDesk, CoinTelegraph, Decrypt, and other leading sources"
-      bgColor="#0033a0"
+      bgColor="#000d2e"
     >
       <div className="max-w-6xl mx-auto">
         {/* Header with refresh button */}
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-2">
-              <TrendingUp className="h-6 w-6 text-[#0033a0]" />
-              <h2 className="text-3xl font-bold text-[#0033a0]">Live Crypto News</h2>
+              <TrendingUp className="h-6 w-6 text-[#000d2e]" />
+              <h2 className="text-3xl font-bold text-[#000d2e]">Live Crypto News</h2>
             </div>
             {isConnected && (
               <div className="flex items-center space-x-2">
@@ -145,7 +145,7 @@ export default function News() {
           <Button
             onClick={() => refetch()}
             variant="outline"
-            className="flex items-center space-x-2 border-[#0033a0] text-[#0033a0] hover:bg-[#0033a0] hover:text-white"
+            className="flex items-center space-x-2 border-[#000d2e] text-[#000d2e] hover:bg-[#000d2e] hover:text-white"
           >
             <RefreshCw className="h-4 w-4" />
             <span>Refresh</span>
@@ -161,7 +161,7 @@ export default function News() {
                 onClick={() => setSelectedCategory(category)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                   selectedCategory === category
-                    ? 'bg-[#0033a0] text-white'
+                    ? 'bg-[#000d2e] text-white'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
@@ -175,7 +175,7 @@ export default function News() {
         {isLoading && (
           <div className="text-center py-12">
             <div className="inline-flex items-center space-x-2">
-              <RefreshCw className="h-6 w-6 animate-spin text-[#0033a0]" />
+              <RefreshCw className="h-6 w-6 animate-spin text-[#000d2e]" />
               <span className="text-lg text-gray-900">Loading latest crypto news...</span>
             </div>
           </div>
@@ -188,7 +188,7 @@ export default function News() {
               <p className="text-red-600 mb-4">Failed to load news. Please try again.</p>
               <Button
                 onClick={() => refetch()}
-                className="bg-[#0033a0] hover:bg-opacity-90 text-white"
+                className="bg-[#000d2e] hover:bg-opacity-90 text-white"
               >
                 Try Again
               </Button>
@@ -216,7 +216,7 @@ export default function News() {
                           }}
                         />
                       ) : (
-                        <div className="w-full h-full bg-gradient-to-br from-[#0033a0] to-[#ff5900] flex items-center justify-center">
+                        <div className="w-full h-full bg-gradient-to-br from-[#000d2e] to-[#ff5900] flex items-center justify-center">
                           <img 
                             src={getSourceLogo(filteredNews[0].source.name)} 
                             alt={filteredNews[0].source.name}
@@ -228,7 +228,7 @@ export default function News() {
                   </div>
                   <div className="p-6 md:w-1/2">
                     <div className="flex items-center mb-3">
-                      <span className="bg-[#0033a0] text-white text-xs px-3 py-1 rounded-full font-medium">
+                      <span className="bg-[#000d2e] text-white text-xs px-3 py-1 rounded-full font-medium">
                         {getCategory(filteredNews[0].source.name)}
                       </span>
                       <div className="flex items-center ml-3 text-sm text-gray-500">
@@ -257,7 +257,7 @@ export default function News() {
                         href={filteredNews[0].url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
+                        className="text-[#000d2e] hover:text-[#ff5900] font-semibold flex items-center"
                       >
                         Read Full Article <ExternalLink className="ml-1 h-4 w-4" />
                       </a>
@@ -294,7 +294,7 @@ export default function News() {
                   </div>
                   <div className="p-4">
                     <div className="flex items-center mb-2">
-                      <span className="bg-[#0033a0] text-white text-xs px-2 py-1 rounded-full font-medium">
+                      <span className="bg-[#000d2e] text-white text-xs px-2 py-1 rounded-full font-medium">
                         {getCategory(article.source.name)}
                       </span>
                       <div className="flex items-center ml-3 text-sm text-gray-500">
@@ -323,7 +323,7 @@ export default function News() {
                         href={article.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-[#0033a0] hover:text-[#ff5900] font-semibold text-sm flex items-center"
+                        className="text-[#000d2e] hover:text-[#ff5900] font-semibold text-sm flex items-center"
                       >
                         Read <ExternalLink className="ml-1 h-3 w-3" />
                       </a>
@@ -337,7 +337,7 @@ export default function News() {
         
         {/* News Sources Section */}
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Trusted Crypto News Sources</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Trusted Crypto News Sources</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {[
               { name: 'CoinDesk', logo: '/logos/coindesk.png' },
@@ -363,13 +363,13 @@ export default function News() {
 
         {/* Nedaxer Press Releases */}
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Nedaxer Press Releases</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Nedaxer Press Releases</h2>
           
           <div className="space-y-4 mb-8">
             {pressReleases.map((release, i) => (
               <div key={i} className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
                 <div className="flex items-start">
-                  <FileText className="text-[#0033a0] mt-1 mr-3 h-6 w-6 flex-shrink-0" />
+                  <FileText className="text-[#000d2e] mt-1 mr-3 h-6 w-6 flex-shrink-0" />
                   <div className="flex-grow">
                     <div className="flex items-center mb-1 text-sm text-gray-500">
                       <Calendar className="h-4 w-4 mr-1" />
@@ -378,7 +378,7 @@ export default function News() {
                     <h3 className="text-lg font-bold mb-2 text-gray-900">{release.title}</h3>
                     <Link 
                       href={release.link} 
-                      className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center text-sm"
+                      className="text-[#000d2e] hover:text-[#ff5900] font-semibold flex items-center text-sm"
                     >
                       Download Press Release <ArrowRight className="ml-1 h-4 w-4" />
                     </Link>
@@ -391,7 +391,7 @@ export default function News() {
           <div className="text-center">
             <Link 
               href="#" 
-              className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center justify-center"
+              className="text-[#000d2e] hover:text-[#ff5900] font-semibold flex items-center justify-center"
             >
               View All Press Releases <ArrowRight className="ml-1 h-4 w-4" />
             </Link>
@@ -400,20 +400,20 @@ export default function News() {
         
         {/* Cryptocurrency Resources */}
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Cryptocurrency Resources</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Cryptocurrency Resources</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
               <div className="flex items-center mb-4">
-                <Newspaper className="text-[#0033a0] h-8 w-8 mr-3" />
-                <h3 className="text-xl font-bold text-[#0033a0]">Market Reports</h3>
+                <Newspaper className="text-[#000d2e] h-8 w-8 mr-3" />
+                <h3 className="text-xl font-bold text-[#000d2e]">Market Reports</h3>
               </div>
               <p className="text-gray-700 mb-4">
                 Weekly and monthly cryptocurrency market reports, trend analysis, and blockchain data insights.
               </p>
               <Link 
                 href="#" 
-                className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
+                className="text-[#000d2e] hover:text-[#ff5900] font-semibold flex items-center"
               >
                 Download Reports <ArrowRight className="ml-1 h-4 w-4" />
               </Link>
@@ -421,15 +421,15 @@ export default function News() {
             
             <div className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
               <div className="flex items-center mb-4">
-                <Award className="text-[#0033a0] h-8 w-8 mr-3" />
-                <h3 className="text-xl font-bold text-[#0033a0]">Trading Guides</h3>
+                <Award className="text-[#000d2e] h-8 w-8 mr-3" />
+                <h3 className="text-xl font-bold text-[#000d2e]">Trading Guides</h3>
               </div>
               <p className="text-gray-700 mb-4">
                 Comprehensive guides to cryptocurrency trading, technical analysis, and strategy development.
               </p>
               <Link 
                 href="#" 
-                className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
+                className="text-[#000d2e] hover:text-[#ff5900] font-semibold flex items-center"
               >
                 View Guides <ArrowRight className="ml-1 h-4 w-4" />
               </Link>
@@ -437,15 +437,15 @@ export default function News() {
             
             <div className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
               <div className="flex items-center mb-4">
-                <FileText className="text-[#0033a0] h-8 w-8 mr-3" />
-                <h3 className="text-xl font-bold text-[#0033a0]">Research Papers</h3>
+                <FileText className="text-[#000d2e] h-8 w-8 mr-3" />
+                <h3 className="text-xl font-bold text-[#000d2e]">Research Papers</h3>
               </div>
               <p className="text-gray-700 mb-4">
                 In-depth research on blockchain technology, cryptocurrency markets, and emerging digital asset trends.
               </p>
               <Link 
                 href="#" 
-                className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
+                className="text-[#000d2e] hover:text-[#ff5900] font-semibold flex items-center"
               >
                 Browse Research <ArrowRight className="ml-1 h-4 w-4" />
               </Link>
@@ -454,7 +454,7 @@ export default function News() {
         </div>
 
         {/* Newsletter Signup */}
-        <div className="bg-gradient-to-r from-[#0033a0] to-[#ff5900] text-white rounded-xl p-8 text-center">
+        <div className="bg-gradient-to-r from-[#000d2e] to-[#ff5900] text-white rounded-xl p-8 text-center">
           <div className="max-w-2xl mx-auto">
             <div className="mb-6">
               <Zap className="h-12 w-12 mx-auto mb-4" />
@@ -469,7 +469,7 @@ export default function News() {
                   className="flex-grow px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-white text-gray-900"
                 />
                 <Button
-                  className="bg-white text-[#0033a0] hover:bg-gray-100 font-semibold px-6 py-3 rounded-lg"
+                  className="bg-white text-[#000d2e] hover:bg-gray-100 font-semibold px-6 py-3 rounded-lg"
                 >
                   Subscribe Now
                 </Button>

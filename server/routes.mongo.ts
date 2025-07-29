@@ -33,6 +33,11 @@ import adminKycRoutes from "./api/admin-kyc-routes";
 import compression from "compression";
 import serveStatic from "serve-static";
 import Parser from 'rss-parser';
+import { generateBrochurePDF } from "./pdf-generator";
+import puppeteer from 'puppeteer';
+import fs from 'fs';
+import path from 'path';
+import multer from 'multer';
 
 
 // Extend express-session types
@@ -193,6 +198,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Connect to MongoDB Atlas
   await connectToDatabase();
+
+  // Start background cleanup for expired email verifications (every 10 minutes)
+  setInterval(async () => {
+    try {
+      await storage.cleanupExpiredVerifications();
+    } catch (error) {
+      console.error('Background cleanup error:', error);
+    }
+  }, 10 * 60 * 1000); // 10 minutes
 
   // Initialize image optimizer asynchronously to prevent startup blocking
   setImmediate(async () => {
@@ -612,12 +626,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
         // Create notifications for both users
         const { Notification } = await import('./models/Notification');
         
+        // Create timestamp for notifications
+        const timestamp = new Date().toISOString().replace('T', ' ').substring(0, 19) + '(UTC)';
+        
         // Notification for sender (transfer sent)
         const senderNotification = new Notification({
           userId: senderId,
           type: 'transfer_sent',
           title: 'Transfer Sent',
-          message: `You sent $${transferAmount.toFixed(2)} to ${recipient?.firstName} ${recipient?.lastName}`,
+          message: `Dear valued Nedaxer trader,
+Your transfer has been sent successfully.
+Transfer amount: $${transferAmount.toFixed(2)}
+Recipient: ${recipient?.firstName || ''} ${recipient?.lastName || ''}
+Transaction ID: ${transactionId}
+Timestamp: ${timestamp}`,
           data: {
             transferId: transfer._id,
             transactionId,
@@ -634,7 +656,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
           userId: recipientId,
           type: 'transfer_received',
           title: 'Transfer Received',
-          message: `You received $${transferAmount.toFixed(2)} from ${sender?.firstName} ${sender?.lastName}`,
+          message: `Dear valued Nedaxer trader,
+Your transfer has been received successfully.
+Transfer amount: $${transferAmount.toFixed(2)}
+Sender: ${sender?.firstName || ''} ${sender?.lastName || ''}
+Transaction ID: ${transactionId}
+Timestamp: ${timestamp}`,
           data: {
             transferId: transfer._id,
             transactionId,
@@ -658,6 +685,42 @@ export async function registerRoutes(app: Express): Promise<Server> {
         console.log('🔄 Committing transaction...');
         await session.commitTransaction();
         console.log('✅ Transaction committed successfully');
+        
+        // Send transfer notification emails after successful transaction
+        try {
+          const { sendTransferSentEmail, sendTransferReceivedEmail } = await import('./email');
+          
+          // Get full user details for emails
+          const senderDetails = await User.findById(senderId).select('email firstName lastName');
+          const recipientDetails = await User.findById(recipientId).select('email firstName lastName');
+          
+          // Send email to sender
+          if (senderDetails?.email) {
+            await sendTransferSentEmail(
+              senderDetails.email,
+              senderDetails.firstName || 'User',
+              transferAmount.toFixed(2),
+              `${recipientDetails?.firstName || ''} ${recipientDetails?.lastName || ''}`.trim() || 'User',
+              transactionId
+            );
+            console.log(`✅ Transfer sent email sent to ${senderDetails.email}`);
+          }
+          
+          // Send email to recipient
+          if (recipientDetails?.email) {
+            await sendTransferReceivedEmail(
+              recipientDetails.email,
+              recipientDetails.firstName || 'User',
+              transferAmount.toFixed(2),
+              `${senderDetails?.firstName || ''} ${senderDetails?.lastName || ''}`.trim() || 'User',
+              transactionId
+            );
+            console.log(`✅ Transfer received email sent to ${recipientDetails.email}`);
+          }
+        } catch (emailError) {
+          console.error('❌ Failed to send transfer notification emails:', emailError);
+          // Don't fail the transfer if email fails
+        }
         
         // Broadcast via WebSocket
         const { getWebSocketServer } = await import('./websocket');
@@ -1411,7 +1474,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      // Ensure profile picture is properly included
+      // Ensure profile picture is properly included and add all profile fields
       const userData = {
         _id: user._id,
         uid: user.uid,
@@ -1419,6 +1482,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
+        phone: user.phone,
+        phoneNumber: user.phoneNumber,
+        dateOfBirth: user.dateOfBirth,
+        monthOfBirth: user.monthOfBirth,
+        yearOfBirth: user.yearOfBirth,
+        gender: user.gender,
+        countryCode: user.countryCode,
         profilePicture: user.profilePicture || null, // Explicit null for consistency
         favorites: user.favorites || [],
         preferences: user.preferences,
@@ -1443,6 +1513,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ success: false, message: 'Failed to fetch user data' });
     }
   });
+
+
 
   // Registration endpoint
   app.post('/api/auth/register', async (req: Request, res: Response) => {
@@ -1500,7 +1572,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      // Check if email already exists
+      // Check if email already exists in confirmed users
       const existingEmail = await storage.getUserByEmail(email);
       if (existingEmail) {
         return res.status(400).json({
@@ -1509,37 +1581,175 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      // Generate unique bot-style avatar using DiceBear (modern API)
-      const avatarUrl = `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(username)}`;
-      
-      console.log(`Generated DiceBear avatar for ${username}: ${avatarUrl}`);
+      // Check if pending registration already exists for this email
+      const { PendingRegistration } = await import('./models/PendingRegistration');
+      const existingPending = await PendingRegistration.findOne({ email });
+      if (existingPending) {
+        // Delete existing pending registration to allow re-registration
+        await PendingRegistration.deleteOne({ email });
+        console.log(`Removed existing pending registration for ${email}`);
+      }
 
-      // Create new user (automatically verified) with avatar and referral info
-      const newUser = await storage.createUser({
-        username,
+      // Generate cute smile face avatar for user profile
+      const { generateSmileFaceAvatar } = await import('./utils/avatar-generator');
+      const avatarUrl = generateSmileFaceAvatar(username);
+      
+      console.log(`Generated smile face avatar for ${username}: ${avatarUrl}`);
+
+      // Generate OTP for email verification
+      const { generateOTP } = await import('./utils/otp');
+      const otp = generateOTP();
+
+      // Store pending registration data (expires in 10 minutes)
+      const pendingRegistration = new PendingRegistration({
         email,
+        username,
         password,
         firstName,
         lastName,
-        profilePicture: avatarUrl,  // Store the DiceBear avatar URL
-        referredBy: referrerId  // Store who referred this user
+        phone: req.body.phone,
+        dateOfBirth: req.body.dateOfBirth,
+        monthOfBirth: req.body.monthOfBirth,
+        yearOfBirth: req.body.yearOfBirth,
+        gender: req.body.gender,
+        referralCode: req.body.referralCode,
+        profilePicture: avatarUrl,
+        referredBy: referrerId,
+        otp,
+        attempts: 0,
+        expiresAt: new Date(Date.now() + 10 * 60 * 1000) // 10 minutes
       });
 
-      // Automatically verify the user
-      await storage.markUserAsVerified(newUser._id.toString());
+      await pendingRegistration.save();
+      console.log(`Pending registration saved for ${email} with OTP: ${otp}, expires at: ${pendingRegistration.expiresAt}`);
 
-      console.log(`User created with ID: ${newUser._id}`);
+      // Send verification email
+      try {
+        await sendVerificationEmail(email, otp, firstName);
+        console.log(`✅ Verification email sent successfully to ${email}`);
+      } catch (emailError) {
+        console.error('❌ Failed to send verification email:', emailError);
+        // Clean up pending registration if email fails
+        await PendingRegistration.deleteOne({ email });
+        return res.status(500).json({
+          success: false,
+          message: "Failed to send verification email"
+        });
+      }
 
-      // Create only USD balance with $0.00 for new user
+      console.log(`Registration initiated for: ${email}. User has 10 minutes to verify.`);
+
+      return res.status(201).json({
+        success: true,
+        message: "Registration initiated! Please check your email for verification code. You have 10 minutes to verify.",
+        requiresVerification: true,
+        pendingRegistrationId: pendingRegistration._id,
+        email: email,
+        expiresIn: 600000 // 10 minutes in milliseconds
+      });
+
+    } catch (error) {
+      console.error('Registration error:', error);
+      return res.status(500).json({
+        success: false,
+        message: "Internal server error during registration"
+      });
+    }
+  });
+
+  // Email verification endpoints
+  app.post('/api/auth/verify-email', async (req: Request, res: Response) => {
+    try {
+      const { email, otp } = req.body;
+
+      if (!email || !otp) {
+        return res.status(400).json({
+          success: false,
+          message: 'Email and verification code are required.'
+        });
+      }
+
+      // Validate OTP format (6 digits)
+      if (!/^\d{6}$/.test(otp)) {
+        return res.status(400).json({
+          success: false,
+          message: 'Verification code must be 6 digits.'
+        });
+      }
+
+      // Find pending registration
+      const { PendingRegistration } = await import('./models/PendingRegistration');
+      const pendingRegistration = await PendingRegistration.findOne({ email });
+
+      if (!pendingRegistration) {
+        return res.status(400).json({
+          success: false,
+          message: 'No pending registration found for this email. Please register again.',
+          expired: true
+        });
+      }
+
+      // Check if expired (10 minutes)
+      if (new Date() > pendingRegistration.expiresAt) {
+        await PendingRegistration.deleteOne({ email });
+        return res.status(400).json({
+          success: false,
+          message: 'Verification code has expired. Please register again.',
+          expired: true
+        });
+      }
+
+      // Check attempts (max 5)
+      if (pendingRegistration.attempts >= 5) {
+        await PendingRegistration.deleteOne({ email });
+        return res.status(400).json({
+          success: false,
+          message: 'Too many verification attempts. Please register again.',
+          maxAttempts: true
+        });
+      }
+
+      // Verify OTP
+      if (pendingRegistration.otp !== otp) {
+        // Increment attempts
+        pendingRegistration.attempts += 1;
+        await pendingRegistration.save();
+        
+        return res.status(400).json({
+          success: false,
+          message: `Invalid verification code. ${5 - pendingRegistration.attempts} attempts remaining.`,
+          attemptsRemaining: 5 - pendingRegistration.attempts
+        });
+      }
+
+      // OTP is correct - create the actual user account
+      const newUser = await storage.createUser({
+        username: pendingRegistration.username,
+        email: pendingRegistration.email,
+        password: pendingRegistration.password,
+        firstName: pendingRegistration.firstName,
+        lastName: pendingRegistration.lastName,
+        phone: pendingRegistration.phone,
+        phoneNumber: pendingRegistration.phone,
+        dateOfBirth: pendingRegistration.dateOfBirth,
+        monthOfBirth: pendingRegistration.monthOfBirth,
+        yearOfBirth: pendingRegistration.yearOfBirth,
+        gender: pendingRegistration.gender,
+        profilePicture: pendingRegistration.profilePicture,
+        referredBy: pendingRegistration.referredBy,
+        isVerified: true // User is verified upon creation
+      });
+
+      console.log(`✅ User account created with ID: ${newUser._id}`);
+
+      // Create USD balance with $0.00 for new user
       try {
         const { Currency } = await import('./models/Currency');
         const { UserBalance } = await import('./models/UserBalance');
         
-        // Get USD currency only
         const usdCurrency = await Currency.findOne({ symbol: 'USD' });
         
         if (usdCurrency) {
-          // Create $0.00 USD balance for new user
           const zeroBalance = new UserBalance({
             userId: newUser._id, 
             currencyId: usdCurrency._id, 
@@ -1547,21 +1757,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
           });
           
           await zeroBalance.save();
-          console.log('Created $0.00 USD balance for new user');
+          console.log('✅ Created $0.00 USD balance for new user');
         }
       } catch (balanceError) {
         console.warn('Could not create initial balance:', balanceError);
-        // Don't fail registration if balance creation fails
       }
 
-      // Set session to automatically log user in after registration
+      // Clean up pending registration
+      await PendingRegistration.deleteOne({ email });
+      console.log(`✅ Pending registration cleaned up for ${email}`);
+
+      // Log user in after successful verification
       req.session.userId = newUser._id.toString();
 
-      console.log(`Registration and auto-login successful for user: ${email}`);
+      // Send welcome email
+      try {
+        await sendWelcomeEmail(newUser.email, newUser.firstName);
+        console.log(`✅ Welcome email sent to ${newUser.email}`);
+      } catch (emailError) {
+        console.error('❌ Failed to send welcome email:', emailError);
+        // Don't fail verification if welcome email fails
+      }
 
-      return res.status(201).json({
+      return res.json({
         success: true,
-        message: "Registration successful. You are now logged in.",
+        message: 'Email verified successfully! Your account has been created.',
+        showLoadingScreen: true, // Trigger 10-second loading screen
         user: {
           _id: newUser._id,
           uid: newUser.uid,
@@ -1570,16 +1791,84 @@ export async function registerRoutes(app: Express): Promise<Server> {
           firstName: newUser.firstName,
           lastName: newUser.lastName,
           isVerified: true,
-          profilePicture: newUser.profilePicture, // Use the saved avatar from database
-          isAdmin: false
+          profilePicture: newUser.profilePicture,
+          isAdmin: newUser.isAdmin || false
         }
       });
 
     } catch (error) {
-      console.error('Registration error:', error);
+      console.error('Email verification error:', error);
       return res.status(500).json({
         success: false,
-        message: "Internal server error during registration"
+        message: 'An error occurred during verification. Please try again.'
+      });
+    }
+  });
+
+  // Resend verification code endpoint
+  app.post('/api/auth/resend-verification', async (req: Request, res: Response) => {
+    try {
+      const { email } = req.body;
+
+      if (!email) {
+        return res.status(400).json({
+          success: false,
+          message: 'Email is required.'
+        });
+      }
+
+      // Find pending registration
+      const { PendingRegistration } = await import('./models/PendingRegistration');
+      const pendingRegistration = await PendingRegistration.findOne({ email });
+
+      if (!pendingRegistration) {
+        return res.status(404).json({
+          success: false,
+          message: 'No pending registration found for this email. Please register again.'
+        });
+      }
+
+      // Check if expired (10 minutes)
+      if (new Date() > pendingRegistration.expiresAt) {
+        await PendingRegistration.deleteOne({ email });
+        return res.status(400).json({
+          success: false,
+          message: 'Registration has expired. Please register again.',
+          expired: true
+        });
+      }
+
+      // Generate new OTP
+      const { generateOTP } = await import('./utils/otp');
+      const otp = generateOTP();
+
+      // Update pending registration with new OTP and reset attempts
+      pendingRegistration.otp = otp;
+      pendingRegistration.attempts = 0; // Reset attempts on resend
+      await pendingRegistration.save();
+
+      // Send verification email
+      try {
+        await sendVerificationEmail(email, otp, pendingRegistration.firstName);
+        console.log(`✅ Verification email resent to ${email}`);
+
+        return res.json({
+          success: true,
+          message: 'New verification code sent! Please check your email.'
+        });
+      } catch (emailError) {
+        console.error('❌ Failed to resend verification email:', emailError);
+        return res.status(500).json({
+          success: false,
+          message: 'Failed to send verification email. Please try again later.'
+        });
+      }
+
+    } catch (error) {
+      console.error('Resend verification error:', error);
+      return res.status(500).json({
+        success: false,
+        message: 'An error occurred. Please try again.'
       });
     }
   });
@@ -1683,12 +1972,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       console.log('✅ Password valid for user:', user.email);
 
-      // Generate avatar for users who don't have one
-      if (!user.profilePicture) {
-        const avatarUrl = `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(user.username)}`;
+      // Check if email is verified
+      if (!user.isVerified) {
+        console.log('❌ User email not verified:', user.email);
+        return res.status(403).json({
+          success: false,
+          message: "Please verify your email address before logging in. Check your inbox for a verification code.",
+          requiresVerification: true,
+          userId: user._id.toString(),
+          redirectTo: '/account/verify'
+        });
+      }
+
+      // Generate smile face avatar for users who don't have one or have bot avatars
+      if (!user.profilePicture || user.profilePicture.includes('bottts')) {
+        const { generateSmileFaceAvatar } = await import('./utils/avatar-generator');
+        const avatarUrl = generateSmileFaceAvatar(user.username);
         await storage.updateUserProfile(user._id.toString(), { profilePicture: avatarUrl });
         user.profilePicture = avatarUrl;
-        console.log(`Generated DiceBear avatar for existing user ${user.username}: ${avatarUrl}`);
+        console.log(`Generated smile face avatar for existing user ${user.username}: ${avatarUrl}`);
       }
 
       // Set session
@@ -1749,6 +2051,189 @@ export async function registerRoutes(app: Express): Promise<Server> {
         message: "Logout successful" 
       });
     });
+  });
+
+  // Password reset endpoints
+  app.post('/api/auth/forgot-password', async (req: Request, res: Response) => {
+    try {
+      const { email } = req.body;
+      
+      if (!email) {
+        return res.status(400).json({
+          success: false,
+          message: 'Email is required'
+        });
+      }
+
+      // Import required modules
+      const { User } = await import('./models/User');
+      const { PasswordReset } = await import('./models/PasswordReset');
+      const { generateOTP } = await import('./utils/otp');
+      
+      // Check if user exists
+      const user = await User.findOne({ email: email.toLowerCase() });
+      if (!user) {
+        return res.status(404).json({
+          success: false,
+          message: 'No account found with this email address'
+        });
+      }
+
+      // Generate reset code
+      const resetCode = generateOTP();
+      const expiresAt = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes
+
+      // Remove any existing reset codes for this email
+      await PasswordReset.deleteMany({ email: email.toLowerCase() });
+
+      // Create new password reset record
+      const passwordReset = new PasswordReset({
+        email: email.toLowerCase(),
+        resetCode,
+        expiresAt,
+        isUsed: false
+      });
+
+      await passwordReset.save();
+
+      // Send reset email
+      try {
+        await sendPasswordResetEmail(email, resetCode, user.firstName);
+        console.log(`✅ Password reset email sent to ${email}`);
+      } catch (emailError) {
+        console.error('❌ Failed to send reset email:', emailError);
+        // Don't fail the request if email fails in development
+        if (process.env.NODE_ENV !== 'development') {
+          throw emailError;
+        }
+      }
+
+      res.json({
+        success: true,
+        message: 'Password reset code sent to your email'
+      });
+
+    } catch (error) {
+      console.error('❌ Forgot password error:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Failed to send reset code. Please try again.'
+      });
+    }
+  });
+
+  app.post('/api/auth/verify-reset-code', async (req: Request, res: Response) => {
+    try {
+      const { email, resetCode } = req.body;
+      
+      if (!email || !resetCode) {
+        return res.status(400).json({
+          success: false,
+          message: 'Email and reset code are required'
+        });
+      }
+
+      const { PasswordReset } = await import('./models/PasswordReset');
+      
+      // Find valid reset code
+      const passwordReset = await PasswordReset.findOne({
+        email: email.toLowerCase(),
+        resetCode,
+        isUsed: false,
+        expiresAt: { $gt: new Date() }
+      });
+
+      if (!passwordReset) {
+        return res.status(400).json({
+          success: false,
+          message: 'Invalid or expired reset code'
+        });
+      }
+
+      res.json({
+        success: true,
+        message: 'Reset code verified successfully'
+      });
+
+    } catch (error) {
+      console.error('❌ Verify reset code error:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Failed to verify reset code'
+      });
+    }
+  });
+
+  app.post('/api/auth/reset-password', async (req: Request, res: Response) => {
+    try {
+      const { email, resetCode, newPassword } = req.body;
+      
+      if (!email || !resetCode || !newPassword) {
+        return res.status(400).json({
+          success: false,
+          message: 'Email, reset code, and new password are required'
+        });
+      }
+
+      if (newPassword.length < 6) {
+        return res.status(400).json({
+          success: false,
+          message: 'Password must be at least 6 characters long'
+        });
+      }
+
+      const { User } = await import('./models/User');
+      const { PasswordReset } = await import('./models/PasswordReset');
+      
+      // Find and verify reset code
+      const passwordReset = await PasswordReset.findOne({
+        email: email.toLowerCase(),
+        resetCode,
+        isUsed: false,
+        expiresAt: { $gt: new Date() }
+      });
+
+      if (!passwordReset) {
+        return res.status(400).json({
+          success: false,
+          message: 'Invalid or expired reset code'
+        });
+      }
+
+      // Find user
+      const user = await User.findOne({ email: email.toLowerCase() });
+      if (!user) {
+        return res.status(404).json({
+          success: false,
+          message: 'User not found'
+        });
+      }
+
+      // Hash new password
+      const hashedPassword = await bcrypt.hash(newPassword, 12);
+      
+      // Update user password
+      user.password = hashedPassword;
+      await user.save();
+
+      // Mark reset code as used
+      passwordReset.isUsed = true;
+      await passwordReset.save();
+
+      console.log(`✅ Password reset successful for user: ${email}`);
+
+      res.json({
+        success: true,
+        message: 'Password reset successfully'
+      });
+
+    } catch (error) {
+      console.error('❌ Reset password error:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Failed to reset password. Please try again.'
+      });
+    }
   });
 
   // Debug endpoint to check callback URL and OAuth config
@@ -1842,15 +2327,54 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // User profile management
+  // New endpoint specifically for individual field updates (phone, date, gender)
+  app.put('/api/auth/update-profile-data', requireAuth, async (req: Request, res: Response) => {
+    try {
+      const userId = req.session.userId!;
+      console.log('💾 Individual profile field update for user:', userId);
+      console.log('💾 Update data:', req.body);
+
+      const { phoneNumber, birthDate, gender, countryCode } = req.body;
+
+      const updateData: any = {};
+      if (phoneNumber !== undefined) updateData.phoneNumber = phoneNumber;
+      if (birthDate !== undefined) updateData.dateOfBirth = birthDate;
+      if (gender !== undefined) updateData.gender = gender;
+      if (countryCode !== undefined) updateData.countryCode = countryCode;
+
+      console.log('💾 Applying updates to MongoDB:', updateData);
+      
+      const result = await mongoStorage.updateUser(userId, updateData);
+      const updatedUser = await mongoStorage.getUser(userId);
+      
+      console.log('✅ Individual profile field updated successfully');
+      return res.json({ 
+        success: true, 
+        message: 'Profile field updated successfully',
+        user: updatedUser 
+      });
+    } catch (error) {
+      console.error('❌ Individual profile field update error:', error);
+      res.status(500).json({ 
+        success: false, 
+        message: 'Failed to update profile field' 
+      });
+    }
+  });
+
   app.put('/api/auth/profile', requireAuth, async (req: Request, res: Response) => {
     try {
       const userId = req.session.userId!;
-      const { username, firstName, lastName, profilePicture } = req.body;
+      const { username, firstName, lastName, profilePicture, phone, phoneNumber, dateOfBirth, email, gender, countryCode } = req.body;
 
-      console.log('Profile update request:', { 
-        userId, 
+      console.log('💾 Profile update request for user:', userId, { 
         hasProfilePicture: !!profilePicture,
-        profilePictureLength: profilePicture?.length 
+        profilePictureLength: profilePicture?.length,
+        phoneNumber,
+        dateOfBirth,
+        gender,
+        countryCode,
+        hasEmail: !!email
       });
 
       // Validate profile picture format if provided
@@ -1861,20 +2385,53 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      // Update user profile in MongoDB
-      await storage.updateUserProfile(userId, {
-        username,
-        firstName,
-        lastName,
-        profilePicture
-      });
+      // Build update object with consistent field names
+      const updateData: any = {};
+      if (username !== undefined) updateData.username = username;
+      if (firstName !== undefined) updateData.firstName = firstName;
+      if (lastName !== undefined) updateData.lastName = lastName;
+      if (profilePicture !== undefined) updateData.profilePicture = profilePicture;
+      // Use phoneNumber (preferred) or phone as fallback
+      if (phoneNumber !== undefined) updateData.phoneNumber = phoneNumber;
+      else if (phone !== undefined) updateData.phoneNumber = phone;
+      
+      // Handle date of birth - parse date string into separate fields
+      if (dateOfBirth !== undefined) {
+        try {
+          // Parse date string in format YYYY-MM-DD
+          const dateStr = dateOfBirth.toString();
+          if (dateStr.includes('-')) {
+            const [year, month, day] = dateStr.split('-');
+            updateData.yearOfBirth = year;
+            updateData.monthOfBirth = month.replace(/^0+/, ''); // Remove leading zeros
+            updateData.dateOfBirth = day.replace(/^0+/, ''); // Remove leading zeros
+            console.log('📅 Parsed date:', { dateStr, year, month: month.replace(/^0+/, ''), day: day.replace(/^0+/, '') });
+          } else {
+            // If it's just a single value, treat as day
+            updateData.dateOfBirth = dateOfBirth;
+          }
+        } catch (error) {
+          console.error('Error parsing dateOfBirth:', error);
+          updateData.dateOfBirth = dateOfBirth;
+        }
+      }
+      
+      if (email !== undefined) updateData.email = email;
+      if (gender !== undefined) updateData.gender = gender;
+      if (countryCode !== undefined) updateData.countryCode = countryCode;
 
-      // Get updated user data to return
+      console.log('💾 Applying profile updates to MongoDB:', updateData);
+
+      // Update user profile using MongoDB storage
+      const result = await storage.updateUser(userId, updateData);
       const updatedUser = await storage.getUser(userId);
 
-      console.log('Profile updated successfully for user:', userId, {
+      console.log('✅ Profile updated successfully for user:', userId, {
         hasProfilePicture: !!updatedUser?.profilePicture,
-        profilePictureLength: updatedUser?.profilePicture?.length
+        phoneNumber: updatedUser?.phoneNumber,
+        dateOfBirth: updatedUser?.dateOfBirth,
+        gender: updatedUser?.gender,
+        countryCode: updatedUser?.countryCode
       });
 
       res.json({ 
@@ -1887,12 +2444,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
           email: updatedUser?.email,
           firstName: updatedUser?.firstName,
           lastName: updatedUser?.lastName,
+          phoneNumber: updatedUser?.phoneNumber,
+          dateOfBirth: updatedUser?.dateOfBirth,
+          gender: updatedUser?.gender,
+          countryCode: updatedUser?.countryCode,
           profilePicture: updatedUser?.profilePicture,
           isVerified: updatedUser?.isVerified
         }
       });
     } catch (error) {
-      console.error('Profile update error:', error);
+      console.error('❌ Profile update error:', error);
       res.status(500).json({ success: false, message: "Failed to update profile" });
     }
   });
@@ -3048,6 +3609,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Fix user avatars endpoint for admin
+  app.post('/api/admin/users/fix-avatars', requireAdminAuth, async (req: Request, res: Response) => {
+    try {
+      const { fixUserAvatars } = await import('./api/fix-user-avatars');
+      await fixUserAvatars(req, res);
+    } catch (error) {
+      console.error('Fix avatars error:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Failed to fix user avatars'
+      });
+    }
+  });
+
   // Get user withdrawal restriction message
   app.get('/api/user/withdrawal-restriction', requireAuth, async (req: Request, res: Response) => {
     try {
@@ -3094,6 +3669,147 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // ADMIN PENDING DEPOSITS MANAGEMENT
+  
+  // Get all pending deposits for admin
+  app.get('/api/admin/pending-deposits', requireAdminAuth, async (req: Request, res: Response) => {
+    try {
+      const { mongoStorage } = await import('./mongoStorage');
+      const pendingDeposits = await mongoStorage.getAllPendingDeposits();
+      
+      res.json({ 
+        success: true, 
+        data: pendingDeposits 
+      });
+    } catch (error) {
+      console.error('Admin get pending deposits error:', error);
+      res.status(500).json({ success: false, message: "Failed to get pending deposits" });
+    }
+  });
+
+  // Approve pending deposit
+  app.post('/api/admin/pending-deposits/approve', requireAdminAuth, async (req: Request, res: Response) => {
+    try {
+      const { depositId, adminNotes } = req.body;
+      
+      if (!depositId) {
+        return res.status(400).json({ 
+          success: false, 
+          message: "Deposit ID is required" 
+        });
+      }
+      
+      const { mongoStorage } = await import('./mongoStorage');
+      const result = await mongoStorage.approvePendingDeposit(depositId, adminNotes);
+      
+      if (result) {
+        // Send deposit confirmation email to user
+        try {
+          const { sendDepositConfirmationEmail } = await import('./email');
+          const user = await mongoStorage.getUser(result.userId);
+          const pendingDeposit = await mongoStorage.getPendingDepositById(depositId);
+          
+          if (user && pendingDeposit) {
+            const cryptoAmount = result.calculatedCryptoAmount.toFixed(8);
+            await sendDepositConfirmationEmail(
+              user.email,
+              user.firstName || user.username || 'User',
+              cryptoAmount,
+              pendingDeposit.cryptoSymbol || 'Unknown',
+              pendingDeposit.usdAmount?.toString() || '0',
+              pendingDeposit.depositAddress || 'Unknown',
+              pendingDeposit.chainType || 'Unknown'
+            );
+            console.log(`✅ Deposit confirmation email sent to ${user.email} for ${cryptoAmount} ${pendingDeposit.cryptoSymbol}`);
+          }
+        } catch (emailError) {
+          console.error('❌ Failed to send deposit confirmation email:', emailError);
+          // Don't fail the approval if email fails
+        }
+        
+        // Real-time WebSocket notification for deposit approval
+        if ((global as any).wss) {
+          const broadcastData = {
+            type: 'DEPOSIT_APPROVED',
+            depositId: depositId,
+            timestamp: new Date().toISOString()
+          };
+          
+          (global as any).wss.clients.forEach((client: any) => {
+            if (client.readyState === 1) { // WebSocket.OPEN
+              client.send(JSON.stringify(broadcastData));
+            }
+          });
+          
+          console.log(`📡 Real-time deposit approval broadcasted for deposit ${depositId}`);
+        }
+        
+        res.json({ 
+          success: true, 
+          message: "Deposit approved and funds added to user account",
+          data: result 
+        });
+      } else {
+        res.status(404).json({ 
+          success: false, 
+          message: "Pending deposit not found" 
+        });
+      }
+    } catch (error) {
+      console.error('Admin approve deposit error:', error);
+      res.status(500).json({ success: false, message: "Failed to approve deposit" });
+    }
+  });
+
+  // Decline pending deposit
+  app.post('/api/admin/pending-deposits/decline', requireAdminAuth, async (req: Request, res: Response) => {
+    try {
+      const { depositId, adminNotes } = req.body;
+      
+      if (!depositId) {
+        return res.status(400).json({ 
+          success: false, 
+          message: "Deposit ID is required" 
+        });
+      }
+      
+      const { mongoStorage } = await import('./mongoStorage');
+      const success = await mongoStorage.declinePendingDeposit(depositId, adminNotes);
+      
+      if (success) {
+        // Real-time WebSocket notification for deposit decline
+        if ((global as any).wss) {
+          const broadcastData = {
+            type: 'DEPOSIT_DECLINED',
+            depositId: depositId,
+            timestamp: new Date().toISOString()
+          };
+          
+          (global as any).wss.clients.forEach((client: any) => {
+            if (client.readyState === 1) { // WebSocket.OPEN
+              client.send(JSON.stringify(broadcastData));
+            }
+          });
+          
+          console.log(`📡 Real-time deposit decline broadcasted for deposit ${depositId}`);
+        }
+        
+        res.json({ 
+          success: true, 
+          message: "Deposit declined successfully" 
+        });
+      } else {
+        res.status(404).json({ 
+          success: false, 
+          message: "Pending deposit not found" 
+        });
+      }
+    } catch (error) {
+      console.error('Admin decline deposit error:', error);
+      res.status(500).json({ success: false, message: "Failed to decline deposit" });
+    }
+  });
+
   // Get user activity analytics
   app.get('/api/admin/users/analytics', requireAdminAuth, async (req: Request, res: Response) => {
     try {
@@ -3133,6 +3849,149 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Admin analytics error:', error);
       res.status(500).json({ success: false, message: "Failed to get analytics" });
+    }
+  });
+
+  // Submit deposit receipt - Updated endpoint that matches frontend expectations
+  app.post('/api/deposits/submit-receipt', requireAuth, async (req: Request, res: Response) => {
+    try {
+      const userId = req.session.userId!;
+      const { cryptoSymbol, chainType, usdAmount, depositAddress, receiptFile } = req.body;
+      
+      // Validate required fields
+      if (!cryptoSymbol || !chainType || !usdAmount || !depositAddress || !receiptFile) {
+        return res.status(400).json({ 
+          success: false, 
+          message: "All deposit details and receipt file are required" 
+        });
+      }
+      
+      console.log('📝 Deposit receipt submission received:', {
+        userId,
+        cryptoSymbol,
+        chainType,
+        usdAmount,
+        depositAddress: depositAddress.substring(0, 10) + '...',
+        hasReceiptFile: !!receiptFile
+      });
+      
+      // Save receipt file
+      const fs = await import('fs');
+      const path = await import('path');
+      
+      // Create uploads directory if it doesn't exist
+      const uploadsDir = path.join(process.cwd(), 'temp-uploads');
+      if (!fs.existsSync(uploadsDir)) {
+        fs.mkdirSync(uploadsDir, { recursive: true });
+      }
+      
+      // Generate unique filename for receipt
+      const timestamp = Date.now();
+      const receiptFileName = `deposit-receipt-${userId}-${timestamp}.jpg`;
+      const receiptPath = path.join(uploadsDir, receiptFileName);
+      
+      try {
+        // Handle base64 image data
+        if (receiptFile.startsWith('data:image/')) {
+          const base64Data = receiptFile.replace(/^data:image\/[a-z]+;base64,/, '');
+          const buffer = Buffer.from(base64Data, 'base64');
+          fs.writeFileSync(receiptPath, buffer);
+        } else {
+          return res.status(400).json({
+            success: false,
+            message: "Invalid receipt file format"
+          });
+        }
+        
+        console.log('✅ Receipt file saved successfully:', receiptFileName);
+      } catch (fileError) {
+        console.error('❌ Failed to save receipt file:', fileError);
+        return res.status(500).json({
+          success: false,
+          message: "Failed to save receipt file"
+        });
+      }
+      
+      // Create pending deposit record
+      const { PendingDeposit } = await import('./models/PendingDeposit');
+      const { ObjectId } = await import('mongodb');
+      
+      const pendingDeposit = new PendingDeposit({
+        userId: new ObjectId(userId),
+        cryptoSymbol,
+        chainType,
+        amount: parseFloat(usdAmount),
+        usdAmount: parseFloat(usdAmount),
+        depositAddress,
+        receiptImageUrl: `temp-uploads/${receiptFileName}`,
+        status: 'pending_approval',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      });
+      
+      const savedDeposit = await pendingDeposit.save();
+      console.log('✅ Pending deposit created with ID:', savedDeposit._id);
+      
+      // Get user details for admin notification
+      const { mongoStorage } = await import('./mongoStorage');
+      const user = await mongoStorage.getUser(userId);
+      
+      if (user) {
+        try {
+          // Send admin notification email
+          const { sendAdminDepositNotification } = await import('./email');
+          
+          // Read receipt file for email attachment
+          let receiptBuffer: Buffer | undefined;
+          try {
+            receiptBuffer = fs.readFileSync(receiptPath);
+            console.log('✅ Receipt file loaded for email attachment');
+          } catch (fileError) {
+            console.log('⚠️ Could not read receipt file for attachment:', fileError);
+          }
+          
+          // Send admin notification
+          await sendAdminDepositNotification(user, savedDeposit, receiptBuffer);
+          console.log('✅ Admin notification email sent to leesmart995@gmail.com');
+          
+        } catch (emailError) {
+          console.error('❌ Failed to send admin notification email:', emailError);
+          // Don't fail the deposit submission if email fails
+        }
+      }
+      
+      // Broadcast real-time update to admin dashboard
+      if ((global as any).wss) {
+        const broadcastData = {
+          type: 'NEW_DEPOSIT_SUBMISSION',
+          depositId: savedDeposit._id,
+          userId: userId,
+          cryptoSymbol,
+          usdAmount: parseFloat(usdAmount),
+          timestamp: new Date().toISOString()
+        };
+        
+        (global as any).wss.clients.forEach((client: any) => {
+          if (client.readyState === 1) { // WebSocket.OPEN
+            client.send(JSON.stringify(broadcastData));
+          }
+        });
+        
+        console.log('📡 Real-time deposit submission broadcasted to admin dashboard');
+      }
+      
+      res.json({ 
+        success: true, 
+        message: "Deposit receipt submitted successfully. Your deposit is now pending admin approval.",
+        depositId: savedDeposit._id
+      });
+      
+    } catch (error) {
+      console.error('❌ Submit deposit receipt error:', error);
+      res.status(500).json({ 
+        success: false, 
+        message: "Failed to submit receipt. Please try again." 
+      });
     }
   });
 
@@ -3365,6 +4224,24 @@ Timestamp: ${new Date().toISOString().replace('T', ' ').substring(0, 19)}(UTC)`;
         }
       });
 
+      // Send deposit confirmation email to user
+      try {
+        const { sendDepositConfirmationEmail } = await import('./email');
+        await sendDepositConfirmationEmail(
+          user.email,
+          user.firstName || user.username || 'User',
+          cryptoAmount.toFixed(6),
+          cryptoSymbol,
+          usdAmount.toString(),
+          actualDepositAddress,
+          chainType
+        );
+        console.log(`✅ Deposit confirmation email sent to ${user.email} for admin-created deposit`);
+      } catch (emailError) {
+        console.error('❌ Failed to send deposit confirmation email:', emailError);
+        // Don't fail the deposit creation if email fails
+      }
+
       // Broadcast real-time update via WebSocket
       const wss = (req.app as any).get('wss');
       if (wss) {
@@ -3392,7 +4269,7 @@ Timestamp: ${new Date().toISOString().replace('T', ' ').substring(0, 19)}(UTC)`;
 
       res.json({ 
         success: true, 
-        message: `Deposit created successfully. User notified of ${cryptoAmount.toFixed(8)} ${cryptoSymbol} deposit.`,
+        message: `Deposit created successfully. User notified via platform and email of ${cryptoAmount.toFixed(8)} ${cryptoSymbol} deposit.`,
         transaction: transaction
       });
     } catch (error) {
@@ -3752,6 +4629,211 @@ Timestamp: ${new Date().toISOString().replace('T', ' ').substring(0, 19)}(UTC)`;
     }
   });
 
+  // PENDING DEPOSITS API ENDPOINTS
+  
+  // Get user's pending deposit
+  app.get('/api/deposits/pending', requireAuth, async (req: Request, res: Response) => {
+    try {
+      const userId = req.session.userId!;
+      
+      const { mongoStorage } = await import('./mongoStorage');
+      const pendingDeposit = await mongoStorage.getUserPendingDeposit(userId);
+      
+      res.json({ 
+        success: true, 
+        data: pendingDeposit 
+      });
+    } catch (error) {
+      console.error('Get pending deposit error:', error);
+      res.status(500).json({ success: false, message: "Failed to get pending deposit" });
+    }
+  });
+
+  // Create pending deposit
+  app.post('/api/deposits/pending', requireAuth, async (req: Request, res: Response) => {
+    try {
+      const userId = req.session.userId!;
+      const { cryptoSymbol, chainType, depositAddress, usdAmount } = req.body;
+      
+      // Validate required fields
+      if (!cryptoSymbol || !chainType || !depositAddress || !usdAmount) {
+        return res.status(400).json({ 
+          success: false, 
+          message: "Missing required fields" 
+        });
+      }
+      
+      // Validate minimum amount
+      if (usdAmount < 500) {
+        return res.status(400).json({ 
+          success: false, 
+          message: "Minimum deposit amount is $500" 
+        });
+      }
+      
+      const { mongoStorage } = await import('./mongoStorage');
+      const pendingDeposit = await mongoStorage.createPendingDeposit({
+        userId,
+        cryptoSymbol,
+        chainType,
+        depositAddress,
+        usdAmount
+      });
+      
+      res.json({ 
+        success: true, 
+        data: pendingDeposit,
+        message: "Pending deposit created successfully"
+      });
+    } catch (error) {
+      console.error('Create pending deposit error:', error);
+      res.status(500).json({ success: false, message: "Failed to create pending deposit" });
+    }
+  });
+
+  // Submit receipt for pending deposit
+  app.post('/api/deposits/pending/submit', requireAuth, async (req: Request, res: Response) => {
+    try {
+      const userId = req.session.userId!;
+      const { receiptImageUrl } = req.body;
+      
+      if (!receiptImageUrl) {
+        return res.status(400).json({ 
+          success: false, 
+          message: "Receipt image URL is required" 
+        });
+      }
+      
+      const { mongoStorage } = await import('./mongoStorage');
+      const success = await mongoStorage.updatePendingDepositReceipt(userId, receiptImageUrl);
+      
+      if (success) {
+        // Get user details and pending deposit details for admin notification
+        const user = await mongoStorage.getUser(userId);
+        const pendingDeposit = await mongoStorage.getPendingDeposit(userId);
+        
+        if (user && pendingDeposit) {
+          try {
+            // Send admin notification with deposit details
+            const { sendAdminDepositNotification } = await import('./email');
+            
+            // Try to read the receipt image file for attachment
+            let receiptBuffer: Buffer | undefined;
+            try {
+              const fs = await import('fs');
+              const path = await import('path');
+              
+              // Construct full path to the uploaded receipt
+              const receiptPath = path.join(process.cwd(), receiptImageUrl);
+              if (fs.existsSync(receiptPath)) {
+                receiptBuffer = fs.readFileSync(receiptPath);
+              }
+            } catch (fileError) {
+              console.log('Could not read receipt file for attachment:', fileError);
+            }
+            
+            await sendAdminDepositNotification(user, pendingDeposit, receiptBuffer);
+            console.log('Admin notification sent for deposit submission by user:', user.email);
+          } catch (emailError) {
+            console.error('Failed to send admin notification, but deposit submission successful:', emailError);
+            // Don't fail the deposit submission if email fails
+          }
+        }
+        
+        res.json({ 
+          success: true, 
+          message: "Receipt submitted successfully. Your deposit is now pending approval."
+        });
+      } else {
+        res.status(404).json({ 
+          success: false, 
+          message: "No pending deposit found" 
+        });
+      }
+    } catch (error) {
+      console.error('Submit receipt error:', error);
+      res.status(500).json({ success: false, message: "Failed to submit receipt" });
+    }
+  });
+
+  // Cancel pending deposit
+  app.delete('/api/deposits/pending', requireAuth, async (req: Request, res: Response) => {
+    try {
+      const userId = req.session.userId!;
+      
+      const { mongoStorage } = await import('./mongoStorage');
+      await mongoStorage.cancelPendingDeposit(userId);
+      
+      res.json({ 
+        success: true, 
+        message: "Pending deposit cancelled successfully"
+      });
+    } catch (error) {
+      console.error('Cancel pending deposit error:', error);
+      res.status(500).json({ success: false, message: "Failed to cancel pending deposit" });
+    }
+  });
+
+  // Configure multer for file uploads
+  const uploadStorage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      const uploadDir = 'temp-uploads';
+      if (!fs.existsSync(uploadDir)) {
+        fs.mkdirSync(uploadDir, { recursive: true });
+      }
+      cb(null, uploadDir);
+    },
+    filename: function (req, file, cb) {
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+      cb(null, 'receipt-' + uniqueSuffix + path.extname(file.originalname));
+    }
+  });
+
+  const upload = multer({ 
+    storage: uploadStorage,
+    limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
+    fileFilter: (req, file, cb) => {
+      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+      if (allowedTypes.includes(file.mimetype)) {
+        cb(null, true);
+      } else {
+        cb(new Error('Invalid file type. Only JPEG, PNG, and WebP images are allowed.'));
+      }
+    }
+  });
+
+  // Upload receipt image endpoint
+  app.post('/api/upload/receipt', requireAuth, upload.single('receipt'), async (req: Request, res: Response) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ success: false, message: 'No file uploaded' });
+      }
+
+      // Create a URL for the uploaded file
+      const fileUrl = `/uploads/${req.file.filename}`;
+      
+      res.json({
+        success: true,
+        data: {
+          url: fileUrl,
+          filename: req.file.filename,
+          size: req.file.size
+        }
+      });
+    } catch (error) {
+      console.error('Upload receipt error:', error);
+      res.status(500).json({ success: false, message: 'Failed to upload receipt' });
+    }
+  });
+
+  // Serve uploaded files
+  app.use('/uploads', serveStatic('temp-uploads', {
+    maxAge: '1d',
+    setHeaders: (res) => {
+      res.setHeader('Cache-Control', 'public, max-age=86400');
+    }
+  }));
+
   // Check withdrawal eligibility
   app.get('/api/withdrawals/eligibility', requireAuth, async (req: Request, res: Response) => {
     try {
@@ -3894,6 +4976,29 @@ Timestamp: ${new Date().toISOString().replace('T', ' ').substring(0, 19)}(UTC)`,
           networkName
         }
       });
+
+      // Send withdrawal confirmation email to user
+      try {
+        const user = await mongoStorage.getUser(userId);
+        if (user && user.email) {
+          const { sendWithdrawalConfirmationEmail } = await import('./email');
+          
+          await sendWithdrawalConfirmationEmail(
+            user.email,
+            user.firstName || user.username || 'User',
+            parseFloat(cryptoAmount).toFixed(6),
+            cryptoSymbol,
+            parseFloat(usdAmount).toFixed(2),
+            withdrawalAddress,
+            networkName
+          );
+          
+          console.log(`📧 Withdrawal confirmation email sent to: ${user.email}`);
+        }
+      } catch (emailError) {
+        console.error('Failed to send withdrawal confirmation email:', emailError);
+        // Don't fail the withdrawal if email fails
+      }
 
       // Real-time WebSocket notification
       if (global.wss) {
@@ -5141,6 +6246,73 @@ Timestamp: ${new Date().toISOString().replace('T', ' ').substring(0, 19)}(UTC)`,
     } catch (error) {
       console.error('Error serving asset:', error);
       res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
+  // HTML Brochure for Print-to-PDF
+  app.get('/api/brochure/download', async (req: Request, res: Response) => {
+    try {
+      console.log('📄 Brochure HTML generation request received');
+      
+      const htmlContent = generateBrochurePDF();
+      
+      // Set response headers for HTML download that can be printed to PDF
+      res.setHeader('Content-Type', 'text/html');
+      res.setHeader('Content-Disposition', 'inline; filename="Nedaxer-Investment-Brochure.html"');
+      
+      // Send HTML content optimized for printing
+      res.send(htmlContent);
+      
+      console.log('📄 Brochure HTML served successfully');
+      
+    } catch (error) {
+      console.error('Brochure generation error:', error);
+      res.status(500).json({ 
+        success: false, 
+        message: 'Failed to generate brochure',
+        error: error.message 
+      });
+    }
+  });
+
+  // Direct PDF download using html-pdf-node
+  app.get('/api/brochure/pdf', async (req: Request, res: Response) => {
+    try {
+      console.log('📄 PDF generation request received');
+      
+      const htmlContent = generateBrochurePDF();
+      
+      const htmlPdf = await import('html-pdf-node');
+      
+      const options = {
+        format: 'A4',
+        printBackground: true,
+        margin: { top: 0, right: 0, bottom: 0, left: 0 },
+        displayHeaderFooter: false
+      };
+
+      const file = { content: htmlContent };
+      
+      // Generate PDF buffer
+      const pdfBuffer = await htmlPdf.generatePdf(file, options);
+      
+      console.log('📄 PDF generated successfully');
+      
+      // Set response headers for PDF download
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', 'attachment; filename="Nedaxer-Investment-Brochure.pdf"');
+      res.setHeader('Content-Length', pdfBuffer.length);
+      
+      // Send PDF
+      res.send(pdfBuffer);
+      
+    } catch (error) {
+      console.error('PDF generation error:', error);
+      res.status(500).json({ 
+        success: false, 
+        message: 'Failed to generate PDF',
+        error: error.message 
+      });
     }
   });
   

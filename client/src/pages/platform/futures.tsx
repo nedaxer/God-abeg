@@ -142,7 +142,7 @@ export default function FuturesTrading() {
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
           <div>
             <h1 className="text-2xl font-bold text-gray-900 flex items-center space-x-2">
-              <Zap className="h-8 w-8 text-[#0033a0]" />
+              <Zap className="h-8 w-8 text-[#000d2e]" />
               <span>Futures Trading</span>
             </h1>
             <p className="text-gray-600">Trade crypto futures with up to 100x leverage</p>
@@ -176,7 +176,7 @@ export default function FuturesTrading() {
                   <p className="text-sm text-gray-600">Account Balance</p>
                   <p className="text-lg font-bold">${accountBalance.toLocaleString()}</p>
                 </div>
-                <DollarSign className="h-6 w-6 text-[#0033a0]" />
+                <DollarSign className="h-6 w-6 text-[#000d2e]" />
               </div>
             </CardContent>
           </Card>
@@ -245,7 +245,7 @@ export default function FuturesTrading() {
               <CardContent>
                 <div className="h-96 bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-300">
                   <div className="text-center">
-                    <BarChart3 className="h-16 w-16 text-[#0033a0] mx-auto mb-4" />
+                    <BarChart3 className="h-16 w-16 text-[#000d2e] mx-auto mb-4" />
                     <h3 className="text-xl font-semibold text-gray-700 mb-2">Advanced Futures Chart</h3>
                     <p className="text-gray-500 mb-4">Real-time price data with leverage indicators</p>
                     <div className="flex justify-center space-x-4 text-sm text-gray-600">

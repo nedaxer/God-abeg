@@ -1,0 +1,14 @@
+Checking for unsafe innerHTML usage...
+client/src/components/lightweight-chart.tsx:        chartContainerRef.current.innerHTML = `
+client/src/components/tradingview-widget.tsx:    script.innerHTML = JSON.stringify({
+client/src/components/tradingview-widget.tsx:        containerRef.current.innerHTML = '';
+client/src/components/mobile-header.tsx:                  e.currentTarget.parentElement!.innerHTML = '<span class="text-white font-bold text-sm">N</span>';
+client/src/hooks/use-push-notifications.tsx:    modal.innerHTML = `
+client/src/pages/company/contact.tsx:      successBanner.innerHTML = `
+client/src/pages/mobile/withdrawal.tsx.backup:                      fallbackDiv.innerHTML = `<span class="text-white font-bold text-xs">${selectedCrypto.symbol.charAt(0)}</span>`;
+client/src/pages/mobile/withdrawal.tsx:                      fallbackDiv.innerHTML = `<span class="text-white font-bold text-xs">${selectedCrypto.symbol.charAt(0)}</span>`;
+client/src/pages/mobile/news.tsx:                              parent.innerHTML = getSourceLogo(article.source?.name || 'Crypto News');
+client/src/pages/mobile/trade.tsx:        chartContainer.innerHTML = '';
+client/src/pages/mobile/home.tsx:          scannerModal.innerHTML = `
+client/src/utils/tradingview-cache.ts:    this.container.innerHTML = '';
+client/src/utils/tradingview-cache.ts:      this.container.innerHTML = '';

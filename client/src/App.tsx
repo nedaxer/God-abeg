@@ -5,6 +5,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '@/lib/queryClient';
 import { AuthProvider } from '@/hooks/use-auth';
 import { ProtectedRoute } from '@/components/protected-route';
+import { ProtectedRouteWithTransition } from '@/components/protected-route-with-transition';
 import { AuthRedirect } from '@/components/auth-redirect';
 
 import { PWAInstallPrompt } from '@/components/pwa-install-prompt';
@@ -12,6 +13,7 @@ import { SplashScreen } from '@/components/splash-screen';
 import { BottomSlideBanner } from '@/components/bottom-slide-banner';
 import { useBottomBanner } from '@/hooks/use-bottom-banner';
 import { ErrorBoundary } from '@/components/error-boundary';
+import { TransitionRoute, NoTransitionRoute } from '@/components/route-transition-wrapper';
 
 import { LanguageProvider } from '@/contexts/language-context';
 import { ThemeProvider } from '@/contexts/theme-context';
@@ -80,6 +82,7 @@ import Terms from '@/pages/legal/terms';
 import Login from '@/pages/account/login';
 import Register from '@/pages/account/register';
 import ForgotPassword from '@/pages/account/forgot-password';
+import ResetPassword from '@/pages/account/reset-password';
 import VerifyAccount from '@/pages/account/verify';
 
 // Legacy Dashboard Pages (keeping for compatibility)
@@ -95,6 +98,7 @@ import MobileTrade from '@/pages/mobile/trade';
 import MobileMarkets from '@/pages/mobile/markets';
 import MobileEarn from '@/pages/mobile/earn';
 import MobileProfile from '@/pages/mobile/profile';
+import ProfileSettings from '@/pages/mobile/profile-settings';
 
 import MobileFutures from '@/pages/mobile/futures';
 import MobileSpot from '@/pages/mobile/spot';
@@ -104,7 +108,7 @@ import NotificationSettings from '@/pages/mobile/notification-settings';
 import Chatbot from '@/pages/mobile/chatbot';
 
 import MobileNews from '@/pages/mobile/news';
-import MobileSettings from '@/pages/mobile/settings';
+
 import MobileSecurity from '@/pages/mobile/security';
 import LanguageSelection from '@/pages/mobile/language-selection';
 import AssetsHistory from '@/pages/mobile/assets-history';
@@ -115,6 +119,7 @@ import Transfer from '@/pages/mobile/transfer';
 import MobileWithdrawal from '@/pages/mobile/withdrawal';
 import MessagesPage from '@/pages/mobile/messages';
 import DepositSelectionPage from '@/pages/mobile/deposit-selection';
+import MobileDeposit from '@/pages/mobile/deposit';
 import { VerificationFlow } from '@/pages/mobile/verification/VerificationFlow';
 import MobileKYCStatus from '@/pages/mobile/kyc-status';
 import VerificationSubmitted from '@/pages/mobile/verification-submitted';
@@ -127,6 +132,7 @@ import UnifiedAdminPortal from '@/pages/admin-portal-unified';
 import SiteMap from '@/pages/site-map';
 import PortfolioDemo from '@/pages/portfolio-demo';
 import BannerTest from '@/pages/banner-test';
+import TransitionDemo from '@/pages/transition-demo';
 
 
 
@@ -271,79 +277,160 @@ export default function App() {
                   }
                 >
             <Switch>
-            {/* Home route with auth redirect */}
+            {/* Home route with auth redirect - WITH Glass Slide Transition */}
             <Route path="/">
               {(params) => (
-                <AuthRedirect>
-                  <Home {...(params || {})} />
-                </AuthRedirect>
+                <TransitionRoute>
+                  <AuthRedirect>
+                    <Home {...(params || {})} />
+                  </AuthRedirect>
+                </TransitionRoute>
               )}
             </Route>
 
-            {/* Company Routes */}
-            <Route path="/company/about" component={About} />
-            <Route path="/company/careers" component={Careers} />
-            <Route path="/company/contact" component={Contact} />
-            <Route path="/company/news" component={News} />
-            <Route path="/company/regulations" component={Regulations} />
+            {/* Company Routes - With Glass Slide Transitions */}
+            <Route path="/company/about">
+              {(params) => <TransitionRoute><About {...(params || {})} /></TransitionRoute>}
+            </Route>
+            <Route path="/company/careers">
+              {(params) => <TransitionRoute><Careers {...(params || {})} /></TransitionRoute>}
+            </Route>
+            <Route path="/company/contact">
+              {(params) => <TransitionRoute><Contact {...(params || {})} /></TransitionRoute>}
+            </Route>
+            <Route path="/company/news">
+              {(params) => <TransitionRoute><News {...(params || {})} /></TransitionRoute>}
+            </Route>
+            <Route path="/company/regulations">
+              {(params) => <TransitionRoute><Regulations {...(params || {})} /></TransitionRoute>}
+            </Route>
 
-            {/* Products Routes */}
-            <Route path="/products/binary-options" component={BinaryOptions} />
-            <Route path="/products/call-spreads" component={CallSpreads} />
-            <Route path="/products/knock-outs" component={KnockOuts} />
-            <Route path="/products/pricing" component={Pricing} />
-            <Route path="/products/touch-brackets" component={TouchBrackets} />
+            {/* Products Routes - With Glass Slide Transitions */}
+            <Route path="/products/binary-options">
+              {(params) => <TransitionRoute><BinaryOptions {...(params || {})} /></TransitionRoute>}
+            </Route>
+            <Route path="/products/call-spreads">
+              {(params) => <TransitionRoute><CallSpreads {...(params || {})} /></TransitionRoute>}
+            </Route>
+            <Route path="/products/knock-outs">
+              {(params) => <TransitionRoute><KnockOuts {...(params || {})} /></TransitionRoute>}
+            </Route>
+            <Route path="/products/pricing">
+              {(params) => <TransitionRoute><Pricing {...(params || {})} /></TransitionRoute>}
+            </Route>
+            <Route path="/products/touch-brackets">
+              {(params) => <TransitionRoute><TouchBrackets {...(params || {})} /></TransitionRoute>}
+            </Route>
 
-            {/* Markets Routes */}
-            <Route path="/markets/altcoins" component={AltcoinMarkets} />
-            <Route path="/markets/bitcoin" component={BitcoinMarkets} />
-            <Route path="/markets/commodities" component={Commodities} />
-            <Route path="/markets/crypto-events" component={CryptoEvents} />
-            <Route path="/markets/ethereum" component={EthereumMarkets} />
-            <Route path="/markets/events" component={Events} />
-            <Route path="/markets/market-data" component={MarketData} />
-            <Route path="/markets/live-markets" component={LiveMarkets} />
+            {/* Markets Routes - With Glass Slide Transitions */}
+            <Route path="/markets/altcoins">
+              {(params) => <TransitionRoute><AltcoinMarkets {...(params || {})} /></TransitionRoute>}
+            </Route>
+            <Route path="/markets/bitcoin">
+              {(params) => <TransitionRoute><BitcoinMarkets {...(params || {})} /></TransitionRoute>}
+            </Route>
+            <Route path="/markets/commodities">
+              {(params) => <TransitionRoute><Commodities {...(params || {})} /></TransitionRoute>}
+            </Route>
+            <Route path="/markets/crypto-events">
+              {(params) => <TransitionRoute><CryptoEvents {...(params || {})} /></TransitionRoute>}
+            </Route>
+            <Route path="/markets/ethereum">
+              {(params) => <TransitionRoute><EthereumMarkets {...(params || {})} /></TransitionRoute>}
+            </Route>
+            <Route path="/markets/events">
+              {(params) => <TransitionRoute><Events {...(params || {})} /></TransitionRoute>}
+            </Route>
+            <Route path="/markets/market-data">
+              {(params) => <TransitionRoute><MarketData {...(params || {})} /></TransitionRoute>}
+            </Route>
+            <Route path="/markets/live-markets">
+              {(params) => <TransitionRoute><LiveMarkets {...(params || {})} /></TransitionRoute>}
+            </Route>
 
-            {/* Platform Routes */}
-            <Route path="/platform/funding" component={Funding} />
-            <Route path="/platform/mobile-app" component={MobileApp} />
-            <Route path="/platform/security" component={Security} />
-            <Route path="/platform/web-platform" component={WebPlatform} />
+            {/* Platform Routes - With Glass Slide Transitions */}
+            <Route path="/platform/funding">
+              {(params) => <TransitionRoute><Funding {...(params || {})} /></TransitionRoute>}
+            </Route>
+            <Route path="/platform/mobile-app">
+              {(params) => <TransitionRoute><MobileApp {...(params || {})} /></TransitionRoute>}
+            </Route>
+            <Route path="/platform/security">
+              {(params) => <TransitionRoute><Security {...(params || {})} /></TransitionRoute>}
+            </Route>
+            <Route path="/platform/web-platform">
+              {(params) => <TransitionRoute><WebPlatform {...(params || {})} /></TransitionRoute>}
+            </Route>
 
-            {/* Learn Routes */}
-            <Route path="/learn/binary-options" component={BinaryOptionsLearn} />
-            <Route path="/learn/call-spreads" component={CallSpreadsLearn} />
-            <Route path="/learn/getting-started" component={GettingStarted} />
-            <Route path="/learn/knock-outs" component={KnockOutsLearn} />
-            <Route path="/learn/trading-guides" component={TradingGuides} />
-            <Route path="/learn/trading-strategies" component={TradingStrategies} />
-            <Route path="/learn/webinars" component={Webinars} />
+            {/* Learn Routes - With Glass Slide Transitions */}
+            <Route path="/learn/binary-options">
+              {(params) => <TransitionRoute><BinaryOptionsLearn {...(params || {})} /></TransitionRoute>}
+            </Route>
+            <Route path="/learn/call-spreads">
+              {(params) => <TransitionRoute><CallSpreadsLearn {...(params || {})} /></TransitionRoute>}
+            </Route>
+            <Route path="/learn/getting-started">
+              {(params) => <TransitionRoute><GettingStarted {...(params || {})} /></TransitionRoute>}
+            </Route>
+            <Route path="/learn/knock-outs">
+              {(params) => <TransitionRoute><KnockOutsLearn {...(params || {})} /></TransitionRoute>}
+            </Route>
+            <Route path="/learn/trading-guides">
+              {(params) => <TransitionRoute><TradingGuides {...(params || {})} /></TransitionRoute>}
+            </Route>
+            <Route path="/learn/trading-strategies">
+              {(params) => <TransitionRoute><TradingStrategies {...(params || {})} /></TransitionRoute>}
+            </Route>
+            <Route path="/learn/webinars">
+              {(params) => <TransitionRoute><Webinars {...(params || {})} /></TransitionRoute>}
+            </Route>
 
-            {/* Legal Routes */}
-            <Route path="/legal/cftc" component={CFTC} />
-            <Route path="/legal/privacy" component={Privacy} />
-            <Route path="/legal/risk" component={Risk} />
-            <Route path="/legal/terms" component={Terms} />
+            {/* Legal Routes - With Glass Slide Transitions */}
+            <Route path="/legal/cftc">
+              {(params) => <TransitionRoute><CFTC {...(params || {})} /></TransitionRoute>}
+            </Route>
+            <Route path="/legal/privacy">
+              {(params) => <TransitionRoute><Privacy {...(params || {})} /></TransitionRoute>}
+            </Route>
+            <Route path="/legal/risk">
+              {(params) => <TransitionRoute><Risk {...(params || {})} /></TransitionRoute>}
+            </Route>
+            <Route path="/legal/terms">
+              {(params) => <TransitionRoute><Terms {...(params || {})} /></TransitionRoute>}
+            </Route>
 
-            {/* Account Routes - with redirection for authenticated users */}
+            {/* Account Routes - with redirection for authenticated users and Glass Slide Transitions */}
             <Route path="/account/login">
               {(params) => (
-                <AuthRedirect redirectTo="/mobile">
-                  <Login {...(params || {})} />
-                </AuthRedirect>
+                <TransitionRoute>
+                  <AuthRedirect redirectTo="/mobile">
+                    <Login {...(params || {})} />
+                  </AuthRedirect>
+                </TransitionRoute>
               )}
             </Route>
             <Route path="/account/register">
               {(params) => (
-                <AuthRedirect redirectTo="/mobile">
-                  <Register {...(params || {})} />
-                </AuthRedirect>
+                <TransitionRoute>
+                  <AuthRedirect redirectTo="/mobile">
+                    <Register {...(params || {})} />
+                  </AuthRedirect>
+                </TransitionRoute>
               )}
             </Route>
-            <Route path="/account/forgot-password" component={ForgotPassword} />
-            {/* Redirect verify to mobile since we no longer need verification */}
+            <Route path="/account/forgot-password">
+              {(params) => <TransitionRoute><ForgotPassword {...(params || {})} /></TransitionRoute>}
+            </Route>
+            <Route path="/account/reset-password">
+              {(params) => <TransitionRoute><ResetPassword {...(params || {})} /></TransitionRoute>}
+            </Route>
+            {/* Alternative route to catch reset-password with query params */}
+            <Route path="/account/reset-password*" component={(params: any) => (
+              <TransitionRoute><ResetPassword {...(params || {})} /></TransitionRoute>
+            )} />
+            {/* Account verification page - accessible to unverified users only */}
             <Route path="/account/verify">
-              {() => <Redirect to="/mobile" />}
+              {(params) => <TransitionRoute><VerifyAccount {...(params || {})} /></TransitionRoute>}
             </Route>
 
             {/* Dashboard Route - Redirect to Mobile */}
@@ -358,51 +445,73 @@ export default function App() {
             <Route path="/deposit">{() => <Redirect to="/mobile" />}</Route>
             <Route path="/withdraw">{() => <Redirect to="/mobile" />}</Route>
 
-            {/* Mobile App Routes - All require authentication */}
-            <ProtectedRoute path="/mobile" component={MobileHome} />
-            <ProtectedRoute path="/mobile/assets" component={MobileAssets} />
-            <ProtectedRoute path="/mobile/trade" component={MobileTrade} />
-            <ProtectedRoute path="/mobile/markets" component={MobileMarkets} />
-            <ProtectedRoute path="/mobile/earn" component={MobileEarn} />
-            <ProtectedRoute path="/mobile/profile" component={MobileProfile} />
+            {/* Mobile App Main Routes - NO Glass Slide Transitions (as requested) */}
+            <ProtectedRouteWithTransition path="/mobile" component={MobileHome} disableTransition={true} />
+            <ProtectedRouteWithTransition path="/mobile/assets" component={MobileAssets} disableTransition={true} />
+            <ProtectedRouteWithTransition path="/mobile/trade" component={MobileTrade} disableTransition={true} />
+            <ProtectedRouteWithTransition path="/mobile/markets" component={MobileMarkets} disableTransition={true} />
 
-            <ProtectedRoute path="/mobile/futures" component={MobileFutures} />
-            <ProtectedRoute path="/mobile/spot" component={MobileSpot} />
-            <ProtectedRoute path="/mobile/invite-friends" component={MobileInviteFriends} />
-            <ProtectedRoute path="/mobile/notifications" component={MobileNotifications} />
-            <ProtectedRoute path="/mobile/notification-settings" component={NotificationSettings} />
-            <ProtectedRoute path="/mobile/chatbot" component={Chatbot} />
-            <ProtectedRoute path="/mobile/messages" component={MessagesPage} />
+            {/* Mobile Secondary Routes - WITH Glass Slide Transitions */}
+            <ProtectedRouteWithTransition path="/mobile/earn" component={MobileEarn} />
+            <ProtectedRouteWithTransition path="/mobile/profile" component={MobileProfile} />
+            <ProtectedRouteWithTransition path="/mobile/profile-settings" component={ProfileSettings} />
+            <ProtectedRouteWithTransition path="/mobile/futures" component={MobileFutures} />
+            <ProtectedRouteWithTransition path="/mobile/spot" component={MobileSpot} />
+            <ProtectedRouteWithTransition path="/mobile/invite-friends" component={MobileInviteFriends} />
+            <ProtectedRouteWithTransition path="/mobile/notifications" component={MobileNotifications} />
+            <ProtectedRouteWithTransition path="/mobile/notification-settings" component={NotificationSettings} />
+            <ProtectedRouteWithTransition path="/mobile/chatbot" component={Chatbot} />
+            <ProtectedRouteWithTransition path="/mobile/messages" component={MessagesPage} />
+            <ProtectedRouteWithTransition path="/mobile/news" component={MobileNews} disableTransition={true} />
+            <ProtectedRouteWithTransition path="/mobile/security" component={MobileSecurity} />
+            <ProtectedRouteWithTransition path="/mobile/language-selection" component={LanguageSelection} />
+            <ProtectedRouteWithTransition path="/mobile/assets-history" component={AssetsHistory} />
+            <ProtectedRouteWithTransition path="/mobile/deposit-details/:transactionId" component={DepositDetails} />
+            <ProtectedRouteWithTransition path="/mobile/withdrawal-details/:transactionId" component={WithdrawalDetailsAdaptive} />
+            <ProtectedRouteWithTransition path="/mobile/transfer-details/:transactionId" component={TransferDetails} />
+            <ProtectedRouteWithTransition path="/mobile/transfer" component={Transfer} />
+            <ProtectedRouteWithTransition path="/mobile/withdrawal" component={MobileWithdrawal} />
+            <ProtectedRouteWithTransition path="/mobile/deposit-selection" component={DepositSelectionPage} />
+            <ProtectedRouteWithTransition path="/mobile/deposit" component={MobileDeposit} />
+            <ProtectedRouteWithTransition path="/mobile/verification" component={VerificationFlow} />
+            <ProtectedRouteWithTransition path="/mobile/kyc-status" component={MobileKYCStatus} />
+            <ProtectedRouteWithTransition path="/mobile/verification-submitted" component={VerificationSubmitted} />
 
-            <ProtectedRoute path="/mobile/news" component={MobileNews} />
-            <ProtectedRoute path="/mobile/settings" component={MobileSettings} />
-            <ProtectedRoute path="/mobile/security" component={MobileSecurity} />
-            <ProtectedRoute path="/mobile/language-selection" component={LanguageSelection} />
-            <ProtectedRoute path="/mobile/assets-history" component={AssetsHistory} />
-            <ProtectedRoute path="/mobile/deposit-details/:transactionId" component={DepositDetails} />
-            <ProtectedRoute path="/mobile/withdrawal-details/:transactionId" component={WithdrawalDetailsAdaptive} />
-            <ProtectedRoute path="/mobile/transfer-details/:transactionId" component={TransferDetails} />
-            <ProtectedRoute path="/mobile/currency-selection" component={() => <div>Currency Selection</div>} />
-            <ProtectedRoute path="/mobile/transfer" component={Transfer} />
-            <ProtectedRoute path="/mobile/withdrawal" component={MobileWithdrawal} />
-            <ProtectedRoute path="/mobile/deposit-selection" component={DepositSelectionPage} />
-            <ProtectedRoute path="/mobile/verification" component={VerificationFlow} />
-            <ProtectedRoute path="/mobile/kyc-status" component={MobileKYCStatus} />
-            <ProtectedRoute path="/mobile/verification-submitted" component={VerificationSubmitted} />
+            {/* Currency Selection with inline component */}
+            <Route path="/mobile/currency-selection">
+              {(params) => <TransitionRoute><div>Currency Selection</div></TransitionRoute>}
+            </Route>
 
 
-            {/* Admin Portal Routes */}
-            <Route path="/admin-portal" component={UnifiedAdminPortal} />
-            <Route path="/admin-portal-enhanced" component={UnifiedAdminPortal} />
-            <Route path="/admin" component={UnifiedAdminPortal} />
+            {/* Admin Portal Routes - WITH Glass Slide Transitions */}
+            <Route path="/admin-portal">
+              {(params) => <TransitionRoute><UnifiedAdminPortal {...(params || {})} /></TransitionRoute>}
+            </Route>
+            <Route path="/admin-portal-enhanced">
+              {(params) => <TransitionRoute><UnifiedAdminPortal {...(params || {})} /></TransitionRoute>}
+            </Route>
+            <Route path="/admin">
+              {(params) => <TransitionRoute><UnifiedAdminPortal {...(params || {})} /></TransitionRoute>}
+            </Route>
 
-            {/* Other Routes */}
-            <Route path="/site-map" component={SiteMap} />
-            <Route path="/portfolio-demo" component={PortfolioDemo} />
-            <Route path="/banner-test" component={BannerTest} />
+            {/* Other Routes - WITH Glass Slide Transitions */}
+            <Route path="/site-map">
+              {(params) => <TransitionRoute><SiteMap {...(params || {})} /></TransitionRoute>}
+            </Route>
+            <Route path="/portfolio-demo">
+              {(params) => <TransitionRoute><PortfolioDemo {...(params || {})} /></TransitionRoute>}
+            </Route>
+            <Route path="/banner-test">
+              {(params) => <TransitionRoute><BannerTest {...(params || {})} /></TransitionRoute>}
+            </Route>
+            <Route path="/transition-demo">
+              {(params) => <TransitionRoute><TransitionDemo {...(params || {})} /></TransitionRoute>}
+            </Route>
 
-            {/* 404 Route */}
-            <Route component={NotFound} />
+            {/* 404 Route - WITH Glass Slide Transition */}
+            <Route>
+              {(params) => <TransitionRoute><NotFound {...(params || {})} /></TransitionRoute>}
+            </Route>
             </Switch>
                 </ErrorBoundary>
             <BottomSlideBanner 

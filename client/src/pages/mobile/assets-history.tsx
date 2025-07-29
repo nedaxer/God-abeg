@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'wouter';
-import { ArrowLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, ChevronRight, CheckCircle, XCircle } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { apiRequest } from '@/lib/queryClient';
@@ -66,7 +66,12 @@ export default function AssetsHistory() {
 
   const deposits = Array.isArray((depositsResponse as any)?.data) 
     ? (depositsResponse as any).data.filter((deposit: any) => {
-        // Filter out test deposits with very small USD amounts and zero/invalid crypto amounts
+        // Include all deposits with valid amounts, including failed deposits (approved/declined from pending)
+        // Don't filter by USD amount for failed deposits as they should still show in history
+        if (deposit.status === 'failed') {
+          return true; // Always show failed deposits regardless of amount
+        }
+        // For succeeded deposits, filter out test deposits with very small USD amounts
         return deposit.usdAmount && deposit.usdAmount >= 1 && 
                deposit.cryptoAmount && deposit.cryptoAmount > 0;
       })
@@ -338,11 +343,14 @@ export default function AssetsHistory() {
                   <Link href={`/mobile/transfer-details/${transaction._id}`}>
                     <Card className="bg-[#1a1a40] border-[#2a2a50] p-3 hover:bg-[#2a2a50] transition-colors cursor-pointer">
                       <div className="flex justify-between items-center">
-                        
+
                         <div className="flex-1">
-                          <p className="text-white font-medium text-xs">
-                            {isSent ? 'Sent to' : 'Received from'} {otherUser.name}
-                          </p>
+                          <div className="flex items-center space-x-2">
+                            <p className="text-white font-medium text-xs">
+                              Transfer
+                            </p>
+                            <CheckCircle className="w-3 h-3 text-green-500" />
+                          </div>
                           <p className="text-gray-400 text-xs">
                             {new Date(transaction.createdAt).toLocaleDateString('en-US', {
                               month: 'short',
@@ -381,11 +389,14 @@ export default function AssetsHistory() {
                   <Link href={`/mobile/withdrawal-details/${transaction._id}`}>
                     <Card className="bg-[#1a1a40] border-[#2a2a50] p-3 hover:bg-[#2a2a50] transition-colors cursor-pointer">
                       <div className="flex justify-between items-center">
-                        
+
                         <div className="flex-1">
-                          <p className="text-white font-medium text-xs">
-                            {transaction.cryptoSymbol} Withdrawal
-                          </p>
+                          <div className="flex items-center space-x-2">
+                            <p className="text-white font-medium text-xs">
+                              Withdrawal
+                            </p>
+                            <CheckCircle className="w-3 h-3 text-green-500" />
+                          </div>
                           <p className="text-gray-400 text-xs">
                             {new Date(transaction.createdAt).toLocaleDateString('en-US', {
                               month: 'short',
@@ -424,11 +435,18 @@ export default function AssetsHistory() {
                   <Link href={`/mobile/deposit-details/${transaction._id}`}>
                     <Card className="bg-[#1a1a40] border-[#2a2a50] p-3 hover:bg-[#2a2a50] transition-colors cursor-pointer">
                       <div className="flex justify-between items-center">
-                        
+
                         <div className="flex-1">
-                          <p className="text-white font-medium text-xs">
-                            {transaction.cryptoSymbol} Deposit
-                          </p>
+                          <div className="flex items-center space-x-2">
+                            <p className="text-white font-medium text-xs">
+                              Deposit
+                            </p>
+                            {(transaction.status === 'succeeded' || transaction.status === 'confirmed') ? (
+                              <CheckCircle className="w-3 h-3 text-green-500" />
+                            ) : (
+                              <XCircle className="w-3 h-3 text-red-500" />
+                            )}
+                          </div>
                           <p className="text-gray-400 text-xs">
                             {new Date(transaction.createdAt).toLocaleDateString('en-US', {
                               month: 'short',

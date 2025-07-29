@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { RefreshCw, Search, TrendingUp, TrendingDown, Clock } from "lucide-react";
+import { Search, TrendingUp, TrendingDown, Clock } from "lucide-react";
 import { useLocation } from "wouter";
 
 interface CryptoTicker {
@@ -28,10 +28,9 @@ interface CoinGeckoResponse {
 export default function LiveMarkets() {
   const [, navigate] = useLocation();
   const [searchTerm, setSearchTerm] = useState("");
-  const [lastUpdate, setLastUpdate] = useState<Date>(new Date());
 
   // Fetch market data from backend cached endpoint with auto-refresh every 10 seconds
-  const { data: marketData, isLoading, refetch, error } = useQuery({
+  const { data: marketData, isLoading, error } = useQuery({
     queryKey: ["/api/coins"],
     queryFn: async (): Promise<CoinGeckoResponse> => {
       const response = await fetch("/api/coins");
@@ -39,7 +38,6 @@ export default function LiveMarkets() {
         throw new Error(`Failed to fetch market data: ${response.statusText}`);
       }
       const data = await response.json();
-      setLastUpdate(new Date());
       return data;
     },
     refetchInterval: 10000, // Refresh every 10 seconds
@@ -121,32 +119,14 @@ export default function LiveMarkets() {
         {/* Market Overview */}
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <TrendingUp className="h-5 w-5 text-[#0033a0]" />
-                Live Market Data
-              </div>
-              <div className="flex items-center gap-4">
-                <span className="text-sm text-gray-500">
-                  Last updated: {lastUpdate.toLocaleTimeString()}
-                </span>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => refetch()}
-                  disabled={isLoading}
-                  className="flex items-center gap-2"
-                >
-                  <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
-                  Refresh
-                </Button>
-              </div>
+            <CardTitle>
+              Market Data
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
               <div className="text-center">
-                <div className="text-2xl font-bold text-[#0033a0]">
+                <div className="text-2xl font-bold text-[#000d2e]">
                   {sortedTickers.length}
                 </div>
                 <div className="text-sm text-gray-600">Trading Pairs</div>
@@ -196,19 +176,13 @@ export default function LiveMarkets() {
                 <div className="text-gray-500 text-sm">
                   {error instanceof Error ? error.message : 'Unknown error occurred'}
                 </div>
-                <Button 
-                  variant="outline" 
-                  onClick={() => refetch()} 
-                  className="mt-4"
-                >
-                  Try Again
-                </Button>
+                
               </div>
             )}
 
             {isLoading && !marketData && (
               <div className="p-6 text-center">
-                <RefreshCw className="h-8 w-8 animate-spin mx-auto mb-2 text-[#0033a0]" />
+                <div className="h-8 w-8 animate-spin mx-auto mb-2 text-[#000d2e] border-4 border-gray-300 border-t-[#000d2e] rounded-full"></div>
                 <div>Loading market data...</div>
               </div>
             )}
@@ -283,7 +257,7 @@ export default function LiveMarkets() {
                               e.stopPropagation();
                               handleCoinClick(ticker.symbol);
                             }}
-                            className="text-[#0033a0] border-[#0033a0] hover:bg-[#0033a0] hover:text-white"
+                            className="text-[#000d2e] border-[#000d2e] hover:bg-[#000d2e] hover:text-white"
                           >
                             Trade
                           </Button>

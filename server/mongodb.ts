@@ -29,33 +29,48 @@ export async function connectToDatabase() {
       try {
         // Try multiple SSL configurations for different MongoDB providers
         const sslConfigurations = [
-          // Standard MongoDB Atlas configuration
+          // Standard MongoDB Atlas configuration with optimized settings
           {
             retryWrites: true,
             w: 'majority' as const,
-            connectTimeoutMS: 10000,
-            serverSelectionTimeoutMS: 10000,
-            socketTimeoutMS: 10000
+            connectTimeoutMS: 60000,
+            serverSelectionTimeoutMS: 60000,
+            socketTimeoutMS: 60000,
+            maxPoolSize: 5,
+            minPoolSize: 1,
+            maxIdleTimeMS: 60000,
+            retryReads: true,
+            readPreference: 'primary'
           },
-          // Enhanced SSL configuration with TLS
+          // Enhanced SSL configuration with TLS and optimized settings
           {
             tls: true,
             tlsAllowInvalidCertificates: true,
             tlsAllowInvalidHostnames: true,
             retryWrites: true,
             w: 'majority' as const,
-            connectTimeoutMS: 10000,
-            serverSelectionTimeoutMS: 10000,
-            socketTimeoutMS: 10000
+            connectTimeoutMS: 60000,
+            serverSelectionTimeoutMS: 60000,
+            socketTimeoutMS: 60000,
+            maxPoolSize: 5,
+            minPoolSize: 1,
+            maxIdleTimeMS: 60000,
+            retryReads: true,
+            readPreference: 'primary'
           },
-          // Legacy SSL configuration
+          // Legacy SSL configuration with optimized settings
           {
             ssl: true,
             retryWrites: true,
             w: 'majority' as const,
-            connectTimeoutMS: 10000,
-            serverSelectionTimeoutMS: 10000,
-            socketTimeoutMS: 10000
+            connectTimeoutMS: 60000,
+            serverSelectionTimeoutMS: 60000,
+            socketTimeoutMS: 60000,
+            maxPoolSize: 5,
+            minPoolSize: 1,
+            maxIdleTimeMS: 60000,
+            retryReads: true,
+            readPreference: 'primary'
           }
         ];
         

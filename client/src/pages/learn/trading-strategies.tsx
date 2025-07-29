@@ -8,7 +8,7 @@ export default function TradingStrategies() {
     {
       title: "Technical Analysis",
       description: "Using chart patterns, indicators, and price action to identify potential trading opportunities.",
-      icon: <TrendingUp className="h-10 w-10 text-[#0033a0]" />,
+      icon: <TrendingUp className="h-10 w-10 text-[#000d2e]" />,
       examples: [
         "Support and resistance trading",
         "Moving average crossovers",
@@ -19,7 +19,7 @@ export default function TradingStrategies() {
     {
       title: "News Trading",
       description: "Trading based on economic data releases, central bank decisions, and other market-moving events.",
-      icon: <Zap className="h-10 w-10 text-[#0033a0]" />,
+      icon: <Zap className="h-10 w-10 text-[#000d2e]" />,
       examples: [
         "Non-Farm Payrolls releases",
         "FOMC interest rate decisions",
@@ -30,7 +30,7 @@ export default function TradingStrategies() {
     {
       title: "Intraday Trading",
       description: "Short-term trading strategies focused on price movements within a single trading day.",
-      icon: <Clock className="h-10 w-10 text-[#0033a0]" />,
+      icon: <Clock className="h-10 w-10 text-[#000d2e]" />,
       examples: [
         "Scalping",
         "Breakout trading",
@@ -41,7 +41,7 @@ export default function TradingStrategies() {
     {
       title: "Risk Management",
       description: "Strategies focused on controlling risk and maximizing reward potential across trades.",
-      icon: <Target className="h-10 w-10 text-[#0033a0]" />,
+      icon: <Target className="h-10 w-10 text-[#000d2e]" />,
       examples: [
         "Position sizing",
         "Diversification across markets",
@@ -97,11 +97,11 @@ export default function TradingStrategies() {
     <PageLayout 
       title="Trading Strategies" 
       subtitle="Learn effective strategies for trading Nadex products across different markets"
-      bgColor="#0033a0"
+      bgColor="#000d2e"
     >
       <div className="max-w-4xl mx-auto">
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Strategy Approaches</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Strategy Approaches</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
             {strategies.map((strategy, i) => (
@@ -109,12 +109,12 @@ export default function TradingStrategies() {
                 <div className="flex items-start mb-4">
                   <div className="mr-4">{strategy.icon}</div>
                   <div>
-                    <h3 className="text-xl font-bold mb-2 text-[#0033a0]">{strategy.title}</h3>
+                    <h3 className="text-xl font-bold mb-2 text-[#000d2e]">{strategy.title}</h3>
                     <p className="text-gray-900">{strategy.description}</p>
                   </div>
                 </div>
 
-                <h4 className="font-bold text-[#0033a0] mb-2">Example Strategies:</h4>
+                <h4 className="font-bold text-[#000d2e] mb-2">Example Strategies:</h4>
                 <ul className="space-y-1 mb-4">
                   {strategy.examples.map((example, eIndex) => (
                     <li key={eIndex} className="flex items-start">
@@ -129,15 +129,15 @@ export default function TradingStrategies() {
         </div>
 
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Applying Strategies to Nadex Products</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Applying Strategies to Nadex Products</h2>
 
           <div className="bg-[#f5f5f5] p-6 rounded-lg mb-8">
-            <h3 className="text-xl font-bold mb-4 text-[#0033a0]">Matching Products to Strategies</h3>
+            <h3 className="text-xl font-bold mb-4 text-[#000d2e]">Matching Products to Strategies</h3>
 
             <div className="overflow-x-auto">
               <table className="w-full border-collapse">
                 <thead>
-                  <tr className="bg-[#0033a0] text-white">
+                  <tr className="bg-[#000d2e] text-white">
                     <th className="p-3 text-left">Product</th>
                     <th className="p-3 text-left">Best For</th>
                     <th className="p-3 text-left">Strategy Approach</th>
@@ -202,7 +202,7 @@ export default function TradingStrategies() {
         </div>
 
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Technical Analysis Guides</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Technical Analysis Guides</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             {technicalGuides.map((guide, i) => (
@@ -214,13 +214,13 @@ export default function TradingStrategies() {
                 />
                 <div className="p-6">
                   <div className="flex justify-between items-center mb-3">
-                    <h3 className="text-lg font-bold text-[#0033a0]">{guide.title}</h3>
-                    <span className="bg-[#e6eef9] text-[#0033a0] text-xs px-2 py-1 rounded-full">{guide.level}</span>
+                    <h3 className="text-lg font-bold text-[#000d2e]">{guide.title}</h3>
+                    <span className="bg-[#e6eef9] text-[#000d2e] text-xs px-2 py-1 rounded-full">{guide.level}</span>
                   </div>
                   <p className="text-gray-700 mb-4">{guide.description}</p>
                   <Link 
                     href="#" 
-                    className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
+                    className="text-[#000d2e] hover:text-[#ff5900] font-semibold flex items-center"
                   >
                     Read Guide <ArrowRight className="ml-1 h-4 w-4" />
                   </Link>
@@ -232,7 +232,7 @@ export default function TradingStrategies() {
           <div className="text-center mb-8">
             <Button
               asChild
-              className="bg-[#0033a0] hover:bg-opacity-90 text-white font-semibold px-6 py-2"
+              className="bg-[#000d2e] hover:bg-opacity-90 text-white font-semibold px-6 py-2"
             >
               <Link href="#">View All Technical Guides</Link>
             </Button>
@@ -240,7 +240,7 @@ export default function TradingStrategies() {
         </div>
 
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">News Trading Guides</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">News Trading Guides</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             {newsGuides.map((guide, i) => (
@@ -252,13 +252,13 @@ export default function TradingStrategies() {
                 />
                 <div className="p-6">
                   <div className="flex justify-between items-center mb-3">
-                    <h3 className="text-lg font-bold text-[#0033a0]">{guide.title}</h3>
-                    <span className="bg-[#e6eef9] text-[#0033a0] text-xs px-2 py-1 rounded-full">{guide.level}</span>
+                    <h3 className="text-lg font-bold text-[#000d2e]">{guide.title}</h3>
+                    <span className="bg-[#e6eef9] text-[#000d2e] text-xs px-2 py-1 rounded-full">{guide.level}</span>
                   </div>
                   <p className="text-gray-700 mb-4">{guide.description}</p>
                   <Link 
                     href="#" 
-                    className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
+                    className="text-[#000d2e] hover:text-[#ff5900] font-semibold flex items-center"
                   >
                     Read Guide <ArrowRight className="ml-1 h-4 w-4" />
                   </Link>
@@ -270,7 +270,7 @@ export default function TradingStrategies() {
           <div className="text-center">
             <Button
               asChild
-              className="bg-[#0033a0] hover:bg-opacity-90 text-white font-semibold px-6 py-2"
+              className="bg-[#000d2e] hover:bg-opacity-90 text-white font-semibold px-6 py-2"
             >
               <Link href="#">View All News Trading Guides</Link>
             </Button>
@@ -278,16 +278,16 @@ export default function TradingStrategies() {
         </div>
 
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Risk Management Essentials</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Risk Management Essentials</h2>
 
           <div className="bg-[#f5f5f5] p-6 rounded-lg">
-            <h3 className="text-xl font-bold mb-4 text-[#0033a0]">Core Risk Management Principles</h3>
+            <h3 className="text-xl font-bold mb-4 text-[#000d2e]">Core Risk Management Principles</h3>
 
             <div className="space-y-4">
               <div className="flex items-start">
                 <Activity className="text-[#ff5900] mt-1 mr-3 h-6 w-6 flex-shrink-0" />
                 <div>
-                  <h4 className="font-bold mb-1 text-[#0033a0]">Position Sizing</h4>
+                  <h4 className="font-bold mb-1 text-[#000d2e]">Position Sizing</h4>
                   <p className="text-gray-700">
                     Determine the appropriate amount to risk on each trade based on your account size and risk tolerance. A common guideline is risking no more than 1-2% of your trading capital on any single trade.
                   </p>
@@ -297,7 +297,7 @@ export default function TradingStrategies() {
               <div className="flex items-start">
                 <Activity className="text-[#ff5900] mt-1 mr-3 h-6 w-6 flex-shrink-0" />
                 <div>
-                  <h4 className="font-bold mb-1 text-[#0033a0]">Diversification</h4>
+                  <h4 className="font-bold mb-1 text-[#000d2e]">Diversification</h4>
                   <p className="text-gray-700">
                     Spread your trading capital across different markets, products, and strategies to reduce overall portfolio risk and avoid overexposure to a single market or event.
                   </p>
@@ -307,7 +307,7 @@ export default function TradingStrategies() {
               <div className="flex items-start">
                 <Activity className="text-[#ff5900] mt-1 mr-3 h-6 w-6 flex-shrink-0" />
                 <div>
-                  <h4 className="font-bold mb-1 text-[#0033a0]">Risk-Reward Ratio</h4>
+                  <h4 className="font-bold mb-1 text-[#000d2e]">Risk-Reward Ratio</h4>
                   <p className="text-gray-700">
                     Aim for trades with a favorable risk-reward ratio, typically 1:1.5 or better. This means your potential profit should be at least 1.5 times your potential loss.
                   </p>
@@ -317,7 +317,7 @@ export default function TradingStrategies() {
               <div className="flex items-start">
                 <Activity className="text-[#ff5900] mt-1 mr-3 h-6 w-6 flex-shrink-0" />
                 <div>
-                  <h4 className="font-bold mb-1 text-[#0033a0]">Trading Journal</h4>
+                  <h4 className="font-bold mb-1 text-[#000d2e]">Trading Journal</h4>
                   <p className="text-gray-700">
                     Keep a detailed record of all your trades, including entry/exit points, strategies used, and outcomes. Regularly review your journal to identify patterns and areas for improvement.
                   </p>
@@ -328,7 +328,7 @@ export default function TradingStrategies() {
             <div className="mt-6 text-center">
               <Link 
                 href="#" 
-                className="text-[#0033a0] hover:text-[#ff5900] font-semibold inline-flex items-center"
+                className="text-[#000d2e] hover:text-[#ff5900] font-semibold inline-flex items-center"
               >
                 Read Our Complete Risk Management Guide <ArrowRight className="ml-1 h-4 w-4" />
               </Link>
@@ -336,7 +336,7 @@ export default function TradingStrategies() {
           </div>
         </div>
 
-        <div className="bg-[#0033a0] text-white rounded-lg p-8 text-center">
+        <div className="bg-[#000d2e] text-white rounded-lg p-8 text-center">
           <h2 className="text-2xl font-bold mb-4">Put These Strategies Into Practice</h2>
           <p className="mb-6">Open an account and apply these trading strategies with limited risk on a regulated US exchange.</p>
           <Button

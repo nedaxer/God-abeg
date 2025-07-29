@@ -1,0 +1,64 @@
+
+> rest-express@1.0.0 dev
+> NODE_ENV=development tsx server/index.ts
+
+MongoDB storage initialized
+Available domain options: [
+  '365f57ee-512c-439c-adab-e8e942d4c69e-00-3qy06liol7v4d.picard.replit.dev',
+  '365f57ee-512c-439c-adab-e8e942d4c69e-00-3qy06liol7v4d.picard.replit.dev',
+  'https://workspace.robinstephen067.replit.dev'
+]
+Using domain for Google OAuth callback: https://365f57ee-512c-439c-adab-e8e942d4c69e-00-3qy06liol7v4d.picard.replit.dev/auth/google/callback
+✅ GitHub Models API configured successfully
+🔑 Token status: Available (ghp_4y0aMd1CFNGpG0el...)
+🌐 Endpoint: https://models.inference.ai.azure.com
+🤖 Model: gpt-4o-mini
+Connecting to MongoDB Atlas...
+MongoDB URI format check: {
+  hasUri: true,
+  startsWithMongodb: true,
+  length: 101,
+  maskedUri: 'mongodb+srv://***:***@nedaxer.eyejj2k.mongodb.net/?retryWrites=true&w=majority&appName=Nadax'
+}
+Attempting MongoDB connection with configuration 1...
+🚀 Starting proactive crypto price fetching...
+🎯 Force fetch attempt #1
+📡 Proactive API call to CoinGecko (106 coins)...
+🚀 Proactive crypto price fetcher initialized
+🎉 Proactive fetch successful: 106 prices processed
+💾 Cache saved to file: crypto-prices (expires in 600s)
+✅ Proactive fetch successful: 106 coins cached
+MongoDB Atlas connection established successfully with config 1
+Creating initial data for development...
+Currencies initialized: USD, BTC, ETH, BNB, USDT
+Database initialization complete - currencies created successfully
+Initial data creation completed successfully
+Using memory session store for development
+Starting background image optimization...
+Background image optimization skipped (WebP binaries not available)
+Generating new VAPID keys...
+✅ VAPID keys generated successfully
+Public Key: BDsQ3OUKjusQ65A-ztKZvEwXgr_ZDfupncSEcuf-s6HjwfWPh9ORVjynPE5kD5CJuxoflH2pE8_l1jYVi5jhz1A
+Private Key: v_xFYnNdkIUdmaP69Iep...
+✅ Web push configured successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 0.0.0.0:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on WebSocketServer instance at:
+    at Server.emit (node:events:524:28)
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '0.0.0.0',
+  port: 5000
+}
+
+Node.js v20.19.3

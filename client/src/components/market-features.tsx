@@ -43,30 +43,30 @@ const DynamicIcon = ({ name }: { name: string }) => {
 
 export const MarketFeatures = () => {
   return (
-    <section className="py-12 bg-white">
+    <section className="py-8 bg-white">
       <div className="container mx-auto px-4">
-        <h2 className="text-2xl md:text-3xl font-bold text-center mb-10 text-[#0033a0]">
+        <h2 className="text-lg md:text-xl font-semibold text-center mb-6 text-[#0033a0]">
           Popular Markets
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {marketFeatures.map((feature, index) => (
             <div
               key={index}
-              className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow"
+              className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
             >
-              <div className="flex items-center mb-4">
-                <span className="text-2xl text-[#0033a0] mr-3">
+              <div className="flex items-center mb-3">
+                <span className="text-lg text-[#0033a0] mr-2">
                   <DynamicIcon name={feature.icon} />
                 </span>
-                <h3 className="text-xl font-bold">{feature.title}</h3>
+                <h3 className="text-base font-semibold">{feature.title}</h3>
               </div>
-              <p className="mb-4 text-gray-800">{feature.description}</p>
+              <p className="mb-3 text-gray-800 text-sm">{feature.description}</p>
               <Link
                 href={feature.link.href}
-                className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center text-sm"
+                className="text-[#0033a0] hover:text-[#ff5900] font-medium flex items-center text-xs"
               >
-                {feature.link.label} <ArrowRight className="ml-1 h-4 w-4" />
+                {feature.link.label} <ArrowRight className="ml-1 h-3 w-3" />
               </Link>
             </div>
           ))}

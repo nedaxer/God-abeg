@@ -1,0 +1,915 @@
+<!DOCTYPE html><html lang="en"><!-- dir="rtl"--><head>
+    <!-- Required meta tags  -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>InvestemntUIUX Mobile - Bootstrap HTML Admin template - adminuiux.com</title>
+    <link rel="icon" type="image/png" href="assets/img/favicon.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:wght@100;400;500;600&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --adminuiux-content-font: 'Roboto';
+            --adminuiux-content-font-weight: 400;
+            --adminuiux-title-font: "Fira Sans Condensed";
+            --adminuiux-title-font-weight: 500;
+        }
+    </style>
+
+<script defer="" src="assets/js/app.js"></script><link href="assets/css/app.css" rel="stylesheet"></head>
+
+    <body class="main-bg main-bg-opac main-bg-blur adminuiux-sidebar-fill-white adminuiux-sidebar-boxed theme-blue roundedui" data-theme="theme-blue" data-sidebarfill="adminuiux-sidebar-fill-white" data-bs-spy="scroll" data-bs-target="#list-example" data-bs-smooth-scroll="true" tabindex="0">
+        <!-- Pageloader -->
+<div class="pageloader">
+    <div class="container h-100">
+        <div class="row justify-content-center align-items-center text-center h-100">
+            <div class="col-12 mb-auto pt-4"></div>
+            <div class="col-auto">
+                <img src="assets/img/logo.svg" alt="" class="height-60 mb-3">
+                <p class="h6 mb-0">AdminUIUX</p>
+                <p class="h3 mb-4">Investment</p>
+                <div class="loader10 mb-2 mx-auto"></div>
+            </div>
+            <div class="col-12 mt-auto pb-4">
+                <p class="text-secondary">Please wait we are preparing awesome things to preview...</p>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- standard header -->
+<header class="adminuiux-header">
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container-fluid">
+            <!-- back -->
+            <button class="btn btn-square btn-link" onclick="goBack()">
+                <i class="bi bi-arrow-left"></i>
+            </button>
+            <p class="h6 my-1 px-3 text-center">
+                <!-- Dynamic title here -->
+                <span class="title"></span>
+            </p>
+            <div class="ms-auto"></div>
+
+            <!-- right icons button -->
+            <div class="ms-auto">
+
+                <!-- global search toggle -->
+                <button class="btn btn-link btn-square btn-icon btn-link-header d-inline-block d-xxl-none" type="button" onclick="openSearch()">
+                    <i data-feather="search"></i>
+                </button>
+
+                <!-- profile dropdown -->
+                <div class="dropdown d-inline-block">
+                    <a class="dropdown-toggle btn btn-link btn-square btn-link-header style-none no-caret px-0" id="userprofiledd" data-bs-toggle="dropdown" aria-expanded="false" role="button">
+                        <div class="row gx-0 d-inline-flex">
+                            <div class="col-auto align-self-center">
+                                <figure class="avatar avatar-28 rounded-circle coverimg align-middle">
+                                    <img src="assets/img/user-6.jpg" alt="" id="userphotoonboarding2">
+                                </figure>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end width-300 pt-0 px-0" aria-labelledby="userprofiledd">
+                        <div class="bg-theme-1-space rounded py-3 mb-3 dropdown-dontclose">
+                            <div class="row gx-0">
+                                <div class="col-auto px-3">
+                                    <figure class="avatar avatar-50 rounded-circle coverimg align-middle">
+                                        <img src="assets/img/user-6.jpg" alt="">
+                                    </figure>
+                                </div>
+                                <div class="col align-self-center ">
+                                    <p class="mb-1"><span>AdminUIUX</span></p>
+                                    <p><i class="bi bi-wallet2 me-2"></i> $1100.00 <small class="opacity-50">Balance</small>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="px-2">
+                            <div><a class="dropdown-item" href="investment-myprofile.html"><i data-feather="user" class="avatar avatar-18 me-1"></i> My
+                                    Profile</a>
+                            </div>
+                            <div>
+                                <a class="dropdown-item" href="investment-dashboard.html">
+                                    <div class="row g-0">
+                                        <div class="col align-self-center"><i data-feather="layout" class="avatar avatar-18 me-1"></i>
+                                            My Dashboard
+                                        </div>
+                                        <div class="col-auto">
+                                            <figure class="avatar avatar-20 coverimg rounded-circle">
+                                                <img src="assets/img/user-1.jpg" alt="">
+                                            </figure>
+                                            <figure class="avatar avatar-20 coverimg rounded-circle">
+                                                <img src="assets/img/user-2.jpg" alt="">
+                                            </figure>
+                                            <figure class="avatar avatar-20 coverimg rounded-circle">
+                                                <img src="assets/img/user-4.jpg" alt="">
+                                            </figure>
+                                            <div class="avatar avatar-20 bg-theme-1 rounded-circle text-center align-middle">
+                                                <small class="fs-10 align-middle">9+</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div>
+                                <a class="dropdown-item" href="investment-earning.html">
+                                    <i data-feather="dollar-sign" class="avatar avatar-18 me-1"></i> Earning
+                                </a>
+                            </div>
+                            <div>
+                                <a class="dropdown-item" href="investment-mysubscription.html">
+                                    <div class="row gx-3">
+                                        <div class="col"><i data-feather="gift" class="avatar avatar-18 me-1"></i> Subscription</div>
+                                        <div class="col-auto">
+                                            <p class="small text-success">Upgrade</p>
+                                        </div>
+                                        <div class="col-auto"><span class="arrow bi bi-chevron-right"></span></div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="dropdown open-left dropdown-dontclose">
+                                <a class="dropdown-item" data-bs-toggle="dropdown" aria-expanded="false" role="button">
+                                    <div class="row gx-3">
+                                        <div class="col"><i class="bi bi-translate avatar avatar-18 me-1"></i> Language</div>
+                                        <div class="col-auto"><small class="vm">EN - English</small> <i class="bi bi-translate"></i></div>
+                                        <div class="col-auto"><span class="arrow bi bi-chevron-right"></span></div>
+                                    </div>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <div><a class="dropdown-item active" data-value="EN">EN - English</a></div>
+                                    <div><a class="dropdown-item" data-value="FR">FR - French</a></div>
+                                    <div><a class="dropdown-item" data-value="CH">CH - Chinese</a></div>
+                                    <div><a class="dropdown-item" data-value="HI">HI - Hindi</a></div>
+                                </div>
+                            </div>
+                            <div>
+                                <a class="dropdown-item" href="investment-settings.html">
+                                    <i data-feather="settings" class="avatar avatar-18 me-1"></i> Account Setting
+                                </a>
+                            </div>
+                            <div>
+                                <a class="dropdown-item theme-red" href="investment-login.html">
+                                    <i data-feather="power" class="avatar avatar-18 me-1"></i> Logout
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- search global wrap -->
+    <div class="adminuiux-search-full">
+        <div class="row gx-2 align-items-center">
+            <div class="col-auto">
+
+                <!-- close global search toggle -->
+                <button class="btn btn-square btn-link btn-icon" type="button" onclick="closeSearch()">
+                    <i data-feather="arrow-left"></i>
+                </button>
+            </div>
+            <div class="col">
+                <input class="form-control pe-0 border-0" type="search" placeholder="Type something here...">
+            </div>
+            <div class="col-auto">
+
+                <!-- filter dropdown -->
+                <div class="dropdown input-group-text border-0 p-0">
+                    <button class="dropdown-toggle btn btn-square btn-link no-caret" type="button" id="searchfilter2" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i data-feather="sliders"></i>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end dropdown-dontclose width-300" aria-labelledby="searchfilter2">
+                        <ul class="nav adminuiux-nav" id="searchtab2" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="searchall-tab2" data-bs-toggle="tab" data-bs-target="#searchall2" type="button" role="tab" aria-controls="searchall2" aria-selected="true">All</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="searchorders-tab2" data-bs-toggle="tab" data-bs-target="#searchorders2" type="button" role="tab" aria-controls="searchorders2" aria-selected="false" tabindex="-1">Orders</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="searchcontacts-tab2" data-bs-toggle="tab" data-bs-target="#searchcontacts2" type="button" role="tab" aria-controls="searchcontacts2" aria-selected="false" tabindex="-1">Contacts</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content py-3" id="searchtabContent2">
+                            <div class="tab-pane fade active show" id="searchall2" role="tabpanel" aria-labelledby="searchall-tab2">
+                                <ul class="list-group adminuiux-list-group list-group-flush bg-none show">
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col">Search apps</div>
+                                            <div class="col-auto">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="searchswitch1">
+                                                    <label class="form-check-label" for="searchswitch1"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col">Include Pages</div>
+                                            <div class="col-auto">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="searchswitch2" checked="">
+                                                    <label class="form-check-label" for="searchswitch2"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col">Internet resource</div>
+                                            <div class="col-auto">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="searchswitch3" checked="">
+                                                    <label class="form-check-label" for="searchswitch3"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col">News and Blogs</div>
+                                            <div class="col-auto">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="searchswitch4">
+                                                    <label class="form-check-label" for="searchswitch4"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="tab-pane fade" id="searchorders2" role="tabpanel" aria-labelledby="searchorders-tab2">
+                                <ul class="list-group adminuiux-list-group list-group-flush bg-none show">
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col">Show order ID</div>
+                                            <div class="col-auto">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="searchswitch5">
+                                                    <label class="form-check-label" for="searchswitch5"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col">International Order</div>
+                                            <div class="col-auto">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="searchswitch6" checked="">
+                                                    <label class="form-check-label" for="searchswitch6"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col">Taxable Product</div>
+                                            <div class="col-auto">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="searchswitch7" checked="">
+                                                    <label class="form-check-label" for="searchswitch7"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col">Published Product</div>
+                                            <div class="col-auto">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="searchswitch8">
+                                                    <label class="form-check-label" for="searchswitch8"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="tab-pane fade" id="searchcontacts2" role="tabpanel" aria-labelledby="searchcontacts-tab2">
+                                <ul class="list-group adminuiux-list-group list-group-flush bg-none show">
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col">Have email ID</div>
+                                            <div class="col-auto">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="searchswitch9">
+                                                    <label class="form-check-label" for="searchswitch9"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col">Have phone number</div>
+                                            <div class="col-auto">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="searchswitch10" checked="">
+                                                    <label class="form-check-label" for="searchswitch10"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col">Photo available</div>
+                                            <div class="col-auto">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="searchswitch11" checked="">
+                                                    <label class="form-check-label" for="searchswitch11"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col">Referral</div>
+                                            <div class="col-auto">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="searchswitch12">
+                                                    <label class="form-check-label" for="searchswitch12"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="">
+                            <div class="row">
+                                <div class="col"><button class="btn btn-link">Reset</button></div>
+                                <div class="col-auto">
+                                    <button class="btn btn-theme">Apply</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        $('.title').html($('#title').html())
+    });
+</script>
+
+                <div id="title" class="d-none">
+                    Add Invoice
+                </div>
+
+                <div class="adminuiux-wrap">
+                    <!-- Standard sidebar -->
+<div class="adminuiux-sidebar">
+    <div class="adminuiux-sidebar-inner">
+        <!-- Profile -->
+        <div class="px-3 not-iconic mt-2">
+            <div class="row gx-3">
+                <div class="col align-self-center ">
+                    <h6 class="fw-medium">Main Menu</h6>
+                </div>
+                <div class="col-auto">
+                    <a class="btn btn-link btn-square" data-bs-toggle="collapse" data-bs-target="#usersidebarprofile" aria-expanded="false" role="button" aria-controls="usersidebarprofile">
+                        <i data-feather="user"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="text-center collapse " id="usersidebarprofile">
+                <figure class="avatar avatar-100 rounded-circle coverimg my-3">
+                    <img src="assets/img/user-6.jpg" alt="">
+                </figure>
+                <h5 class="mb-1 fw-medium">AdminUIUX</h5>
+                <p class="small">The Investment UI Kit</p>
+            </div>
+        </div>
+
+        <ul class="nav flex-column menu-active-line">
+            <!-- investment sidebar -->
+            <li class="nav-item">
+                <a href="investment-dashboard.html" class="nav-link">
+                    <i class="menu-icon bi bi-columns-gap"></i>
+                    <span class="menu-name">Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="investment-wallet.html" class="nav-link">
+                    <i class="menu-icon bi bi-wallet"></i>
+                    <span class="menu-name">Wallet</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="investment-goals.html" class="nav-link">
+                    <i class="menu-icon bi bi-bullseye"></i>
+                    <span class="menu-name">My Goals</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="investment-loan-list.html" class="nav-link">
+                    <i class="menu-icon bi bi-bank"></i>
+                    <span class="menu-name">My Loans</span>
+                </a>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="javascrit:void(0)" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                    <i class="menu-icon bi bi-piggy-bank"></i>
+                    <span class="menu-name">Investment</span>
+                </a>
+                <div class="dropdown-menu">
+                    <div class="nav-item">
+                        <a href="investment-company-shares.html" class="nav-link">
+                            <i class="menu-icon bi bi-bank"></i>
+                            <span class="menu-name">Company Share</span>
+                        </a>
+                    </div>
+                    <div class="nav-item">
+                        <a href="investment-mutual-funds.html" class="nav-link">
+                            <i class="menu-icon bi bi-cash-coin"></i>
+                            <span class="menu-name">Mutual Fund</span>
+                        </a>
+                    </div>
+                    <div class="nav-item">
+                        <a href="investment-deposit.html" class="nav-link">
+                            <i class="menu-icon bi bi-percent"></i>
+                            <span class="menu-name">Deposit</span>
+                        </a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a href="investment-explore.html" class="nav-link">
+                    <i class="menu-icon bi bi-search"></i>
+                    <span class="menu-name">Explore</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="investment-statistics.html" class="nav-link">
+                    <i class="menu-icon bi bi-bar-chart-line"></i>
+                    <span class="menu-name">Statistics</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="investment-calculator.html" class="nav-link">
+                    <i class="menu-icon bi bi-calculator"></i>
+                    <span class="menu-name">Calculators</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="investment-pages.html" class="nav-link">
+                    <i class="menu-icon bi bi-layers"></i>
+                    <span class="menu-name">Pages</span>
+                    <span class="badge text-bg-primary mx-2">55+</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="investment-personalization.html" class="nav-link">
+                    <i class="menu-icon bi bi-palette h4"></i>
+                    <span class="menu-name">Personalize ❤️</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="components.html">
+                    <i class="menu-icon bi bi-cpu"></i>
+                    <span class="menu-name">Components</span>
+                </a>
+            </li>
+        </ul>
+        <div class=" mt-auto "></div>
+        <!-- quick links -->
+        <div class="px-3 mb-3 not-iconic">
+            <h6 class="mb-3 fw-medium">Quick Links</h6>
+            <div class="card adminuiux-card">
+                <div class="card-body p-2">
+                    <div class="row gx-2">
+                        <div class="col-12 d-flex justify-content-between">
+                            <a href="investment-search-mutual-funds.html" class="btn btn-square btn-link theme-red">
+                                <span class="position-relative">
+                                    <i data-feather="heart"></i>
+                                    <span class="position-absolute top-0 start-100 translate-middle p-1 bg-success rounded-circle">
+                                        <span class="visually-hidden">New alerts</span>
+                                    </span>
+                                </span>
+                            </a>
+                            <a href="investment-schedule.html" class="btn btn-square btn-link">
+                                <span class="position-relative">
+                                    <i data-feather="calendar"></i>
+                                    <span class="position-absolute top-0 start-100 translate-middle p-1 bg-warning rounded-circle">
+                                        <span class="visually-hidden">New alerts</span>
+                                    </span>
+                                </span>
+                            </a>
+                            <a href="investment-inbox.html" class="btn btn-square btn-link">
+                                <i data-feather="inbox"></i>
+                            </a>
+                            <a href="investment-help-center.html" class="btn btn-square btn-link">
+                                <i data-feather="help-circle"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- User account -->
+        <ul class="nav flex-column menu-active-line">
+            <!-- bottom sidebar menu -->
+            <li class="nav-item">
+                <a href="investment-referral.html" class="nav-link">
+                    <i class="menu-icon" data-feather="users"></i>
+                    <span class="menu-name">Referral</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="investment-settings.html" class="nav-link">
+                    <i class="menu-icon" data-feather="settings"></i>
+                    <span class="menu-name">Settings</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+                        <main class="adminuiux-content has-sidebar" onclick="contentClick()">
+
+                            <!-- breadcrumb -->
+                            <div class="container-fluid mt-3">
+                                <div class="row gx-3 align-items-center">
+                                    <div class="col col-sm">
+                                        <h5>Add Invoice</h5>
+                                    </div>
+                                    <div class="col-auto py-1">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- content -->
+                            <div class="container mt-3" id="main-content">
+                                <!-- add appointment fields -->
+
+                                <div class="row ">
+                                    <div class="col-12 col-md-12 col-lg-12 col-xl-8 col-xxl-9">
+                                        <div class="row ">
+                                            <div class="col-12 col-xl-6">
+                                                <!-- provider -->
+                                                <div class="card adminuiux-card mb-3">
+                                                    <div class="card-header">
+                                                        <h6>Provider Details</h6>
+                                                    </div>
+                                                    <div class="card-body ">
+                                                        <div class="input-group search-wrap rounded w-100 mb-3">
+                                                            <span class="input-group-text bg-none "><i data-feather="search"></i></span>
+                                                            <input type="text" class="form-control" id="searchdoctorname" placeholder="Search provider" value="John">
+                                                        </div>
+
+                                                        <!-- search result -->
+                                                        <div class="row" id="resultdoctor">
+                                                            <div class="col-12">
+                                                                <div class="card adminuiux-card border">
+                                                                    <div class="card-body py-2">
+                                                                        <div class="row justify-content-center align-items-center">
+                                                                            <div class="col-auto py-2">
+                                                                                <div class="avatar avatar-40 rounded-circle coverimg">
+                                                                                    <img src="assets/img/user-8.jpg" alt="">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col py-2">
+                                                                                <p class="h6 mb-1 ">
+                                                                                    <span class="position-relative">John Williams
+                                                                                        <span class="position-absolute top-50 start-100 translate-middle p-1 bg-success rounded-circle mx-2">
+                                                                                            <span class="visually-hidden">online</span>
+                                                                                        </span>
+                                                                                    </span>
+                                                                                </p>
+                                                                                <p class="opacity-75 small">General Expert
+                                                                                    <span class="badge badge-sm badge-light rounded-pill text-bg-warning">5
+                                                                                        <i class="bi bi-star-fill"></i>
+                                                                                    </span>
+                                                                                </p>
+                                                                            </div>
+                                                                            <div class="col-auto text-end py-2">
+                                                                                <button class="btn btn-square btn-outline-danger">
+                                                                                    <i data-feather="trash"></i>
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-xl-6">
+                                                <!-- customer details -->
+                                                <div class="card adminuiux-card mb-3">
+                                                    <div class="card-header">
+                                                        <h6>Customer Details</h6>
+                                                    </div>
+                                                    <div class="card-body ">
+                                                        <div class="input-group search-wrap rounded w-100 mb-3">
+                                                            <span class="input-group-text bg-none "><i data-feather="search"></i></span>
+                                                            <input type="text" class="form-control" id="searchpatientname" placeholder="Search Patient" value="Alex">
+                                                            <a class="btn btn-theme collapsed" data-bs-toggle="collapse" data-bs-target=".patinetcollapse" role="button" aria-expanded="false" aria-controls="addnewpatient">
+                                                                <span class="collapse patinetcollapse show">New</span>
+                                                                <span class="collapse patinetcollapse">Existing</span>
+                                                            </a>
+                                                        </div>
+
+                                                        <!-- search result -->
+                                                        <div class="row patinetcollapse collapse show " id="resultpatient">
+                                                            <div class="col-12">
+                                                                <div class="card adminuiux-card border">
+                                                                    <div class="card-body py-2">
+                                                                        <div class="row justify-content-center align-items-center">
+                                                                            <div class="col-auto py-2">
+                                                                                <div class="avatar avatar-40 rounded-circle coverimg">
+                                                                                    <img src="assets/img/user-5.jpg" alt="">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col py-2">
+                                                                                <p class="h6 mb-1 ">
+                                                                                    <span class="position-relative">Alexa John
+                                                                                        <span class="position-absolute top-50 start-100 translate-middle p-1 bg-success rounded-circle mx-2">
+                                                                                            <span class="visually-hidden">online</span>
+                                                                                        </span>
+                                                                                    </span>
+                                                                                </p>
+                                                                                <p class="opacity-75 small mb-1">United States</p>
+                                                                                <p class="opacity-75 small mb-0">Last Visit: 26 July 2024</p>
+                                                                            </div>
+                                                                            <div class="col-auto text-end py-2">
+                                                                                <button class="btn btn-square btn-outline-danger">
+                                                                                    <i data-feather="trash"></i>
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- new collapse-->
+                                        <div class="collapse patinetcollapse" id="addnewpatient">
+                                            <div class="card adminuiux-card mb-3">
+                                                <div class="card-body">
+                                                    <!-- Details -->
+                                                    <p class="h6 mb-3">New Details</p>
+                                                    <div class="row mb-1">
+                                                        <div class="col-12 col-lg-6 col-xl-4">
+                                                            <div class="form-floating mb-3">
+                                                                <input type="text" class="form-control" id="patientname" placeholder="Enter First Name" value="Alex">
+                                                                <label for="patientname">First Name</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 col-lg-6 col-xl-4">
+                                                            <div class="form-floating mb-3">
+                                                                <input type="text" class="form-control" id="patientlname" placeholder="Enter Middle Name">
+                                                                <label for="patientlname">Middle Name (Optional)</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 col-lg-6 col-xl-4">
+                                                            <div class="form-floating mb-3">
+                                                                <input type="text" class="form-control" id="patientlname2" placeholder="Enter Last Name" value="Smith">
+                                                                <label for="patientlname2">Last Name</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 col-lg-6 col-xl-4">
+                                                            <div class="form-floating mb-3">
+                                                                <input type="text" class="form-control" id="dobdate" placeholder="Select Birthday">
+                                                                <label for="dobdate">Select Birthday</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 col-lg-6 col-xl-4">
+                                                            <div class="form-floating mb-3">
+                                                                <input type="text" class="form-control" id="phoneon" placeholder="Enter phone" value="+91 4152 21A45488004">
+                                                                <label for="phoneon">Enter Phone</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 col-lg-6 col-xl-4">
+                                                            <div class="form-floating mb-3">
+                                                                <input type="email" class="form-control" id="emailaddresson" placeholder="Enter Email Address" value="alex.smith@tgmail.com">
+                                                                <label for="emailaddresson">Email Address</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Address -->
+                                                    <p class="h6 mb-3">New Address</p>
+                                                    <div class="row mb-1">
+                                                        <div class="col-12 col-lg-6 col-xl-4">
+                                                            <div class="form-floating mb-3">
+                                                                <input type="text" class="form-control" id="house" placeholder="Enter house number" value="12">
+                                                                <label for="house">House Number</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 col-lg-6 col-xl-4">
+                                                            <div class="form-floating mb-3">
+                                                                <input type="text" class="form-control" id="street" placeholder="Enter Street" value="Featherstone Street">
+                                                                <label for="street">Street</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 col-lg-6 col-xl-4">
+                                                            <div class="form-floating mb-3">
+                                                                <input type="text" class="form-control" id="locality" placeholder="Enter locality" value="Ward">
+                                                                <label for="locality">Locality</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 col-lg-6 col-xl-4">
+                                                            <div class="form-floating mb-3">
+                                                                <input type="text" class="form-control" id="town" placeholder="Enter Town" value="London">
+                                                                <label for="town">Town</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 col-lg-6 col-xl-4">
+                                                            <div class="form-floating mb-3">
+                                                                <input type="text" class="form-control" id="city" placeholder="Enter City" value="London">
+                                                                <label for="city">City</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 col-lg-6 col-xl-4">
+                                                            <div class="form-floating mb-3">
+                                                                <input type="text" class="form-control" id="postcode" placeholder="Enter Postcode" value="NG25 5AY">
+                                                                <label for="postcode">Postcode</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 col-lg-6 col-xl-4">
+                                                            <div class="form-floating mb-3">
+                                                                <input type="text" class="form-control" id="country" placeholder="Enter Country" value="United Kingdom">
+                                                                <label for="country">Country</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- product -->
+                                        <div class="card adminuiux-card mb-3">
+                                            <div class="card-header">
+                                                <h6>Product Details</h6>
+                                            </div>
+                                            <div class="card-body pb-0">
+                                                <!-- -->
+                                                <div class="row gx-3 align-items-center mb-3">
+                                                    <div class="col">
+                                                        <div class="input-group input-group-md search-wrap rounded w-100">
+                                                            <span class="input-group-text bg-none "><i data-feather="search"></i></span>
+                                                            <div class="form-floating">
+                                                                <input type="text" class="form-control" id="searchservicename" placeholder="Search Product" value="Service 2">
+                                                                <label for="searchservicename">Search Product</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- selected services -->
+                                                <div class="card adminuiux-card border mb-3">
+                                                    <div class="card-body py-2">
+                                                        <div class="row justify-content-center align-items-center">
+                                                            <div class="col py-2">
+                                                                <p class="h6 mb-1 ">
+                                                                    <span class="position-relative">Consultation </span>
+                                                                </p>
+                                                                <p class="opacity-75 small">30min </p>
+                                                            </div>
+                                                            <div class="col-auto text-end py-2">
+                                                                <p class="h6 mb-0">$ 30.00</p>
+                                                                <p class="opacity-75 small">$ 2.00 Tax</p>
+                                                            </div>
+                                                            <div class="col-auto text-end py-2">
+                                                                <button class="btn btn-square btn-outline-danger">
+                                                                    <i data-feather="trash"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card adminuiux-card border mb-3">
+                                                    <div class="card-body py-2">
+                                                        <div class="row justify-content-center align-items-center">
+                                                            <div class="col py-2">
+                                                                <p class="h6 mb-1 ">
+                                                                    <span class="position-relative">Tea</span>
+                                                                </p>
+                                                                <p class="opacity-75 small">15min </p>
+                                                            </div>
+                                                            <div class="col-auto text-end py-2">
+                                                                <p class="h6 mb-0">$ 50.00</p>
+                                                                <p class="opacity-75 small">$ 4.00 Tax</p>
+                                                            </div>
+                                                            <div class="col-auto text-end py-2">
+                                                                <button class="btn btn-square btn-outline-danger">
+                                                                    <i data-feather="trash"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-12 col-lg-12 col-xl-4 col-xxl-3">
+                                        <div class="row gx-3 mb-4">
+                                            <!-- inline calendar -->
+                                            <div class="col-12 col-sm-6 col-xl-12 mb-4">
+                                                <h6 class="mb-3">Select Date</h6>
+                                                <div class="inlinewrap1 inline-calendar mx-auto"></div>
+                                                <input type="text" id="inlinewrap1" class="d-none">
+                                            </div>
+                                            <!-- appointment timings -->
+                                            <div class="col-12 col-sm-6 col-xl-12 mb-4">
+                                                <h6 class="mb-3">Select Time</h6>
+                                                <button class="btn btn-sm btn-outline-theme mb-2 me-1 active">
+                                                    <span>11:00 AM</span>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-theme mb-2 me-1"><span>11:30
+                                                        AM</span></button>
+                                                <button class="btn btn-sm btn-outline-theme mb-2 me-1"><span>12:00
+                                                        PM</span></button>
+                                                <button class="btn btn-sm btn-outline-theme mb-2 me-1"><span>12:30
+                                                        PM</span></button>
+                                                <button class="btn btn-sm btn-outline-theme mb-2 me-1"><span>1:00
+                                                        PM</span></button>
+                                                <button class="btn btn-sm btn-outline-theme mb-2 me-1"><span>1:30
+                                                        PM</span></button>
+                                                <button class="btn btn-sm btn-outline-theme mb-2 me-1"><span>2:00
+                                                        PM</span></button>
+                                                <button class="btn btn-sm btn-outline-theme mb-2 me-1"><span>2:30
+                                                        PM</span></button>
+                                                <button class="btn btn-sm btn-outline-theme mb-2 me-1"><span>3:00
+                                                        PM</span></button>
+                                                <button class="btn btn-sm btn-outline-theme mb-2 me-1"><span>3:30
+                                                        PM</span></button>
+                                            </div>
+                                            <div class="col-12">
+                                                <h6 class="mb-3">Payment Details</h6>
+                                            </div>
+                                            <div class="col-auto">
+                                                <h5 class="mb-1">$ 80.00</h5>
+                                                <p class="text-secondary small mb-0">Sub Total</p>
+                                            </div>
+                                            <div class="col-auto">
+                                                <h5 class="mb-1">$ 6.00</h5>
+                                                <p class="text-secondary small mb-0">Total Tax</p>
+                                            </div>
+                                            <div class="col text-end ms-auto">
+                                                <h5 class="mb-1 text-success">$ 86.00</h5>
+                                                <p class="text-secondary small mb-0">Total Payable</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- save and cancel buttons -->
+                                <div class="mb-3">
+                                    <div class="row gx-3">
+                                        <div class="col">
+                                            <a href="investment-billing.html" class="btn btn-theme my-2"><i class="bi bi-floppy me-2"></i>Create</a>
+                                            <!-- <button class="btn btn-theme my-2"><i class="bi bi-floppy me-2"></i>Submit</button> -->
+                                            <button class="btn btn-outline-theme my-2 mx-2">Save as draft</button>
+                                        </div>
+                                        <div class="col-auto">
+                                            <button class="btn btn-link my-2">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </main>
+                </div>
+                <!-- standard footer -->
+<footer class="adminuiux-footer has-adminuiux-sidebar mt-auto">
+    <div class="container-fluid">
+        <div class="row gx-3">
+            <div class="col-12 col-md col-lg text-center text-md-start py-2">
+                <span class="small">�2024,
+                    <a href="https://adminuiux.com" target="_blank">InvestmentUX - Adminuiux</a> on Earth ❤️
+                </span>
+            </div>
+            <div class="col-12 col-md-auto col-lg-auto align-self-center">
+                <ul class="nav small justify-content-center">
+                    <li class="nav-item"><a class="nav-link" href="help-center.html">Help</a></li>
+                    <li class="nav-item">|</li>
+                    <li class="nav-item"><a class="nav-link" href="terms-of-use.html">Terms</a></li>
+                    <li class="nav-item">|</li>
+                    <li class="nav-item"><a class="nav-link" href="privacy-policy.html">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+                    <!-- Page Level js -->
+
+    
+
+</body></html>

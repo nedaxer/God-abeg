@@ -115,7 +115,7 @@ Phone: +1 (888) 555-7777`
     <PageLayout 
       title="Terms & Conditions" 
       subtitle="Please read these terms carefully before using our services"
-      bgColor="#0033a0"
+      bgColor="#000d2e"
     >
       <div className="max-w-4xl mx-auto">
         <div className="mb-8">
@@ -139,13 +139,13 @@ Phone: +1 (888) 555-7777`
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="md:col-span-1">
               <div className="sticky top-8">
-                <h3 className="text-lg font-bold mb-4 text-[#0033a0]">Contents</h3>
+                <h3 className="text-lg font-bold mb-4 text-[#000d2e]">Contents</h3>
                 <ul className="space-y-2">
                   {sections.map((section) => (
                     <li key={section.id}>
                       <a 
                         href={`#${section.id}`} 
-                        className="text-[#0033a0] hover:text-[#ff5900] flex items-center"
+                        className="text-[#000d2e] hover:text-[#ff5900] flex items-center"
                       >
                         <ArrowRight className="h-3 w-3 mr-1" />
                         <span>{section.title}</span>
@@ -158,7 +158,7 @@ Phone: +1 (888) 555-7777`
                   <Button
                     asChild
                     variant="outline"
-                    className="w-full border-[#0033a0] text-[#0033a0] hover:bg-[#0033a0] hover:text-white"
+                    className="w-full border-[#000d2e] text-[#000d2e] hover:bg-[#000d2e] hover:text-white"
                   >
                     <Link href="#" className="flex items-center justify-center">
                       <FileText className="h-4 w-4 mr-2" />
@@ -169,7 +169,7 @@ Phone: +1 (888) 555-7777`
                   <Button
                     asChild
                     variant="outline"
-                    className="w-full border-[#0033a0] text-[#0033a0] hover:bg-[#0033a0] hover:text-white"
+                    className="w-full border-[#000d2e] text-[#000d2e] hover:bg-[#000d2e] hover:text-white"
                   >
                     <Link href="/legal/privacy">
                       Privacy Policy
@@ -179,7 +179,7 @@ Phone: +1 (888) 555-7777`
                   <Button
                     asChild
                     variant="outline"
-                    className="w-full border-[#0033a0] text-[#0033a0] hover:bg-[#0033a0] hover:text-white"
+                    className="w-full border-[#000d2e] text-[#000d2e] hover:bg-[#000d2e] hover:text-white"
                   >
                     <Link href="/legal/risk">
                       Risk Disclosure
@@ -193,7 +193,7 @@ Phone: +1 (888) 555-7777`
               <div className="space-y-8">
                 {sections.map((section) => (
                   <section key={section.id} id={section.id} className="scroll-mt-8">
-                    <h2 className="text-xl font-bold mb-4 text-[#0033a0]">{section.title}</h2>
+                    <h2 className="text-xl font-bold mb-4 text-[#000d2e]">{section.title}</h2>
                     <div className="prose prose-blue max-w-none">
                       {section.content.split('\n\n').map((paragraph, i) => {
                         if (paragraph.startsWith('-')) {
@@ -218,11 +218,11 @@ Phone: +1 (888) 555-7777`
         </div>
 
         <div className="bg-[#f5f5f5] rounded-lg p-8 text-center mb-8">
-          <h2 className="text-xl font-bold mb-4 text-[#0033a0]">Questions about our Terms & Conditions?</h2>
+          <h2 className="text-xl font-bold mb-4 text-[#000d2e]">Questions about our Terms & Conditions?</h2>
           <p className="mb-6">Contact our compliance team for clarification or assistance.</p>
           <Button
             asChild
-            className="bg-[#0033a0] hover:bg-opacity-90 text-white font-semibold"
+            className="bg-[#000d2e] hover:bg-opacity-90 text-white font-semibold"
           >
             <Link href="/company/contact">Contact Compliance Team</Link>
           </Button>

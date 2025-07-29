@@ -1,0 +1,83 @@
+client/src/components/crypto-price-ticker.tsx(26,53): error TS2552: Cannot find name 'useStablePrices'. Did you mean 'useStableCoinPrice'?
+client/src/components/crypto-price-ticker.tsx(59,25): error TS2304: Cannot find name 'selectedCrypto'.
+client/src/components/crypto-price-ticker.tsx(59,44): error TS2304: Cannot find name 'cryptoData'.
+client/src/components/crypto-price-ticker.tsx(59,58): error TS2304: Cannot find name 'cryptoData'.
+client/src/components/crypto-price-ticker.tsx(59,82): error TS2304: Cannot find name 'cryptoData'.
+client/src/components/crypto-price-ticker.tsx(134,8): error TS2304: Cannot find name 'cryptoData'.
+client/src/components/crypto-price-ticker.tsx(134,22): error TS2304: Cannot find name 'cryptoData'.
+client/src/components/crypto-price-ticker.tsx(138,14): error TS2304: Cannot find name 'cryptoData'.
+client/src/components/desktop-content.tsx(66,36): error TS2339: Property 'data' does not exist on type 'unknown'.
+client/src/components/desktop-content.tsx(67,32): error TS2339: Property 'data' does not exist on type 'unknown'.
+client/src/components/desktop-content.tsx(68,32): error TS2339: Property 'data' does not exist on type 'unknown'.
+client/src/components/desktop-content.tsx(221,30): error TS2339: Property 'data' does not exist on type 'unknown'.
+client/src/components/desktop-pages/desktop-deposit-details.tsx(41,11): error TS2339: Property 'transactionId' does not exist on type 'StringRouteParams<undefined>'.
+client/src/components/desktop-pages/desktop-settings.tsx(198,33): error TS2339: Property 'data' does not exist on type 'unknown'.
+client/src/components/desktop-pages/desktop-transfer-details.tsx(16,11): error TS2339: Property 'transactionId' does not exist on type 'StringRouteParams<undefined>'.
+client/src/components/desktop-pages/desktop-verification.tsx(222,39): error TS2339: Property 'data' does not exist on type 'unknown'.
+client/src/components/desktop-pages/desktop-withdrawal-details.tsx(18,11): error TS2339: Property 'transactionId' does not exist on type 'StringRouteParams<undefined>'.
+client/src/components/desktop-pages/desktop-withdrawal-new.tsx(182,61): error TS2339: Property 'data' does not exist on type 'unknown'.
+client/src/components/desktop-pages/desktop-withdrawal-new.tsx(239,57): error TS2339: Property 'data' does not exist on type 'unknown'.
+client/src/components/desktop-pages/desktop-withdrawal-new.tsx(242,31): error TS2339: Property 'data' does not exist on type 'unknown'.
+client/src/components/desktop-pages/desktop-withdrawal-new.tsx(262,24): error TS2339: Property 'data' does not exist on type 'unknown'.
+client/src/components/desktop-pages/desktop-withdrawal-new.tsx(262,59): error TS2339: Property 'data' does not exist on type 'unknown'.
+client/src/components/desktop-pages/desktop-withdrawal-new.tsx(271,24): error TS2339: Property 'data' does not exist on type 'unknown'.
+client/src/components/desktop-pages/desktop-withdrawal-new.tsx(271,60): error TS2339: Property 'data' does not exist on type 'unknown'.
+client/src/components/desktop-pages/desktop-withdrawal-new.tsx(272,31): error TS2339: Property 'data' does not exist on type 'unknown'.
+client/src/components/desktop-pages/desktop-withdrawal.tsx(22,3): error TS2305: Module '"lucide-react"' has no exported member 'Ethereum'.
+client/src/components/desktop-pages/desktop-withdrawal.tsx(229,61): error TS2339: Property 'data' does not exist on type 'unknown'.
+client/src/components/desktop-pages/desktop-withdrawal.tsx(259,33): error TS2339: Property 'data' does not exist on type 'unknown'.
+client/src/components/desktop-pages/desktop-withdrawal.tsx(270,57): error TS2339: Property 'data' does not exist on type 'unknown'.
+client/src/components/desktop-pages/desktop-withdrawal.tsx(273,31): error TS2339: Property 'data' does not exist on type 'unknown'.
+client/src/components/desktop-pages/desktop-withdrawal.tsx(287,24): error TS2339: Property 'data' does not exist on type 'unknown'.
+client/src/components/desktop-pages/desktop-withdrawal.tsx(287,59): error TS2339: Property 'data' does not exist on type 'unknown'.
+client/src/components/desktop-pages/desktop-withdrawal.tsx(296,24): error TS2339: Property 'data' does not exist on type 'unknown'.
+client/src/components/desktop-pages/desktop-withdrawal.tsx(296,60): error TS2339: Property 'data' does not exist on type 'unknown'.
+client/src/components/desktop-pages/desktop-withdrawal.tsx(297,31): error TS2339: Property 'data' does not exist on type 'unknown'.
+client/src/components/mobile-header.tsx(49,41): error TS2339: Property 'unreadCount' does not exist on type 'unknown'.
+client/src/components/mobile-header.tsx(50,43): error TS2339: Property 'supportUnreadCount' does not exist on type 'unknown'.
+client/src/components/mobile-layout.tsx(106,25): error TS2551: Property 'WebkitTextSizeAdjust' does not exist on type 'CSSStyleDeclaration'. Did you mean 'webkitTextSizeAdjust'?
+client/src/components/mobile-layout.tsx(107,25): error TS2339: Property 'MozTextSizeAdjust' does not exist on type 'CSSStyleDeclaration'.
+client/src/components/nedaxer-brochure.tsx(224,20): error TS2304: Cannot find name 'Shield'.
+client/src/components/nedaxer-brochure.tsx(236,20): error TS2304: Cannot find name 'Zap'.
+client/src/components/nedaxer-brochure.tsx(248,20): error TS2304: Cannot find name 'Target'.
+client/src/components/nedaxer-brochure.tsx(311,20): error TS2304: Cannot find name 'CheckCircle'.
+client/src/components/nedaxer-brochure.tsx(324,20): error TS2304: Cannot find name 'TrendingUp'.
+client/src/components/nedaxer-brochure.tsx(337,19): error TS2607: JSX element class does not support attributes because it does not have a 'props' property.
+client/src/components/nedaxer-brochure.tsx(337,20): error TS2786: 'Lock' cannot be used as a JSX component.
+  Its type '{ new (): Lock; prototype: Lock; }' is not a valid JSX element type.
+    Type '{ new (): Lock; prototype: Lock; }' is not assignable to type 'new (props: any, deprecatedLegacyContext?: any) => Component<any, any, any>'.
+      Type 'Lock' is missing the following properties from type 'Component<any, any, any>': context, setState, forceUpdate, render, and 3 more.
+client/src/components/nedaxer-brochure.tsx(418,22): error TS2304: Cannot find name 'CheckCircle'.
+client/src/components/nedaxer-brochure.tsx(422,22): error TS2304: Cannot find name 'CheckCircle'.
+client/src/components/nedaxer-brochure.tsx(426,22): error TS2304: Cannot find name 'CheckCircle'.
+client/src/components/nedaxer-brochure.tsx(447,22): error TS2304: Cannot find name 'CheckCircle'.
+client/src/components/nedaxer-brochure.tsx(451,22): error TS2304: Cannot find name 'CheckCircle'.
+client/src/components/nedaxer-brochure.tsx(455,22): error TS2304: Cannot find name 'CheckCircle'.
+client/src/components/nedaxer-brochure.tsx(473,22): error TS2304: Cannot find name 'CheckCircle'.
+client/src/components/nedaxer-brochure.tsx(477,22): error TS2304: Cannot find name 'CheckCircle'.
+client/src/components/nedaxer-brochure.tsx(481,22): error TS2304: Cannot find name 'CheckCircle'.
+client/src/components/nedaxer-brochure.tsx(493,22): error TS2304: Cannot find name 'CheckCircle'.
+client/src/components/nedaxer-brochure.tsx(497,22): error TS2304: Cannot find name 'CheckCircle'.
+client/src/components/nedaxer-brochure.tsx(501,22): error TS2304: Cannot find name 'CheckCircle'.
+client/src/components/nedaxer-brochure.tsx(507,22): error TS2304: Cannot find name 'CheckCircle'.
+client/src/components/nedaxer-brochure.tsx(511,22): error TS2304: Cannot find name 'CheckCircle'.
+client/src/components/nedaxer-brochure.tsx(515,22): error TS2304: Cannot find name 'CheckCircle'.
+client/src/components/nedaxer-brochure.tsx(742,18): error TS2304: Cannot find name 'Globe'.
+client/src/components/nedaxer-brochure.tsx(748,18): error TS2304: Cannot find name 'Shield'.
+client/src/components/nedaxer-brochure.tsx(754,18): error TS2304: Cannot find name 'TrendingUp'.
+client/src/components/simple-nedaxer-brochure.tsx(22,14): error TS2322: Type '{ children: string; jsx: true; global: true; }' is not assignable to type 'DetailedHTMLProps<StyleHTMLAttributes<HTMLStyleElement>, HTMLStyleElement>'.
+  Property 'jsx' does not exist on type 'DetailedHTMLProps<StyleHTMLAttributes<HTMLStyleElement>, HTMLStyleElement>'.
+client/src/pages/account/login-enterprise.tsx(45,7): error TS2554: Expected 2-3 arguments, but got 1.
+client/src/pages/account/login-enterprise.tsx(61,13): error TS2554: Expected 2-3 arguments, but got 1.
+client/src/pages/account/login-enterprise.tsx(61,36): error TS2339: Property 'message' does not exist on type '{ success: boolean; user: UserData; }'.
+client/src/pages/account/login-enterprise.tsx(65,13): error TS2554: Expected 2-3 arguments, but got 1.
+client/src/pages/account/login-enterprise.tsx(65,34): error TS2339: Property 'message' does not exist on type '{ success: boolean; user: UserData; }'.
+client/src/pages/account/login-enterprise.tsx(70,11): error TS2554: Expected 2-3 arguments, but got 1.
+client/src/pages/company/about.tsx(20,7): error TS2322: Type '{ children: Element; title: string; description: string; }' is not assignable to type 'IntrinsicAttributes & PageLayoutProps'.
+  Property 'description' does not exist on type 'IntrinsicAttributes & PageLayoutProps'.
+server/index.production.ts(8,10): error TS2305: Module '"./routes.mongo.js"' has no exported member 'setupRoutes'.
+server/index.production.ts(9,10): error TS2305: Module '"./websocket.js"' has no exported member 'setupWebSocket'.
+server/vite.ts(43,5): error TS2322: Type '{ middlewareMode: boolean; hmr: { server: Server<typeof IncomingMessage, typeof ServerResponse>; host: string; port: number; }; allowedHosts: boolean; }' is not assignable to type 'ResolvedServerOptions | ServerOptions$1'.
+  Type '{ middlewareMode: boolean; hmr: { server: Server<typeof IncomingMessage, typeof ServerResponse>; host: string; port: number; }; allowedHosts: boolean; }' is not assignable to type 'ServerOptions$1'.
+    Types of property 'allowedHosts' are incompatible.
+      Type 'boolean' is not assignable to type 'true | string[]'.

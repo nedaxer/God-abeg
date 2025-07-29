@@ -103,7 +103,7 @@ export default function CryptoEvents() {
     >
       <div className="max-w-4xl mx-auto">
         <div className="mb-10">
-          <h2 className="text-2xl font-bold mb-4 text-[#0033a0]">Crypto Event Trading on Nedaxer</h2>
+          <h2 className="text-2xl font-bold mb-4 text-[#000d2e]">Crypto Event Trading on Nedaxer</h2>
           <p className="mb-4">
             Cryptocurrency markets are heavily influenced by scheduled events, protocol upgrades, 
             regulatory decisions, and other significant developments. On Nedaxer, you can trade 
@@ -118,7 +118,7 @@ export default function CryptoEvents() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
             <div className="bg-[#f5f5f5] p-6 rounded-lg">
-              <h3 className="text-xl font-bold mb-4 text-[#0033a0]">Event Trading Benefits</h3>
+              <h3 className="text-xl font-bold mb-4 text-[#000d2e]">Event Trading Benefits</h3>
               <ul className="space-y-3">
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
@@ -144,7 +144,7 @@ export default function CryptoEvents() {
             </div>
             
             <div className="bg-[#f5f5f5] p-6 rounded-lg">
-              <h3 className="text-xl font-bold mb-4 text-[#0033a0]">Event Trading Opportunities</h3>
+              <h3 className="text-xl font-bold mb-4 text-[#000d2e]">Event Trading Opportunities</h3>
               <ul className="space-y-3">
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
@@ -172,12 +172,12 @@ export default function CryptoEvents() {
         </div>
         
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Upcoming Crypto Events</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Upcoming Crypto Events</h2>
           
           <div className="overflow-x-auto mb-6">
             <table className="w-full border-collapse">
               <thead>
-                <tr className="bg-[#0033a0] text-white">
+                <tr className="bg-[#000d2e] text-white">
                   <th className="py-3 px-4 text-left">Date</th>
                   <th className="py-3 px-4 text-left">Event</th>
                   <th className="py-3 px-4 text-left">Category</th>
@@ -189,7 +189,7 @@ export default function CryptoEvents() {
                   <tr key={i} className={i % 2 === 0 ? "bg-white" : "bg-gray-50"}>
                     <td className="py-3 px-4 border-b border-gray-200 font-medium">{event.date}</td>
                     <td className="py-3 px-4 border-b border-gray-200">
-                      <div className="font-medium text-[#0033a0]">{event.name}</div>
+                      <div className="font-medium text-[#000d2e]">{event.name}</div>
                       <div className="text-sm text-gray-600">{event.description}</div>
                     </td>
                     <td className="py-3 px-4 border-b border-gray-200">{event.category}</td>
@@ -213,7 +213,7 @@ export default function CryptoEvents() {
             <Button
               asChild
               variant="outline"
-              className="border-[#0033a0] text-[#0033a0] hover:bg-[#0033a0] hover:text-white"
+              className="border-[#000d2e] text-[#000d2e] hover:bg-[#000d2e] hover:text-white"
             >
               <Link href="#">View Full Event Calendar</Link>
             </Button>
@@ -221,12 +221,12 @@ export default function CryptoEvents() {
         </div>
         
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Event Trading Strategies</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Event Trading Strategies</h2>
           
           <div className="space-y-6">
             {tradingStrategies.map((strategy, i) => (
               <div key={i} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-                <h3 className="text-xl font-bold mb-2 text-[#0033a0]">{strategy.name}</h3>
+                <h3 className="text-xl font-bold mb-2 text-[#000d2e]">{strategy.name}</h3>
                 <p className="text-gray-700 mb-4">{strategy.description}</p>
                 <h4 className="font-semibold text-gray-800 mb-2">Implementation Steps:</h4>
                 <ul className="space-y-1 mb-4">
@@ -239,7 +239,7 @@ export default function CryptoEvents() {
                 </ul>
                 <Link 
                   href="#" 
-                  className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
+                  className="text-[#000d2e] hover:text-[#ff5900] font-semibold flex items-center"
                 >
                   Learn More <ArrowRight className="ml-1 h-4 w-4" />
                 </Link>
@@ -249,7 +249,7 @@ export default function CryptoEvents() {
         </div>
         
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Types of Crypto Events</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Types of Crypto Events</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {eventCategories.map((category, i) => (
@@ -257,7 +257,7 @@ export default function CryptoEvents() {
                 <div className="mb-4">
                   {category.icon}
                 </div>
-                <h3 className="text-xl font-bold mb-2 text-[#0033a0]">{category.name}</h3>
+                <h3 className="text-xl font-bold mb-2 text-[#000d2e]">{category.name}</h3>
                 <p className="text-gray-700 mb-4">{category.description}</p>
                 <div className="mb-4">
                   <h4 className="font-semibold text-gray-800 mb-2">Examples:</h4>
@@ -276,7 +276,7 @@ export default function CryptoEvents() {
         </div>
         
         <div className="mb-12">
-          <div className="bg-gradient-to-r from-[#0033a0] via-[#002680] to-[#001a60] text-white rounded-lg p-8 text-center">
+          <div className="bg-gradient-to-r from-[#000d2e] via-[#002680] to-[#001a60] text-white rounded-lg p-8 text-center">
             <h2 className="text-2xl font-bold mb-4">Trade Cryptocurrency Events Today</h2>
             <p className="mb-6">Open an account and start trading crypto market events with limited risk.</p>
             <Button

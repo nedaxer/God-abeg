@@ -175,22 +175,22 @@ export default function Contact() {
     {
       title: "General Inquiries",
       description: "Questions about our platform, our products, or how to get started?",
-      icon: <HelpCircle className="h-10 w-10 text-[#0033a0]" />,
+      icon: <HelpCircle className="h-10 w-10 text-[#000d2e]" />,
     },
     {
       title: "Customer Support",
       description: "Account-related questions, technical issues, or trading assistance.",
-      icon: <MessageSquare className="h-10 w-10 text-[#0033a0]" />,
+      icon: <MessageSquare className="h-10 w-10 text-[#000d2e]" />,
     },
     {
       title: "Security & Compliance",
       description: "Questions about KYC, account security, or regulatory matters.",
-      icon: <Shield className="h-10 w-10 text-[#0033a0]" />,
+      icon: <Shield className="h-10 w-10 text-[#000d2e]" />,
     },
     {
       title: "Technical Analysis Team",
       description: "Help with chart analysis, indicators, or trading strategies.",
-      icon: <Zap className="h-10 w-10 text-[#0033a0]" />,
+      icon: <Zap className="h-10 w-10 text-[#000d2e]" />,
     },
   ];
 
@@ -198,11 +198,11 @@ export default function Contact() {
     <PageLayout 
       title="Contact Us" 
       subtitle="Get in touch with our team for any questions or assistance"
-      bgColor="#0033a0"
+      bgColor="#000d2e"
     >
       <div className="max-w-4xl mx-auto">
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Get in Touch</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Get in Touch</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             {contactOptions.map((option, i) => (
@@ -210,7 +210,7 @@ export default function Contact() {
                 <div className="flex items-start mb-4">
                   <div className="mr-4">{option.icon}</div>
                   <div>
-                    <h3 className="text-xl font-bold mb-2 text-[#0033a0]">{option.title}</h3>
+                    <h3 className="text-xl font-bold mb-2 text-[#000d2e]">{option.title}</h3>
                     <p className="text-gray-700">{option.description}</p>
                   </div>
                 </div>
@@ -223,7 +223,7 @@ export default function Contact() {
         </div>
         
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Contact Form</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Contact Form</h2>
           
           {!user && (
             <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-6">
@@ -254,7 +254,7 @@ export default function Contact() {
                     value={formData.firstName}
                     onChange={handleInputChange}
                     placeholder="Enter your first name"
-                    className="focus:ring-2 focus:ring-[#0033a0] focus:border-[#0033a0]"
+                    className="focus:ring-2 focus:ring-[#000d2e] focus:border-[#000d2e]"
                     disabled={!user}
                     required
                   />
@@ -268,7 +268,7 @@ export default function Contact() {
                     value={formData.lastName}
                     onChange={handleInputChange}
                     placeholder="Enter your last name"
-                    className="focus:ring-2 focus:ring-[#0033a0] focus:border-[#0033a0]"
+                    className="focus:ring-2 focus:ring-[#000d2e] focus:border-[#000d2e]"
                     disabled={!user}
                     required
                   />
@@ -284,7 +284,7 @@ export default function Contact() {
                   value={formData.email}
                   onChange={handleInputChange}
                   placeholder="Enter your email address"
-                  className="focus:ring-2 focus:ring-[#0033a0] focus:border-[#0033a0]"
+                  className="focus:ring-2 focus:ring-[#000d2e] focus:border-[#000d2e]"
                   disabled={!user}
                   required
                 />
@@ -294,7 +294,7 @@ export default function Contact() {
                 <div className="space-y-2">
                   <Label htmlFor="category">Category</Label>
                   <Select value={formData.category} onValueChange={(value) => handleSelectChange('category', value)} disabled={!user}>
-                    <SelectTrigger className="focus:ring-2 focus:ring-[#0033a0] focus:border-[#0033a0]">
+                    <SelectTrigger className="focus:ring-2 focus:ring-[#000d2e] focus:border-[#000d2e]">
                       <SelectValue placeholder="Select category" />
                     </SelectTrigger>
                     <SelectContent>
@@ -308,7 +308,7 @@ export default function Contact() {
                 <div className="space-y-2">
                   <Label htmlFor="priority">Priority</Label>
                   <Select value={formData.priority} onValueChange={(value) => handleSelectChange('priority', value)} disabled={!user}>
-                    <SelectTrigger className="focus:ring-2 focus:ring-[#0033a0] focus:border-[#0033a0]">
+                    <SelectTrigger className="focus:ring-2 focus:ring-[#000d2e] focus:border-[#000d2e]">
                       <SelectValue placeholder="Select priority" />
                     </SelectTrigger>
                     <SelectContent>
@@ -329,7 +329,7 @@ export default function Contact() {
                   value={formData.subject}
                   onChange={handleInputChange}
                   placeholder="Enter the subject of your message"
-                  className="focus:ring-2 focus:ring-[#0033a0] focus:border-[#0033a0]"
+                  className="focus:ring-2 focus:ring-[#000d2e] focus:border-[#000d2e]"
                   disabled={!user}
                   required
                 />
@@ -343,7 +343,7 @@ export default function Contact() {
                   value={formData.message}
                   onChange={handleInputChange}
                   placeholder="Type your detailed message here..."
-                  className="resize-none min-h-[120px] focus:ring-2 focus:ring-[#0033a0] focus:border-[#0033a0]"
+                  className="resize-none min-h-[120px] focus:ring-2 focus:ring-[#000d2e] focus:border-[#000d2e]"
                   disabled={!user}
                   required
                 />
@@ -355,7 +355,7 @@ export default function Contact() {
               <div className="text-center pt-4">
                 <Button 
                   type="submit" 
-                  className="bg-[#0033a0] hover:bg-[#002680] text-white px-8 py-3 font-medium"
+                  className="bg-[#000d2e] hover:bg-[#002680] text-white px-8 py-3 font-medium"
                   disabled={!user || contactMutation.isPending}
                 >
                   {contactMutation.isPending ? (

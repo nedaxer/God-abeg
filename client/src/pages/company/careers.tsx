@@ -17,22 +17,22 @@ export default function Careers() {
     {
       title: "Innovation",
       description: "We encourage creative thinking and continuous improvement to drive the evolution of our products and services.",
-      icon: <Brain className="h-10 w-10 text-[#0033a0]" />,
+      icon: <Brain className="h-10 w-10 text-[#000d2e]" />,
     },
     {
       title: "Integrity",
       description: "We operate with honesty, transparency, and ethical behavior in all our actions and decisions.",
-      icon: <Heart className="h-10 w-10 text-[#0033a0]" />,
+      icon: <Heart className="h-10 w-10 text-[#000d2e]" />,
     },
     {
       title: "Collaboration",
       description: "We work together across teams, valuing diverse perspectives to achieve common goals.",
-      icon: <Users className="h-10 w-10 text-[#0033a0]" />,
+      icon: <Users className="h-10 w-10 text-[#000d2e]" />,
     },
     {
       title: "Customer Focus",
       description: "We are dedicated to understanding and meeting the needs of our customers in everything we do.",
-      icon: <Coffee className="h-10 w-10 text-[#0033a0]" />,
+      icon: <Coffee className="h-10 w-10 text-[#000d2e]" />,
     },
   ];
 
@@ -112,11 +112,11 @@ export default function Careers() {
     <PageLayout 
       title="Careers at Nedaxer" 
       subtitle="Join our team and help shape the future of derivatives trading"
-      bgColor="#0033a0"
+      bgColor="#000d2e"
     >
       <div className="max-w-4xl mx-auto">
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Join Our Team</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Join Our Team</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
             <div>
@@ -131,7 +131,7 @@ export default function Careers() {
               </p>
               <Button
                 asChild
-                className="bg-[#0033a0] hover:bg-opacity-90 text-white font-semibold px-6 py-2 mt-2"
+                className="bg-[#000d2e] hover:bg-opacity-90 text-white font-semibold px-6 py-2 mt-2"
               >
                 <Link href="#openings">View Open Positions</Link>
               </Button>
@@ -149,14 +149,14 @@ export default function Careers() {
         </div>
 
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Our Values</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Our Values</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {coreValues.map((value, i) => (
               <div key={i} className="flex items-start p-6 bg-[#f5f5f5] rounded-lg">
                 <div className="mr-4">{value.icon}</div>
                 <div>
-                  <h3 className="text-xl font-bold mb-2 text-[#0033a0]">{value.title}</h3>
+                  <h3 className="text-xl font-bold mb-2 text-[#000d2e]">{value.title}</h3>
                   <p className="text-gray-900">{value.description}</p>
                 </div>
               </div>
@@ -165,12 +165,12 @@ export default function Careers() {
         </div>
 
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Benefits & Perks</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Benefits & Perks</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {benefits.map((benefit, i) => (
               <div key={i} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-                <h3 className="text-xl font-bold mb-2 text-[#0033a0]">{benefit.title}</h3>
+                <h3 className="text-xl font-bold mb-2 text-[#000d2e]">{benefit.title}</h3>
                 <p className="text-gray-900">{benefit.description}</p>
               </div>
             ))}
@@ -178,25 +178,25 @@ export default function Careers() {
         </div>
 
         <div id="openings" className="mb-12 scroll-mt-24">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Current Openings</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Current Openings</h2>
 
           <div className="space-y-6">
             {jobOpenings.map((job, i) => (
               <div key={i} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
                 <div className="md:flex justify-between items-center">
                   <div>
-                    <h3 className="text-xl font-bold mb-2 text-[#0033a0]">{job.title}</h3>
+                    <h3 className="text-xl font-bold mb-2 text-[#000d2e]">{job.title}</h3>
                     <div className="flex flex-wrap gap-2 mb-4">
-                      <span className="bg-[#e6eef9] text-[#0033a0] text-xs px-2 py-1 rounded-full">{job.department}</span>
-                      <span className="bg-[#e6eef9] text-[#0033a0] text-xs px-2 py-1 rounded-full">{job.location}</span>
-                      <span className="bg-[#e6eef9] text-[#0033a0] text-xs px-2 py-1 rounded-full">{job.type}</span>
+                      <span className="bg-[#e6eef9] text-[#000d2e] text-xs px-2 py-1 rounded-full">{job.department}</span>
+                      <span className="bg-[#e6eef9] text-[#000d2e] text-xs px-2 py-1 rounded-full">{job.location}</span>
+                      <span className="bg-[#e6eef9] text-[#000d2e] text-xs px-2 py-1 rounded-full">{job.type}</span>
                     </div>
                     <div className="text-sm text-gray-900">Job ID: {job.id}</div>
                   </div>
                   <div className="mt-4 md:mt-0">
                     <Button
                       asChild
-                      className="bg-[#0033a0] hover:bg-opacity-90 text-white font-semibold"
+                      className="bg-[#000d2e] hover:bg-opacity-90 text-white font-semibold"
                     >
                       <Link href="#">View Job Details</Link>
                     </Button>
@@ -213,7 +213,7 @@ export default function Careers() {
             <Button
               asChild
               variant="outline"
-              className="border-[#0033a0] text-[#0033a0] hover:bg-[#0033a0] hover:text-white"
+              className="border-[#000d2e] text-[#000d2e] hover:bg-[#000d2e] hover:text-white"
             >
               <Link href="#">Submit General Application</Link>
             </Button>
@@ -221,7 +221,7 @@ export default function Careers() {
         </div>
 
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Life at Nedaxer</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Life at Nedaxer</h2>
 
           {/* Team Photo Gallery */}
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
@@ -246,10 +246,10 @@ export default function Careers() {
           </div>
 
           <div className="bg-[#f5f5f5] p-6 rounded-lg">
-            <h3 className="text-xl font-bold mb-4 text-[#0033a0]">Employee Testimonials</h3>
+            <h3 className="text-xl font-bold mb-4 text-[#000d2e]">Employee Testimonials</h3>
 
             <div className="space-y-6">
-              <div className="border-l-4 border-[#0033a0] pl-4">
+              <div className="border-l-4 border-[#000d2e] pl-4">
                 <p className="italic mb-2 text-gray-900">
                   "Working at Nedaxer has been an incredible journey. The company truly values innovation and 
                   encourages us to bring new ideas to the table. I've grown professionally while being part 
@@ -258,7 +258,7 @@ export default function Careers() {
                 <div className="font-semibold text-gray-900">- Software Engineer, 3 years at Nedaxer</div>
               </div>
 
-              <div className="border-l-4 border-[#0033a0] pl-4">
+              <div className="border-l-4 border-[#000d2e] pl-4">
                 <p className="italic mb-2 text-gray-900">
                   "The collaborative culture at Nedaxer sets it apart from other places I've worked. 
                   There's a real sense of teamwork across departments, and leadership is accessible 
@@ -271,13 +271,13 @@ export default function Careers() {
         </div>
 
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Our Hiring Process</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Our Hiring Process</h2>
 
           <div className="space-y-6">
             <div className="flex items-start">
-              <div className="bg-[#0033a0] text-white rounded-full h-8 w-8 flex items-center justify-center font-bold flex-shrink-0 mr-4">1</div>
+              <div className="bg-[#000d2e] text-white rounded-full h-8 w-8 flex items-center justify-center font-bold flex-shrink-0 mr-4">1</div>
               <div>
-                <h3 className="text-xl font-bold mb-2 text-[#0033a0]">Application Review</h3>
+                <h3 className="text-xl font-bold mb-2 text-[#000d2e]">Application Review</h3>
                 <p className="text-gray-900">
                   Our recruiting team reviews your application and resume to assess your qualifications 
                   and experience relative to the position requirements.
@@ -286,9 +286,9 @@ export default function Careers() {
             </div>
 
             <div className="flex items-start">
-              <div className="bg-[#0033a0] text-white rounded-full h-8 w-8 flex items-center justify-center font-bold flex-shrink-0 mr-4">2</div>
+              <div className="bg-[#000d2e] text-white rounded-full h-8 w-8 flex items-center justify-center font-bold flex-shrink-0 mr-4">2</div>
               <div>
-                <h3 className="text-xl font-bold mb-2 text-[#0033a0]">Initial Screening</h3>
+                <h3 className="text-xl font-bold mb-2 text-[#000d2e]">Initial Screening</h3>
                 <p className="text-gray-900">
                   If your profile aligns with our needs, you'll participate in a phone or video screening 
                   with a recruiter to discuss your background and interest in the role.
@@ -297,9 +297,9 @@ export default function Careers() {
             </div>
 
             <div className="flex items-start">
-              <div className="bg-[#0033a0] text-white rounded-full h-8 w-8 flex items-center justify-center font-bold flex-shrink-0 mr-4">3</div>
+              <div className="bg-[#000d2e] text-white rounded-full h-8 w-8 flex items-center justify-center font-bold flex-shrink-0 mr-4">3</div>
               <div>
-                <h3 className="text-xl font-bold mb-2 text-[#0033a0]">Skills Assessment</h3>
+                <h3 className="text-xl font-bold mb-2 text-[#000d2e]">Skills Assessment</h3>
                 <p className="text-gray-900">
                   Depending on the role, you may be asked to complete a skills assessment or technical 
                   challenge to demonstrate your capabilities.
@@ -308,9 +308,9 @@ export default function Careers() {
             </div>
 
             <div className="flex items-start">
-              <div className="bg-[#0033a0] text-white rounded-full h-8 w-8 flex items-center justify-center font-bold flex-shrink-0 mr-4">4</div>
+              <div className="bg-[#000d2e] text-white rounded-full h-8 w-8 flex items-center justify-center font-bold flex-shrink-0 mr-4">4</div>
               <div>
-                <h3 className="text-xl font-bold mb-2 text-[#0033a0]">Team Interviews</h3>
+                <h3 className="text-xl font-bold mb-2 text-[#000d2e]">Team Interviews</h3>
                 <p className="text-gray-900">
                   You'll meet with several team members, including potential colleagues and managers, 
                   to discuss your experience, skills, and fit with our culture.
@@ -319,9 +319,9 @@ export default function Careers() {
             </div>
 
             <div className="flex items-start">
-              <div className="bg-[#0033a0] text-white rounded-full h-8 w-8 flex items-center justify-center font-bold flex-shrink-0 mr-4">5</div>
+              <div className="bg-[#000d2e] text-white rounded-full h-8 w-8 flex items-center justify-center font-bold flex-shrink-0 mr-4">5</div>
               <div>
-                <h3 className="text-xl font-bold mb-2 text-[#0033a0]">Final Decision & Offer</h3>
+                <h3 className="text-xl font-bold mb-2 text-[#000d2e]">Final Decision & Offer</h3>
                 <p className="text-gray-900">
                   After gathering feedback from all interviewers, we'll make a decision and extend an 
                   offer to the selected candidate, followed by onboarding preparations.
@@ -331,7 +331,7 @@ export default function Careers() {
           </div>
         </div>
 
-        <div className="bg-[#0033a0] text-white rounded-lg p-8 text-center">
+        <div className="bg-[#000d2e] text-white rounded-lg p-8 text-center">
           <h2 className="text-2xl font-bold mb-4">Ready to Join Our Team?</h2>
           <p className="mb-6">Explore our current openings and take the next step in your career with Nedaxer.</p>
           <Button

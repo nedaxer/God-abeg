@@ -113,7 +113,7 @@ export default function DesktopDashboard({ children, title = 'Nedaxer' }: Deskto
   const navigationItems = [
     { id: 'home', label: 'Dashboard', icon: Home, path: '/mobile' },
     { id: 'assets', label: 'Assets', icon: Wallet, path: '/mobile/assets' },
-    { id: 'trade', label: 'Trading', icon: TrendingUp, path: '/mobile/trade' },
+    { id: 'trade', label: 'Invest', icon: TrendingUp, path: '/mobile/trade' },
     { id: 'markets', label: 'Markets', icon: BarChart3, path: '/mobile/markets' },
     { id: 'earn', label: 'Earn', icon: Gift, path: '/mobile/earn' },
     { id: 'news', label: 'News', icon: Newspaper, path: '/mobile/news' },

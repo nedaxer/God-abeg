@@ -108,7 +108,7 @@ By opening an account and trading on Nadex, you acknowledge that you have read a
     <PageLayout 
       title="Risk Disclosure" 
       subtitle="Important information about the risks of trading on Nadex"
-      bgColor="#0033a0"
+      bgColor="#000d2e"
     >
       <div className="max-w-4xl mx-auto">
         <div className="mb-8">
@@ -133,13 +133,13 @@ By opening an account and trading on Nadex, you acknowledge that you have read a
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="md:col-span-1">
               <div className="sticky top-8">
-                <h3 className="text-lg font-bold mb-4 text-[#0033a0]">Contents</h3>
+                <h3 className="text-lg font-bold mb-4 text-[#000d2e]">Contents</h3>
                 <ul className="space-y-2">
                   {sections.map((section) => (
                     <li key={section.id}>
                       <a 
                         href={`#${section.id}`} 
-                        className="text-[#0033a0] hover:text-[#ff5900] flex items-center"
+                        className="text-[#000d2e] hover:text-[#ff5900] flex items-center"
                       >
                         <ArrowRight className="h-3 w-3 mr-1" />
                         <span>{section.title}</span>
@@ -152,7 +152,7 @@ By opening an account and trading on Nadex, you acknowledge that you have read a
                   <Button
                     asChild
                     variant="outline"
-                    className="w-full border-[#0033a0] text-[#0033a0] hover:bg-[#0033a0] hover:text-white"
+                    className="w-full border-[#000d2e] text-[#000d2e] hover:bg-[#000d2e] hover:text-white"
                   >
                     <Link href="#" className="flex items-center justify-center">
                       <FileText className="h-4 w-4 mr-2" />
@@ -163,7 +163,7 @@ By opening an account and trading on Nadex, you acknowledge that you have read a
                   <Button
                     asChild
                     variant="outline"
-                    className="w-full border-[#0033a0] text-[#0033a0] hover:bg-[#0033a0] hover:text-white"
+                    className="w-full border-[#000d2e] text-[#000d2e] hover:bg-[#000d2e] hover:text-white"
                   >
                     <Link href="/legal/terms">
                       Terms & Conditions
@@ -173,7 +173,7 @@ By opening an account and trading on Nadex, you acknowledge that you have read a
                   <Button
                     asChild
                     variant="outline"
-                    className="w-full border-[#0033a0] text-[#0033a0] hover:bg-[#0033a0] hover:text-white"
+                    className="w-full border-[#000d2e] text-[#000d2e] hover:bg-[#000d2e] hover:text-white"
                   >
                     <Link href="/legal/privacy">
                       Privacy Policy
@@ -187,7 +187,7 @@ By opening an account and trading on Nadex, you acknowledge that you have read a
               <div className="space-y-8">
                 {sections.map((section) => (
                   <section key={section.id} id={section.id} className="scroll-mt-8">
-                    <h2 className="text-xl font-bold mb-4 text-[#0033a0]">{section.title}</h2>
+                    <h2 className="text-xl font-bold mb-4 text-[#000d2e]">{section.title}</h2>
                     <div className="prose prose-blue max-w-none">
                       {section.content.split('\n\n').map((paragraph, i) => {
                         if (paragraph.includes(':\n')) {
@@ -227,21 +227,21 @@ By opening an account and trading on Nadex, you acknowledge that you have read a
         <div className="bg-[#f5f5f5] rounded-lg p-8 mb-8">
           <div className="md:flex justify-between items-center">
             <div className="mb-6 md:mb-0 md:mr-6">
-              <h2 className="text-xl font-bold mb-2 text-[#0033a0]">Learn More About Trading Safely</h2>
+              <h2 className="text-xl font-bold mb-2 text-[#000d2e]">Learn More About Trading Safely</h2>
               <p className="mb-0">
                 Explore our educational resources to learn more about trading strategies and risk management techniques.
               </p>
             </div>
             <Button
               asChild
-              className="bg-[#0033a0] hover:bg-opacity-90 text-white font-semibold whitespace-nowrap"
+              className="bg-[#000d2e] hover:bg-opacity-90 text-white font-semibold whitespace-nowrap"
             >
               <Link href="/learn/getting-started">View Educational Resources</Link>
             </Button>
           </div>
         </div>
         
-        <div className="bg-[#0033a0] text-white rounded-lg p-8 text-center">
+        <div className="bg-[#000d2e] text-white rounded-lg p-8 text-center">
           <h2 className="text-2xl font-bold mb-4">Questions about risk disclosure?</h2>
           <p className="mb-6">Contact our support team for clarification or assistance.</p>
           <Button

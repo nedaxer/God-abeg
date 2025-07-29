@@ -15,7 +15,8 @@ import {
   Calendar,
   Zap,
   Loader2,
-  RefreshCw
+  RefreshCw,
+  Star
 } from 'lucide-react';
 import { useLocation } from 'wouter';
 
@@ -161,6 +162,108 @@ export default function DesktopNews() {
               </Button>
             </CardContent>
           </Card>
+        )}
+
+        {/* Featured Content Section */}
+        {!isLoading && !error && (
+          <div className="mb-8">
+            <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+              <Star className="w-6 h-6 text-orange-500" />
+              Featured Content
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+              {/* Welcome to the Future */}
+              <Card className="bg-black/20 backdrop-blur-sm border-gray-700/50 hover:border-orange-500/50 transition-all duration-300">
+                <CardContent className="p-6">
+                  <div className="flex items-start space-x-4">
+                    <div className="flex-1">
+                      <h3 className="text-white font-semibold text-lg mb-2">
+                        Welcome to the Future
+                      </h3>
+                      <p className="text-gray-400 text-sm mb-4">
+                        Discover how Nedaxer is creating a promising future in cryptocurrency and asset management
+                      </p>
+                      <div className="flex items-center space-x-2 text-xs">
+                        <span className="text-orange-400 font-medium">Nedaxer</span>
+                        <span className="text-gray-500">•</span>
+                        <span className="text-gray-500">Featured</span>
+                      </div>
+                    </div>
+                    <div className="w-20 h-20 rounded-lg overflow-hidden">
+                      <img 
+                        src="/assets/nedaxer-welcome.png" 
+                        alt="Welcome to the Future" 
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Investment Guide */}
+              <Card className="bg-black/20 backdrop-blur-sm border-gray-700/50 hover:border-orange-500/50 transition-all duration-300">
+                <CardContent className="p-6">
+                  <div className="flex items-start space-x-4">
+                    <div className="flex-1">
+                      <h3 className="text-white font-semibold text-lg mb-2">
+                        Investment Guide & Resources
+                      </h3>
+                      <p className="text-gray-400 text-sm mb-4">
+                        Comprehensive guide to Nedaxer's investment plans, analysis, and company information
+                      </p>
+                      <div className="flex items-center space-x-2 text-xs">
+                        <span className="text-orange-400 font-medium">Nedaxer</span>
+                        <span className="text-gray-500">•</span>
+                        <span className="text-gray-500">Resources</span>
+                      </div>
+                    </div>
+                    <div className="w-20 h-20 rounded-lg overflow-hidden">
+                      <img 
+                        src="/assets/nedaxer-toc.png" 
+                        alt="Investment Guide" 
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Creating a Promising Future */}
+              <Card className="bg-black/20 backdrop-blur-sm border-gray-700/50 hover:border-orange-500/50 transition-all duration-300">
+                <CardContent className="p-6">
+                  <div className="flex items-start space-x-4">
+                    <div className="flex-1">
+                      <h3 className="text-white font-semibold text-lg mb-2">
+                        Creating a Promising Future
+                      </h3>
+                      <p className="text-gray-400 text-sm mb-4">
+                        How Nedaxer is revolutionizing investment opportunities with sustainable growth strategies
+                      </p>
+                      <div className="flex items-center space-x-2 text-xs">
+                        <span className="text-orange-400 font-medium">Nedaxer</span>
+                        <span className="text-gray-500">•</span>
+                        <span className="text-gray-500">Vision</span>
+                      </div>
+                    </div>
+                    <div className="w-20 h-20 rounded-lg overflow-hidden">
+                      <img 
+                        src="/assets/nedaxer-future-city.png" 
+                        alt="Creating a Promising Future" 
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+            
+            <div className="border-t border-gray-700/50 pt-6">
+              <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                <Newspaper className="w-6 h-6 text-orange-500" />
+                Latest Crypto News
+              </h2>
+            </div>
+          </div>
         )}
 
         {/* News Grid */}

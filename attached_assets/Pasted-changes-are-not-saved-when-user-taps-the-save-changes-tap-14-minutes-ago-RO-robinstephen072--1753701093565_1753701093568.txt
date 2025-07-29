@@ -1,0 +1,97 @@
+changes are not saved when user taps the save changes tap
+
+14 minutes ago
+RO
+
+robinstephen072
+I can see from the logs that the database is correctly returning the profile data, but the frontend still shows "Not set". The issue is likely in how the data is being processed in the frontend. Let me check the browser console logs and examine the form data initialization more closely.
+
+
+Opened client/src/pages/mobile/profile-settings.tsx
+
+Opened client/src/pages/mobile/profile-settings.tsx
+Now I need to find the save edit function to see how it's handling the data updates. Let me look for the saveEdit function and the API endpoint it calls:
+
+
+Opened client/src/pages/mobile/profile-settings.tsx
+
+Searched for "Find the profile update API endpoint that handles saving profile data changes"
+Now I can see the issue! I found two separate problems:
+
+Backend API Issue: The backend /api/auth/profile endpoint is expecting dateOfBirth but the database has separate fields (dateOfBirth, monthOfBirth, yearOfBirth).
+
+Frontend Display Issue: The frontend console shows that user data is being retrieved correctly from the API, but the form initialization isn't properly combining the separate date fields.
+
+Let me fix both issues. First, let me check the backend profile update endpoint to see how it's handling the date data:
+
+
+Opened server/routes.mongo.ts
+
+Searched for "Find the PUT /api/auth/profile endpoint that handles profile updates"
+I found the issue! Looking at the backend /api/auth/profile endpoint, I can see that it's expecting dateOfBirth as a single field, but the database is storing separate dateOfBirth, monthOfBirth, and yearOfBirth fields. The backend endpoint needs to be updated to properly handle the date data when saving.
+
+Let me fix the backend profile update endpoint to properly parse the date into separate fields, and also ensure the frontend data initialization is working correctly:
+
+
+Opened server/routes.mongo.ts
+
+Executed grep -n "PUT /api/auth/profile" server/routes.mongo.ts
+Let me search for the exact profile update endpoint:
+
+
+Executed grep -A 30 -B 5 "PUT.*auth/profile" server/routes.mongo.ts
+
+Opened server/routes.mongo.ts
+Let me search specifically for the profile update endpoint in the routes file:
+
+
+Executed grep -n "app.put.*profile" server/routes.mongo.ts
+
+Opened server/routes.mongo.ts
+Optimized Agent memory
+Perfect! Now I can see the profile update endpoint. The issue is clear:
+
+Backend Problem: The /api/auth/profile endpoint at line 2395 expects a single dateOfBirth field, but the database stores separate dateOfBirth, monthOfBirth, and yearOfBirth fields.
+
+Frontend Problem: The frontend is sending the date as a single dateOfBirth field (like "1994-09-05"), but the backend is trying to store this as a single field instead of parsing it into separate day, month, and year fields.
+
+Let me fix the backend profile update endpoint to properly parse the date and then ensure the frontend is sending the data correctly:
+
+
+Opened server/routes.mongo.ts
+
+Edited server/routes.mongo.ts
+Now I need to fix the frontend to ensure the form data is properly initialized. Let me check the profile settings page to see how the form data is being initialized and make sure it properly combines the separate date fields:
+
+
+Opened client/src/pages/mobile/profile-settings.tsx
+
+Opened client/src/pages/mobile/profile-settings.tsx
+Great! Now I can see the frontend is correctly formatting the date data. The frontend code looks good - it properly combines the separate dateOfBirth, monthOfBirth, and yearOfBirth fields into a formatted date string (YYYY-MM-DD format) in the useEffect initialization.
+
+Now let me test the profile settings page to see if the data is displaying properly and if the save functionality works:
+
+
+Executed curl -X GET "http://localhost:5000/api/auth/user" -b cookies.txt -s | node -e " const data = JSON.parse(require('fs').readFileSync('/dev/stdin', 'utf8')); console.log('✅ User data from API:'); console.log('- Phone:', data.phoneNumber || data.phone); console.log('- Date of Birth (day):', data.dateOfBirth); console.log('- Month of Birth:', data.monthOfBirth); console.log('- Year of Birth:', data.yearOfBirth); console.log('- Gender:', data.gender); console.log(''); console.log('🔧 Frontend should format date as:', data.yearOfBirth + '-' + String(data.monthOfBirth).padStart(2, '0') + '-' + String(data.dateOfBirth).padStart(2, '0')); "
+
+Executed curl -X PUT "http://localhost:5000/api/auth/profile" \ -H "Content-Type: application/json" \ -b cookies.txt \ -d '{ "phoneNumber": "+1255 669 5447", "dateOfBirth": "1994-09-05", "gender": "male", "countryCode": "+1" }' -s | node -e " const response = JSON.parse(require('fs').readFileSync('/dev/stdin', 'utf8')); console.log('💾 Profile update test result:'); console.log('Success:', response.success); console.log('Message:', response.message); if (response.user) { console.log('Updated user data:'); console.log('- Phone:', response.user.phoneNumber); console.log('- Date (day):', response.user.dateOfBirth); console.log('- Month:', response.user.monthOfBirth); console.log('- Year:', response.user.yearOfBirth); console.log('- Gender:', response.user.gender); } "
+I see the issue! The session expired and I need to login again. Let me reauthenticate and then test the profile update functionality:
+
+
+Executed curl -X POST "http://localhost:5000/api/auth/login" \ -H "Content-Type: application/json" \ -d '{"username":"leesmart995@gmail.com","password":"Nedaxer@2025"}' \ -c cookies.txt -s
+
+Executed curl -X GET "http://localhost:5000/api/auth/user" -b cookies.txt -s | node -e " const data = JSON.parse(require('fs').readFileSync('/dev/stdin', 'utf8')); console.log('✅ User data verification:'); console.log('- Phone Number:', data.phoneNumber || data.phone); console.log('- Date of Birth (day):', data.dateOfBirth); console.log('- Month of Birth:', data.monthOfBirth); console.log('- Year of Birth:', data.yearOfBirth); console.log('- Gender:', data.gender); console.log(''); if (data.dateOfBirth && data.monthOfBirth && data.yearOfBirth) { const formattedDate = data.yearOfBirth + '-' + String(data.monthOfBirth).padStart(2, '0') + '-' + String(data.dateOfBirth).padStart(2, '0'); console.log('🔧 Frontend should display date as:', formattedDate); } else { console.log('❌ Missing date field data'); } "
+
+Executed curl -X PUT "http://localhost:5000/api/auth/profile" \ -H "Content-Type: application/json" \ -b cookies.txt \ -d '{ "phoneNumber": "+1255 669 5447", "dateOfBirth": "1994-09-05", "gender": "male", "countryCode": "+1" }' -s
+Perfect! I can see the issue now. The error shows mongoStorage is not defined in the profile update endpoint. The backend is correctly parsing the date (I can see the log 📅 Parsed date:), but there's a reference error with mongoStorage. Let me fix this:
+
+
+Opened server/routes.mongo.ts
+
+Edited server/routes.mongo.ts
+Now let me test the profile update again to see if the storage reference error is fixed:
+
+
+Executed curl -X PUT "http://localhost:5000/api/auth/profile" \ -H "Content-Type: application/json" \ -b cookies.txt \ -d '{ "phoneNumber": "+1255 669 5447", "dateOfBirth": "1994-09-05", "gender": "male", "countryCode": "+1" }' -s | node -e " const result = JSON.parse(require('fs').readFileSync('/dev/stdin', 'utf8')); console.log('✅ Profile update test result:'); console.log('- Success:', result.success); console.log('- Message:', result.message); if (result.user) { console.log('- Phone:', result.user.phoneNumber); console.log('- Gender:', result.user.gender); console.log('- Country Code:', result.user.countryCode); } "
+
+Executed sleep 2 && curl -X GET "http://localhost:5000/api/

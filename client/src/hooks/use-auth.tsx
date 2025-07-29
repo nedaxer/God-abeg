@@ -26,7 +26,16 @@ type UserData = Pick<
   | "isAdmin"
   | "isVerified"
   | "profilePicture"
->;
+> & {
+  // Additional profile fields from MongoDB
+  phoneNumber?: string;
+  phone?: string;
+  dateOfBirth?: string;
+  monthOfBirth?: string;
+  yearOfBirth?: string;
+  gender?: string;
+  countryCode?: string;
+};
 
 type AuthContextType = {
   user: UserData | null;
@@ -103,7 +112,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             email: data.user.email,
             isAdmin: data.user.isAdmin || false,
             isVerified: data.user.isVerified || false,
-            profilePicture: data.user.profilePicture || null
+            profilePicture: data.user.profilePicture || null,
+            // Include profile fields
+            phoneNumber: data.user.phoneNumber,
+            phone: data.user.phone,
+            dateOfBirth: data.user.dateOfBirth,
+            monthOfBirth: data.user.monthOfBirth,
+            yearOfBirth: data.user.yearOfBirth,
+            gender: data.user.gender,
+            countryCode: data.user.countryCode
           };
           console.log("✅ User authenticated successfully:", userData.email);
           return { user: userData };
@@ -120,7 +137,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             email: data.email,
             isAdmin: data.isAdmin || false,
             isVerified: data.isVerified || false,
-            profilePicture: data.profilePicture || null
+            profilePicture: data.profilePicture || null,
+            // Include profile fields
+            phoneNumber: data.phoneNumber,
+            phone: data.phone,
+            dateOfBirth: data.dateOfBirth,
+            monthOfBirth: data.monthOfBirth,
+            yearOfBirth: data.yearOfBirth,
+            gender: data.gender,
+            countryCode: data.countryCode
           };
           console.log("✅ User authenticated (direct format):", userData.email);
           return { user: userData };

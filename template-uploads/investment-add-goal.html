@@ -1,0 +1,951 @@
+<!DOCTYPE html><html lang="en"><!-- dir="rtl"--><head>
+    <!-- Required meta tags  -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>InvestemntUIUX Mobile - Bootstrap HTML Admin template - adminuiux.com</title>
+    <link rel="icon" type="image/png" href="assets/img/favicon.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:wght@100;400;500;600&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --adminuiux-content-font: 'Roboto';
+            --adminuiux-content-font-weight: 400;
+            --adminuiux-title-font: "Fira Sans Condensed";
+            --adminuiux-title-font-weight: 500;
+        }
+    </style>
+
+<script defer="" src="assets/js/app.js"></script><link href="assets/css/app.css" rel="stylesheet"></head>
+
+    <body class="main-bg main-bg-opac main-bg-blur adminuiux-sidebar-fill-white adminuiux-sidebar-boxed theme-blue roundedui" data-theme="theme-blue" data-sidebarfill="adminuiux-sidebar-fill-white" data-bs-spy="scroll" data-bs-target="#list-example" data-bs-smooth-scroll="true" tabindex="0">
+        <!-- Pageloader -->
+<div class="pageloader">
+    <div class="container h-100">
+        <div class="row justify-content-center align-items-center text-center h-100">
+            <div class="col-12 mb-auto pt-4"></div>
+            <div class="col-auto">
+                <img src="assets/img/logo.svg" alt="" class="height-60 mb-3">
+                <p class="h6 mb-0">AdminUIUX</p>
+                <p class="h3 mb-4">Investment</p>
+                <div class="loader10 mb-2 mx-auto"></div>
+            </div>
+            <div class="col-12 mt-auto pb-4">
+                <p class="text-secondary">Please wait we are preparing awesome things to preview...</p>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- standard header -->
+<header class="adminuiux-header">
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container-fluid">
+            <!-- back -->
+            <button class="btn btn-square btn-link" onclick="goBack()">
+                <i class="bi bi-arrow-left"></i>
+            </button>
+            <p class="h6 my-1 px-3 text-center">
+                <!-- Dynamic title here -->
+                <span class="title"></span>
+            </p>
+            <div class="ms-auto"></div>
+
+            <!-- right icons button -->
+            <div class="ms-auto">
+
+                <!-- global search toggle -->
+                <button class="btn btn-link btn-square btn-icon btn-link-header d-inline-block d-xxl-none" type="button" onclick="openSearch()">
+                    <i data-feather="search"></i>
+                </button>
+
+                <!-- profile dropdown -->
+                <div class="dropdown d-inline-block">
+                    <a class="dropdown-toggle btn btn-link btn-square btn-link-header style-none no-caret px-0" id="userprofiledd" data-bs-toggle="dropdown" aria-expanded="false" role="button">
+                        <div class="row gx-0 d-inline-flex">
+                            <div class="col-auto align-self-center">
+                                <figure class="avatar avatar-28 rounded-circle coverimg align-middle">
+                                    <img src="assets/img/user-6.jpg" alt="" id="userphotoonboarding2">
+                                </figure>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end width-300 pt-0 px-0" aria-labelledby="userprofiledd">
+                        <div class="bg-theme-1-space rounded py-3 mb-3 dropdown-dontclose">
+                            <div class="row gx-0">
+                                <div class="col-auto px-3">
+                                    <figure class="avatar avatar-50 rounded-circle coverimg align-middle">
+                                        <img src="assets/img/user-6.jpg" alt="">
+                                    </figure>
+                                </div>
+                                <div class="col align-self-center ">
+                                    <p class="mb-1"><span>AdminUIUX</span></p>
+                                    <p><i class="bi bi-wallet2 me-2"></i> $1100.00 <small class="opacity-50">Balance</small>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="px-2">
+                            <div><a class="dropdown-item" href="investment-myprofile.html"><i data-feather="user" class="avatar avatar-18 me-1"></i> My
+                                    Profile</a>
+                            </div>
+                            <div>
+                                <a class="dropdown-item" href="investment-dashboard.html">
+                                    <div class="row g-0">
+                                        <div class="col align-self-center"><i data-feather="layout" class="avatar avatar-18 me-1"></i>
+                                            My Dashboard
+                                        </div>
+                                        <div class="col-auto">
+                                            <figure class="avatar avatar-20 coverimg rounded-circle">
+                                                <img src="assets/img/user-1.jpg" alt="">
+                                            </figure>
+                                            <figure class="avatar avatar-20 coverimg rounded-circle">
+                                                <img src="assets/img/user-2.jpg" alt="">
+                                            </figure>
+                                            <figure class="avatar avatar-20 coverimg rounded-circle">
+                                                <img src="assets/img/user-4.jpg" alt="">
+                                            </figure>
+                                            <div class="avatar avatar-20 bg-theme-1 rounded-circle text-center align-middle">
+                                                <small class="fs-10 align-middle">9+</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div>
+                                <a class="dropdown-item" href="investment-earning.html">
+                                    <i data-feather="dollar-sign" class="avatar avatar-18 me-1"></i> Earning
+                                </a>
+                            </div>
+                            <div>
+                                <a class="dropdown-item" href="investment-mysubscription.html">
+                                    <div class="row gx-3">
+                                        <div class="col"><i data-feather="gift" class="avatar avatar-18 me-1"></i> Subscription</div>
+                                        <div class="col-auto">
+                                            <p class="small text-success">Upgrade</p>
+                                        </div>
+                                        <div class="col-auto"><span class="arrow bi bi-chevron-right"></span></div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="dropdown open-left dropdown-dontclose">
+                                <a class="dropdown-item" data-bs-toggle="dropdown" aria-expanded="false" role="button">
+                                    <div class="row gx-3">
+                                        <div class="col"><i class="bi bi-translate avatar avatar-18 me-1"></i> Language</div>
+                                        <div class="col-auto"><small class="vm">EN - English</small> <i class="bi bi-translate"></i></div>
+                                        <div class="col-auto"><span class="arrow bi bi-chevron-right"></span></div>
+                                    </div>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <div><a class="dropdown-item active" data-value="EN">EN - English</a></div>
+                                    <div><a class="dropdown-item" data-value="FR">FR - French</a></div>
+                                    <div><a class="dropdown-item" data-value="CH">CH - Chinese</a></div>
+                                    <div><a class="dropdown-item" data-value="HI">HI - Hindi</a></div>
+                                </div>
+                            </div>
+                            <div>
+                                <a class="dropdown-item" href="investment-settings.html">
+                                    <i data-feather="settings" class="avatar avatar-18 me-1"></i> Account Setting
+                                </a>
+                            </div>
+                            <div>
+                                <a class="dropdown-item theme-red" href="investment-login.html">
+                                    <i data-feather="power" class="avatar avatar-18 me-1"></i> Logout
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- search global wrap -->
+    <div class="adminuiux-search-full">
+        <div class="row gx-2 align-items-center">
+            <div class="col-auto">
+
+                <!-- close global search toggle -->
+                <button class="btn btn-square btn-link btn-icon" type="button" onclick="closeSearch()">
+                    <i data-feather="arrow-left"></i>
+                </button>
+            </div>
+            <div class="col">
+                <input class="form-control pe-0 border-0" type="search" placeholder="Type something here...">
+            </div>
+            <div class="col-auto">
+
+                <!-- filter dropdown -->
+                <div class="dropdown input-group-text border-0 p-0">
+                    <button class="dropdown-toggle btn btn-square btn-link no-caret" type="button" id="searchfilter2" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i data-feather="sliders"></i>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end dropdown-dontclose width-300" aria-labelledby="searchfilter2">
+                        <ul class="nav adminuiux-nav" id="searchtab2" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="searchall-tab2" data-bs-toggle="tab" data-bs-target="#searchall2" type="button" role="tab" aria-controls="searchall2" aria-selected="true">All</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="searchorders-tab2" data-bs-toggle="tab" data-bs-target="#searchorders2" type="button" role="tab" aria-controls="searchorders2" aria-selected="false" tabindex="-1">Orders</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="searchcontacts-tab2" data-bs-toggle="tab" data-bs-target="#searchcontacts2" type="button" role="tab" aria-controls="searchcontacts2" aria-selected="false" tabindex="-1">Contacts</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content py-3" id="searchtabContent2">
+                            <div class="tab-pane fade active show" id="searchall2" role="tabpanel" aria-labelledby="searchall-tab2">
+                                <ul class="list-group adminuiux-list-group list-group-flush bg-none show">
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col">Search apps</div>
+                                            <div class="col-auto">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="searchswitch1">
+                                                    <label class="form-check-label" for="searchswitch1"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col">Include Pages</div>
+                                            <div class="col-auto">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="searchswitch2" checked="">
+                                                    <label class="form-check-label" for="searchswitch2"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col">Internet resource</div>
+                                            <div class="col-auto">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="searchswitch3" checked="">
+                                                    <label class="form-check-label" for="searchswitch3"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col">News and Blogs</div>
+                                            <div class="col-auto">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="searchswitch4">
+                                                    <label class="form-check-label" for="searchswitch4"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="tab-pane fade" id="searchorders2" role="tabpanel" aria-labelledby="searchorders-tab2">
+                                <ul class="list-group adminuiux-list-group list-group-flush bg-none show">
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col">Show order ID</div>
+                                            <div class="col-auto">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="searchswitch5">
+                                                    <label class="form-check-label" for="searchswitch5"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col">International Order</div>
+                                            <div class="col-auto">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="searchswitch6" checked="">
+                                                    <label class="form-check-label" for="searchswitch6"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col">Taxable Product</div>
+                                            <div class="col-auto">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="searchswitch7" checked="">
+                                                    <label class="form-check-label" for="searchswitch7"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col">Published Product</div>
+                                            <div class="col-auto">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="searchswitch8">
+                                                    <label class="form-check-label" for="searchswitch8"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="tab-pane fade" id="searchcontacts2" role="tabpanel" aria-labelledby="searchcontacts-tab2">
+                                <ul class="list-group adminuiux-list-group list-group-flush bg-none show">
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col">Have email ID</div>
+                                            <div class="col-auto">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="searchswitch9">
+                                                    <label class="form-check-label" for="searchswitch9"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col">Have phone number</div>
+                                            <div class="col-auto">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="searchswitch10" checked="">
+                                                    <label class="form-check-label" for="searchswitch10"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col">Photo available</div>
+                                            <div class="col-auto">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="searchswitch11" checked="">
+                                                    <label class="form-check-label" for="searchswitch11"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col">Referral</div>
+                                            <div class="col-auto">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="searchswitch12">
+                                                    <label class="form-check-label" for="searchswitch12"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="">
+                            <div class="row">
+                                <div class="col"><button class="btn btn-link">Reset</button></div>
+                                <div class="col-auto">
+                                    <button class="btn btn-theme">Apply</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        $('.title').html($('#title').html())
+    });
+</script>
+                <div id="title" class="d-none">
+                    Add Goal
+                </div>
+
+                <div class="adminuiux-wrap">
+                    <!-- Standard sidebar -->
+<div class="adminuiux-sidebar">
+    <div class="adminuiux-sidebar-inner">
+        <!-- Profile -->
+        <div class="px-3 not-iconic mt-2">
+            <div class="row gx-3">
+                <div class="col align-self-center ">
+                    <h6 class="fw-medium">Main Menu</h6>
+                </div>
+                <div class="col-auto">
+                    <a class="btn btn-link btn-square" data-bs-toggle="collapse" data-bs-target="#usersidebarprofile" aria-expanded="false" role="button" aria-controls="usersidebarprofile">
+                        <i data-feather="user"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="text-center collapse " id="usersidebarprofile">
+                <figure class="avatar avatar-100 rounded-circle coverimg my-3">
+                    <img src="assets/img/user-6.jpg" alt="">
+                </figure>
+                <h5 class="mb-1 fw-medium">AdminUIUX</h5>
+                <p class="small">The Investment UI Kit</p>
+            </div>
+        </div>
+
+        <ul class="nav flex-column menu-active-line">
+            <!-- investment sidebar -->
+            <li class="nav-item">
+                <a href="investment-dashboard.html" class="nav-link">
+                    <i class="menu-icon bi bi-columns-gap"></i>
+                    <span class="menu-name">Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="investment-wallet.html" class="nav-link">
+                    <i class="menu-icon bi bi-wallet"></i>
+                    <span class="menu-name">Wallet</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="investment-goals.html" class="nav-link">
+                    <i class="menu-icon bi bi-bullseye"></i>
+                    <span class="menu-name">My Goals</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="investment-loan-list.html" class="nav-link">
+                    <i class="menu-icon bi bi-bank"></i>
+                    <span class="menu-name">My Loans</span>
+                </a>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="javascrit:void(0)" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                    <i class="menu-icon bi bi-piggy-bank"></i>
+                    <span class="menu-name">Investment</span>
+                </a>
+                <div class="dropdown-menu">
+                    <div class="nav-item">
+                        <a href="investment-company-shares.html" class="nav-link">
+                            <i class="menu-icon bi bi-bank"></i>
+                            <span class="menu-name">Company Share</span>
+                        </a>
+                    </div>
+                    <div class="nav-item">
+                        <a href="investment-mutual-funds.html" class="nav-link">
+                            <i class="menu-icon bi bi-cash-coin"></i>
+                            <span class="menu-name">Mutual Fund</span>
+                        </a>
+                    </div>
+                    <div class="nav-item">
+                        <a href="investment-deposit.html" class="nav-link">
+                            <i class="menu-icon bi bi-percent"></i>
+                            <span class="menu-name">Deposit</span>
+                        </a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a href="investment-explore.html" class="nav-link">
+                    <i class="menu-icon bi bi-search"></i>
+                    <span class="menu-name">Explore</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="investment-statistics.html" class="nav-link">
+                    <i class="menu-icon bi bi-bar-chart-line"></i>
+                    <span class="menu-name">Statistics</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="investment-calculator.html" class="nav-link">
+                    <i class="menu-icon bi bi-calculator"></i>
+                    <span class="menu-name">Calculators</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="investment-pages.html" class="nav-link">
+                    <i class="menu-icon bi bi-layers"></i>
+                    <span class="menu-name">Pages</span>
+                    <span class="badge text-bg-primary mx-2">55+</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="investment-personalization.html" class="nav-link">
+                    <i class="menu-icon bi bi-palette h4"></i>
+                    <span class="menu-name">Personalize ❤️</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="components.html">
+                    <i class="menu-icon bi bi-cpu"></i>
+                    <span class="menu-name">Components</span>
+                </a>
+            </li>
+        </ul>
+        <div class=" mt-auto "></div>
+        <!-- quick links -->
+        <div class="px-3 mb-3 not-iconic">
+            <h6 class="mb-3 fw-medium">Quick Links</h6>
+            <div class="card adminuiux-card">
+                <div class="card-body p-2">
+                    <div class="row gx-2">
+                        <div class="col-12 d-flex justify-content-between">
+                            <a href="investment-search-mutual-funds.html" class="btn btn-square btn-link theme-red">
+                                <span class="position-relative">
+                                    <i data-feather="heart"></i>
+                                    <span class="position-absolute top-0 start-100 translate-middle p-1 bg-success rounded-circle">
+                                        <span class="visually-hidden">New alerts</span>
+                                    </span>
+                                </span>
+                            </a>
+                            <a href="investment-schedule.html" class="btn btn-square btn-link">
+                                <span class="position-relative">
+                                    <i data-feather="calendar"></i>
+                                    <span class="position-absolute top-0 start-100 translate-middle p-1 bg-warning rounded-circle">
+                                        <span class="visually-hidden">New alerts</span>
+                                    </span>
+                                </span>
+                            </a>
+                            <a href="investment-inbox.html" class="btn btn-square btn-link">
+                                <i data-feather="inbox"></i>
+                            </a>
+                            <a href="investment-help-center.html" class="btn btn-square btn-link">
+                                <i data-feather="help-circle"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- User account -->
+        <ul class="nav flex-column menu-active-line">
+            <!-- bottom sidebar menu -->
+            <li class="nav-item">
+                <a href="investment-referral.html" class="nav-link">
+                    <i class="menu-icon" data-feather="users"></i>
+                    <span class="menu-name">Referral</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="investment-settings.html" class="nav-link">
+                    <i class="menu-icon" data-feather="settings"></i>
+                    <span class="menu-name">Settings</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+                        <main class="adminuiux-content has-sidebar" onclick="contentClick()">
+
+                            <!-- breadcrumb -->
+                            <div class="container-fluid mt-3">
+                                <div class="row gx-3 align-items-center">
+                                    <div class="col col-sm">
+                                        <h5>Add Goal</h5>
+                                    </div>
+                                    <div class="col-auto py-1">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- content -->
+                            <div class="container mt-3" id="main-content">
+                                <!-- SmartWizard html -->
+                                <div class="card adminuiux-card overflow-hidden mb-3" id="smartwizard">
+                                    <ul class="nav mb-0">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#step-1">
+                                                <div class="num">1</div>
+                                                <div>
+                                                    <p class="h5 mb-0">Type of Saving</p>
+                                                    <p class="small">Define Goal Type</p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#step-2">
+                                                <div class="num">2</div>
+                                                <div>
+                                                    <p class="h5 mb-0">Your Goal</p>
+                                                    <p class="small">Goal and Details</p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#step-3">
+                                                <div class="num">3</div>
+                                                <div>
+                                                    <p class="h5 mb-0">Investment</p>
+                                                    <p class="small">Select Investment Options</p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <div class="card-body pb-0">
+                                        <div class="tab-content">
+
+                                            <!-- goal plan type selection -->
+                                            <div id="step-1" class="tab-pane px-0 " role="tabpanel" aria-labelledby="step-1">
+                                                <div class="row gx-3">
+                                                    <div class="col-6 col-md-3 col-lg-3 col-xl-3 mb-3">
+                                                        <div class="card text-center bg-theme-1-subtle theme-green h-100 selectable">
+                                                            <div class="card-body">
+                                                                <img src="assets/img/regular-saving.jpg" alt="" class="mw-100 rounded mb-3">
+                                                                <h6 class="text-theme-1">Regular Saving</h6>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 col-lg-3 col-xl-3 mb-3">
+                                                        <div class="card text-center bg-theme-1-subtle theme-purple h-100 selectable">
+                                                            <div class="card-body">
+                                                                <img src="assets/img/tax-saving.jpg" alt="" class="mw-100 rounded mb-3">
+                                                                <h6 class="text-theme-1">Save Taxes</h6>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 col-lg-3 col-xl-3 mb-3">
+                                                        <div class="card text-center h-100 bg-theme-1-subtle theme-orange selectable">
+                                                            <div class="card-body">
+                                                                <img src="assets/img/retirement-saving.jpg" alt="" class="mw-100 rounded mb-3">
+                                                                <h6 class="text-theme-1">Retirement Plan</h6>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 col-lg-3 col-xl-3 mb-3">
+                                                        <div class="card text-center bg-theme-1-subtle theme-red h-100 selectable">
+                                                            <div class="card-body">
+                                                                <img src="assets/img/emergency-saving.jpg" alt="" class="mw-100 rounded mb-3">
+                                                                <h6 class="text-theme-1">Emergency</h6>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- goal plan define -->
+                                            <div id="step-2" class="tab-pane px-0 pb-0" role="tabpanel" aria-labelledby="step-2">
+                                                <div class="row gx-3">
+                                                    <div class="col-6 col-md-3 col-lg-3 col-xl-3 mb-3">
+                                                        <div class="card h-100 bg-theme-1-subtle theme-blue selectable anyone">
+                                                            <div class="card-body">
+                                                                <div class="avatar avatar-50 rounded bg-theme-1 mb-3">
+                                                                    <i class="bi bi-house h5"></i>
+                                                                </div>
+                                                                <h6 class="text-theme-1">Home</h6>
+                                                                <p class="opacity-50 small">I want to buy a own home</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 col-lg-3 col-xl-3 mb-3">
+                                                        <div class="card h-100 bg-theme-1-subtle theme-purple selectable anyone">
+                                                            <div class="card-body">
+                                                                <div class="avatar avatar-50 rounded bg-theme-1 mb-3">
+                                                                    <i class="bi bi-people h5"></i>
+                                                                </div>
+                                                                <h6 class="text-theme-1">Family</h6>
+                                                                <p class="opacity-50 small">I need regular saving for family</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 col-lg-3 col-xl-3 mb-3">
+                                                        <div class="card h-100 bg-theme-1-subtle theme-red selectable anyone">
+                                                            <div class="card-body">
+                                                                <div class="avatar avatar-50 rounded bg-theme-1 mb-3">
+                                                                    <i class="bi bi-mortarboard h5"></i>
+                                                                </div>
+                                                                <h6 class="text-theme-1">Education</h6>
+                                                                <p class="opacity-50 small">Creating planning for kids</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 col-lg-3 col-xl-3 mb-3">
+                                                        <div class="card h-100 bg-theme-1-subtle theme-orange selectable anyone">
+                                                            <div class="card-body">
+                                                                <div class="avatar avatar-50 rounded bg-theme-1 mb-3">
+                                                                    <i class="bi bi-luggage h5"></i>
+                                                                </div>
+                                                                <h6 class="text-theme-1">Vacation</h6>
+                                                                <p class="opacity-50 small">Planning for trip</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 col-lg-3 col-xl-3 mb-3">
+                                                        <div class="card h-100 bg-theme-1-subtle theme-brown selectable anyone">
+                                                            <div class="card-body">
+                                                                <div class="avatar avatar-50 rounded bg-theme-1 mb-3">
+                                                                    <i class="bi bi-person-walking h5"></i>
+                                                                </div>
+                                                                <h6 class="text-theme-1">Retirement</h6>
+                                                                <p class="opacity-50 small">Planning for better future</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 col-lg-3 col-xl-3 mb-3">
+                                                        <div class="card h-100 bg-theme-1-subtle theme-teal selectable anyone">
+                                                            <div class="card-body">
+                                                                <div class="avatar avatar-50 rounded bg-theme-1 mb-3">
+                                                                    <i class="bi bi-puzzle h5"></i>
+                                                                </div>
+                                                                <h6 class="text-theme-1">Other</h6>
+                                                                <p class="opacity-50 small">I have independent self plan</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-md-3 col-lg-3 col-xl-3 mb-4">
+                                                        <div class="card h-100">
+                                                            <div class="card-body z-index-1">
+                                                                <h5 class="fw-normal mb-3">What is your goal name?</h5>
+                                                                <div class="form-floating text-dark">
+                                                                    <input type="text" class="form-control" id="name" placeholder="Enter name">
+                                                                    <label for="name">Name</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-md-3 col-lg-3 col-xl-3 mb-4">
+                                                        <div class="card adminuiux-card position-relative overflow-hidden bg-theme-1 h-100">
+                                                            <div class="position-absolute top-0 start-0 h-100 w-100 z-index-0 coverimg opacity-50">
+                                                                <img src="assets/img/flamingo-4.jpg" alt="">
+                                                            </div>
+                                                            <div class="card-body z-index-1">
+                                                                <h5 class="fw-normal mb-3">Your goal target amount?</h5>
+                                                                <div class="form-floating text-dark">
+                                                                    <input type="number" class="form-control" id="amount" placeholder="Enter amount">
+                                                                    <label for="amount">Amount</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- goal adjustment and plan selection -->
+                                            <div id="step-3" class="tab-pane px-0 pb-0" role="tabpanel" aria-labelledby="step-3">
+                                                <div class="row gx-3">
+                                                    <div class="col-12 col-md-6">
+                                                        <div class="card text-center mb-3">
+                                                            <div class="card-header">
+                                                                <h5 class="mb-0">Goal: Sweet Home</h5>
+                                                                <p class="text-secondary small">Choose your investment plan</p>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <h4 class="mb-0">$ 22500.00</h4>
+                                                                <p class="text-secondary small mb-3">Targeted Goal Amount</p>
+
+                                                                <div class="card adminuiux-card bg-theme-1-subtle theme-green">
+                                                                    <div class="card-body">
+                                                                        <h4 class="mb-0">$ 750.00</h4>
+                                                                        <p class="opacity-75 small">You will need to save per month</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-md-6">
+                                                        <div class="mb-3">
+                                                            <div class="row gx-3 align-items-center">
+                                                                <div class="col-12 col-sm mb-3">
+                                                                    <p>Targeted Amount</p>
+                                                                </div>
+                                                                <div class="col-12 col-sm-5 mb-3">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-text bg-none">$</span>
+                                                                        <input type="text" class="form-control text-end rangevalues" value="22500.00" id="value1">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <input type="range" id="range1" class="range1 rangevalue" min="100" max="150000" value="22500.00" data-value="value1">
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <div class="row gx-3 align-items-center">
+                                                                <div class="col-12 col-sm mb-3">
+                                                                    <p>Expected goal duration</p>
+                                                                </div>
+                                                                <div class="col-12 col-sm-5 mb-3">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-text bg-none">Months</span>
+                                                                        <input type="text" class="form-control text-end rangevalues" value="24" id="value2">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <input type="range" id="range2" class="range1 rangevalue" min="1" max="60" step="1" value="24" data-value="value2">
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <div class="row gx-3 align-items-center">
+                                                                <div class="col-12 col-sm mb-3">
+                                                                    <p>Time period in Year</p>
+                                                                </div>
+                                                                <div class="col-12 col-sm-5 mb-3">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-text bg-none">$</span>
+                                                                        <input type="text" class="form-control text-end rangevalues" value="1000" id="value3">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <input type="range" id="range3" class="range1 rangevalue" min="500" max="20000" step="500" value="1000" data-value="value3">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <h5 class="text-center">Choose funds for your plan from suggestion</h5>
+                                                <p class="text-secondary text-center small mb-3">You can select any one or multiple and in each total amount should be of $ 750.00/month.</p>
+
+                                                <div class="row gx-3">
+                                                    <div class="col-12 col-md-6 col-lg-4">
+                                                        <div class="card selectable active mb-3">
+                                                            <div class="card-body">
+                                                                <h6 class="fw-medium mb-2">JACKY New age EV and automotive Fund</h6>
+                                                                <p class="text-secondary small mb-3">Direct <i class="bi bi-chevron-right"></i> Growth <i class="bi bi-chevron-right"></i> Thematic </p>
+
+                                                                <div class="row gx-3 mb-3">
+                                                                    <div class="col-6 text-start mb-3">
+                                                                        <h6 class="fw-medium">$150.1250</h6>
+                                                                        <p class="text-secondary small">NAV <span>10 Aug 25</span></p>
+                                                                    </div>
+                                                                    <div class="col-6 text-end mb-3">
+                                                                        <h6 class="fw-medium">$2426.50 cr</h6>
+                                                                        <p class="text-secondary small">AUM</p>
+                                                                    </div>
+                                                                    <div class="col-6 text-start">
+                                                                        <h6 class="fw-medium text-success">+32.5%</h6>
+                                                                        <p class="text-secondary small">CAGR <span>5 Years</span></p>
+                                                                    </div>
+                                                                    <div class="col-6 text-end">
+                                                                        <h6 class="fw-medium">0.79%</h6>
+                                                                        <p class="text-secondary small">Expanse Ratio</p>
+                                                                    </div>
+                                                                </div>
+                                                                <hr>
+                                                                <div class="row gx-3 align-items-center">
+                                                                    <div class="col">
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-text bg-none">Invest <b class="mx-1">$</b></span>
+                                                                            <input type="text" class="form-control form-control-sm text-end rangevalues" value="375.00">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-auto">
+                                                                        <button class="btn btn-sm btn-square btn-outline-theme theme-red"><i class="bi bi-heart"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-4">
+                                                        <div class="card selectable active mb-3">
+                                                            <div class="card-body">
+                                                                <h6 class="fw-medium mb-2">OrganicX Agriculture and innovation Fund</h6>
+                                                                <p class="text-secondary small mb-3">Direct <i class="bi bi-chevron-right"></i> Growth <i class="bi bi-chevron-right"></i> FoF </p>
+
+                                                                <div class="row gx-3 align-items-center mb-3">
+                                                                    <div class="col-6 text-start mb-3">
+                                                                        <h6 class="fw-medium">$205.6530</h6>
+                                                                        <p class="text-secondary small">NAV <span>10 Aug 25</span></p>
+                                                                    </div>
+                                                                    <div class="col-6 text-end mb-3">
+                                                                        <h6 class="fw-medium">$9586.50 cr</h6>
+                                                                        <p class="text-secondary small">AUM</p>
+                                                                    </div>
+                                                                    <div class="col-6 text-start">
+                                                                        <h6 class="fw-medium text-success">+15.5%</h6>
+                                                                        <p class="text-secondary small">CAGR <span>5 Years</span></p>
+                                                                    </div>
+                                                                    <div class="col-6 text-end">
+                                                                        <h6 class="fw-medium">0.65%</h6>
+                                                                        <p class="text-secondary small">Expanse Ratio</p>
+                                                                    </div>
+                                                                </div>
+                                                                <hr>
+                                                                <div class="row gx-3 align-items-center">
+                                                                    <div class="col">
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-text bg-none">Invest <b class="mx-1">$</b></span>
+                                                                            <input type="text" class="form-control form-control-sm text-end rangevalues" value="375.00">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-auto">
+                                                                        <button class="btn btn-sm btn-square btn-outline-theme theme-red"><i class="bi bi-heart"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-4">
+                                                        <div class="card selectable mb-4">
+                                                            <div class="card-body">
+                                                                <h6 class="fw-medium mb-2">Energy and New Smart Technology Fund</h6>
+                                                                <p class="text-secondary small mb-3">Direct <i class="bi bi-chevron-right"></i> Growth <i class="bi bi-chevron-right"></i> ELSS </p>
+
+                                                                <div class="row gx-3 align-items-center mb-3">
+                                                                    <div class="col-6 text-start mb-3">
+                                                                        <h6 class="fw-medium">$156.1250</h6>
+                                                                        <p class="text-secondary small">NAV <span>10 Aug 25</span></p>
+                                                                    </div>
+                                                                    <div class="col-6 text-end mb-3">
+                                                                        <h6 class="fw-medium">$3265.50 cr</h6>
+                                                                        <p class="text-secondary small">AUM</p>
+                                                                    </div>
+                                                                    <div class="col-6 text-start">
+                                                                        <h6 class="fw-medium text-success">+25.5%</h6>
+                                                                        <p class="text-secondary small">CAGR <span>5 Years</span></p>
+                                                                    </div>
+                                                                    <div class="col-6 text-end">
+                                                                        <h6 class="fw-medium">0.65%</h6>
+                                                                        <p class="text-secondary small">Expanse Ratio</p>
+                                                                    </div>
+                                                                </div>
+                                                                <hr>
+                                                                <div class="row gx-3 align-items-center">
+                                                                    <div class="col">
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-text bg-none">Invest <b class="mx-1">$</b></span>
+                                                                            <input type="text" class="form-control form-control-sm text-end rangevalues" value="00.00">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-auto">
+                                                                        <button class="btn btn-sm btn-square btn-outline-theme theme-red"><i class="bi bi-heart"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <!-- Include optional progressbar HTML -->
+                                    <div class="progress bg-theme-1-subtle rounded-0">
+                                        <div class="progress-bar bg-theme-1 h-100 rounded-0" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </main>
+                </div>
+                <!-- standard footer -->
+<footer class="adminuiux-footer has-adminuiux-sidebar mt-auto">
+    <div class="container-fluid">
+        <div class="row gx-3">
+            <div class="col-12 col-md col-lg text-center text-md-start py-2">
+                <span class="small">�2024,
+                    <a href="https://adminuiux.com" target="_blank">InvestmentUX - Adminuiux</a> on Earth ❤️
+                </span>
+            </div>
+            <div class="col-12 col-md-auto col-lg-auto align-self-center">
+                <ul class="nav small justify-content-center">
+                    <li class="nav-item"><a class="nav-link" href="help-center.html">Help</a></li>
+                    <li class="nav-item">|</li>
+                    <li class="nav-item"><a class="nav-link" href="terms-of-use.html">Terms</a></li>
+                    <li class="nav-item">|</li>
+                    <li class="nav-item"><a class="nav-link" href="privacy-policy.html">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+                    <!-- Page Level js -->
+                    <script src="assets/js/investment-add-goal.js"></script>
+
+    
+
+</body></html>

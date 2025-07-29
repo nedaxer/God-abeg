@@ -68,25 +68,25 @@ export default function GettingStarted() {
     {
       title: "Trading Guides",
       description: "Comprehensive guides covering all aspects of trading on Nadex.",
-      icon: <Book className="h-8 w-8 text-[#0033a0]" />,
+      icon: <Book className="h-8 w-8 text-[#000d2e]" />,
       link: "/learn/trading-guides",
     },
     {
       title: "Webinars",
       description: "Live and recorded educational webinars hosted by market experts.",
-      icon: <Play className="h-8 w-8 text-[#0033a0]" />,
+      icon: <Play className="h-8 w-8 text-[#000d2e]" />,
       link: "/learn/webinars",
     },
     {
       title: "Glossary",
       description: "Definitions of trading terms and concepts used on Nadex.",
-      icon: <Info className="h-8 w-8 text-[#0033a0]" />,
+      icon: <Info className="h-8 w-8 text-[#000d2e]" />,
       link: "#",
     },
     {
       title: "Demo Account",
       description: "Practice trading with virtual funds in a real market environment.",
-      icon: <Award className="h-8 w-8 text-[#0033a0]" />,
+      icon: <Award className="h-8 w-8 text-[#000d2e]" />,
       link: "#",
     },
   ];
@@ -95,23 +95,23 @@ export default function GettingStarted() {
     <PageLayout 
       title="Getting Started" 
       subtitle="Your guide to trading on Nadex - from account setup to your first trade"
-      bgColor="#0033a0"
+      bgColor="#000d2e"
     >
       <div className="max-w-4xl mx-auto">
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Start Trading in 5 Easy Steps</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Start Trading in 5 Easy Steps</h2>
           
           <div className="space-y-6">
             {steps.map((step, i) => (
               <div key={i} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
                 <div className="md:flex justify-between items-center">
                   <div>
-                    <h3 className="text-xl font-bold mb-2 text-[#0033a0]">{step.title}</h3>
+                    <h3 className="text-xl font-bold mb-2 text-[#000d2e]">{step.title}</h3>
                     <p className="text-gray-700 mb-4 md:mb-0">{step.description}</p>
                   </div>
                   <Button
                     asChild
-                    className="bg-[#0033a0] hover:bg-opacity-90 text-white font-semibold whitespace-nowrap"
+                    className="bg-[#000d2e] hover:bg-opacity-90 text-white font-semibold whitespace-nowrap"
                   >
                     <Link href={step.ctaLink}>{step.cta}</Link>
                   </Button>
@@ -122,7 +122,7 @@ export default function GettingStarted() {
         </div>
         
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Video Tutorials</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Video Tutorials</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {tutorials.map((tutorial, i) => (
@@ -143,7 +143,7 @@ export default function GettingStarted() {
                   </div>
                 </div>
                 <div className="p-4">
-                  <h3 className="text-lg font-bold mb-2 text-[#0033a0]">{tutorial.title}</h3>
+                  <h3 className="text-lg font-bold mb-2 text-[#000d2e]">{tutorial.title}</h3>
                   <p className="text-gray-700 text-sm">{tutorial.description}</p>
                 </div>
               </div>
@@ -154,7 +154,7 @@ export default function GettingStarted() {
             <Button
               asChild
               variant="outline"
-              className="border-[#0033a0] text-[#0033a0] hover:bg-[#0033a0] hover:text-white"
+              className="border-[#000d2e] text-[#000d2e] hover:bg-[#000d2e] hover:text-white"
             >
               <Link href="#">View All Tutorials</Link>
             </Button>
@@ -162,10 +162,10 @@ export default function GettingStarted() {
         </div>
         
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Understanding Nadex Products</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Understanding Nadex Products</h2>
           
           <div className="bg-[#f5f5f5] p-6 rounded-lg mb-8">
-            <h3 className="text-xl font-bold mb-4 text-[#0033a0]">Limited Risk Trading</h3>
+            <h3 className="text-xl font-bold mb-4 text-[#000d2e]">Limited Risk Trading</h3>
             <p className="mb-4">
               All Nadex products are designed with limited risk characteristics, which means:
             </p>
@@ -182,39 +182,39 @@ export default function GettingStarted() {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-              <h3 className="text-xl font-bold mb-3 text-[#0033a0]">Binary Options</h3>
+              <h3 className="text-xl font-bold mb-3 text-[#000d2e]">Binary Options</h3>
               <p className="text-gray-700 mb-4">
                 Simple yes/no contracts based on a specific market proposition. If you're right at expiration, you receive the full payout.
               </p>
               <Link 
                 href="/products/binary-options" 
-                className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
+                className="text-[#000d2e] hover:text-[#ff5900] font-semibold flex items-center"
               >
                 Learn More <ArrowRight className="ml-1 h-4 w-4" />
               </Link>
             </div>
             
             <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-              <h3 className="text-xl font-bold mb-3 text-[#0033a0]">Call Spreads</h3>
+              <h3 className="text-xl font-bold mb-3 text-[#000d2e]">Call Spreads</h3>
               <p className="text-gray-700 mb-4">
                 Limited risk alternatives to traditional call options, with built-in floor and ceiling levels for defined risk parameters.
               </p>
               <Link 
                 href="/products/call-spreads" 
-                className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
+                className="text-[#000d2e] hover:text-[#ff5900] font-semibold flex items-center"
               >
                 Learn More <ArrowRight className="ml-1 h-4 w-4" />
               </Link>
             </div>
             
             <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-              <h3 className="text-xl font-bold mb-3 text-[#0033a0]">Knock-Outs</h3>
+              <h3 className="text-xl font-bold mb-3 text-[#000d2e]">Knock-Outs</h3>
               <p className="text-gray-700 mb-4">
                 Leveraged trading products with built-in risk management features, using predetermined floor and ceiling levels.
               </p>
               <Link 
                 href="/products/knock-outs" 
-                className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
+                className="text-[#000d2e] hover:text-[#ff5900] font-semibold flex items-center"
               >
                 Learn More <ArrowRight className="ml-1 h-4 w-4" />
               </Link>
@@ -223,18 +223,18 @@ export default function GettingStarted() {
         </div>
         
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Educational Resources</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Educational Resources</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {resources.map((resource, i) => (
               <div key={i} className="flex items-start p-6 bg-[#f5f5f5] rounded-lg">
                 <div className="mr-4">{resource.icon}</div>
                 <div>
-                  <h3 className="text-xl font-bold mb-2 text-[#0033a0]">{resource.title}</h3>
+                  <h3 className="text-xl font-bold mb-2 text-[#000d2e]">{resource.title}</h3>
                   <p className="text-gray-700 mb-3">{resource.description}</p>
                   <Link 
                     href={resource.link} 
-                    className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
+                    className="text-[#000d2e] hover:text-[#ff5900] font-semibold flex items-center"
                   >
                     Explore <ArrowRight className="ml-1 h-4 w-4" />
                   </Link>
@@ -245,32 +245,32 @@ export default function GettingStarted() {
         </div>
         
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Frequently Asked Questions</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Frequently Asked Questions</h2>
           
           <div className="space-y-4">
             <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-              <h3 className="text-lg font-bold mb-2 text-[#0033a0]">What is the minimum deposit to open an account?</h3>
+              <h3 className="text-lg font-bold mb-2 text-[#000d2e]">What is the minimum deposit to open an account?</h3>
               <p className="text-gray-700">
                 The minimum initial deposit to open a Nadex account is $250. After your account is open, there is no minimum for subsequent deposits.
               </p>
             </div>
             
             <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-              <h3 className="text-lg font-bold mb-2 text-[#0033a0]">How long does account approval take?</h3>
+              <h3 className="text-lg font-bold mb-2 text-[#000d2e]">How long does account approval take?</h3>
               <p className="text-gray-700">
                 Most accounts are approved within 1-2 business days after all required documentation is submitted. You'll receive an email notification once your account is approved.
               </p>
             </div>
             
             <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-              <h3 className="text-lg font-bold mb-2 text-[#0033a0]">What documentation is required to open an account?</h3>
+              <h3 className="text-lg font-bold mb-2 text-[#000d2e]">What documentation is required to open an account?</h3>
               <p className="text-gray-700">
                 To comply with regulatory requirements, you'll need to provide proof of identity (government-issued photo ID) and proof of residence (utility bill, bank statement, etc.). Additional documentation may be required in some cases.
               </p>
             </div>
             
             <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-              <h3 className="text-lg font-bold mb-2 text-[#0033a0]">Can I practice trading before risking real money?</h3>
+              <h3 className="text-lg font-bold mb-2 text-[#000d2e]">Can I practice trading before risking real money?</h3>
               <p className="text-gray-700">
                 Yes, Nadex offers a demo account with virtual funds that allows you to practice trading in a real market environment without risking actual money. This is a great way to familiarize yourself with our platform and products.
               </p>
@@ -280,14 +280,14 @@ export default function GettingStarted() {
           <div className="mt-6 text-center">
             <Link 
               href="#" 
-              className="text-[#0033a0] hover:text-[#ff5900] font-semibold inline-flex items-center"
+              className="text-[#000d2e] hover:text-[#ff5900] font-semibold inline-flex items-center"
             >
               View More FAQs
             </Link>
           </div>
         </div>
 
-        <div className="bg-[#0033a0] text-white rounded-lg p-8 text-center">
+        <div className="bg-[#000d2e] text-white rounded-lg p-8 text-center">
           <h2 className="text-2xl font-bold mb-4">Ready to start trading?</h2>
           <p className="mb-6">Open an account today and experience limited-risk trading on a regulated US exchange.</p>
           <Button

@@ -1,0 +1,4 @@
+⚡ Testing performance...
+✅ PASS Crypto Prices API: 40ms
+✅ PASS Crypto News API: 949ms
+✅ PASS Static Assets: 17ms

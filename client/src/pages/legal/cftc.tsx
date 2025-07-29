@@ -8,13 +8,13 @@ export default function CFTC() {
     <PageLayout 
       title="CFTC Rule 4.41" 
       subtitle="Hypothetical Performance Disclaimer"
-      bgColor="#0033a0"
+      bgColor="#000d2e"
     >
       <div className="max-w-4xl mx-auto">
         <div className="mb-12">
           <div className="bg-[#f5f5f5] p-6 rounded-lg mb-8">
             <div className="flex items-start">
-              <Info className="text-[#0033a0] mt-1 mr-3 h-6 w-6 flex-shrink-0" />
+              <Info className="text-[#000d2e] mt-1 mr-3 h-6 w-6 flex-shrink-0" />
               <div>
                 <p className="mb-4">
                   In accordance with CFTC Rule 4.41, the following disclaimer applies to all hypothetical performance 
@@ -30,7 +30,7 @@ export default function CFTC() {
           </div>
           
           <div className="mb-10">
-            <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Hypothetical Performance Disclaimer</h2>
+            <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Hypothetical Performance Disclaimer</h2>
             
             <div className="bg-gray-100 p-6 border-l-4 border-yellow-500 rounded-r-lg mb-8">
               <p className="font-bold text-gray-700 mb-4">
@@ -55,11 +55,11 @@ export default function CFTC() {
           </div>
           
           <div className="mb-10">
-            <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Understanding the Limitations of Hypothetical Results</h2>
+            <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Understanding the Limitations of Hypothetical Results</h2>
             
             <div className="space-y-6">
               <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-                <h3 className="text-xl font-bold mb-3 text-[#0033a0]">Benefit of Hindsight</h3>
+                <h3 className="text-xl font-bold mb-3 text-[#000d2e]">Benefit of Hindsight</h3>
                 <p className="text-gray-700">
                   Hypothetical trading results are often prepared with the benefit of hindsight. This means that the 
                   strategy or approach may have been developed or refined after the fact, with knowledge of how the 
@@ -70,7 +70,7 @@ export default function CFTC() {
               </div>
               
               <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-                <h3 className="text-xl font-bold mb-3 text-[#0033a0]">Absence of Financial Risk</h3>
+                <h3 className="text-xl font-bold mb-3 text-[#000d2e]">Absence of Financial Risk</h3>
                 <p className="text-gray-700">
                   Hypothetical trading does not involve actual financial risk. When trading with real money, emotional 
                   factors such as fear of loss or excitement over potential profits can significantly impact trading 
@@ -80,7 +80,7 @@ export default function CFTC() {
               </div>
               
               <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-                <h3 className="text-xl font-bold mb-3 text-[#0033a0]">Market Factors</h3>
+                <h3 className="text-xl font-bold mb-3 text-[#000d2e]">Market Factors</h3>
                 <p className="text-gray-700">
                   Hypothetical results may not fully account for various market factors that can affect actual trading, 
                   such as liquidity, slippage, and the ability to execute trades at desired prices. In real trading, 
@@ -90,7 +90,7 @@ export default function CFTC() {
               </div>
               
               <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-                <h3 className="text-xl font-bold mb-3 text-[#0033a0]">System or Strategy Implementation</h3>
+                <h3 className="text-xl font-bold mb-3 text-[#000d2e]">System or Strategy Implementation</h3>
                 <p className="text-gray-700">
                   Hypothetical results may assume perfect implementation of a trading system or strategy. In reality, 
                   there may be delays in executing trades, errors in following the strategy, or technical issues with 
@@ -102,7 +102,7 @@ export default function CFTC() {
           </div>
           
           <div className="mb-10">
-            <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Nedaxer's Approach to Presenting Performance Information</h2>
+            <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Nedaxer's Approach to Presenting Performance Information</h2>
             
             <p className="mb-6">
               At Nedaxer, we strive to provide educational content and trading information that is accurate, balanced, 
@@ -111,9 +111,9 @@ export default function CFTC() {
             
             <div className="bg-[#f5f5f5] p-6 rounded-lg space-y-4">
               <div className="flex items-start">
-                <div className="bg-[#0033a0] text-white rounded-full h-6 w-6 flex items-center justify-center font-bold flex-shrink-0 mr-3">1</div>
+                <div className="bg-[#000d2e] text-white rounded-full h-6 w-6 flex items-center justify-center font-bold flex-shrink-0 mr-3">1</div>
                 <div>
-                  <h3 className="font-bold mb-1 text-[#0033a0]">Clear Disclaimers</h3>
+                  <h3 className="font-bold mb-1 text-[#000d2e]">Clear Disclaimers</h3>
                   <p className="text-gray-900">
                     We include appropriate disclaimers when presenting hypothetical performance information to ensure 
                     that users understand the limitations of such information.
@@ -122,9 +122,9 @@ export default function CFTC() {
               </div>
               
               <div className="flex items-start">
-                <div className="bg-[#0033a0] text-white rounded-full h-6 w-6 flex items-center justify-center font-bold flex-shrink-0 mr-3">2</div>
+                <div className="bg-[#000d2e] text-white rounded-full h-6 w-6 flex items-center justify-center font-bold flex-shrink-0 mr-3">2</div>
                 <div>
-                  <h3 className="font-bold mb-1 text-[#0033a0]">Balanced Presentation</h3>
+                  <h3 className="font-bold mb-1 text-[#000d2e]">Balanced Presentation</h3>
                   <p className="text-gray-900">
                     We aim to present a balanced view of the potential risks and rewards of trading, avoiding 
                     exaggerated claims or guarantees of trading success.
@@ -133,9 +133,9 @@ export default function CFTC() {
               </div>
               
               <div className="flex items-start">
-                <div className="bg-[#0033a0] text-white rounded-full h-6 w-6 flex items-center justify-center font-bold flex-shrink-0 mr-3">3</div>
+                <div className="bg-[#000d2e] text-white rounded-full h-6 w-6 flex items-center justify-center font-bold flex-shrink-0 mr-3">3</div>
                 <div>
-                  <h3 className="font-bold mb-1 text-[#0033a0]">Educational Focus</h3>
+                  <h3 className="font-bold mb-1 text-[#000d2e]">Educational Focus</h3>
                   <p className="text-gray-900">
                     Our content focuses on educating users about trading concepts, markets, and strategy principles 
                     rather than promoting specific trading approaches based solely on hypothetical results.
@@ -144,9 +144,9 @@ export default function CFTC() {
               </div>
               
               <div className="flex items-start">
-                <div className="bg-[#0033a0] text-white rounded-full h-6 w-6 flex items-center justify-center font-bold flex-shrink-0 mr-3">4</div>
+                <div className="bg-[#000d2e] text-white rounded-full h-6 w-6 flex items-center justify-center font-bold flex-shrink-0 mr-3">4</div>
                 <div>
-                  <h3 className="font-bold mb-1 text-[#0033a0]">Transparency</h3>
+                  <h3 className="font-bold mb-1 text-[#000d2e]">Transparency</h3>
                   <p className="text-gray-900">
                     We strive to be transparent about the nature of any performance information presented, 
                     clearly indicating when information is based on hypothetical or backtested results.
@@ -157,7 +157,7 @@ export default function CFTC() {
           </div>
           
           <div className="mb-10">
-            <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">CFTC Regulation Reference</h2>
+            <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">CFTC Regulation Reference</h2>
             
             <p className="mb-4">
               CFTC Rule 4.41 pertains to advertising by commodity pool operators, commodity trading advisors, and the 
@@ -170,7 +170,7 @@ export default function CFTC() {
               <Button
                 asChild
                 variant="outline"
-                className="border-[#0033a0] text-[#0033a0] hover:bg-[#0033a0] hover:text-white"
+                className="border-[#000d2e] text-[#000d2e] hover:bg-[#000d2e] hover:text-white"
               >
                 <Link href="https://www.cftc.gov/" target="_blank" className="flex items-center">
                   Visit CFTC Website <ExternalLink className="ml-2 h-4 w-4" />
@@ -180,7 +180,7 @@ export default function CFTC() {
           </div>
         </div>
 
-        <div className="bg-[#0033a0] text-white rounded-lg p-8 text-center">
+        <div className="bg-[#000d2e] text-white rounded-lg p-8 text-center">
           <h2 className="text-2xl font-bold mb-4">Trade with Realistic Expectations</h2>
           <p className="mb-6">
             Understanding the limitations of hypothetical results helps you approach trading with realistic expectations. 

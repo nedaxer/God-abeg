@@ -30,7 +30,7 @@ export default function LanguageSelection() {
       title: t('language') + ' ' + t('save').toLowerCase(),
       description: `${t('language')} ${language.nativeName}`,
     });
-    setLocation('/mobile/settings');
+    setLocation('/mobile/profile');
   };
 
   return (
@@ -40,7 +40,7 @@ export default function LanguageSelection() {
         <Button
           variant="ghost"
           size="sm"
-          onClick={() => setLocation('/mobile/settings')}
+          onClick={() => setLocation('/mobile/profile')}
           className="text-white hover:bg-blue-900"
         >
           <ArrowLeft className="h-5 w-5" />

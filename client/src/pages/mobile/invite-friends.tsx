@@ -1,10 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'wouter';
-import { ArrowLeft, Copy, Share, Users, Gift, TrendingUp, Clock } from 'lucide-react';
-import { Card } from '@/components/ui/card';
+import { ArrowLeft, Copy, Share } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useQuery } from '@tanstack/react-query';
-import { useLanguage } from '@/contexts/language-context';
 
 interface ReferralStats {
   totalEarnings: number;
@@ -22,220 +20,198 @@ interface ReferralStats {
 }
 
 export default function InviteFriends() {
-  const [copySuccess, setCopySuccess] = useState(false);
+  const [copyCodeSuccess, setCopyCodeSuccess] = useState(false);
   const { toast } = useToast();
-  const { t } = useLanguage();
 
   // Fetch referral stats with real-time updates
-  const { data: referralStats } = useQuery<ReferralStats>({
+  const { data: referralStats, isLoading, error } = useQuery<ReferralStats>({
     queryKey: ['/api/referrals/stats'],
-    refetchInterval: 5000, // Real-time updates every 5 seconds
+    refetchInterval: 5000, // Update every 5 seconds
     staleTime: 2000, // Consider data stale after 2 seconds
-    refetchOnWindowFocus: true, // Refresh when user returns to tab
-    refetchOnMount: true // Always fetch fresh data on mount
+    refetchOnWindowFocus: true,
+    refetchOnMount: true
   });
 
-  const referralLink = `https://nedaxer.onrender.com/register?ref=${referralStats?.referralCode || 'LOADING'}`;
+  // Debug logging
+  console.log('Referral Stats Debug:', { 
+    hasData: !!referralStats, 
+    referralCode: referralStats?.referralCode,
+    isLoading, 
+    error: error?.message || error,
+    fullData: referralStats
+  });
 
-  const copyToClipboard = async (text: string) => {
+  // Create test data in development if needed
+  const createTestData = async () => {
     try {
-      await navigator.clipboard.writeText(text);
-      setCopySuccess(true);
-      toast({
-        title: "Copied!",
-        description: "Referral link copied to clipboard",
+      const response = await fetch('/api/referrals/create-test-data', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
       });
-      setTimeout(() => setCopySuccess(false), 2000);
+      const result = await response.json();
+      console.log('Test data creation result:', result);
+      // Refresh the data
+      window.location.reload();
+    } catch (error) {
+      console.error('Error creating test data:', error);
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto mb-4"></div>
+          <p>Loading referral information...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center text-red-500">
+          <p>Failed to load referral data</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="mt-2 px-4 py-2 bg-blue-500 text-white rounded"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const copyReferralCode = async () => {
+    if (!referralStats?.referralCode) {
+      toast({
+        title: "Error",
+        description: "Referral code not available yet. Please refresh the page.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    try {
+      await navigator.clipboard.writeText(referralStats.referralCode);
+      setCopyCodeSuccess(true);
+      toast({
+        title: "Referral Code Copied!",
+        description: "Share this code with your friends",
+      });
+      setTimeout(() => setCopyCodeSuccess(false), 2000);
     } catch (err) {
       toast({
         title: "Error",
-        description: "Failed to copy link",
+        description: "Failed to copy referral code",
         variant: "destructive"
       });
     }
   };
 
-  const shareReferralLink = async () => {
+  const shareReferralCode = async () => {
+    if (!referralStats?.referralCode) return;
+    
+    const shareText = `Join me on Nedaxer!\n\nUse my referral code: ${referralStats.referralCode}\n\nSign up and start investing today!`;
+    
     if (navigator.share) {
       try {
         await navigator.share({
-          title: 'Join Nedaxer - Crypto Trading Platform',
-          text: 'Start trading crypto with zero fees! Use my referral link to get bonus rewards.',
-          url: referralLink
+          title: 'Join Nedaxer - Investment Platform',
+          text: shareText
         });
       } catch (err) {
-        // Fallback to copy if sharing fails
-        copyToClipboard(referralLink);
+        copyReferralCode();
       }
     } else {
-      copyToClipboard(referralLink);
+      try {
+        await navigator.clipboard.writeText(shareText);
+        toast({
+          title: "Share Message Copied!",
+          description: "Paste this message to share with friends",
+        });
+      } catch (err) {
+        copyReferralCode();
+      }
     }
   };
 
-  const formatDate = (date: string) => {
-    return new Date(date).toLocaleDateString('en-US', {
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    });
-  };
-
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-[#0a0a2e] text-white">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-blue-800">
+      <div className="flex items-center justify-between p-4 bg-[#0d0d3a] border-b border-orange-500/20">
         <Link href="/mobile">
-          <ArrowLeft className="w-6 h-6 text-white" />
+          <ArrowLeft className="w-6 h-6 text-white hover:text-orange-400 transition-colors" />
         </Link>
-        <h1 className="text-lg font-semibold">{t('invite_friends')}</h1>
+        <h1 className="text-xl font-bold text-white">
+          Invite Friends
+        </h1>
         <div className="w-6 h-6" />
       </div>
 
-      {/* Hero Section */}
-      <div className="p-4 text-center">
-        <div className="w-20 h-20 bg-gradient-to-r from-orange-500 to-yellow-500 rounded-full flex items-center justify-center mx-auto mb-4">
-          <Gift className="w-10 h-10 text-white" />
-        </div>
-        <h2 className="text-2xl font-bold mb-2">{t('referral_program')}</h2>
-        <p className="text-gray-400 text-sm mb-6">
-          {t('invite_friends')} and earn up to 25% commission on their trading activities
-        </p>
-      </div>
+      {/* Content */}
+      <div className="flex flex-col items-center justify-center min-h-[calc(100vh-80px)] p-6">
+        {/* Main Card */}
+        <div className="w-full max-w-md bg-[#1a1a4a]/50 border border-orange-500/20 rounded-2xl p-8 backdrop-blur-sm">
+          {/* Title */}
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-bold text-white mb-3">
+              Your Referral Code
+            </h2>
+            <p className="text-gray-300 text-sm">
+              Share this code with friends to invite them to Nedaxer
+            </p>
+          </div>
 
-      {/* Stats Cards */}
-      <div className="px-4 grid grid-cols-2 gap-3 mb-6">
-        <Card className="bg-blue-950 border-blue-700 p-4">
-          <div className="flex items-center space-x-2 mb-2">
-            <TrendingUp className="w-4 h-4 text-green-500" />
-            <span className="text-gray-400 text-xs">Total Earnings</span>
-          </div>
-          <div className="text-xl font-bold text-green-500">
-            ${referralStats?.totalEarnings?.toFixed(2) || '0.00'}
-          </div>
-        </Card>
-
-        <Card className="bg-blue-950 border-blue-700 p-4">
-          <div className="flex items-center space-x-2 mb-2">
-            <Users className="w-4 h-4 text-blue-500" />
-            <span className="text-gray-400 text-xs">Total Referrals</span>
-          </div>
-          <div className="text-xl font-bold text-blue-500">
-            {referralStats?.totalReferrals || 0}
-          </div>
-        </Card>
-      </div>
-
-      {/* Monthly Earnings */}
-      <div className="px-4 mb-6">
-        <Card className="bg-blue-950 border-blue-700 p-4">
-          <div className="flex items-center justify-between mb-2">
-            <div className="flex items-center space-x-2">
-              <Clock className="w-4 h-4 text-orange-500" />
-              <span className="text-gray-400 text-sm">This Month</span>
-            </div>
-            <div className="text-right">
-              <div className="text-lg font-bold text-orange-500">
-                ${referralStats?.monthlyEarnings?.toFixed(2) || '0.00'}
+          {/* Code Display */}
+          <div className="text-center mb-8">
+            <div className="bg-[#0a0a2e] border border-orange-500/30 rounded-xl p-6 mb-6">
+              <div className="text-orange-400 text-xs font-medium mb-2 uppercase tracking-wide">
+                Your Code
               </div>
-              <div className="text-xs text-gray-400">Monthly Earnings</div>
-            </div>
-          </div>
-        </Card>
-      </div>
-
-      {/* Referral Link */}
-      <div className="px-4 mb-6">
-        <h3 className="text-white font-medium mb-3 text-sm">Your Referral Link</h3>
-        <Card className="bg-blue-950 border-blue-700 p-4">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex-1 mr-3">
-              <div className="text-gray-400 text-xs mb-1">Referral Code</div>
-              <div className="text-white font-mono text-sm">
-                {referralStats?.referralCode || 'Loading...'}
+              <div className="text-2xl font-bold text-white font-mono tracking-wider break-all">
+                {isLoading ? 'Loading...' : error ? 'Error loading code' : referralStats?.referralCode || 'No code yet'}
               </div>
             </div>
           </div>
-          
-          <div className="bg-blue-900 rounded-lg p-3 mb-3">
-            <div className="text-gray-300 text-xs break-all">
-              {referralLink}
-            </div>
-          </div>
 
-          <div className="flex space-x-2">
+          {/* Action Buttons */}
+          <div className="space-y-4">
             <button
-              onClick={() => copyToClipboard(referralLink)}
-              className="flex-1 bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-lg text-sm font-medium flex items-center justify-center space-x-2"
+              onClick={copyReferralCode}
+              className="w-full bg-orange-500 hover:bg-orange-600 text-white py-4 px-6 rounded-xl text-base font-bold flex items-center justify-center space-x-3 transition-all"
             >
-              <Copy className="w-4 h-4" />
-              <span>{copySuccess ? 'Copied!' : 'Copy Link'}</span>
+              <Copy className="w-5 h-5" />
+              <span>{copyCodeSuccess ? 'Copied!' : 'Copy Code'}</span>
             </button>
             
             <button
-              onClick={shareReferralLink}
-              className="flex-1 bg-blue-800 hover:bg-gray-600 text-white py-2 px-4 rounded-lg text-sm font-medium flex items-center justify-center space-x-2"
+              onClick={shareReferralCode}
+              className="w-full bg-[#1a1a4a] hover:bg-[#2a2a5a] border border-orange-500/30 text-white py-4 px-6 rounded-xl text-base font-bold flex items-center justify-center space-x-3 transition-all"
             >
-              <Share className="w-4 h-4" />
+              <Share className="w-5 h-5" />
               <span>Share</span>
             </button>
           </div>
-        </Card>
-      </div>
-
-      {/* Commission Rates */}
-      <div className="px-4 mb-6">
-        <h3 className="text-white font-medium mb-3 text-sm">Commission Rates</h3>
-        <div className="space-y-2">
-          <Card className="bg-blue-950 border-blue-700 p-3">
-            <div className="flex items-center justify-between">
-              <span className="text-gray-300 text-sm">Spot Trading</span>
-              <span className="text-orange-500 font-medium">20%</span>
-            </div>
-          </Card>
-          <Card className="bg-blue-950 border-blue-700 p-3">
-            <div className="flex items-center justify-between">
-              <span className="text-gray-300 text-sm">Futures Trading</span>
-              <span className="text-orange-500 font-medium">25%</span>
-            </div>
-          </Card>
-          <Card className="bg-blue-950 border-blue-700 p-3">
-            <div className="flex items-center justify-between">
-              <span className="text-gray-300 text-sm">Staking Rewards</span>
-              <span className="text-orange-500 font-medium">15%</span>
-            </div>
-          </Card>
         </div>
-      </div>
 
-      {/* Recent Earnings */}
-      <div className="px-4 pb-6">
-        <h3 className="text-white font-medium mb-3 text-sm">Recent Earnings</h3>
-        <div className="space-y-3">
-          {referralStats?.recentEarnings?.map((earning) => (
-            <Card key={earning.id} className="bg-blue-950 border-blue-700 p-3">
-              <div className="flex items-center justify-between">
-                <div className="flex-1">
-                  <div className="flex items-center space-x-2 mb-1">
-                    <span className="text-white text-sm font-medium">
-                      +${earning.amount.toFixed(2)}
-                    </span>
-                    <span className="bg-orange-600 text-orange-100 text-xs px-2 py-1 rounded">
-                      {earning.percentage}%
-                    </span>
-                  </div>
-                  <div className="text-gray-400 text-xs">
-                    {earning.transactionType.charAt(0).toUpperCase() + earning.transactionType.slice(1)} 
-                    {' • '}
-                    {earning.referredUserEmail.split('@')[0]}***
-                  </div>
-                </div>
-                <div className="text-gray-500 text-xs">
-                  {formatDate(earning.createdAt)}
-                </div>
-              </div>
-            </Card>
-          ))}
+        {/* Simple Instructions */}
+        <div className="mt-8 text-center max-w-md">
+          <p className="text-gray-400 text-sm leading-relaxed">
+            When friends sign up using your referral code, both of you will benefit from special rewards.
+          </p>
+          
+          {/* Development Debug Button */}
+          {process.env.NODE_ENV === 'development' && (!referralStats?.referralCode || referralStats?.referralCode === 'No code yet') && (
+            <button
+              onClick={createTestData}
+              className="mt-4 px-4 py-2 bg-red-600 text-white text-xs rounded"
+            >
+              [DEV] Create Test Data
+            </button>
+          )}
         </div>
       </div>
     </div>

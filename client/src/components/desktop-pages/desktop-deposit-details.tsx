@@ -1,5 +1,5 @@
 import { useParams, useLocation } from 'wouter';
-import { ArrowLeft, Copy, CheckCircle, Calendar, DollarSign, Hash } from 'lucide-react';
+import { ArrowLeft, Copy, CheckCircle, XCircle, Calendar, DollarSign, Hash } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -171,10 +171,21 @@ export default function DesktopDepositDetails() {
               </div>
               
               <div className="flex items-center justify-center">
-                <CheckCircle className="w-5 h-5 text-green-400 mr-2" />
-                <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
-                  Completed
-                </Badge>
+                {transaction.status === 'failed' ? (
+                  <>
+                    <XCircle className="w-5 h-5 text-red-400 mr-2" />
+                    <Badge className="bg-red-500/20 text-red-400 border-red-500/30">
+                      Deposit Failed
+                    </Badge>
+                  </>
+                ) : (
+                  <>
+                    <CheckCircle className="w-5 h-5 text-green-400 mr-2" />
+                    <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
+                      Deposit Confirmed
+                    </Badge>
+                  </>
+                )}
               </div>
             </div>
           </Card>
@@ -255,8 +266,17 @@ export default function DesktopDepositDetails() {
               <div>
                 <p className="text-gray-400 text-sm mb-2">Status</p>
                 <div className="flex items-center">
-                  <div className="w-2 h-2 bg-green-400 rounded-full mr-2"></div>
-                  <span className="text-green-400 font-medium">Successful</span>
+                  {transaction.status === 'failed' ? (
+                    <>
+                      <div className="w-2 h-2 bg-red-400 rounded-full mr-2"></div>
+                      <span className="text-red-400 font-medium">Failed</span>
+                    </>
+                  ) : (
+                    <>
+                      <div className="w-2 h-2 bg-green-400 rounded-full mr-2"></div>
+                      <span className="text-green-400 font-medium">Succeeded</span>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
@@ -267,8 +287,10 @@ export default function DesktopDepositDetails() {
         <Card className="bg-black/20 border-gray-700/50 p-6 mt-8">
           <div className="text-center text-gray-400">
             <p className="text-sm">
-              This deposit has been successfully processed and added to your account balance.
-              For any questions regarding this transaction, please contact our support team.
+              {transaction.status === 'failed' 
+                ? 'This deposit has been declined and no funds have been added to your account. For any questions regarding this transaction, please contact our support team.'
+                : 'This deposit has been successfully processed and added to your account balance. For any questions regarding this transaction, please contact our support team.'
+              }
             </p>
           </div>
         </Card>

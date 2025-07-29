@@ -8,7 +8,7 @@ export default function Funding() {
     {
       title: "Debit Card",
       description: "Fund your account instantly using a debit card for immediate trading access.",
-      icon: <CreditCard className="h-10 w-10 text-[#0033a0]" />,
+      icon: <CreditCard className="h-10 w-10 text-[#000d2e]" />,
       benefits: [
         "Instant funding",
         "No deposit fees",
@@ -19,7 +19,7 @@ export default function Funding() {
     {
       title: "ACH Transfer",
       description: "Link your bank account for easy electronic transfers into your trading account.",
-      icon: <Landmark className="h-10 w-10 text-[#0033a0]" />,
+      icon: <Landmark className="h-10 w-10 text-[#000d2e]" />,
       benefits: [
         "No deposit fees",
         "Funds typically available in 1-3 business days",
@@ -30,7 +30,7 @@ export default function Funding() {
     {
       title: "Wire Transfer",
       description: "Use wire transfers for larger deposits or when immediate availability is required.",
-      icon: <Calendar className="h-10 w-10 text-[#0033a0]" />,
+      icon: <Calendar className="h-10 w-10 text-[#000d2e]" />,
       benefits: [
         "No deposit fees from Nadex (bank may charge)",
         "Funds typically available same day if received before 2 PM ET",
@@ -41,7 +41,7 @@ export default function Funding() {
     {
       title: "Check",
       description: "Mail a check to our processing center for deposit into your trading account.",
-      icon: <Clock className="h-10 w-10 text-[#0033a0]" />,
+      icon: <Clock className="h-10 w-10 text-[#000d2e]" />,
       benefits: [
         "No deposit fees",
         "Funds typically available in 5-7 business days after receipt",
@@ -79,11 +79,11 @@ export default function Funding() {
     <PageLayout 
       title="Account Funding" 
       subtitle="Secure and convenient methods to fund your trading account"
-      bgColor="#0033a0"
+      bgColor="#000d2e"
     >
       <div className="max-w-4xl mx-auto">
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Funding Options</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Funding Options</h2>
           
           <p className="mb-6">
             Nadex offers several secure and convenient methods to fund your trading account. 
@@ -96,7 +96,7 @@ export default function Funding() {
                 <div className="flex items-start mb-4">
                   <div className="mr-4">{method.icon}</div>
                   <div>
-                    <h3 className="text-xl font-bold mb-2 text-[#0033a0]">{method.title}</h3>
+                    <h3 className="text-xl font-bold mb-2 text-[#000d2e]">{method.title}</h3>
                     <p className="text-gray-700">{method.description}</p>
                   </div>
                 </div>
@@ -114,7 +114,7 @@ export default function Funding() {
         </div>
         
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Withdrawal Options</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Withdrawal Options</h2>
           
           <p className="mb-6">
             Withdraw funds from your Nadex account quickly and securely using the following methods. 
@@ -148,11 +148,11 @@ export default function Funding() {
         </div>
         
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Funding FAQs</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Funding FAQs</h2>
           
           <div className="space-y-6">
             <div className="bg-[#f5f5f5] p-6 rounded-lg">
-              <h3 className="text-lg font-bold mb-2 text-[#0033a0]">How long does it take for deposits to be available?</h3>
+              <h3 className="text-lg font-bold mb-2 text-[#000d2e]">How long does it take for deposits to be available?</h3>
               <p>
                 Debit card deposits are typically available immediately. ACH transfers usually take 1-3 business days. 
                 Wire transfers received before 2 PM ET are generally available same day. Check deposits take 5-7 business days after receipt.
@@ -160,21 +160,21 @@ export default function Funding() {
             </div>
             
             <div className="bg-[#f5f5f5] p-6 rounded-lg">
-              <h3 className="text-lg font-bold mb-2 text-[#0033a0]">Are there any deposit fees?</h3>
+              <h3 className="text-lg font-bold mb-2 text-[#000d2e]">Are there any deposit fees?</h3>
               <p>
                 Nadex does not charge any fees for deposits. However, your bank may charge fees for wire transfers or other services.
               </p>
             </div>
             
             <div className="bg-[#f5f5f5] p-6 rounded-lg">
-              <h3 className="text-lg font-bold mb-2 text-[#0033a0]">What is the minimum deposit?</h3>
+              <h3 className="text-lg font-bold mb-2 text-[#000d2e]">What is the minimum deposit?</h3>
               <p>
                 The minimum initial deposit to open a Nadex account is $250. After your account is open, there is no minimum for subsequent deposits.
               </p>
             </div>
             
             <div className="bg-[#f5f5f5] p-6 rounded-lg">
-              <h3 className="text-lg font-bold mb-2 text-[#0033a0]">How do I request a withdrawal?</h3>
+              <h3 className="text-lg font-bold mb-2 text-[#000d2e]">How do I request a withdrawal?</h3>
               <p>
                 Log in to your Nadex account, go to the Account section, and select "Withdraw Funds." 
                 Follow the prompts to select your withdrawal method and amount.
@@ -182,7 +182,7 @@ export default function Funding() {
             </div>
             
             <div className="bg-[#f5f5f5] p-6 rounded-lg">
-              <h3 className="text-lg font-bold mb-2 text-[#0033a0]">Can I withdraw to a different bank account than the one I used to deposit?</h3>
+              <h3 className="text-lg font-bold mb-2 text-[#000d2e]">Can I withdraw to a different bank account than the one I used to deposit?</h3>
               <p>
                 For security and regulatory purposes, withdrawals must generally be returned to the original funding source. 
                 If you need to withdraw to a different account, please contact our customer support for assistance.
@@ -192,11 +192,11 @@ export default function Funding() {
         </div>
         
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Account Types</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Account Types</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-              <h3 className="text-xl font-bold mb-4 text-[#0033a0]">Standard Account</h3>
+              <h3 className="text-xl font-bold mb-4 text-[#000d2e]">Standard Account</h3>
               <p className="mb-4">Perfect for beginning to intermediate traders.</p>
               <ul className="space-y-2 mb-6">
                 <li className="flex items-start">
@@ -218,14 +218,14 @@ export default function Funding() {
               </ul>
               <Button 
                 asChild
-                className="w-full bg-[#0033a0] hover:bg-opacity-90 text-white"
+                className="w-full bg-[#000d2e] hover:bg-opacity-90 text-white"
               >
                 <Link href="#">Open Standard Account</Link>
               </Button>
             </div>
             
-            <div className="border border-[#0033a0] ring-2 ring-[#0033a0] ring-opacity-30 rounded-lg p-6 hover:shadow-md transition-shadow">
-              <h3 className="text-xl font-bold mb-4 text-[#0033a0]">Pro Account</h3>
+            <div className="border border-[#000d2e] ring-2 ring-[#000d2e] ring-opacity-30 rounded-lg p-6 hover:shadow-md transition-shadow">
+              <h3 className="text-xl font-bold mb-4 text-[#000d2e]">Pro Account</h3>
               <p className="mb-4">Enhanced features for active traders.</p>
               <ul className="space-y-2 mb-6">
                 <li className="flex items-start">
@@ -255,7 +255,7 @@ export default function Funding() {
           </div>
         </div>
 
-        <div className="bg-[#0033a0] text-white rounded-lg p-8 text-center">
+        <div className="bg-[#000d2e] text-white rounded-lg p-8 text-center">
           <h2 className="text-2xl font-bold mb-4">Ready to start trading?</h2>
           <p className="mb-6">Open an account today with as little as $250.</p>
           <Button

@@ -1,0 +1,9 @@
+Running final verification test...
+🔧 Final Verification: Admin KYC System...
+
+🔐 Step 1: Admin authentication...
+✅ Admin login: FAILED
+❌ Final verification failed: Admin login failed
+Error details: Error: Admin login failed
+    at testFinalVerification (file:///home/runner/workspace/test-final-verification.js:27:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)

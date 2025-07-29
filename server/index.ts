@@ -54,6 +54,16 @@ async function findAvailablePort(startPort: number): Promise<number> {
 }
 
 const app = express();
+
+// Serve static files from public directory
+app.use(express.static('public'));
+
+// Serve static files from attached_assets directory
+app.use('/attached_assets', express.static('attached_assets'));
+
+// Serve static files from testimonials directory
+app.use('/testimonials', express.static('testimonials'));
+
 app.use(express.json({ limit: '10mb' })); // Increased limit for profile picture uploads
 app.use(express.urlencoded({ extended: false, limit: '10mb' }));
 
@@ -194,8 +204,10 @@ app.use((req, res, next) => {
 
 
 
-    // Use PORT environment variable for deployment (Render) or default to 5000
-    const port = process.env.PORT ? parseInt(process.env.PORT) : 5000;
+    // Use PORT environment variable for deployment or find available port starting from 5000
+    const requestedPort = process.env.PORT ? parseInt(process.env.PORT) : 5000;
+    const port = process.env.PORT ? requestedPort : await findAvailablePort(requestedPort);
+    
     server.listen({
       port,
       host: "0.0.0.0",

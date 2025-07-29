@@ -241,7 +241,7 @@ export default function NewsAndEvents() {
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
           <div>
             <h1 className="text-2xl font-bold text-gray-900 flex items-center space-x-2">
-              <Globe className="h-8 w-8 text-[#0033a0]" />
+              <Globe className="h-8 w-8 text-[#000d2e]" />
               <span>News & Events</span>
             </h1>
             <p className="text-gray-600">Stay updated with crypto market news, events, and on-chain data</p>

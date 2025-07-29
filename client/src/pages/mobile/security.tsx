@@ -446,7 +446,7 @@ export default function SecurityPage() {
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => setLocation('/mobile/settings')}
+            onClick={() => setLocation('/mobile/profile')}
             className="text-gray-400 hover:text-white"
           >
             <ArrowLeft className="w-5 h-5" />

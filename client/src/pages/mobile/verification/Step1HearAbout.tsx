@@ -107,7 +107,7 @@ export const Step1HearAbout: React.FC<Step1HearAboutProps> = ({
       </div>
 
       {/* Fixed Bottom Buttons like home navigation */}
-      <div className="fixed bottom-0 left-0 right-0 bg-slate-900 p-4 border-t border-gray-700 z-50 space-y-3">
+      <div className="fixed bottom-0 left-0 right-0 bg-[#0a0a2e] p-4 border-t border-gray-700 z-50 space-y-3">
         <Button 
           onClick={handleNext}
           disabled={!selectedOption || isLoading}

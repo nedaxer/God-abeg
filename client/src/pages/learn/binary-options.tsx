@@ -8,22 +8,22 @@ export default function BinaryOptionsLearn() {
     {
       title: "Limited Risk by Design",
       description: "Know your maximum risk and reward before you trade. You can never lose more than your initial investment.",
-      icon: <Check className="h-10 w-10 text-[#0033a0]" />,
+      icon: <Check className="h-10 w-10 text-[#000d2e]" />,
     },
     {
       title: "Short-term Expirations",
       description: "Trade with expiries from 5 minutes to 1 day, perfect for cryptocurrency markets that move 24/7.",
-      icon: <TrendingUp className="h-10 w-10 text-[#0033a0]" />,
+      icon: <TrendingUp className="h-10 w-10 text-[#000d2e]" />,
     },
     {
       title: "Crypto Markets",
       description: "Access Bitcoin, Ethereum, and other cryptocurrency markets with simple yes/no propositions.",
-      icon: <BarChart2 className="h-10 w-10 text-[#0033a0]" />,
+      icon: <BarChart2 className="h-10 w-10 text-[#000d2e]" />,
     },
     {
       title: "Simple Trading Logic",
       description: "Easy to understand - either your proposition is correct (you win) or incorrect (you lose).",
-      icon: <FileText className="h-10 w-10 text-[#0033a0]" />,
+      icon: <FileText className="h-10 w-10 text-[#000d2e]" />,
     },
   ];
 
@@ -101,11 +101,11 @@ export default function BinaryOptionsLearn() {
     <PageLayout 
       title="Binary Options Trading Guide" 
       subtitle="Learn how to trade cryptocurrency markets with limited-risk binary options"
-      bgColor="#0033a0"
+      bgColor="#000d2e"
     >
       <div className="max-w-4xl mx-auto">
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">What Are Binary Options?</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">What Are Binary Options?</h2>
           
           <div className="bg-white p-6 rounded-lg shadow-md mb-6">
             <p className="mb-4">
@@ -122,9 +122,9 @@ export default function BinaryOptionsLearn() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {features.map((feature, i) => (
               <div key={i} className="bg-[#f5f5f5] p-6 rounded-lg flex items-start">
-                <div className="mr-4 text-[#0033a0]">{feature.icon}</div>
+                <div className="mr-4 text-[#000d2e]">{feature.icon}</div>
                 <div>
-                  <h3 className="text-xl font-bold mb-2 text-[#0033a0]">{feature.title}</h3>
+                  <h3 className="text-xl font-bold mb-2 text-[#000d2e]">{feature.title}</h3>
                   <p className="text-gray-700">{feature.description}</p>
                 </div>
               </div>
@@ -133,11 +133,11 @@ export default function BinaryOptionsLearn() {
         </div>
         
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">How Crypto Binary Options Work</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">How Crypto Binary Options Work</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
             <div>
-              <h3 className="text-xl font-bold mb-4 text-[#0033a0]">Trading Mechanics</h3>
+              <h3 className="text-xl font-bold mb-4 text-[#000d2e]">Trading Mechanics</h3>
               <ul className="space-y-3">
                 <li className="flex items-start">
                   <Check className="text-[#ff5900] mt-1 mr-2 h-5 w-5 flex-shrink-0" />
@@ -163,7 +163,7 @@ export default function BinaryOptionsLearn() {
             </div>
             
             <div>
-              <h3 className="text-xl font-bold mb-4 text-[#0033a0]">Buy or Sell?</h3>
+              <h3 className="text-xl font-bold mb-4 text-[#000d2e]">Buy or Sell?</h3>
               <div className="space-y-4">
                 <div className="bg-green-50 p-4 rounded-lg border border-green-200">
                   <h4 className="font-bold text-green-700 mb-2">Buy a Binary Option When:</h4>
@@ -197,13 +197,13 @@ export default function BinaryOptionsLearn() {
           </div>
           
           <div className="bg-[#f5f5f5] p-6 rounded-lg mb-8">
-            <h3 className="text-xl font-bold mb-4 text-[#0033a0]">Binary Option Example Trades</h3>
+            <h3 className="text-xl font-bold mb-4 text-[#000d2e]">Binary Option Example Trades</h3>
             
             <div className="space-y-6">
               {examples.map((example, i) => (
                 <div key={i} className="border-b border-gray-300 pb-6 last:border-0 last:pb-0">
                   <h4 className="font-bold text-lg mb-2">{example.market}</h4>
-                  <p className="font-medium mb-1 text-[#0033a0]">{example.proposition}</p>
+                  <p className="font-medium mb-1 text-[#000d2e]">{example.proposition}</p>
                   <p className="text-sm mb-3">Current price: {example.currentPrice}</p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm mb-3">
                     <div>
@@ -224,17 +224,17 @@ export default function BinaryOptionsLearn() {
         </div>
         
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Binary Option Trading Strategies</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Binary Option Trading Strategies</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             {strategyTypes.map((strategy, i) => (
               <div key={i} className="bg-white shadow-md rounded-lg overflow-hidden">
-                <div className="bg-[#0033a0] p-4">
+                <div className="bg-[#000d2e] p-4">
                   <h3 className="text-lg font-bold text-white">{strategy.title}</h3>
                 </div>
                 <div className="p-5">
                   <p className="mb-4 text-gray-700">{strategy.description}</p>
-                  <h4 className="font-bold text-[#0033a0] mb-2">Examples:</h4>
+                  <h4 className="font-bold text-[#000d2e] mb-2">Examples:</h4>
                   <ul className="space-y-1">
                     {strategy.examples.map((example, j) => (
                       <li key={j} className="flex items-start">
@@ -277,12 +277,12 @@ export default function BinaryOptionsLearn() {
         </div>
         
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Frequently Asked Questions</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Frequently Asked Questions</h2>
           
           <div className="space-y-4">
             {faqs.map((faq, i) => (
               <div key={i} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-                <h3 className="text-lg font-bold mb-2 text-[#0033a0]">{faq.question}</h3>
+                <h3 className="text-lg font-bold mb-2 text-[#000d2e]">{faq.question}</h3>
                 <p className="text-gray-700">{faq.answer}</p>
               </div>
             ))}
@@ -291,30 +291,30 @@ export default function BinaryOptionsLearn() {
 
         <div className="flex flex-col md:flex-row gap-6 mb-12">
           <div className="md:w-1/2 bg-[#f5f5f5] p-6 rounded-lg">
-            <h3 className="text-xl font-bold mb-4 text-[#0033a0]">Ready to Try Binary Options?</h3>
+            <h3 className="text-xl font-bold mb-4 text-[#000d2e]">Ready to Try Binary Options?</h3>
             <p className="mb-6">Open an account and start trading cryptocurrency binary options with as little as $250.</p>
             <Button
               asChild
-              className="w-full bg-[#0033a0] hover:bg-opacity-90 text-white font-semibold"
+              className="w-full bg-[#000d2e] hover:bg-opacity-90 text-white font-semibold"
             >
               <Link href="#">Open Trading Account</Link>
             </Button>
           </div>
           
           <div className="md:w-1/2 bg-[#f5f5f5] p-6 rounded-lg">
-            <h3 className="text-xl font-bold mb-4 text-[#0033a0]">Practice First</h3>
+            <h3 className="text-xl font-bold mb-4 text-[#000d2e]">Practice First</h3>
             <p className="mb-6">Try cryptocurrency binary options trading with virtual funds on our demo platform.</p>
             <Button
               asChild
               variant="outline"
-              className="w-full border-[#0033a0] text-[#0033a0] hover:bg-[#0033a0] hover:text-white"
+              className="w-full border-[#000d2e] text-[#000d2e] hover:bg-[#000d2e] hover:text-white"
             >
               <Link href="#">Open Demo Account</Link>
             </Button>
           </div>
         </div>
 
-        <div className="bg-[#0033a0] text-white rounded-lg p-8 text-center">
+        <div className="bg-[#000d2e] text-white rounded-lg p-8 text-center">
           <h2 className="text-2xl font-bold mb-4">Explore Other Trading Products</h2>
           <p className="mb-6">Nedaxer offers multiple ways to trade cryptocurrency markets with limited risk.</p>
           <div className="flex flex-wrap justify-center gap-4">

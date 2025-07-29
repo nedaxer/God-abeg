@@ -16,22 +16,25 @@ export const Step2DateOfBirth: React.FC<Step2DateOfBirthProps> = ({
   onClose, 
   initialValue 
 }) => {
-  const [day, setDay] = useState(initialValue?.day || 12);
-  const [month, setMonth] = useState(initialValue?.month || 6);
-  const [year, setYear] = useState(initialValue?.year || 1990);
+  // Initialize with a default date or user's existing date
+  const initDate = initialValue 
+    ? `${initialValue.year}-${initialValue.month.toString().padStart(2, '0')}-${initialValue.day.toString().padStart(2, '0')}`
+    : '1990-06-12';
+  
+  const [dateOfBirth, setDateOfBirth] = useState(initDate);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleNext = async () => {
     setIsLoading(true);
     await new Promise(resolve => setTimeout(resolve, 600));
+    
+    // Convert date string to day/month/year object
+    const date = new Date(dateOfBirth);
+    const day = date.getDate();
+    const month = date.getMonth() + 1; // getMonth() returns 0-11
+    const year = date.getFullYear();
+    
     onNext({ day, month, year });
-  };
-
-  const generateDays = () => Array.from({ length: 31 }, (_, i) => i + 1);
-  const generateMonths = () => Array.from({ length: 12 }, (_, i) => i + 1);
-  const generateYears = () => {
-    const currentYear = new Date().getFullYear();
-    return Array.from({ length: 100 }, (_, i) => currentYear - 18 - i);
   };
 
   return (
@@ -57,69 +60,41 @@ export const Step2DateOfBirth: React.FC<Step2DateOfBirthProps> = ({
       {/* Content */}
       <div className="flex-1 px-6 py-8">
         {/* Title - Smaller font */}
-        <h2 className="text-base font-medium text-white text-center mb-12">
+        <h2 className="text-base font-medium text-white text-center mb-4">
           What is your date of birth?
         </h2>
+        
+        {/* Date of Birth Label */}
+        <p className="text-gray-300 text-center mb-8 text-sm">
+          Date of Birth
+        </p>
 
-        {/* Date Picker */}
-        <div className="grid grid-cols-3 gap-4 mb-16">
-          {/* Day */}
-          <div className="text-center">
-            <p className="text-gray-400 text-xs mb-2">Day</p>
-            <select
-              value={day}
-              onChange={(e) => setDay(Number(e.target.value))}
-              className="w-full bg-transparent text-white text-2xl font-light text-center border-none outline-none appearance-none"
-            >
-              {generateDays().map(d => (
-                <option key={d} value={d} className="bg-[#0a0a2e] text-white">
-                  {d.toString().padStart(2, '0')}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Month */}
-          <div className="text-center">
-            <p className="text-gray-400 text-xs mb-2">Month</p>
-            <select
-              value={month}
-              onChange={(e) => setMonth(Number(e.target.value))}
-              className="w-full bg-transparent text-white text-2xl font-light text-center border-none outline-none appearance-none"
-            >
-              {generateMonths().map(m => (
-                <option key={m} value={m} className="bg-[#0a0a2e] text-white">
-                  {m.toString().padStart(2, '0')}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Year */}
-          <div className="text-center">
-            <p className="text-gray-400 text-xs mb-2">Year</p>
-            <select
-              value={year}
-              onChange={(e) => setYear(Number(e.target.value))}
-              className="w-full bg-transparent text-white text-2xl font-light text-center border-none outline-none appearance-none"
-            >
-              {generateYears().map(y => (
-                <option key={y} value={y} className="bg-[#0a0a2e] text-white">
-                  {y}
-                </option>
-              ))}
-            </select>
-          </div>
+        {/* Device-Native Date Picker */}
+        <div className="mb-16">
+          <input
+            type="date"
+            value={dateOfBirth}
+            onChange={(e) => setDateOfBirth(e.target.value)}
+            max={new Date(new Date().setFullYear(new Date().getFullYear() - 18)).toISOString().split('T')[0]}
+            min={new Date(new Date().setFullYear(new Date().getFullYear() - 100)).toISOString().split('T')[0]}
+            className="w-full bg-black/20 border border-gray-600 rounded-lg px-4 py-3 text-white text-lg text-center focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
+            style={{
+              colorScheme: 'dark',
+              fontSize: '18px'
+            }}
+          />
         </div>
 
-        {/* Next Button - Orange accent with loading */}
-        <Button 
-          onClick={handleNext}
-          disabled={isLoading}
-          className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-4 text-sm rounded-full disabled:opacity-50"
-        >
-          {isLoading ? "Loading..." : "Next"}
-        </Button>
+        {/* Next Button - Fixed at bottom with deep background */}
+        <div className="fixed bottom-0 left-0 right-0 bg-[#0a0a2e] p-4 border-t border-gray-700 z-50">
+          <Button 
+            onClick={handleNext}
+            disabled={isLoading}
+            className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-4 text-sm rounded-full disabled:opacity-50"
+          >
+            {isLoading ? "Loading..." : "Next"}
+          </Button>
+        </div>
       </div>
     </MobileLayout>
   );

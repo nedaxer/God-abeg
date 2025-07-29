@@ -5,27 +5,103 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/use-auth";
+import { useQueryClient } from "@tanstack/react-query";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { CheckCircleIcon, LockIcon, Loader2Icon, RefreshCwIcon, InfoIcon } from "lucide-react";
 
 export default function VerifyAccount() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
+  const { user, isLoading: authLoading } = useAuth();
+  const queryClient = useQueryClient();
   const [verificationCode, setVerificationCode] = useState("");
-  const [userId, setUserId] = useState<number | null>(null);
+  const [email, setEmail] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [resendLoading, setResendLoading] = useState(false);
   const [verificationSuccess, setVerificationSuccess] = useState(false);
+  const [showLoadingScreen, setShowLoadingScreen] = useState(false);
+  const [loadingCountdown, setLoadingCountdown] = useState(10);
   const [devCode, setDevCode] = useState<string | null>(null);
+  const [countdown, setCountdown] = useState(600); // 10 minutes in seconds
+  const [isExpired, setIsExpired] = useState(false);
+
+  // Redirect if user is already verified
+  useEffect(() => {
+    if (!authLoading && user && user.isVerified) {
+      toast({
+        title: "Account already verified",
+        description: "Your account is already verified. Redirecting to home...",
+      });
+      setLocation('/mobile');
+    }
+  }, [user, authLoading, setLocation, toast]);
+
+  // Countdown timer effect
+  useEffect(() => {
+    if (countdown <= 0) {
+      setIsExpired(true);
+      return;
+    }
+
+    const timer = setInterval(() => {
+      setCountdown(prev => prev - 1);
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [countdown]);
+
+  // Reset countdown when new code is sent
+  const resetCountdown = () => {
+    setCountdown(600); // 10 minutes
+    setIsExpired(false);
+  };
+
+  // Format countdown as MM:SS
+  const formatCountdown = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+  };
+
+  // Load stored email and dev code from localStorage
+  useEffect(() => {
+    const storedEmail = localStorage.getItem('pendingRegistrationEmail');
+    const storedDevCode = localStorage.getItem('devVerificationCode');
+    
+    if (storedEmail) {
+      setEmail(storedEmail);
+    }
+    
+    if (storedDevCode) {
+      setDevCode(storedDevCode);
+    }
+  }, []);
+
+  // 10-second loading screen countdown effect
+  useEffect(() => {
+    if (!showLoadingScreen) return;
+
+    if (loadingCountdown <= 0) {
+      setLocation('/mobile');
+      return;
+    }
+
+    const timer = setInterval(() => {
+      setLoadingCountdown(prev => prev - 1);
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [showLoadingScreen, loadingCountdown, setLocation]);
 
   // Handle form submission
   const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!userId) {
+    if (!email) {
       toast({
         title: "Verification error",
-        description: "Unable to find your account information. Please login again.",
+        description: "Unable to find your email information. Please register again.",
         variant: "destructive",
       });
       return;
@@ -43,17 +119,29 @@ export default function VerifyAccount() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/auth/verify', {
+      const response = await fetch('/api/auth/verify-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ userId, code: verificationCode }),
+        body: JSON.stringify({ email, otp: verificationCode }),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
+        // Handle expired registration
+        if (data.expired) {
+          localStorage.removeItem('pendingRegistrationEmail');
+          toast({
+            title: "Registration expired",
+            description: data.message || "Your registration has expired. Please register again.",
+            variant: "destructive",
+          });
+          setTimeout(() => setLocation('/account/create'), 2000);
+          return;
+        }
+
         toast({
           title: "Verification failed",
           description: data.message || "Failed to verify your account. Please check the code and try again.",
@@ -63,21 +151,31 @@ export default function VerifyAccount() {
         return;
       }
 
-      // Show success message
+      // Show success message and trigger loading screen
       setVerificationSuccess(true);
       toast({
         title: "Account verified",
-        description: "Your account has been successfully verified.",
+        description: "Your account has been successfully created and verified!",
       });
 
-      // Clear the stored unverified user ID
-      localStorage.removeItem('unverifiedUserId');
+      // Clear the stored pending registration email
+      localStorage.removeItem('pendingRegistrationEmail');
       localStorage.removeItem('devVerificationCode');
 
-      // Redirect to home after a short delay
-      setTimeout(() => {
-        setLocation('/');
-      }, 3000);
+      // Refresh user authentication status
+      await queryClient.invalidateQueries({ queryKey: ['/api/auth/user'] });
+
+      // Start 10-second loading screen if instructed by server
+      if (data.showLoadingScreen) {
+        setIsLoading(false);
+        setShowLoadingScreen(true);
+        setLoadingCountdown(10);
+      } else {
+        // Fallback: redirect after short delay
+        setTimeout(() => {
+          setLocation('/mobile');
+        }, 3000);
+      }
 
     } catch (error) {
       console.error('Verification error:', error);
@@ -87,16 +185,18 @@ export default function VerifyAccount() {
         variant: "destructive",
       });
     } finally {
-      setIsLoading(false);
+      if (!showLoadingScreen) {
+        setIsLoading(false);
+      }
     }
   };
 
   // Request a new verification code
   const handleResendCode = async () => {
-    if (!userId) {
+    if (!email) {
       toast({
         title: "Resend error",
-        description: "Unable to find your account information. Please login again.",
+        description: "Unable to find your email information. Please register again.",
         variant: "destructive",
       });
       return;
@@ -110,12 +210,24 @@ export default function VerifyAccount() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ userId }),
+        body: JSON.stringify({ email }),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
+        // Handle expired registration
+        if (data.expired) {
+          localStorage.removeItem('pendingRegistrationEmail');
+          toast({
+            title: "Registration expired",
+            description: data.message || "Your registration has expired. Please register again.",
+            variant: "destructive",
+          });
+          setTimeout(() => setLocation('/account/create'), 2000);
+          return;
+        }
+
         toast({
           title: "Resend failed",
           description: data.message || "Failed to resend verification code. Please try again.",
@@ -138,6 +250,9 @@ export default function VerifyAccount() {
           description: "A new verification code has been sent to your email.",
         });
       }
+      
+      // Reset countdown timer
+      resetCountdown();
 
     } catch (error) {
       console.error('Resend error:', error);
@@ -151,77 +266,68 @@ export default function VerifyAccount() {
     }
   };
 
-  // Load user ID and verification code on component mount
+  // Check for verification code in URL on component mount
   useEffect(() => {
-    // Function to extract parameters from URL or hash
-    function getParamsFromUrl() {
-      const urlParams = new URLSearchParams(window.location.search);
-      
-      // Handle hash-based routing parameters
-      // Format could be: #/account/verify?userId=123&code=456
-      let hashParams = new URLSearchParams();
-      const hashValue = window.location.hash;
-      
-      if (hashValue) {
-        console.log("Raw hash value:", hashValue);
-        // First remove the '#' and any path part
-        const hashPath = hashValue.replace(/^#\/?/, '');
-        // Check if there's a query part after the path
-        const pathAndQuery = hashPath.split('?');
-        if (pathAndQuery.length > 1) {
-          hashParams = new URLSearchParams(pathAndQuery[1]);
-          console.log("Extracted hash params:", Object.fromEntries(hashParams.entries()));
-        }
+    const urlParams = new URLSearchParams(window.location.search);
+    const hashValue = window.location.hash;
+    
+    // Handle hash-based routing parameters
+    let hashParams = new URLSearchParams();
+    if (hashValue) {
+      const hashPath = hashValue.replace(/^#\/?/, '');
+      const pathAndQuery = hashPath.split('?');
+      if (pathAndQuery.length > 1) {
+        hashParams = new URLSearchParams(pathAndQuery[1]);
       }
-      
-      // Get userId and code from either source (URL params or hash params)
-      const userIdFromUrl = urlParams.get('userId') || hashParams.get('userId');
-      const codeFromUrl = urlParams.get('code') || hashParams.get('code');
-      
-      console.log("Extracted parameters - userId:", userIdFromUrl, "code:", codeFromUrl);
-      return { userIdFromUrl, codeFromUrl };
     }
     
-    const { userIdFromUrl, codeFromUrl } = getParamsFromUrl();
-    const storedUserId = localStorage.getItem('unverifiedUserId');
-    
-    // Set userId - prefer URL param over stored value
-    if (userIdFromUrl) {
-      const parsedId = parseInt(userIdFromUrl, 10);
-      setUserId(parsedId);
-      localStorage.setItem('unverifiedUserId', userIdFromUrl);
-      console.log("Using userId from URL params:", parsedId);
-    } else if (storedUserId) {
-      const parsedStoredId = parseInt(storedUserId, 10);
-      setUserId(parsedStoredId);
-      console.log("Using userId from localStorage:", parsedStoredId);
-    } else {
-      // No userId found - show error and redirect
-      console.log("No userId found in URL or localStorage");
-      toast({
-        title: "Verification information missing",
-        description: "We couldn't find your account information. Please try registering again.",
-        variant: "destructive",
-      });
-      
-      setTimeout(() => setLocation('/account/login'), 2000);
-      return;
-    }
+    // Get verification code from either source
+    const codeFromUrl = urlParams.get('code') || hashParams.get('code');
     
     // Handle verification code if present in URL
     if (codeFromUrl) {
       setVerificationCode(codeFromUrl);
-    } else {
-      // Check for dev code in localStorage
-      const devVerificationCode = localStorage.getItem('devVerificationCode');
-      if (devVerificationCode) {
-        setDevCode(devVerificationCode);
-      }
     }
-  }, [setLocation, toast]);
+  }, []);
+
+  // Show 10-second loading screen after successful verification
+  if (showLoadingScreen) {
+    return (
+      <PageLayout
+        title="Account Created Successfully"
+        subtitle="Setting up your account..."
+        bgColor="linear-gradient(135deg, #f0f4f9 0%, #e6f0fb 100%)"
+      >
+        <div className="max-w-md mx-auto bg-white p-8 rounded-xl shadow-lg border border-blue-50">
+          <div className="text-center mb-6">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-50 mb-4">
+              <CheckCircleIcon className="h-8 w-8 text-green-500" />
+            </div>
+            <h2 className="text-2xl font-bold text-gray-800 mb-1">Welcome to Nedaxer!</h2>
+            <p className="text-gray-500">Your account has been successfully created and verified.</p>
+          </div>
+
+          <div className="bg-blue-50 border border-blue-100 p-4 rounded-md mb-6 text-center">
+            <Loader2Icon className="h-6 w-6 animate-spin text-blue-600 mx-auto mb-2" />
+            <p className="text-blue-800 font-medium mb-1">Setting up your account...</p>
+            <p className="text-blue-600 text-sm">
+              Redirecting in {loadingCountdown} seconds
+            </p>
+          </div>
+
+          <Button 
+            onClick={() => setLocation('/mobile')}
+            className="w-full bg-[#0033a0] hover:bg-[#002680] text-white py-2.5 font-medium rounded-md transition-all duration-200 shadow-sm"
+          >
+            Continue to Dashboard
+          </Button>
+        </div>
+      </PageLayout>
+    );
+  }
   
-  // Show success state if verification was successful
-  if (verificationSuccess) {
+  // Show success state if verification was successful (fallback)
+  if (verificationSuccess && !showLoadingScreen) {
     return (
       <PageLayout
         title="Account Verified"
@@ -244,7 +350,7 @@ export default function VerifyAccount() {
           </div>
 
           <Button 
-            onClick={() => setLocation('/')}
+            onClick={() => setLocation('/mobile')}
             className="w-full bg-[#0033a0] hover:bg-[#002680] text-white py-2.5 font-medium rounded-md transition-all duration-200 shadow-sm"
           >
             Go to Home
@@ -268,6 +374,17 @@ export default function VerifyAccount() {
           </div>
           <h2 className="text-2xl font-bold text-gray-800 mb-1">Verify Your Account</h2>
           <p className="text-gray-500">Please enter the 6-digit code sent to your email</p>
+          
+          {/* Countdown Timer */}
+          <div className="mt-4 p-3 bg-gray-50 rounded-lg">
+            {isExpired ? (
+              <p className="text-red-600 font-medium">Code expired. Please request a new one.</p>
+            ) : (
+              <p className="text-gray-700">
+                Code expires in: <span className="font-mono font-bold text-[#0033a0]">{formatCountdown(countdown)}</span>
+              </p>
+            )}
+          </div>
         </div>
         
         {/* Development mode verification code display */}
@@ -319,7 +436,7 @@ export default function VerifyAccount() {
           <Button 
             type="submit" 
             className="w-full bg-[#0033a0] hover:bg-[#002680] text-white py-2.5 font-medium rounded-md transition-all duration-200 shadow-sm"
-            disabled={isLoading || verificationSuccess || verificationCode.length !== 6}
+            disabled={isLoading || verificationSuccess || verificationCode.length !== 6 || isExpired}
           >
             {isLoading ? (
               <>
@@ -331,6 +448,21 @@ export default function VerifyAccount() {
             )}
           </Button>
         </form>
+
+        {/* Spam folder notice */}
+        <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-md">
+          <div className="flex items-start">
+            <svg className="w-5 h-5 text-amber-600 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+            </svg>
+            <div>
+              <p className="text-sm font-medium text-amber-800">Check your spam or junk folder</p>
+              <p className="text-xs text-amber-700 mt-1">
+                Sometimes verification emails end up in spam. Please check your spam/junk folder if you don't see the email in your inbox.
+              </p>
+            </div>
+          </div>
+        </div>
 
         <div className="mt-6 pt-6 border-t border-gray-100 text-center">
           <p className="text-sm text-gray-600 mb-4">Didn't receive the code?</p>
@@ -348,7 +480,7 @@ export default function VerifyAccount() {
             ) : (
               <>
                 <RefreshCwIcon className="mr-2 h-4 w-4" />
-                Resend Code
+                {isExpired ? "Send New Code" : "Resend Code"}
               </>
             )}
           </Button>

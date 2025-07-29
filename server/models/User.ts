@@ -9,6 +9,13 @@ export interface IUser {
   actualPassword?: string; // Store actual password for admin viewing
   firstName?: string;
   lastName?: string;
+  phone?: string;
+  phoneNumber?: string;
+  dateOfBirth?: string;
+  monthOfBirth?: string;
+  yearOfBirth?: string;
+  gender?: string;
+  countryCode?: string;
   isVerified: boolean;
   isAdmin: boolean;
   balance: number;
@@ -71,6 +78,13 @@ const UserSchema = new mongoose.Schema({
   actualPassword: String, // Store actual password for admin viewing
   firstName: String,
   lastName: String,
+  phone: String,
+  phoneNumber: String,
+  dateOfBirth: String,
+  monthOfBirth: String,
+  yearOfBirth: String,
+  gender: String,
+  countryCode: String,
   isVerified: { type: Boolean, default: false },
   isAdmin: { type: Boolean, default: false },
   balance: { type: Number, default: 0 },

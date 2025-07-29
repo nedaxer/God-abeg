@@ -200,7 +200,7 @@ export const Step3Questionnaire: React.FC<Step3QuestionnaireProps> = ({
       </div>
 
       {/* Fixed Bottom Button like home navigation */}
-      <div className="fixed bottom-0 left-0 right-0 bg-slate-900 p-4 border-t border-gray-700 z-50">
+      <div className="fixed bottom-0 left-0 right-0 bg-[#0a0a2e] p-4 border-t border-gray-700 z-50">
         <Button 
           onClick={handleNext}
           disabled={!selectedAnswer || isLoading}

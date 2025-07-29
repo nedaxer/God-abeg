@@ -113,13 +113,13 @@ export default function TradingGuides() {
     <PageLayout 
       title="Trading Guides" 
       subtitle="Comprehensive guides to help you master trading on Nadex"
-      bgColor="#0033a0"
+      bgColor="#000d2e"
     >
       <div className="max-w-4xl mx-auto">
         <div className="mb-10">
           <div className="bg-[#f5f5f5] p-6 rounded-lg mb-8">
             <div className="md:flex justify-between items-center">
-              <h2 className="text-2xl font-bold mb-4 md:mb-0 text-[#0033a0]">Find Trading Guides</h2>
+              <h2 className="text-2xl font-bold mb-4 md:mb-0 text-[#000d2e]">Find Trading Guides</h2>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                   <Search className="h-5 w-5 text-gray-400" />
@@ -127,7 +127,7 @@ export default function TradingGuides() {
                 <input
                   type="text"
                   placeholder="Search guides..."
-                  className="pl-10 pr-4 py-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#0033a0]"
+                  className="pl-10 pr-4 py-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#000d2e]"
                 />
               </div>
             </div>
@@ -138,7 +138,7 @@ export default function TradingGuides() {
                 {categories.map((category, i) => (
                   <button 
                     key={i}
-                    className="bg-white hover:bg-[#0033a0] hover:text-white text-[#0033a0] text-sm px-3 py-1 rounded-full border border-[#0033a0] transition-colors"
+                    className="bg-white hover:bg-[#000d2e] hover:text-white text-[#000d2e] text-sm px-3 py-1 rounded-full border border-[#000d2e] transition-colors"
                   >
                     {category}
                   </button>
@@ -149,13 +149,13 @@ export default function TradingGuides() {
             <div className="mt-4">
               <div className="font-semibold mb-2">Filter by Level:</div>
               <div className="flex flex-wrap gap-2">
-                <button className="bg-white hover:bg-[#0033a0] hover:text-white text-[#0033a0] text-sm px-3 py-1 rounded-full border border-[#0033a0] transition-colors">
+                <button className="bg-white hover:bg-[#000d2e] hover:text-white text-[#000d2e] text-sm px-3 py-1 rounded-full border border-[#000d2e] transition-colors">
                   Beginner
                 </button>
-                <button className="bg-white hover:bg-[#0033a0] hover:text-white text-[#0033a0] text-sm px-3 py-1 rounded-full border border-[#0033a0] transition-colors">
+                <button className="bg-white hover:bg-[#000d2e] hover:text-white text-[#000d2e] text-sm px-3 py-1 rounded-full border border-[#000d2e] transition-colors">
                   Intermediate
                 </button>
-                <button className="bg-white hover:bg-[#0033a0] hover:text-white text-[#0033a0] text-sm px-3 py-1 rounded-full border border-[#0033a0] transition-colors">
+                <button className="bg-white hover:bg-[#000d2e] hover:text-white text-[#000d2e] text-sm px-3 py-1 rounded-full border border-[#000d2e] transition-colors">
                   Advanced
                 </button>
               </div>
@@ -164,7 +164,7 @@ export default function TradingGuides() {
         </div>
         
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Featured Guides</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Featured Guides</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             {featuredGuides.map((guide) => (
@@ -176,14 +176,14 @@ export default function TradingGuides() {
                 />
                 <div className="p-4">
                   <div className="flex justify-between items-center mb-2">
-                    <span className="bg-[#e6eef9] text-[#0033a0] text-xs px-2 py-1 rounded-full">
+                    <span className="bg-[#e6eef9] text-[#000d2e] text-xs px-2 py-1 rounded-full">
                       {guide.category}
                     </span>
-                    <span className="bg-[#e6eef9] text-[#0033a0] text-xs px-2 py-1 rounded-full">
+                    <span className="bg-[#e6eef9] text-[#000d2e] text-xs px-2 py-1 rounded-full">
                       {guide.level}
                     </span>
                   </div>
-                  <h3 className="text-lg font-bold mb-2 text-[#0033a0]">{guide.title}</h3>
+                  <h3 className="text-lg font-bold mb-2 text-[#000d2e]">{guide.title}</h3>
                   <p className="text-gray-700 text-sm mb-3 line-clamp-2">{guide.description}</p>
                   <div className="flex justify-between items-center">
                     <div className="flex items-center text-sm text-gray-500">
@@ -192,7 +192,7 @@ export default function TradingGuides() {
                     </div>
                     <Link 
                       href={guide.link} 
-                      className="text-[#0033a0] hover:text-[#ff5900] text-sm font-semibold flex items-center"
+                      className="text-[#000d2e] hover:text-[#ff5900] text-sm font-semibold flex items-center"
                     >
                       Read Guide <ArrowRight className="ml-1 h-4 w-4" />
                     </Link>
@@ -205,11 +205,11 @@ export default function TradingGuides() {
         
         <div className="mb-12">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold text-[#0033a0]">Beginner Guides</h2>
+            <h2 className="text-2xl font-bold text-[#000d2e]">Beginner Guides</h2>
             <Button
               asChild
               variant="outline"
-              className="border-[#0033a0] text-[#0033a0] hover:bg-[#0033a0] hover:text-white text-sm"
+              className="border-[#000d2e] text-[#000d2e] hover:bg-[#000d2e] hover:text-white text-sm"
             >
               <Link href="#">View All Beginner Guides</Link>
             </Button>
@@ -221,7 +221,7 @@ export default function TradingGuides() {
                 <div className="md:flex justify-between items-center">
                   <div>
                     <div className="flex items-center mb-2">
-                      <span className="bg-[#e6eef9] text-[#0033a0] text-xs px-2 py-1 rounded-full flex items-center">
+                      <span className="bg-[#e6eef9] text-[#000d2e] text-xs px-2 py-1 rounded-full flex items-center">
                         <Tag className="h-3 w-3 mr-1" />
                         {guide.category}
                       </span>
@@ -230,13 +230,13 @@ export default function TradingGuides() {
                         {guide.readTime}
                       </span>
                     </div>
-                    <h3 className="text-lg font-bold mb-1 text-[#0033a0]">{guide.title}</h3>
+                    <h3 className="text-lg font-bold mb-1 text-[#000d2e]">{guide.title}</h3>
                     <p className="text-gray-700 mb-0 md:pr-8">{guide.description}</p>
                   </div>
                   <div className="mt-4 md:mt-0 md:ml-4 md:flex-shrink-0">
                     <Button
                       asChild
-                      className="bg-[#0033a0] hover:bg-opacity-90 text-white font-semibold whitespace-nowrap"
+                      className="bg-[#000d2e] hover:bg-opacity-90 text-white font-semibold whitespace-nowrap"
                     >
                       <Link href="#">Read Guide</Link>
                     </Button>
@@ -249,11 +249,11 @@ export default function TradingGuides() {
         
         <div className="mb-12">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold text-[#0033a0]">Intermediate Guides</h2>
+            <h2 className="text-2xl font-bold text-[#000d2e]">Intermediate Guides</h2>
             <Button
               asChild
               variant="outline"
-              className="border-[#0033a0] text-[#0033a0] hover:bg-[#0033a0] hover:text-white text-sm"
+              className="border-[#000d2e] text-[#000d2e] hover:bg-[#000d2e] hover:text-white text-sm"
             >
               <Link href="#">View All Intermediate Guides</Link>
             </Button>
@@ -265,7 +265,7 @@ export default function TradingGuides() {
                 <div className="md:flex justify-between items-center">
                   <div>
                     <div className="flex items-center mb-2">
-                      <span className="bg-[#e6eef9] text-[#0033a0] text-xs px-2 py-1 rounded-full flex items-center">
+                      <span className="bg-[#e6eef9] text-[#000d2e] text-xs px-2 py-1 rounded-full flex items-center">
                         <Tag className="h-3 w-3 mr-1" />
                         {guide.category}
                       </span>
@@ -274,13 +274,13 @@ export default function TradingGuides() {
                         {guide.readTime}
                       </span>
                     </div>
-                    <h3 className="text-lg font-bold mb-1 text-[#0033a0]">{guide.title}</h3>
+                    <h3 className="text-lg font-bold mb-1 text-[#000d2e]">{guide.title}</h3>
                     <p className="text-gray-700 mb-0 md:pr-8">{guide.description}</p>
                   </div>
                   <div className="mt-4 md:mt-0 md:ml-4 md:flex-shrink-0">
                     <Button
                       asChild
-                      className="bg-[#0033a0] hover:bg-opacity-90 text-white font-semibold whitespace-nowrap"
+                      className="bg-[#000d2e] hover:bg-opacity-90 text-white font-semibold whitespace-nowrap"
                     >
                       <Link href="#">Read Guide</Link>
                     </Button>
@@ -292,14 +292,14 @@ export default function TradingGuides() {
         </div>
         
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Guide Collections</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Guide Collections</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
               <div className="flex items-start mb-4">
-                <BookOpen className="text-[#0033a0] mt-1 mr-3 h-8 w-8 flex-shrink-0" />
+                <BookOpen className="text-[#000d2e] mt-1 mr-3 h-8 w-8 flex-shrink-0" />
                 <div>
-                  <h3 className="text-xl font-bold mb-2 text-[#0033a0]">Binary Options Mastery</h3>
+                  <h3 className="text-xl font-bold mb-2 text-[#000d2e]">Binary Options Mastery</h3>
                   <p className="text-gray-700 mb-3">
                     A comprehensive collection of guides covering all aspects of binary options trading on Nadex.
                   </p>
@@ -307,7 +307,7 @@ export default function TradingGuides() {
                   <Button
                     asChild
                     variant="outline"
-                    className="w-full border-[#0033a0] text-[#0033a0] hover:bg-[#0033a0] hover:text-white"
+                    className="w-full border-[#000d2e] text-[#000d2e] hover:bg-[#000d2e] hover:text-white"
                   >
                     <Link href="#">View Collection</Link>
                   </Button>
@@ -317,9 +317,9 @@ export default function TradingGuides() {
             
             <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
               <div className="flex items-start mb-4">
-                <BarChart2 className="text-[#0033a0] mt-1 mr-3 h-8 w-8 flex-shrink-0" />
+                <BarChart2 className="text-[#000d2e] mt-1 mr-3 h-8 w-8 flex-shrink-0" />
                 <div>
-                  <h3 className="text-xl font-bold mb-2 text-[#0033a0]">Technical Analysis Fundamentals</h3>
+                  <h3 className="text-xl font-bold mb-2 text-[#000d2e]">Technical Analysis Fundamentals</h3>
                   <p className="text-gray-700 mb-3">
                     Learn the essential technical analysis tools and techniques for effective trading on Nadex.
                   </p>
@@ -327,7 +327,7 @@ export default function TradingGuides() {
                   <Button
                     asChild
                     variant="outline"
-                    className="w-full border-[#0033a0] text-[#0033a0] hover:bg-[#0033a0] hover:text-white"
+                    className="w-full border-[#000d2e] text-[#000d2e] hover:bg-[#000d2e] hover:text-white"
                   >
                     <Link href="#">View Collection</Link>
                   </Button>
@@ -338,11 +338,11 @@ export default function TradingGuides() {
         </div>
         
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Frequently Asked Questions</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Frequently Asked Questions</h2>
           
           <div className="space-y-4">
             <div className="border border-gray-200 rounded-lg overflow-hidden">
-              <button className="w-full p-5 text-left flex justify-between items-center font-bold text-[#0033a0]">
+              <button className="w-full p-5 text-left flex justify-between items-center font-bold text-[#000d2e]">
                 How do I access the trading guides?
                 <ChevronDown className="h-5 w-5" />
               </button>
@@ -357,7 +357,7 @@ export default function TradingGuides() {
             </div>
             
             <div className="border border-gray-200 rounded-lg overflow-hidden">
-              <button className="w-full p-5 text-left flex justify-between items-center font-bold text-[#0033a0]">
+              <button className="w-full p-5 text-left flex justify-between items-center font-bold text-[#000d2e]">
                 Can I download the guides for offline reading?
                 <ChevronDown className="h-5 w-5" />
               </button>
@@ -371,7 +371,7 @@ export default function TradingGuides() {
             </div>
             
             <div className="border border-gray-200 rounded-lg overflow-hidden">
-              <button className="w-full p-5 text-left flex justify-between items-center font-bold text-[#0033a0]">
+              <button className="w-full p-5 text-left flex justify-between items-center font-bold text-[#000d2e]">
                 How often are new guides added?
                 <ChevronDown className="h-5 w-5" />
               </button>
@@ -387,7 +387,7 @@ export default function TradingGuides() {
           </div>
         </div>
 
-        <div className="bg-[#0033a0] text-white rounded-lg p-8 text-center">
+        <div className="bg-[#000d2e] text-white rounded-lg p-8 text-center">
           <h2 className="text-2xl font-bold mb-4">Put Your Knowledge into Practice</h2>
           <p className="mb-6">Open an account today and apply what you've learned with limited-risk trading on Nadex.</p>
           <Button

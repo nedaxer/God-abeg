@@ -1,7 +1,7 @@
 // @ts-nocheck
 // TypeScript error suppression for development productivity - 1 mobile page type conflict
 import { Link, useParams } from 'wouter';
-import { ArrowLeft, Copy, CheckCircle } from 'lucide-react';
+import { ArrowLeft, Copy, CheckCircle, XCircle } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
@@ -131,8 +131,17 @@ function MobileDepositDetails() {
             {transaction.cryptoAmount.toFixed(8)} {transaction.cryptoSymbol}
           </h2>
           <div className="flex items-center justify-center">
-            <CheckCircle className="w-3 h-3 text-green-400 mr-2" />
-            <span className="text-green-400 text-xs font-medium">Succeeded</span>
+            {transaction.status === 'failed' ? (
+              <>
+                <XCircle className="w-3 h-3 text-red-400 mr-2" />
+                <span className="text-red-400 text-xs font-medium">Deposit Failed</span>
+              </>
+            ) : (
+              <>
+                <CheckCircle className="w-3 h-3 text-green-400 mr-2" />
+                <span className="text-green-400 text-xs font-medium">Deposit Confirmed</span>
+              </>
+            )}
           </div>
         </div>
       </div>

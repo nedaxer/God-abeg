@@ -125,12 +125,12 @@ export default function Webinars() {
     <PageLayout 
       title="Crypto Webinars" 
       subtitle="Live and recorded educational sessions hosted by Nedaxer market experts"
-      bgColor="#0033a0"
+      bgColor="#000d2e"
       bgImage="https://images.unsplash.com/photo-1642104704074-907c0698cbd9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&h=500&q=80"
     >
       <div className="max-w-4xl mx-auto">
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Upcoming Live Webinars</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Upcoming Live Webinars</h2>
 
           <div className="space-y-6 mb-8">
             {upcomingWebinars.map((webinar) => (
@@ -146,13 +146,13 @@ export default function Webinars() {
                   <div className="p-6 md:w-2/3">
                     <div className="flex flex-wrap gap-2 mb-2">
                       {webinar.tags.map((tag, i) => (
-                        <span key={i} className="bg-[#e6eef9] text-[#0033a0] text-xs px-2 py-1 rounded-full flex items-center">
+                        <span key={i} className="bg-[#e6eef9] text-[#000d2e] text-xs px-2 py-1 rounded-full flex items-center">
                           <Tag className="h-3 w-3 mr-1" />
                           {tag}
                         </span>
                       ))}
                     </div>
-                    <h3 className="text-xl font-bold mb-2 text-[#0033a0]">{webinar.title}</h3>
+                    <h3 className="text-xl font-bold mb-2 text-[#000d2e]">{webinar.title}</h3>
                     <p className="text-gray-900 mb-4">{webinar.description}</p>
                     <div className="space-y-2 mb-4">
                       <div className="flex items-center text-sm text-gray-900">
@@ -170,7 +170,7 @@ export default function Webinars() {
                     </div>
                     <Button
                       asChild
-                      className="bg-[#0033a0] hover:bg-opacity-90 text-white font-semibold"
+                      className="bg-[#000d2e] hover:bg-opacity-90 text-white font-semibold"
                     >
                       <Link href="#">Register Now</Link>
                     </Button>
@@ -183,7 +183,7 @@ export default function Webinars() {
           <div className="text-center">
             <Link 
               href="#" 
-              className="text-[#0033a0] hover:text-[#ff5900] font-semibold inline-flex items-center"
+              className="text-[#000d2e] hover:text-[#ff5900] font-semibold inline-flex items-center"
             >
               View Full Webinar Schedule <ArrowRight className="ml-1 h-4 w-4" />
             </Link>
@@ -191,7 +191,7 @@ export default function Webinars() {
         </div>
 
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Recorded Webinars</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Recorded Webinars</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             {recordedWebinars.map((webinar) => (
@@ -214,12 +214,12 @@ export default function Webinars() {
                 <div className="p-4">
                   <div className="flex flex-wrap gap-2 mb-2">
                     {webinar.tags.map((tag, i) => (
-                      <span key={i} className="bg-[#e6eef9] text-[#0033a0] text-xs px-2 py-1 rounded-full">
+                      <span key={i} className="bg-[#e6eef9] text-[#000d2e] text-xs px-2 py-1 rounded-full">
                         {tag}
                       </span>
                     ))}
                   </div>
-                  <h3 className="text-lg font-bold mb-2 text-[#0033a0]">{webinar.title}</h3>
+                  <h3 className="text-lg font-bold mb-2 text-[#000d2e]">{webinar.title}</h3>
                   <p className="text-gray-900 text-sm mb-3">{webinar.description}</p>
                   <div className="space-y-1 mb-3">
                     <div className="flex items-center text-xs text-gray-900">
@@ -233,7 +233,7 @@ export default function Webinars() {
                   </div>
                   <Link 
                     href="#" 
-                    className="text-[#0033a0] hover:text-[#ff5900] text-sm font-semibold flex items-center"
+                    className="text-[#000d2e] hover:text-[#ff5900] text-sm font-semibold flex items-center"
                   >
                     Watch Webinar <ArrowRight className="ml-1 h-4 w-4" />
                   </Link>
@@ -246,7 +246,7 @@ export default function Webinars() {
             <Button
               asChild
               variant="outline"
-              className="border-[#0033a0] text-[#0033a0] hover:bg-[#0033a0] hover:text-white"
+              className="border-[#000d2e] text-[#000d2e] hover:bg-[#000d2e] hover:text-white"
             >
               <Link href="#">View All Recorded Webinars</Link>
             </Button>
@@ -254,12 +254,12 @@ export default function Webinars() {
         </div>
 
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Webinar Series</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Webinar Series</h2>
 
           <div className="space-y-6">
             {webinarSeries.map((series, i) => (
               <div key={i} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-                <h3 className="text-xl font-bold mb-2 text-[#0033a0]">{series.title}</h3>
+                <h3 className="text-xl font-bold mb-2 text-[#000d2e]">{series.title}</h3>
                 <p className="text-gray-900 mb-3">{series.description}</p>
                 <div className="flex flex-wrap gap-x-6 gap-y-2 mb-4">
                   <div className="flex items-center text-sm text-gray-900">
@@ -273,7 +273,7 @@ export default function Webinars() {
                 </div>
                 <Link 
                   href="#" 
-                  className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
+                  className="text-[#000d2e] hover:text-[#ff5900] font-semibold flex items-center"
                 >
                   View Series <ArrowRight className="ml-1 h-4 w-4" />
                 </Link>
@@ -283,10 +283,10 @@ export default function Webinars() {
         </div>
 
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Webinar Resources</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Webinar Resources</h2>
 
           <div className="bg-[#f5f5f5] p-6 rounded-lg">
-            <h3 className="text-xl font-bold mb-4 text-[#0033a0]">Downloadable Materials</h3>
+            <h3 className="text-xl font-bold mb-4 text-[#000d2e]">Downloadable Materials</h3>
             <p className="mb-4 text-gray-900">
               Many of our webinars include downloadable resources such as presentation slides, 
               trading checklists, strategy guides, and more. These materials are available 
@@ -295,15 +295,15 @@ export default function Webinars() {
 
             <div className="space-y-4 mb-6">
               <div className="flex items-start p-4 bg-white rounded-lg border border-gray-200">
-                <Download className="text-[#0033a0] mt-1 mr-3 h-6 w-6 flex-shrink-0" />
+                <Download className="text-[#000d2e] mt-1 mr-3 h-6 w-6 flex-shrink-0" />
                 <div>
-                  <h4 className="font-bold mb-1 text-[#0033a0]">Binary Options Trading Checklist</h4>
+                  <h4 className="font-bold mb-1 text-[#000d2e]">Binary Options Trading Checklist</h4>
                   <p className="text-gray-900 text-sm mb-2">
                     A comprehensive checklist to help you evaluate potential binary options trades.
                   </p>
                   <Link 
                     href="#" 
-                    className="text-[#0033a0] hover:text-[#ff5900] text-sm font-semibold flex items-center"
+                    className="text-[#000d2e] hover:text-[#ff5900] text-sm font-semibold flex items-center"
                   >
                     Download PDF <ArrowRight className="ml-1 h-4 w-4" />
                   </Link>
@@ -311,15 +311,15 @@ export default function Webinars() {
               </div>
 
               <div className="flex items-start p-4 bg-white rounded-lg border border-gray-200">
-                <Download className="text-[#0033a0] mt-1 mr-3 h-6 w-6 flex-shrink-0" />
+                <Download className="text-[#000d2e] mt-1 mr-3 h-6 w-6 flex-shrink-0" />
                 <div>
-                  <h4 className="font-bold mb-1 text-[#0033a0]">Technical Analysis Indicator Guide</h4>
+                  <h4 className="font-bold mb-1 text-[#000d2e]">Technical Analysis Indicator Guide</h4>
                   <p className="text-gray-900 text-sm mb-2">
                     Quick reference guide for commonly used technical indicators and how to interpret them.
                   </p>
                   <Link 
                     href="#" 
-                    className="text-[#0033a0] hover:text-[#ff5900] text-sm font-semibold flex items-center"
+                    className="text-[#000d2e] hover:text-[#ff5900] text-sm font-semibold flex items-center"
                   >
                     Download PDF <ArrowRight className="ml-1 h-4 w-4" />
                   </Link>
@@ -334,32 +334,32 @@ export default function Webinars() {
         </div>
 
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Webinar FAQs</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Webinar FAQs</h2>
 
           <div className="space-y-4">
             <div className="border border-gray-200 rounded-lg p-5 hover:shadow-md transition-shadow">
-              <h3 className="text-lg font-bold mb-2 text-[#0033a0]">How do I register for a webinar?</h3>
+              <h3 className="text-lg font-bold mb-2 text-[#000d2e]">How do I register for a webinar?</h3>
               <p className="text-gray-900">
                 Simply click the "Register Now" button next to the webinar you're interested in. You'll need to provide your name and email address. After registering, you'll receive a confirmation email with the webinar link and calendar invitation.
               </p>
             </div>
 
             <div className="border border-gray-200 rounded-lg p-5 hover:shadow-md transition-shadow">
-              <h3 className="text-lg font-bold mb-2 text-[#0033a0]">Are the webinars free?</h3>
+              <h3 className="text-lg font-bold mb-2 text-[#000d2e]">Are the webinars free?</h3>
               <p className="text-gray-900">
                 Yes, all Nedaxer webinars are free to attend for both members and non-members. However, some advanced webinar series may be exclusive to Nedaxer account holders.
               </p>
             </div>
 
             <div className="border border-gray-200 rounded-lg p-5 hover:shadow-md transition-shadow">
-              <h3 className="text-lg font-bold mb-2 text-[#0033a0]">What if I miss a live webinar?</h3>
+              <h3 className="text-lg font-bold mb-2 text-[#000d2e]">What if I miss a live webinar?</h3>
               <p className="text-gray-900">
                 Most of our webinars are recorded and made available in our webinar archive within 24-48 hours after the live event. You can watch these recordings at your convenience.
               </p>
             </div>
 
             <div className="border border-gray-200 rounded-lg p-5 hover:shadow-md transition-shadow">
-              <h3 className="text-lg font-bold mb-2 text-[#0033a0]">Can I ask questions during the webinar?</h3>
+              <h3 className="text-lg font-bold mb-2 text-[#000d2e]">Can I ask questions during the webinar?</h3>
               <p className="text-gray-900">
                 Yes, our live webinars include a Q&A session where you can submit questions for the presenter. We encourage participation and try to answer as many questions as time allows.
               </p>
@@ -367,7 +367,7 @@ export default function Webinars() {
           </div>
         </div>
 
-        <div className="bg-[#0033a0] text-white rounded-lg p-8">
+        <div className="bg-[#000d2e] text-white rounded-lg p-8">
           <div className="md:flex items-center justify-between">
             <div className="mb-6 md:mb-0 md:mr-6">
               <h2 className="text-2xl font-bold mb-2">Subscribe to Webinar Updates</h2>

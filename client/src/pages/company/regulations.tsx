@@ -8,22 +8,22 @@ export default function Regulations() {
     {
       title: "CFTC Regulation",
       description: "The Commodity Futures Trading Commission (CFTC) is the primary regulator of derivatives markets in the United States, overseeing exchanges like Nedaxer to ensure market integrity and customer protection.",
-      icon: <Shield className="h-10 w-10 text-[#0033a0]" />,
+      icon: <Shield className="h-10 w-10 text-[#000d2e]" />,
     },
     {
       title: "Designated Contract Market (DCM)",
       description: "Nedaxer is registered as a Designated Contract Market (DCM), which allows us to offer regulated derivative products to retail traders in the United States.",
-      icon: <FileText className="h-10 w-10 text-[#0033a0]" />,
+      icon: <FileText className="h-10 w-10 text-[#000d2e]" />,
     },
     {
       title: "Anti-Money Laundering (AML)",
       description: "Nedaxer implements robust AML procedures including identity verification, transaction monitoring, and suspicious activity reporting to prevent financial crimes.",
-      icon: <Scale className="h-10 w-10 text-[#0033a0]" />,
+      icon: <Scale className="h-10 w-10 text-[#000d2e]" />,
     },
     {
       title: "Segregated Funds",
       description: "Member funds are held in segregated accounts at top-tier US banks, separate from Nedaxer's operating funds, providing an additional layer of protection.",
-      icon: <DollarSign className="h-10 w-10 text-[#0033a0]" />,
+      icon: <DollarSign className="h-10 w-10 text-[#000d2e]" />,
     },
   ];
 
@@ -59,11 +59,11 @@ export default function Regulations() {
     <PageLayout 
       title="Regulations" 
       subtitle="Trading on a secure, regulated US exchange with robust customer protections"
-      bgColor="#0033a0"
+      bgColor="#000d2e"
     >
       <div className="max-w-4xl mx-auto">
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Regulatory Oversight</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Regulatory Oversight</h2>
 
           <div className="mb-8">
             <p className="mb-4 text-gray-900">
@@ -82,7 +82,7 @@ export default function Regulations() {
               <div key={i} className="flex items-start p-6 bg-[#f5f5f5] rounded-lg">
                 <div className="mr-4">{item.icon}</div>
                 <div>
-                  <h3 className="text-xl font-bold mb-2 text-[#0033a0]">{item.title}</h3>
+                  <h3 className="text-xl font-bold mb-2 text-[#000d2e]">{item.title}</h3>
                   <p className="text-gray-900">{item.description}</p>
                 </div>
               </div>
@@ -91,10 +91,10 @@ export default function Regulations() {
         </div>
 
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Customer Protection</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Customer Protection</h2>
 
           <div className="bg-[#f5f5f5] p-6 rounded-lg mb-8">
-            <h3 className="text-xl font-bold mb-4 text-[#0033a0]">Segregated Funds</h3>
+            <h3 className="text-xl font-bold mb-4 text-[#000d2e]">Segregated Funds</h3>
             <p className="mb-4 text-gray-900">
               One of the most important customer protections at Nedaxer is the segregation of member funds. 
               This means your money is held in dedicated accounts at top-tier US banks, completely separate 
@@ -111,7 +111,7 @@ export default function Regulations() {
           </div>
 
           <div className="bg-[#f5f5f5] p-6 rounded-lg">
-            <h3 className="text-xl font-bold mb-4 text-[#0033a0]">Limited Risk Products</h3>
+            <h3 className="text-xl font-bold mb-4 text-[#000d2e]">Limited Risk Products</h3>
             <p className="mb-4 text-gray-900">
               All products offered on Nedaxer are designed with limited risk characteristics. This means:
             </p>
@@ -129,7 +129,7 @@ export default function Regulations() {
         </div>
 
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Compliance Documents</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Compliance Documents</h2>
 
           <p className="mb-6 text-gray-900">
             The following documents outline Nedaxer's regulatory framework, operating procedures, 
@@ -139,11 +139,11 @@ export default function Regulations() {
           <div className="space-y-4">
             {complianceDocuments.map((doc, i) => (
               <div key={i} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-                <h3 className="text-xl font-bold mb-2 text-[#0033a0]">{doc.title}</h3>
+                <h3 className="text-xl font-bold mb-2 text-[#000d2e]">{doc.title}</h3>
                 <p className="text-gray-900 mb-3">{doc.description}</p>
                 <Link 
                   href={doc.link} 
-                  className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
+                  className="text-[#000d2e] hover:text-[#ff5900] font-semibold flex items-center"
                 >
                   View Document <FileText className="ml-1 h-4 w-4" />
                 </Link>
@@ -153,7 +153,7 @@ export default function Regulations() {
         </div>
 
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-[#0033a0]">Regulatory Notices</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#000d2e]">Regulatory Notices</h2>
 
           <div className="border border-yellow-400 bg-yellow-50 p-6 rounded-lg mb-6">
             <div className="flex items-start">
@@ -182,7 +182,7 @@ export default function Regulations() {
                 </p>
                 <Link 
                   href="/legal/risk" 
-                  className="text-[#0033a0] hover:text-[#ff5900] font-semibold flex items-center"
+                  className="text-[#000d2e] hover:text-[#ff5900] font-semibold flex items-center"
                 >
                   View Full Risk Disclosure <FileText className="ml-1 h-4 w-4" />
                 </Link>
@@ -191,7 +191,7 @@ export default function Regulations() {
           </div>
         </div>
 
-        <div className="bg-[#0033a0] text-white rounded-lg p-8">
+        <div className="bg-[#000d2e] text-white rounded-lg p-8">
           <div className="md:flex items-center justify-between">
             <div className="mb-6 md:mb-0 md:mr-6">
               <h2 className="text-2xl font-bold mb-2">Questions about our regulatory framework?</h2>

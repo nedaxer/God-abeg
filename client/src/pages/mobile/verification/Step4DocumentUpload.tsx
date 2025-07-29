@@ -52,14 +52,27 @@ export const Step4DocumentUpload: React.FC<Step4DocumentUploadProps> = ({
   const [isLoading, setIsLoading] = useState(false);
 
   const handleNext = async () => {
+    console.log('📤 Attempting to proceed with documents:', {
+      documentType,
+      hasFiles: {
+        front: !!files.front,
+        back: !!files.back,
+        single: !!files.single
+      }
+    });
+    
     if (isPassport && files.single) {
+      console.log('📄 Processing passport document');
       setIsLoading(true);
       await new Promise(resolve => setTimeout(resolve, 600));
       onNext({ single: files.single });
     } else if (requiresTwoSides && files.front && files.back) {
+      console.log('📄 Processing two-sided document (driver license/residence permit)');
       setIsLoading(true);
       await new Promise(resolve => setTimeout(resolve, 600));
       onNext({ front: files.front, back: files.back });
+    } else {
+      console.log('❌ Missing required documents');
     }
   };
 
@@ -76,14 +89,27 @@ export const Step4DocumentUpload: React.FC<Step4DocumentUploadProps> = ({
     file?: File; 
     inputRef: React.RefObject<HTMLInputElement> 
   }) => (
-    <div className="border-2 border-dashed border-gray-600 rounded-lg p-8 text-center">
+    <div className="border-2 border-dashed border-gray-600 rounded-lg p-8 text-center hover:border-orange-500 transition-colors">
       <input
         ref={inputRef}
         type="file"
         accept="image/*,.pdf"
         onChange={(e) => {
           const selectedFile = e.target.files?.[0];
+          console.log(`📁 File selected for ${type}:`, selectedFile?.name, selectedFile?.type, selectedFile?.size);
           if (selectedFile) {
+            // Validate file size (10MB limit)
+            if (selectedFile.size > 10 * 1024 * 1024) {
+              alert('File size must be less than 10MB');
+              return;
+            }
+            
+            // Validate file type
+            if (!selectedFile.type.startsWith('image/') && selectedFile.type !== 'application/pdf') {
+              alert('Only images and PDF files are allowed');
+              return;
+            }
+            
             handleFileSelect(type, selectedFile);
           }
         }}
@@ -95,13 +121,19 @@ export const Step4DocumentUpload: React.FC<Step4DocumentUploadProps> = ({
         <div>
           <p className="text-white font-medium">{label}</p>
           {file ? (
-            <p className="text-orange-500 text-sm mt-1">✓ {file.name}</p>
+            <div>
+              <p className="text-green-500 text-sm mt-1">✓ {file.name}</p>
+              <p className="text-gray-400 text-xs">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
+            </div>
           ) : (
             <button
-              onClick={() => inputRef.current?.click()}
-              className="text-orange-500 text-sm hover:text-orange-400"
+              onClick={() => {
+                console.log(`📁 Upload button clicked for ${type}`);
+                inputRef.current?.click();
+              }}
+              className="text-orange-500 text-sm hover:text-orange-400 mt-2 px-4 py-2 border border-orange-500 rounded hover:bg-orange-500 hover:text-white transition-colors"
             >
-              Upload document
+              Choose File
             </button>
           )}
         </div>
@@ -177,7 +209,7 @@ export const Step4DocumentUpload: React.FC<Step4DocumentUploadProps> = ({
       </div>
 
       {/* Fixed Bottom Button like home navigation */}
-      <div className="fixed bottom-0 left-0 right-0 bg-slate-900 p-4 border-t border-gray-700 z-50 space-y-4">
+      <div className="fixed bottom-0 left-0 right-0 bg-[#0a0a2e] p-4 border-t border-gray-700 z-50 space-y-4">
         <p className="text-gray-400 text-center text-xs">
           Please tap "next" to save your documents
         </p>

@@ -44,6 +44,12 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     return <Redirect to="/account/login" />;
   }
 
+  // Check if user needs email verification before accessing protected routes
+  if (user && !user.isVerified) {
+    console.log('User account not verified, redirecting to verification page');
+    return <Redirect to="/account/verify" />;
+  }
+
   // Check admin permissions for admin-only routes
   if (adminOnly && !user.isAdmin) {
     console.log('User is not admin, redirecting to mobile home');
@@ -62,6 +68,11 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
 
         if (!user) {
           return <Redirect to="/account/login" />;
+        }
+
+        // Check email verification in route handler too
+        if (user && !user.isVerified) {
+          return <Redirect to="/account/verify" />;
         }
 
         if (adminOnly && !user.isAdmin) {

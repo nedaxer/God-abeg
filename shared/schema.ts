@@ -253,6 +253,35 @@ export const userPreferencesRelations = relations(userPreferences, ({ one }) => 
   })
 }));
 
+// Pending deposits with receipt uploads
+export const pendingDeposits = pgTable("pending_deposits", {
+  id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
+  userId: integer("user_id").notNull().references(() => users.id),
+  currencyId: integer("currency_id").notNull().references(() => currencies.id),
+  cryptoSymbol: varchar("crypto_symbol", { length: 10 }).notNull(),
+  chainType: varchar("chain_type", { length: 50 }).notNull(),
+  depositAddress: varchar("deposit_address", { length: 255 }).notNull(),
+  usdAmount: doublePrecision("usd_amount").notNull(),
+  cryptoAmount: doublePrecision("crypto_amount"),
+  cryptoPrice: doublePrecision("crypto_price"),
+  receiptImageUrl: text("receipt_image_url"),
+  status: varchar("status", { length: 50 }).default("pending_payment").notNull(), // 'pending_payment', 'pending_approval', 'approved', 'declined'
+  adminNotes: text("admin_notes"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull()
+});
+
+export const pendingDepositsRelations = relations(pendingDeposits, ({ one }) => ({
+  user: one(users, {
+    fields: [pendingDeposits.userId],
+    references: [users.id]
+  }),
+  currency: one(currencies, {
+    fields: [pendingDeposits.currencyId],
+    references: [currencies.id]
+  })
+}));
+
 // Basic validation schemas using zod
 export const insertUserSchema = z.object({
   username: z.string(),
@@ -322,6 +351,53 @@ export const insertStakingPositionSchema = z.object({
   rewards: z.number().default(0),
   status: z.string().default("active"),
 });
+
+export const insertPendingDepositSchema = z.object({
+  userId: z.number(),
+  currencyId: z.number(),
+  cryptoSymbol: z.string(),
+  chainType: z.string(),
+  depositAddress: z.string(),
+  usdAmount: z.number().min(500), // Minimum $500 as per requirements
+  cryptoAmount: z.number().optional(),
+  cryptoPrice: z.number().optional(),
+  receiptImageUrl: z.string().optional(),
+  status: z.string().default("pending_payment"),
+  adminNotes: z.string().optional(),
+});
+
+// Referral earnings table
+export const referralEarnings = pgTable("referral_earnings", {
+  id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
+  referrerId: integer("referrer_id").notNull().references(() => users.id),
+  referredUserId: integer("referred_user_id").notNull().references(() => users.id),
+  amount: doublePrecision("amount").notNull(),
+  percentage: doublePrecision("percentage").notNull(),
+  transactionType: varchar("transaction_type", { length: 50 }).notNull(),
+  originalAmount: doublePrecision("original_amount").notNull(),
+  currencyId: varchar("currency_id", { length: 10 }).default("USD").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull()
+});
+
+export const referralEarningsRelations = relations(referralEarnings, ({ one }) => ({
+  referrer: one(users, {
+    fields: [referralEarnings.referrerId],
+    references: [users.id]
+  }),
+  referredUser: one(users, {
+    fields: [referralEarnings.referredUserId],
+    references: [users.id]
+  })
+}));
+
+// Type definitions for pending deposits
+export type InsertPendingDeposit = z.infer<typeof insertPendingDepositSchema>;
+export type SelectPendingDeposit = typeof pendingDeposits.$inferSelect;
+
+// Type definitions for referral earnings
+export type ReferralEarning = typeof referralEarnings.$inferSelect;
+export type InsertReferralEarning = typeof referralEarnings.$inferInsert;
 
 export const insertMarketPriceSchema = z.object({
   symbol: z.string(),

@@ -2,7 +2,7 @@
 import MobileLayout from '@/components/mobile-layout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ArrowLeft, Check, Search } from 'lucide-react';
+import { ArrowLeft, Check, Search, X } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'wouter';
 import { useLanguage } from '@/contexts/language-context';
@@ -10,9 +10,10 @@ import { useLanguage } from '@/contexts/language-context';
 interface CurrencySelectionProps {
   onSelectCurrency?: (currency: string) => void;
   currentCurrency?: string;
+  onClose?: () => void;
 }
 
-export default function CurrencySelection({ onSelectCurrency, currentCurrency = 'USD' }: CurrencySelectionProps) {
+export default function CurrencySelection({ onSelectCurrency, currentCurrency = 'USD', onClose }: CurrencySelectionProps) {
   const [selectedCurrency, setSelectedCurrency] = useState(currentCurrency);
   const [searchQuery, setSearchQuery] = useState('');
   const { t } = useLanguage();
@@ -109,27 +110,42 @@ export default function CurrencySelection({ onSelectCurrency, currentCurrency = 
     // Store in localStorage for persistence
     localStorage.setItem('selectedCurrency', currency);
     
-    // Navigate back to settings if no parent handler
-    if (!onSelectCurrency) {
+    // Navigate back if no parent handler
+    if (!onSelectCurrency && !onClose) {
       // Small delay to show selection feedback
       setTimeout(() => {
         window.history.back();
       }, 300);
+    } else if (onClose) {
+      // Small delay to show selection feedback
+      setTimeout(() => {
+        onClose();
+      }, 300);
+    }
+  };
+
+  const handleClose = () => {
+    if (onClose) {
+      onClose();
+    } else {
+      window.history.back();
     }
   };
 
   return (
-    <MobileLayout hideBottomNav={true}>
+    <div className="fixed inset-0 z-50 flex flex-col bg-black/80 backdrop-blur-sm">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 bg-blue-950 border-b border-blue-700">
-        <button onClick={() => window.history.back()}>
+      <div className="flex items-center justify-between p-4 bg-blue-950/90 border-b border-blue-700/50">
+        <button onClick={handleClose}>
           <ArrowLeft className="w-6 h-6 text-white" />
         </button>
         <h1 className="text-lg font-semibold text-white">{t('currency_selection')}</h1>
-        <div className="w-6 h-6" /> {/* Spacer */}
+        <button onClick={handleClose}>
+          <X className="w-6 h-6 text-white" />
+        </button>
       </div>
 
-      <div className="px-4 py-4 bg-blue-950 min-h-screen">
+      <div className="flex-1 px-4 py-4 bg-blue-950/90 overflow-y-auto">
         {/* Search Bar */}
         <div className="mb-4">
           <div className="relative">
@@ -139,7 +155,7 @@ export default function CurrencySelection({ onSelectCurrency, currentCurrency = 
               placeholder="Search currencies..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 bg-blue-900 border-gray-600 text-white placeholder-gray-400 text-sm"
+              className="pl-10 bg-blue-900/80 border-gray-600 text-white placeholder-gray-400 text-sm backdrop-blur-sm"
             />
           </div>
         </div>
@@ -148,24 +164,24 @@ export default function CurrencySelection({ onSelectCurrency, currentCurrency = 
         {filteredMostUsed.length > 0 && (
           <div className="mb-4">
             <h2 className="text-gray-400 text-xs mb-2">Most Used</h2>
-            <div className="space-y-2">
+            <div className="space-y-1">
               {filteredMostUsed.map((currency) => (
                 <button
                   key={currency.code}
                   onClick={() => handleCurrencySelect(currency.code)}
-                  className={`w-full p-3 rounded-lg border transition-colors ${
+                  className={`w-full p-2 rounded-lg text-left transition-colors ${
                     selectedCurrency === currency.code
-                      ? 'border-orange-500 bg-orange-500/10'
-                      : 'border-gray-600 bg-blue-900 hover:bg-blue-800'
+                      ? 'bg-orange-500 text-white'
+                      : 'bg-blue-800/80 text-gray-300 hover:bg-blue-700/80 backdrop-blur-sm'
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <div className="text-left">
-                      <div className="text-white text-sm font-medium">{currency.code}</div>
-                      <div className="text-gray-400 text-xs">{currency.name}</div>
+                    <div>
+                      <span className="text-sm font-medium">{currency.code}</span>
+                      <span className="text-xs text-gray-400 ml-2">{currency.name}</span>
                     </div>
                     {selectedCurrency === currency.code && (
-                      <Check className="w-4 h-4 text-orange-500" />
+                      <Check className="w-4 h-4" />
                     )}
                   </div>
                 </button>
@@ -188,7 +204,7 @@ export default function CurrencySelection({ onSelectCurrency, currentCurrency = 
                   className={`w-full p-2 rounded-lg text-left transition-colors ${
                     selectedCurrency === currency.code
                       ? 'bg-orange-500 text-white'
-                      : 'bg-blue-800 text-gray-300 hover:bg-blue-700'
+                      : 'bg-blue-800/80 text-gray-300 hover:bg-blue-700/80 backdrop-blur-sm'
                   }`}
                 >
                   <div className="flex items-center justify-between">
@@ -213,6 +229,6 @@ export default function CurrencySelection({ onSelectCurrency, currentCurrency = 
           </div>
         )}
       </div>
-    </MobileLayout>
+    </div>
   );
 }

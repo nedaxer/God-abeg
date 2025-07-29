@@ -1,0 +1,209 @@
+# npm audit report
+
+cross-spawn  <6.0.6
+Severity: high
+Regular Expression Denial of Service (ReDoS) in cross-spawn - https://github.com/advisories/GHSA-3xgq-45jj-v275
+fix available via `npm audit fix --force`
+Will install imagemin-webp@6.1.0, which is a breaking change
+node_modules/bin-build/node_modules/cross-spawn
+node_modules/bin-check/node_modules/cross-spawn
+node_modules/exec-buffer/node_modules/cross-spawn
+  execa  0.5.0 - 0.9.0
+  Depends on vulnerable versions of cross-spawn
+  node_modules/bin-build/node_modules/execa
+  node_modules/bin-check/node_modules/execa
+  node_modules/exec-buffer/node_modules/execa
+    bin-build  >=2.1.2
+    Depends on vulnerable versions of download
+    Depends on vulnerable versions of execa
+    node_modules/bin-build
+      cwebp-bin  >=3.0.0
+      Depends on vulnerable versions of bin-build
+      Depends on vulnerable versions of bin-wrapper
+      node_modules/cwebp-bin
+        imagemin-webp  >=5.0.0
+        Depends on vulnerable versions of cwebp-bin
+        Depends on vulnerable versions of exec-buffer
+        node_modules/imagemin-webp
+      mozjpeg  >=4.0.0
+      Depends on vulnerable versions of bin-build
+      Depends on vulnerable versions of bin-wrapper
+      node_modules/mozjpeg
+        imagemin-mozjpeg  >=8.0.0
+        Depends on vulnerable versions of mozjpeg
+        node_modules/imagemin-mozjpeg
+      optipng-bin  >=3.0.0
+      Depends on vulnerable versions of bin-build
+      Depends on vulnerable versions of bin-wrapper
+      node_modules/optipng-bin
+        imagemin-optipng  >=6.0.0
+        Depends on vulnerable versions of optipng-bin
+        node_modules/imagemin-optipng
+    bin-check  >=4.1.0
+    Depends on vulnerable versions of execa
+    node_modules/bin-check
+      bin-wrapper  >=0.4.0
+      Depends on vulnerable versions of bin-check
+      Depends on vulnerable versions of bin-version-check
+      Depends on vulnerable versions of download
+      node_modules/bin-wrapper
+    exec-buffer  >=3.1.0
+    Depends on vulnerable versions of execa
+    node_modules/exec-buffer
+
+esbuild  <=0.24.2
+Severity: moderate
+esbuild enables any website to send any requests to the development server and read the response - https://github.com/advisories/GHSA-67mh-4wv8-2f99
+fix available via `npm audit fix --force`
+Will install drizzle-kit@0.18.1, which is a breaking change
+node_modules/@esbuild-kit/core-utils/node_modules/esbuild
+  @esbuild-kit/core-utils  *
+  Depends on vulnerable versions of esbuild
+  node_modules/@esbuild-kit/core-utils
+    @esbuild-kit/esm-loader  *
+    Depends on vulnerable versions of @esbuild-kit/core-utils
+    node_modules/@esbuild-kit/esm-loader
+      drizzle-kit  0.17.5-6b7793f - 0.17.5-e5944eb || 0.18.1-065de38 - 0.18.1-f3800bf || >=0.19.0-07024c4
+      Depends on vulnerable versions of @esbuild-kit/esm-loader
+      node_modules/drizzle-kit
+
+form-data  <2.5.4
+Severity: critical
+form-data uses unsafe random function in form-data for choosing boundary - https://github.com/advisories/GHSA-fjxv-7rqg-78g4
+fix available via `npm audit fix`
+node_modules/@types/request/node_modules/form-data
+
+got  <=11.8.3
+Severity: high
+Got allows a redirect to a UNIX socket - https://github.com/advisories/GHSA-pfrx-2q88-qq97
+Depends on vulnerable versions of cacheable-request
+fix available via `npm audit fix --force`
+Will install imagemin-mozjpeg@7.0.0, which is a breaking change
+node_modules/bin-wrapper/node_modules/got
+node_modules/got
+  download  >=4.0.0
+  Depends on vulnerable versions of got
+  node_modules/bin-wrapper/node_modules/download
+  node_modules/download
+
+http-cache-semantics  <4.1.1
+Severity: high
+http-cache-semantics vulnerable to Regular Expression Denial of Service - https://github.com/advisories/GHSA-rc47-6667-2j5j
+fix available via `npm audit fix --force`
+Will install imagemin-mozjpeg@7.0.0, which is a breaking change
+node_modules/http-cache-semantics
+  cacheable-request  0.1.0 - 2.1.4
+  Depends on vulnerable versions of http-cache-semantics
+  node_modules/cacheable-request
+
+lodash.pick  >=4.0.0
+Severity: high
+Prototype Pollution in lodash - https://github.com/advisories/GHSA-p6mc-m468-83gw
+fix available via `npm audit fix`
+node_modules/lodash.pick
+  cheerio  0.19.0 - 1.0.0-rc.12
+  Depends on vulnerable versions of css-select
+  Depends on vulnerable versions of lodash.pick
+  node_modules/cheerio
+    inline-css  2.2.4 - 4.0.0
+    Depends on vulnerable versions of cheerio
+    Depends on vulnerable versions of extract-css
+    node_modules/inline-css
+    list-stylesheets  1.1.1 - 1.2.10
+    Depends on vulnerable versions of cheerio
+    node_modules/list-stylesheets
+      extract-css  1.0.5 - 2.0.1
+      Depends on vulnerable versions of list-stylesheets
+      Depends on vulnerable versions of style-data
+      node_modules/extract-css
+    style-data  1.1.3 - 1.4.8
+    Depends on vulnerable versions of cheerio
+    node_modules/style-data
+
+multer  1.4.4-lts.1 - 2.0.1
+Severity: high
+Multer vulnerable to Denial of Service via unhandled exception from malformed request - https://github.com/advisories/GHSA-fjgf-rc76-4x9p
+fix available via `npm audit fix`
+node_modules/multer
+
+node-fetch  <2.6.7
+Severity: high
+node-fetch forwards secure headers to untrusted sites - https://github.com/advisories/GHSA-r683-j2x4-v87g
+fix available via `npm audit fix --force`
+Will install html-pdf-node@1.0.7, which is a breaking change
+node_modules/html-pdf-node/node_modules/node-fetch
+  puppeteer  10.0.0 - 18.1.0
+  Depends on vulnerable versions of node-fetch
+  Depends on vulnerable versions of tar-fs
+  Depends on vulnerable versions of ws
+  node_modules/html-pdf-node/node_modules/puppeteer
+    html-pdf-node  >=1.0.8
+    Depends on vulnerable versions of inline-css
+    Depends on vulnerable versions of puppeteer
+    node_modules/html-pdf-node
+
+nth-check  <2.0.1
+Severity: high
+Inefficient Regular Expression Complexity in nth-check - https://github.com/advisories/GHSA-rp65-9cf3-cjxr
+fix available via `npm audit fix`
+node_modules/nth-check
+  css-select  <=3.1.0
+  Depends on vulnerable versions of nth-check
+  node_modules/css-select
+
+on-headers  <1.1.0
+on-headers is vulnerable to http response header manipulation - https://github.com/advisories/GHSA-76c9-3jph-rj3q
+No fix available
+node_modules/on-headers
+  compression  1.0.3 - 1.8.0
+  Depends on vulnerable versions of on-headers
+  node_modules/compression
+  express-compression  *
+  Depends on vulnerable versions of on-headers
+  node_modules/express-compression
+  express-session  1.2.0 - 1.18.1
+  Depends on vulnerable versions of on-headers
+  node_modules/express-session
+
+semver-regex  <=3.1.3
+Severity: high
+semver-regex Regular Expression Denial of Service (ReDOS) - https://github.com/advisories/GHSA-44c6-4v22-4mhx
+Regular expression denial of service in semver-regex - https://github.com/advisories/GHSA-4x5v-gmq8-25ch
+fix available via `npm audit fix --force`
+Will install imagemin-mozjpeg@7.0.0, which is a breaking change
+node_modules/semver-regex
+  find-versions  <=3.2.0
+  Depends on vulnerable versions of semver-regex
+  node_modules/find-versions
+    bin-version  <=4.0.0
+    Depends on vulnerable versions of find-versions
+    node_modules/bin-version
+      bin-version-check  <=4.0.0
+      Depends on vulnerable versions of bin-version
+      node_modules/bin-version-check
+
+tar-fs  2.0.0 - 2.1.2
+Severity: high
+tar-fs Vulnerable to Link Following and Path Traversal via Extracting a Crafted tar File - https://github.com/advisories/GHSA-pq67-2wwv-3xjx
+tar-fs can extract outside the specified dir with a specific tarball - https://github.com/advisories/GHSA-8cj5-5rvv-wf4v
+fix available via `npm audit fix --force`
+Will install html-pdf-node@1.0.7, which is a breaking change
+node_modules/html-pdf-node/node_modules/tar-fs
+
+ws  7.0.0 - 7.5.9
+Severity: high
+ws affected by a DoS when handling a request with many HTTP headers - https://github.com/advisories/GHSA-3h5v-q93c-6h6q
+fix available via `npm audit fix --force`
+Will install html-pdf-node@1.0.7, which is a breaking change
+node_modules/html-pdf-node/node_modules/ws
+
+43 vulnerabilities (4 low, 5 moderate, 33 high, 1 critical)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues possible (including breaking changes), run:
+  npm audit fix --force
+
+Some issues need review, and may require choosing
+a different dependency.

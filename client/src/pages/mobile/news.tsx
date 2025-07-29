@@ -209,6 +209,9 @@ export default function MobileNews() {
 
       {displayNewsData && displayNewsData.length > 0 && (
         <div className="px-4 py-4 space-y-3 bg-[#0a0a2e] min-h-screen">
+          <div className="mb-6">
+            <h2 className="text-white text-lg font-semibold mb-4">Latest Crypto News</h2>
+          </div>
 
           {displayNewsData.map((article, index) => (
             <a

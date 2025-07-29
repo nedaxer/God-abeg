@@ -4,6 +4,7 @@ import { hapticNavigation } from '@/lib/haptics';
 import { useLanguage } from '@/contexts/language-context';
 import { usePersistentChart } from '@/hooks/use-persistent-chart';
 import { useTheme } from '@/contexts/theme-context';
+import { AdaptiveLineTraceIcon } from './adaptive-line-trace-icon';
 
 export function BottomNavigation() {
   const [location] = useLocation();
@@ -15,27 +16,32 @@ export function BottomNavigation() {
     { 
       nameKey: 'home', 
       icon: Home, 
-      path: '/mobile' 
+      path: '/mobile',
+      iconType: 'home' as const
     },
     { 
       nameKey: 'markets', 
       icon: BarChart3, 
-      path: '/mobile/markets' 
+      path: '/mobile/markets',
+      iconType: 'chart' as const
     },
     { 
       nameKey: 'trade', 
       icon: TrendingUp, 
-      path: '/mobile/trade' 
+      path: '/mobile/trade',
+      iconType: 'trending' as const
     },
     { 
       nameKey: 'news', 
       icon: Newspaper, 
-      path: '/mobile/news' 
+      path: '/mobile/news',
+      iconType: 'news' as const
     },
     { 
       nameKey: 'assets', 
       icon: Wallet, 
-      path: '/mobile/assets' 
+      path: '/mobile/assets',
+      iconType: 'wallet' as const
     }
   ];
 
@@ -77,7 +83,12 @@ export function BottomNavigation() {
                 onClick={() => handleNavClick(item.nameKey)}
                 onTouchStart={() => handleNavClick(item.nameKey)}
               >
-                <Icon size={18} />
+                <AdaptiveLineTraceIcon
+                  Icon={Icon}
+                  isActive={isActive}
+                  size={18}
+                  iconType={item.iconType}
+                />
                 <span className="text-xs mt-0.5 font-medium">{t(item.nameKey)}</span>
               </div>
             </Link>
