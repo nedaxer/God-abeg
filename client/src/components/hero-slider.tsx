@@ -47,14 +47,14 @@ export const HeroSlider = () => {
               asChild
               className="bg-[#ff5900] hover:bg-opacity-90 text-white font-medium px-5 py-2 text-sm"
             >
-              <Link href="/register">Open Account</Link>
+              <Link href="/account/register">Open Account</Link>
             </Button>
             <Button
               asChild
               variant="outline"
               className="bg-transparent border border-white hover:bg-white hover:bg-opacity-20 text-white font-medium text-sm"
             >
-              <Link href="/login">Sign In</Link>
+              <Link href="/account/login">Sign In</Link>
             </Button>
           </div>
         </div>

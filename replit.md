@@ -10,6 +10,13 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes (August 18, 2025)
 
+### Navigation Link Fixes ✅ COMPLETED
+- **Fixed Incorrect Navigation Links**: Updated "Open Account" and "Sign In" buttons to use correct routing paths
+- **Files Modified**:
+  - `client/src/components/hero-slider.tsx` - Fixed `/register` and `/login` to `/account/register` and `/account/login`
+  - `client/src/pages/company/about.tsx` - Fixed `/register` to `/account/register` in call-to-action section
+- **Issue Resolution**: Landing page buttons now correctly navigate to registration and login pages instead of 404 errors
+
 ### Navigation Transition Update ✅ COMPLETED
 - **Changed Page Transitions**: Updated navigation transitions from sliding glass effect to smooth fade-in animation
 - **Files Modified**: 
