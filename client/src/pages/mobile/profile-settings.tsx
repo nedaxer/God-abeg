@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import AdaptiveLayout from '@/components/adaptive-layout';
+import LayoutModeToggle from '@/components/layout-mode-toggle';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -685,6 +686,9 @@ export default function ProfileSettings() {
             </div>
           </div>
         )}
+
+        {/* Layout Mode Toggle */}
+        <LayoutModeToggle />
 
         {/* Content */}
         <div className="px-4 py-6">

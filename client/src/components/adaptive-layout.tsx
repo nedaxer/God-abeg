@@ -27,6 +27,11 @@ export default function AdaptiveLayout({
 
   useEffect(() => {
     try {
+      // Proper desktop detection for trading platforms
+      const screenWidth = window.innerWidth;
+      const screenHeight = window.innerHeight;
+      const aspectRatio = screenWidth / screenHeight;
+      
       // Check user's preferred layout mode from localStorage
       const savedLayoutMode = localStorage.getItem('nedaxer_layout_mode');
       
@@ -34,20 +39,54 @@ export default function AdaptiveLayout({
         setLayoutMode(savedLayoutMode as 'mobile' | 'desktop');
         console.log('Using saved layout preference:', savedLayoutMode);
       } else {
-        // Only auto-detect on first visit - default to mobile to preserve user's browser mode
-        const isLargeScreen = window.innerWidth >= 1200; // Only very large screens default to desktop
-        const autoMode = isLargeScreen ? 'desktop' : 'mobile';
+        // Improved desktop detection logic
+        const isDesktopScreen = screenWidth >= 1024 && aspectRatio >= 1.2; // Tablets and desktops
+        const isLargeDesktop = screenWidth >= 1440; // Large desktop screens
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        
+        // Auto-detect: desktop for non-touch devices with proper screen size
+        const autoMode = (isDesktopScreen && !isTouchDevice) || isLargeDesktop ? 'desktop' : 'mobile';
         setLayoutMode(autoMode);
-        console.log('Auto-detected layout mode:', autoMode, 'for screen width:', window.innerWidth);
+        console.log('Auto-detected layout mode:', autoMode, 'for screen:', screenWidth + 'x' + screenHeight, 'touch:', isTouchDevice);
       }
       
       setIsMounted(true);
     } catch (error) {
       console.error('Error in adaptive layout:', error);
-      // Always fallback to mobile to preserve user choice
+      // Fallback to mobile for safety
       setLayoutMode('mobile');
       setIsMounted(true);
     }
+
+    // Add window resize listener to adapt to screen changes
+    const handleResize = () => {
+      const savedLayoutMode = localStorage.getItem('nedaxer_layout_mode');
+      
+      // Only auto-adapt if user hasn't explicitly chosen a layout
+      if (!savedLayoutMode) {
+        const screenWidth = window.innerWidth;
+        const screenHeight = window.innerHeight;
+        const aspectRatio = screenWidth / screenHeight;
+        const isDesktopScreen = screenWidth >= 1024 && aspectRatio >= 1.2;
+        const isLargeDesktop = screenWidth >= 1440;
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        
+        const newMode = (isDesktopScreen && !isTouchDevice) || isLargeDesktop ? 'desktop' : 'mobile';
+        
+        setLayoutMode(currentMode => {
+          if (currentMode !== newMode) {
+            console.log('Layout mode auto-adjusted to:', newMode, 'due to resize');
+            return newMode;
+          }
+          return currentMode;
+        });
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   // Add layout mode toggle function (can be used by components)
@@ -55,7 +94,10 @@ export default function AdaptiveLayout({
     const newMode = layoutMode === 'mobile' ? 'desktop' : 'mobile';
     setLayoutMode(newMode);
     localStorage.setItem('nedaxer_layout_mode', newMode);
-    console.log('Layout mode changed to:', newMode);
+    console.log('Layout mode manually changed to:', newMode);
+    
+    // Force page reload to ensure proper layout initialization
+    window.location.reload();
   };
 
   // Don't render anything until we've determined the layout mode
