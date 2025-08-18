@@ -27,7 +27,7 @@ const addresses = {
     'Bitcoin': 'bc1qq35fj5pxkwflsrlt4xk8jta5wx22qy4knnt2q2'
   },
   'ETH': {
-    'ETH': '0x126975caaf44D603307a95E2d2670F6Ef46e563C',
+    'ETH': '0xDD843A736960D0dd2508c02389AF61970D2a6185',
     'ETH (BEP-20)': '0x126975caaf44D603307a95E2d2670F6Ef46e563C'
   },
   'BNB': {
