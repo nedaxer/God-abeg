@@ -1,15 +1,15 @@
-modules = ["postgresql-16", "python-3.11", "web", "nodejs-20"]
+modules = ["web", "nodejs-20", "bash"]
 run = "npm run dev"
 hidden = [".config", ".git", "generated-icon.png", "node_modules", "dist"]
 
 [nix]
-channel = "stable-24_05"
+channel = "stable-25_05"
 packages = ["imagemagick", "mongodb-tools", "np", "openssh_hpn"]
 
 [deployment]
 deploymentTarget = "autoscale"
-build = ["npm", "run", "build"]
 run = ["npm", "run", "start"]
+build = ["npm", "run", "build"]
 
 [[ports]]
 localPort = 3000
@@ -47,7 +47,7 @@ localPort = 6000
 externalPort = 6000
 
 [workflows]
-runButton = "Start Server (Auto Port)"
+runButton = "Project"
 
 [[workflows.workflow]]
 name = "Project"
@@ -64,9 +64,6 @@ author = "agent"
 
 [workflows.workflow.metadata]
 agentRequireRestartOnSave = false
-
-[[workflows.workflow.tasks]]
-task = "packager.installForAll"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
