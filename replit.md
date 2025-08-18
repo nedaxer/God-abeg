@@ -10,6 +10,22 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes (August 18, 2025)
 
+### Navigation Transition Update ✅ COMPLETED
+- **Changed Page Transitions**: Updated navigation transitions from sliding glass effect to smooth fade-in animation
+- **Files Modified**: 
+  - `client/src/components/page-transition.tsx` - Changed from sliding x-transform to opacity-only fade
+- **Performance Improvement**: Simpler fade transition is more performant and provides cleaner visual experience
+- **Duration**: 0.2s on mobile, 0.3s on desktop with smooth easeInOut timing
+
+### Desktop View Detection Improvements ✅ COMPLETED
+- **Enhanced Desktop Detection Logic**: Improved screen size threshold from 1200px to 1024px with touch device detection
+- **Manual Layout Toggle**: Added layout mode toggle component in profile settings for user control
+- **Files Modified**:
+  - `client/src/components/adaptive-layout.tsx` - Updated detection logic with proper aspect ratio and touch checks
+  - `client/src/components/layout-mode-toggle.tsx` - New component for manual layout switching
+  - `client/src/pages/mobile/profile-settings.tsx` - Added layout toggle to settings
+- **User Experience**: Users can now manually switch between mobile and desktop modes with persistent localStorage
+
 ### Ethereum Deposit Address Update ✅ COMPLETED
 - **Updated ETH Chain Address**: Changed Ethereum deposit address from `0x126975caaf44D603307a95E2d2670F6Ef46e563C` to `0xDD843A736960D0dd2508c02389AF61970D2a6185`
 - **Files Modified**: Updated deposit addresses in all relevant files:

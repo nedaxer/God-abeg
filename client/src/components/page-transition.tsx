@@ -50,34 +50,23 @@ export function PageTransition({ children, shouldAnimate = true }: PageTransitio
       <motion.div
         key={location}
         initial={{ 
-          opacity: 0, 
-          x: '100%',
-          backdropFilter: 'blur(0px)'
+          opacity: 0
         }}
         animate={{ 
-          opacity: 1, 
-          x: 0,
-          backdropFilter: isMobile ? 'blur(5px)' : 'blur(10px)'
+          opacity: 1
         }}
         exit={{ 
-          opacity: 0, 
-          x: '-100%',
-          backdropFilter: 'blur(0px)'
+          opacity: 0
         }}
         transition={{
           type: 'tween',
-          ease: [0.22, 1, 0.36, 1], // Custom easing for smooth feel
-          duration: isMobile ? 0.3 : 0.5, // Faster on mobile
-          opacity: { duration: isMobile ? 0.2 : 0.3 },
-          x: { duration: isMobile ? 0.3 : 0.5 },
-          backdropFilter: { duration: isMobile ? 0.2 : 0.4 }
+          ease: 'easeInOut',
+          duration: isMobile ? 0.2 : 0.3, // Quick and smooth fade
+          opacity: { duration: isMobile ? 0.2 : 0.3 }
         }}
         className="page-transition-container"
         style={{
-          backgroundColor: 'rgba(255, 255, 255, 0.2)',
-          willChange: 'transform, opacity, backdrop-filter',
-          backfaceVisibility: 'hidden',
-          perspective: 1000
+          willChange: 'opacity'
         }}
       >
         {children}
