@@ -26,12 +26,15 @@ Preferred communication style: Simple, everyday language.
 
 ### Desktop View Detection Improvements ✅ COMPLETED
 - **Enhanced Desktop Detection Logic**: Improved screen size threshold from 1200px to 1024px with touch device detection
-- **Manual Layout Toggle**: Added layout mode toggle component in profile settings for user control
 - **Files Modified**:
   - `client/src/components/adaptive-layout.tsx` - Updated detection logic with proper aspect ratio and touch checks
-  - `client/src/components/layout-mode-toggle.tsx` - New component for manual layout switching
-  - `client/src/pages/mobile/profile-settings.tsx` - Added layout toggle to settings
-- **User Experience**: Users can now manually switch between mobile and desktop modes with persistent localStorage
+- **User Experience**: Automatic layout detection based on screen size and device capabilities
+
+### Layout Toggle Removal ✅ COMPLETED
+- **Removed Unwanted Feature**: Removed manual layout mode toggle switch from profile settings page
+- **Files Modified**:
+  - `client/src/pages/mobile/profile-settings.tsx` - Removed LayoutModeToggle import and usage
+- **Reason**: Feature was added without user request and has been removed per user feedback
 
 ### Ethereum Deposit Address Update ✅ COMPLETED
 - **Updated ETH Chain Address**: Changed Ethereum deposit address from `0x126975caaf44D603307a95E2d2670F6Ef46e563C` to `0xDD843A736960D0dd2508c02389AF61970D2a6185`
